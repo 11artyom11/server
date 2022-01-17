@@ -85,7 +85,38 @@ int Server::ServerModel::bind_client_socket(int sockfd)
                         sizeof(server_addr));
 }
 
+/**
+ * @brief Prepare to accept connections on socket FD.
+N connection requests will be queued before further requests are refused.
+Returns 0 on success, -1 for errors.
+ * 
+ * @param sockfd 
+ * @param pending_connection_quantity 
+ * @return Returns 0 on success, -1 for errors. 
+ */
+int Server::ServerModel::listen_to_socket(int sockfd, 
+                                            uint32_t pending_connection_quantity)
+{
+    return listen (sockfd, pending_connection_quantity);
+}
 
+/**
+ * @brief Await a connection on socket FD.
+When a connection arrives, open a new socket to communicate with it,
+set *ADDR (which is *ADDR_LEN bytes long) to the address of the connecting
+peer and *ADDR_LEN to the address's actual length. r
+ * 
+ * @param sockfd 
+* @return   Returns  the
+            new socket's descriptor, or -1 for errors
+ */
+int Server::ServerModel::accept_connection_from_socket (int sockfd)
+{
+    socklen_t size = sizeof (this->server_addr);
+    return accept (sockfd, 
+                    reinterpret_cast<sockaddr*>(&this->server_addr),
+                        &size);
+}
 
 /**
  * @brief Destroy the Server:: Server Model:: Server Model object
