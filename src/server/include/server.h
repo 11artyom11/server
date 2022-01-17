@@ -6,12 +6,14 @@
 #include <cstring>
 #include <vector>
 #include <stdlib.h>
+#include <stdio.h>
 #include <unistd.h>
 #include <arpa/inet.h>
 #include <sys/socket.h>
 #include <netdb.h>
 #include <netinet/in.h>
 
+/*Namespace purposed to store server-related functions and classes*/
 namespace Server
 {
     bool is_client_connection_close(const char* msg);
@@ -19,15 +21,36 @@ namespace Server
     class ServerModel
     {
         public:
-            ServerModel();
-            ~ServerModel();
+            ServerModel              ();
+            bool set_server_port     (uint16_t port = DEFAULT_PORT);
+            bool set_protocol_family (uint16_t family = AF_INET);
+            bool set_listen_ip       (in_addr_t ip = INADDR_ANY);
+            int bind_client_socket   (int sockfd = -1);
+            
+            ~ServerModel             ();
 
         
         private:
-            static int connected_users;
-            static int pending_connections;
-            std::vector <int> sockfds;
-            //tESTSKSMKdmac
+            static int          connected_users;
+            static int          pending_connections;
+            std::vector <int>   sockfds;
+
+        private:
+        /* Structure describing an Internet socket address.  */
+            struct sockaddr_in  server_addr;
+
+        /*variable (int) that stores port server listens to*/
+            uint16_t            listen_port;
+
+        /*
+            variable (int) that stores protocol family via which client
+            server communication is being done
+        */
+            int                 protocol_family;
+
+        /*Ip from which connection requests are being accepted
+            uint32_t*/
+            in_addr_t           listen_ip;
 
     };
 

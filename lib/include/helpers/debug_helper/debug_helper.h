@@ -23,11 +23,11 @@ class Debug
 {
     public:
         template <typename debMesType>
-        Debug (const debMesType& message,
+         Debug (const debMesType& message,
                     DEBUG_TYPE d_type = DEBUG_TYPE::INFO_T,
                         MACHINE_TYPE m_type = MACHINE_TYPE::SERVER);
 
-                
+
 };
 
 template <typename debMesType>
@@ -63,5 +63,6 @@ Debug::Debug(const debMesType& message,
     }
     std::cerr << who <<  carriage_head << message << '\n';
 }
+
 
 #endif
