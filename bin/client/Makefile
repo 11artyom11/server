@@ -126,14 +126,14 @@ edit_cache/fast: edit_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/aram/workspace/clientserver/CMakeFiles /home/aram/workspace/clientserver/CMakeFiles/progress.marks
-	$(MAKE) -f CMakeFiles/Makefile2 all
+	cd /home/aram/workspace/clientserver && $(CMAKE_COMMAND) -E cmake_progress_start /home/aram/workspace/clientserver/CMakeFiles /home/aram/workspace/clientserver/bin/client/CMakeFiles/progress.marks
+	cd /home/aram/workspace/clientserver && $(MAKE) -f CMakeFiles/Makefile2 bin/client/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/aram/workspace/clientserver/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
 clean:
-	$(MAKE) -f CMakeFiles/Makefile2 clean
+	cd /home/aram/workspace/clientserver && $(MAKE) -f CMakeFiles/Makefile2 bin/client/clean
 .PHONY : clean
 
 # The main clean target
@@ -143,57 +143,60 @@ clean/fast: clean
 
 # Prepare targets for installation.
 preinstall: all
-	$(MAKE) -f CMakeFiles/Makefile2 preinstall
+	cd /home/aram/workspace/clientserver && $(MAKE) -f CMakeFiles/Makefile2 bin/client/preinstall
 .PHONY : preinstall
 
 # Prepare targets for installation.
 preinstall/fast:
-	$(MAKE) -f CMakeFiles/Makefile2 preinstall
+	cd /home/aram/workspace/clientserver && $(MAKE) -f CMakeFiles/Makefile2 bin/client/preinstall
 .PHONY : preinstall/fast
 
 # clear depends
 depend:
-	$(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
+	cd /home/aram/workspace/clientserver && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
 .PHONY : depend
 
-#=============================================================================
-# Target rules for targets named server
+# Convenience name for target.
+bin/client/CMakeFiles/client.dir/rule:
+	cd /home/aram/workspace/clientserver && $(MAKE) -f CMakeFiles/Makefile2 bin/client/CMakeFiles/client.dir/rule
+.PHONY : bin/client/CMakeFiles/client.dir/rule
 
-# Build rule for target.
-server: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 server
-.PHONY : server
+# Convenience name for target.
+client: bin/client/CMakeFiles/client.dir/rule
 
-# fast build rule for target.
-server/fast:
-	$(MAKE) -f bin/server/CMakeFiles/server.dir/build.make bin/server/CMakeFiles/server.dir/build
-.PHONY : server/fast
-
-#=============================================================================
-# Target rules for targets named client
-
-# Build rule for target.
-client: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 client
 .PHONY : client
 
 # fast build rule for target.
 client/fast:
-	$(MAKE) -f bin/client/CMakeFiles/client.dir/build.make bin/client/CMakeFiles/client.dir/build
+	cd /home/aram/workspace/clientserver && $(MAKE) -f bin/client/CMakeFiles/client.dir/build.make bin/client/CMakeFiles/client.dir/build
 .PHONY : client/fast
 
-#=============================================================================
-# Target rules for targets named libdebug_helper
+src/client.o: src/client.cpp.o
 
-# Build rule for target.
-libdebug_helper: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 libdebug_helper
-.PHONY : libdebug_helper
+.PHONY : src/client.o
 
-# fast build rule for target.
-libdebug_helper/fast:
-	$(MAKE) -f lib/src/helpers/CMakeFiles/libdebug_helper.dir/build.make lib/src/helpers/CMakeFiles/libdebug_helper.dir/build
-.PHONY : libdebug_helper/fast
+# target to build an object file
+src/client.cpp.o:
+	cd /home/aram/workspace/clientserver && $(MAKE) -f bin/client/CMakeFiles/client.dir/build.make bin/client/CMakeFiles/client.dir/src/client.cpp.o
+.PHONY : src/client.cpp.o
+
+src/client.i: src/client.cpp.i
+
+.PHONY : src/client.i
+
+# target to preprocess a source file
+src/client.cpp.i:
+	cd /home/aram/workspace/clientserver && $(MAKE) -f bin/client/CMakeFiles/client.dir/build.make bin/client/CMakeFiles/client.dir/src/client.cpp.i
+.PHONY : src/client.cpp.i
+
+src/client.s: src/client.cpp.s
+
+.PHONY : src/client.s
+
+# target to generate assembly for a file
+src/client.cpp.s:
+	cd /home/aram/workspace/clientserver && $(MAKE) -f bin/client/CMakeFiles/client.dir/build.make bin/client/CMakeFiles/client.dir/src/client.cpp.s
+.PHONY : src/client.cpp.s
 
 # Help Target
 help:
@@ -207,9 +210,10 @@ help:
 	@echo "... list_install_components"
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
-	@echo "... server"
 	@echo "... client"
-	@echo "... libdebug_helper"
+	@echo "... src/client.o"
+	@echo "... src/client.i"
+	@echo "... src/client.s"
 .PHONY : help
 
 
@@ -221,6 +225,6 @@ help:
 # No rule that depends on this can have commands that come from listfiles
 # because they might be regenerated.
 cmake_check_build_system:
-	$(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
+	cd /home/aram/workspace/clientserver && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
 .PHONY : cmake_check_build_system
 

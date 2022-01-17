@@ -126,14 +126,14 @@ edit_cache/fast: edit_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/aram/workspace/clientserver/CMakeFiles /home/aram/workspace/clientserver/CMakeFiles/progress.marks
-	$(MAKE) -f CMakeFiles/Makefile2 all
+	cd /home/aram/workspace/clientserver && $(CMAKE_COMMAND) -E cmake_progress_start /home/aram/workspace/clientserver/CMakeFiles /home/aram/workspace/clientserver/lib/src/helpers/CMakeFiles/progress.marks
+	cd /home/aram/workspace/clientserver && $(MAKE) -f CMakeFiles/Makefile2 lib/src/helpers/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/aram/workspace/clientserver/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
 clean:
-	$(MAKE) -f CMakeFiles/Makefile2 clean
+	cd /home/aram/workspace/clientserver && $(MAKE) -f CMakeFiles/Makefile2 lib/src/helpers/clean
 .PHONY : clean
 
 # The main clean target
@@ -143,57 +143,60 @@ clean/fast: clean
 
 # Prepare targets for installation.
 preinstall: all
-	$(MAKE) -f CMakeFiles/Makefile2 preinstall
+	cd /home/aram/workspace/clientserver && $(MAKE) -f CMakeFiles/Makefile2 lib/src/helpers/preinstall
 .PHONY : preinstall
 
 # Prepare targets for installation.
 preinstall/fast:
-	$(MAKE) -f CMakeFiles/Makefile2 preinstall
+	cd /home/aram/workspace/clientserver && $(MAKE) -f CMakeFiles/Makefile2 lib/src/helpers/preinstall
 .PHONY : preinstall/fast
 
 # clear depends
 depend:
-	$(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
+	cd /home/aram/workspace/clientserver && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
 .PHONY : depend
 
-#=============================================================================
-# Target rules for targets named server
+# Convenience name for target.
+lib/src/helpers/CMakeFiles/libdebug_helper.dir/rule:
+	cd /home/aram/workspace/clientserver && $(MAKE) -f CMakeFiles/Makefile2 lib/src/helpers/CMakeFiles/libdebug_helper.dir/rule
+.PHONY : lib/src/helpers/CMakeFiles/libdebug_helper.dir/rule
 
-# Build rule for target.
-server: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 server
-.PHONY : server
+# Convenience name for target.
+libdebug_helper: lib/src/helpers/CMakeFiles/libdebug_helper.dir/rule
 
-# fast build rule for target.
-server/fast:
-	$(MAKE) -f bin/server/CMakeFiles/server.dir/build.make bin/server/CMakeFiles/server.dir/build
-.PHONY : server/fast
-
-#=============================================================================
-# Target rules for targets named client
-
-# Build rule for target.
-client: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 client
-.PHONY : client
-
-# fast build rule for target.
-client/fast:
-	$(MAKE) -f bin/client/CMakeFiles/client.dir/build.make bin/client/CMakeFiles/client.dir/build
-.PHONY : client/fast
-
-#=============================================================================
-# Target rules for targets named libdebug_helper
-
-# Build rule for target.
-libdebug_helper: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 libdebug_helper
 .PHONY : libdebug_helper
 
 # fast build rule for target.
 libdebug_helper/fast:
-	$(MAKE) -f lib/src/helpers/CMakeFiles/libdebug_helper.dir/build.make lib/src/helpers/CMakeFiles/libdebug_helper.dir/build
+	cd /home/aram/workspace/clientserver && $(MAKE) -f lib/src/helpers/CMakeFiles/libdebug_helper.dir/build.make lib/src/helpers/CMakeFiles/libdebug_helper.dir/build
 .PHONY : libdebug_helper/fast
+
+debug_helper/debug_helper.o: debug_helper/debug_helper.cpp.o
+
+.PHONY : debug_helper/debug_helper.o
+
+# target to build an object file
+debug_helper/debug_helper.cpp.o:
+	cd /home/aram/workspace/clientserver && $(MAKE) -f lib/src/helpers/CMakeFiles/libdebug_helper.dir/build.make lib/src/helpers/CMakeFiles/libdebug_helper.dir/debug_helper/debug_helper.cpp.o
+.PHONY : debug_helper/debug_helper.cpp.o
+
+debug_helper/debug_helper.i: debug_helper/debug_helper.cpp.i
+
+.PHONY : debug_helper/debug_helper.i
+
+# target to preprocess a source file
+debug_helper/debug_helper.cpp.i:
+	cd /home/aram/workspace/clientserver && $(MAKE) -f lib/src/helpers/CMakeFiles/libdebug_helper.dir/build.make lib/src/helpers/CMakeFiles/libdebug_helper.dir/debug_helper/debug_helper.cpp.i
+.PHONY : debug_helper/debug_helper.cpp.i
+
+debug_helper/debug_helper.s: debug_helper/debug_helper.cpp.s
+
+.PHONY : debug_helper/debug_helper.s
+
+# target to generate assembly for a file
+debug_helper/debug_helper.cpp.s:
+	cd /home/aram/workspace/clientserver && $(MAKE) -f lib/src/helpers/CMakeFiles/libdebug_helper.dir/build.make lib/src/helpers/CMakeFiles/libdebug_helper.dir/debug_helper/debug_helper.cpp.s
+.PHONY : debug_helper/debug_helper.cpp.s
 
 # Help Target
 help:
@@ -207,9 +210,10 @@ help:
 	@echo "... list_install_components"
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
-	@echo "... server"
-	@echo "... client"
 	@echo "... libdebug_helper"
+	@echo "... debug_helper/debug_helper.o"
+	@echo "... debug_helper/debug_helper.i"
+	@echo "... debug_helper/debug_helper.s"
 .PHONY : help
 
 
@@ -221,6 +225,6 @@ help:
 # No rule that depends on this can have commands that come from listfiles
 # because they might be regenerated.
 cmake_check_build_system:
-	$(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
+	cd /home/aram/workspace/clientserver && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
 .PHONY : cmake_check_build_system
 
