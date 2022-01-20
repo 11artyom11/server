@@ -29,19 +29,22 @@ namespace Server
             int listen_to_socket     (int sockfd, 
                                         uint32_t pending_connection_quantity = 1);
             int accept_connection_from_socket (int sockfd);
+            void dump_server_state (void) const noexcept;
+
+            struct sockaddr_in* get_server_addr() const;
             ~ServerModel             ();
 
         
         private:
-            static int          connected_users;
-            static int          pending_connections;
+            static int          connected_users_count;
+            static int          pending_connections_count;
             std::vector <int>   sockfds;
 
         private:
         /* Structure describing an Internet socket address.  */
-            struct sockaddr_in  server_addr;
+            struct sockaddr_in*  server_addr;
 
-        /*variable (int) that stores port server listens to*/
+        /*variable (int) that stores port server listens to  in host byte order*/
             uint16_t            listen_port;
 
         /*

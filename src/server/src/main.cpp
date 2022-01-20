@@ -2,90 +2,49 @@
 
 using namespace Server;
 
-int main(int argc, char* argv[])
-{
+int main() {
+  // Create a socket (IPv4, TCP)
+  int sockfd = socket(AF_INET, SOCK_STREAM, 0);
+  if (sockfd == -1) {
+    std::cout << "Failed to create socket. errno: " << errno << std::endl;
+    exit(EXIT_FAILURE);
+  }
 
-    int client;
-    int server;
+    ServerModel servModel;
+    sockaddr_in *sockaddr = servModel.get_server_addr();
+    Debug ("First dump");
+    servModel.dump_server_state();
+  
+  if (servModel.bind_client_socket(sockfd)) {
+    Debug( "Failed to bind to port:", 
+                DEBUG_TYPE::ERROR_T);
+    exit(EXIT_FAILURE);
+  }
 
+  // Start listening. Hold at most 10 connections in the queue
+  if (listen(sockfd, 10) < 0) {
+    std::cout << "Failed to listen on socket. errno: " << errno << std::endl;
+    exit(EXIT_FAILURE);
+  }
 
-    struct sockaddr_in server_address;
-    client = socket (AF_INET, SOCK_STREAM,0);
-    if (client < 0)
-    {
-        Debug("Socket cannot be established", DEBUG_TYPE::ERROR_T);
-        exit(0);
-    }
+  // Grab a connection from the queue
+  auto addrlen = sizeof(*sockaddr);
+  int connection = accept(sockfd, (struct sockaddr*)sockaddr, (socklen_t*)&addrlen);
+  if (connection < 0) {
+    std::cout << "Failed to grab connection. errno: " << errno << std::endl;
+    exit(EXIT_FAILURE);
+  }
 
+  // Read from the connection
+  char buffer[100];
+  auto bytesRead = read(connection, buffer, 100);
+  std::cout << "The message was: " << buffer;
 
-    Debug("Socket for server was created");    
-    server_address.sin_port = htons(DEFAULT_PORT);
-    server_address.sin_family = AF_INET;
-    server_address.sin_addr.s_addr = htons (INADDR_ANY);
+  // Send a message to the connection
+  std::string response = "Good talking to you\n";
+  send(connection, response.c_str(), response.size(), 0);
 
-    int ret  = bind(client,
-                         reinterpret_cast<struct sockaddr*>(&server_address),
-                                sizeof(server_address));
-
-
-    if (ret < 0)
-    {
-        Debug("binding connection... Socket has already been establishing",DEBUG_TYPE::ERROR_T);
-        exit(0);
-    }
-
-    socklen_t size = sizeof (server_address);
-
-    Debug("Server is listening...");
-
-    listen(client, 1);
-    server = accept (client, reinterpret_cast<struct sockaddr*>(&server_address), &size);
-    
-    if (server < 0)
-    {
-        Debug("Couldn't accept client", DEBUG_TYPE::ERROR_T);
-    }
-
-    char buffer[BUFFER_SIZE];
-    bool isExit = false;
-    while (server > 0)
-    {
-        strcpy (buffer, "Server connected ...\n");
-        send (server, buffer, BUFFER_SIZE, 0);
-
-         
-        
-        Debug ("Connected to client #1\nEnter \'#\' to end connection");
-
-       
-        recv(server, buffer, BUFFER_SIZE, 0);
-        Debug(buffer,DEBUG_TYPE::INFO_T, MACHINE_TYPE::CLIENT);
-        
-        if (is_client_connection_close(buffer))
-        {
-            isExit = true;
-        }
-        while (!isExit)
-        {
-            Debug ("");
-            std::cin.getline(buffer, BUFFER_SIZE);
-            send(server, buffer, BUFFER_SIZE, 0);
-            if (is_client_connection_close(buffer))
-            {
-                break;
-            }
-
-            recv (server, buffer, BUFFER_SIZE, 0);
-            Debug(buffer,DEBUG_TYPE::INFO_T,MACHINE_TYPE::CLIENT);
-            if (is_client_connection_close(buffer))
-            {
-                break;
-            }
-        }
-        Debug ("Client disconnected");
-        isExit = false;
-        exit(1);
-    }
-
-    exit(0);
+  // Close the connections
+  close(connection);
+  close(sockfd);
 }

@@ -17,9 +17,17 @@ bool Server::is_client_connection_close(const char* msg)
  *  default constructor
  * 
  */
-Server::ServerModel::ServerModel()
+Server::ServerModel::ServerModel() :
+    listen_port {DEFAULT_PORT},
+        protocol_family {AF_INET},
+            listen_ip {INADDR_ANY}
+
 {
-    Debug("Constructed Server Model object");
+    server_addr = new struct sockaddr_in;
+
+    server_addr->sin_port = htons(listen_port);
+    server_addr->sin_family = protocol_family;
+    server_addr->sin_addr.s_addr = listen_ip;
 }
 
 /**
@@ -32,6 +40,7 @@ Server::ServerModel::ServerModel()
 bool Server::ServerModel::set_server_port(uint16_t port)
 {
     std::string debugMes = "Set server port to " +  ( port + '0');
+    server_addr->sin_port = htons(port);
     Debug(std::string{debugMes});
     this->listen_port = port;
     return true;
@@ -48,6 +57,7 @@ bool Server::ServerModel::set_protocol_family(uint16_t family)
 {
     std::string debugMes = "Set protocol family to " + (family + '0');
     Debug(std::string{debugMes});
+    server_addr->sin_family = family;
     this->protocol_family = family;
     return true;
 }
@@ -64,6 +74,7 @@ bool Server::ServerModel::set_listen_ip(in_addr_t ip)
 {
     std::string debugMes = "Set listen ip to " + (ip + '0');
     Debug(std::string{debugMes});
+    server_addr->sin_addr.s_addr = htons(ip);
     this->listen_ip = ip;
     return true;
 }
@@ -81,8 +92,8 @@ int Server::ServerModel::bind_client_socket(int sockfd)
 {
     /*for more info see https://man7.org/linux/man-pages/man2/bind.2.html*/
     return bind(sockfd, 
-                   reinterpret_cast<sockaddr*>(&this->server_addr), 
-                        sizeof(server_addr));
+                   reinterpret_cast<sockaddr*>(this->server_addr), 
+                        sizeof(*server_addr));
 }
 
 /**
@@ -112,10 +123,25 @@ peer and *ADDR_LEN to the address's actual length. r
  */
 int Server::ServerModel::accept_connection_from_socket (int sockfd)
 {
-    socklen_t size = sizeof (this->server_addr);
+    socklen_t size = sizeof (*this->server_addr);
     return accept (sockfd, 
-                    reinterpret_cast<sockaddr*>(&this->server_addr),
+                    reinterpret_cast<sockaddr*>(this->server_addr),
                         &size);
+}
+
+
+void Server::ServerModel::dump_server_state(void) const noexcept
+{
+    Debug(server_addr->sin_addr.s_addr);
+    Debug(server_addr->sin_port);
+    Debug(server_addr->sin_family);
+    return;
+}
+
+
+struct sockaddr_in* Server::ServerModel::get_server_addr() const
+{
+    return this->server_addr;
 }
 
 /**
@@ -124,6 +150,7 @@ int Server::ServerModel::accept_connection_from_socket (int sockfd)
  */
 Server::ServerModel::~ServerModel()
 {
+    delete server_addr;
      Debug("Destructed Server Model object");
 }
 

@@ -1,1 +1,1 @@
-/usr/bin/c++    -rdynamic CMakeFiles/server.dir/src/server.cpp.o CMakeFiles/server.dir/src/main.cpp.o  -o server  -Wl,-rpath,/home/aram/workspace/clientserver/lib/src/helpers ../../lib/src/helpers/liblibdebug_helper.so.1.0.1 
+/usr/bin/c++  -g -w  -rdynamic CMakeFiles/server.dir/src/server.cpp.o CMakeFiles/server.dir/src/main.cpp.o  -o server  -Wl,-rpath,/home/aram/workspace/clientserver/lib/src/helpers ../../lib/src/helpers/liblibdebug_helper.so.1.0.1 

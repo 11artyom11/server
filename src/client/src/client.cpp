@@ -16,7 +16,7 @@ constexpr auto ERROR_S = "[ERROR] : ";
 constexpr auto INFO_S = "[INFO] : ";
 constexpr auto WARNING_S = "[WARNING] : ";
 
-constexpr auto DEFAULT_PORT = 8080;
+constexpr auto DEFAULT_PORT = 9982;
 constexpr auto BUFFER_SIZE = 1024; 
 constexpr auto SERVER_IP = "127.0.0.1";
 constexpr auto EXIT_SYM = '#';
@@ -111,7 +111,7 @@ int main(int agrc, char* argv[])
 
     debug ("Waiting for server confirmation");
     recv(client, buffer,BUFFER_SIZE, 0);
-
+    debug (buffer); 
     debug ("Connection established");
     debug ("Enter # to close connection");
 
