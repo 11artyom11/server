@@ -18,26 +18,33 @@ enum class MACHINE_TYPE
     CLIENT
 };
 
-/*Functional class with only static member functions*/
+/*Functional class to provide debug interface*/
 class Debug
 {
     public:
-        template <typename debMesType>
-         Debug (const debMesType& message,
-                    DEBUG_TYPE d_type = DEBUG_TYPE::INFO_T,
-                        MACHINE_TYPE m_type = MACHINE_TYPE::SERVER);
+        Debug ();
+
+        template <typename mesType>
+        void operator << (const mesType& mes);
+        inline static DEBUG_TYPE deb_type = DEBUG_TYPE::INFO_T;
+        inline static MACHINE_TYPE machine_type = MACHINE_TYPE::SERVER;
+        std::ostream* outp_stream;
 
 
 };
 
-template <typename debMesType>
-Debug::Debug(const debMesType& message,
-                    DEBUG_TYPE d_type,
-                        MACHINE_TYPE m_type)
+
+
+template <typename mesType>
+void Debug::operator << (const mesType& mes)
 {
     std::string who{};
     std::string carriage_head{};
-    switch (m_type)
+
+    
+    std::cout << "R 1" << std::endl;
+
+    switch (Debug::machine_type)
     {
     case MACHINE_TYPE::SERVER:
         who = SERVER_NAME;
@@ -48,7 +55,7 @@ Debug::Debug(const debMesType& message,
         break;
     }
 
-    switch (d_type)
+    switch (Debug::deb_type)
     {
     case DEBUG_TYPE::ERROR_T:    
         carriage_head = ERROR_S;
@@ -61,8 +68,8 @@ Debug::Debug(const debMesType& message,
         carriage_head = WARNING_S;
         break;
     }
-    std::cerr << who <<  carriage_head << message << '\n';
+    std::cout << "R 2" << std::endl;
+
+    (*outp_stream) << who << carriage_head << mes << std::endl;
 }
-
-
 #endif
