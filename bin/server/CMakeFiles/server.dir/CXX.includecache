@@ -42,10 +42,6 @@ netdb.h
 netinet/in.h
 -
 
-/home/aram/workspace/clientserver/src/server/src/main.cpp
-../include/server.h
-/home/aram/workspace/clientserver/src/server/include/server.h
-
 /home/aram/workspace/clientserver/src/server/src/server.cpp
 ../include/server.h
 /home/aram/workspace/clientserver/src/server/include/server.h

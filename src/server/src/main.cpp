@@ -3,7 +3,6 @@
 using namespace Server;
 
 int main() {
-    
 
   // Create a socket (IPv4, TCP)
   int sockfd = socket(AF_INET, SOCK_STREAM, 0);

@@ -23,6 +23,8 @@ Server::ServerModel::ServerModel() :
             listen_ip {INADDR_ANY}
 
 {
+
+    Debug().warning("Constructed");
     server_addr = new struct sockaddr_in;
 
     server_addr->sin_port = htons(listen_port);
@@ -40,7 +42,7 @@ bool Server::ServerModel::set_server_port(uint16_t port)
 {
     std::string debugMes = "Set server port to " +  ( port + '0');
     server_addr->sin_port = htons(port);
-    Debug() << std::string{debugMes};
+    //Debug() << std::string{debugMes};
     this->listen_port = port;
     return true;
 }
@@ -55,7 +57,7 @@ bool Server::ServerModel::set_server_port(uint16_t port)
 bool Server::ServerModel::set_protocol_family(uint16_t family)
 {
     std::string debugMes = "Set protocol family to " + (family + '0');
-    Debug() << std::string{debugMes};
+    //Debug() << std::string{debugMes};
     server_addr->sin_family = family;
     this->protocol_family = family;
     return true;
@@ -72,7 +74,7 @@ bool Server::ServerModel::set_protocol_family(uint16_t family)
 bool Server::ServerModel::set_listen_ip(in_addr_t ip)
 {
     std::string debugMes = "Set listen ip to " + (ip + '0');
-    Debug() << std::string{debugMes};
+    //Debug() << std::string{debugMes};
     server_addr->sin_addr.s_addr = htons(ip);
     this->listen_ip = ip;
     return true;
@@ -131,7 +133,7 @@ int Server::ServerModel::accept_connection_from_socket (int sockfd)
 
 void Server::ServerModel::dump_server_state(void) const noexcept
 {
-    Debug() << server_addr->sin_addr.s_addr;
+    //Debug() << server_addr->sin_addr.s_addr;
     //Debug() << server_addr->sin_port;
     //Debug() << server_addr->sin_family;
     return;

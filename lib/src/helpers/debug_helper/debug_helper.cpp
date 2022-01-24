@@ -5,18 +5,44 @@ Debug::Debug()
     this->outp_stream = &std::cout;
 }
 
-template <>
-void Debug::operator <<  (const DEBUG_TYPE& deb_t)
+
+/**
+ * @brief Returns whom current instance debugging belongs to
+ * 
+ * @return corresponding name of debuggable machine
+ */
+std::string Debug::from () const noexcept
 {
-    std::cout << "DT" << std::endl;
-    deb_type = deb_t;
-    return;
+    switch (machine)
+    {
+        case MACHINE_TYPE::SERVER:
+            return " : [ SERVER ]";
+            break;
+        case MACHINE_TYPE::CLIENT:
+            return " : [ CLIENT ]";
+            break;
+        default:
+            return " : [ SERVER ]";
+            break;
+    }
 }
 
-template <>
-void Debug::operator << (const MACHINE_TYPE& mach_t)
+/**
+ * @brief Set pointer to default output stream for debug messages
+ * can be done for each instance. For temporary instances this action is not available
+ * 
+ * @param oS_ptr pointer to standard output stream
+ * @return 0 on success , otherwise -1 
+ */
+int Debug::set_output_stream( std::ostream* oS_ptr)
 {
-    std::cout << "MT"<< std::endl;
-    machine_type = mach_t ;
-    return;
+    try
+    {
+        this->outp_stream = oS_ptr;
+        return 0;
+    }
+    catch(const std::exception& e)
+    {
+        return -1;
+    }
 }
