@@ -46,7 +46,7 @@ template <typename ...mesTL>
  void Debug::info (mesTL... messages)
 {    
     ((*outp_stream << messages << ' '), ...);
-    *outp_stream << Code::BG_GREEN << " [ INFO ] " << Code::BG_DEFAULT << from() << std::endl;
+    *outp_stream << " [ INFO ] " << from() << std::endl;
 
 }
 
