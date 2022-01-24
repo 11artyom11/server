@@ -24,7 +24,12 @@ Server::ServerModel::ServerModel() :
 
 {
 
-    Debug().warning("Constructed");
+    Debug().info("Constructed ServerModel instance");
+
+    Debug().info("Port : ", listen_port);
+    Debug().info("Protocol Family : ", protocol_family);
+    Debug().info("Listen IP : ", listen_ip);
+    
     server_addr = new struct sockaddr_in;
 
     server_addr->sin_port = htons(listen_port);

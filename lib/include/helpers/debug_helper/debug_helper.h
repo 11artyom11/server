@@ -2,6 +2,7 @@
 #define __DEBUG_HELPER__
 #include <iostream>
 #include <stdio.h>
+#include <time.h>
 #include "../constants.h"
 
 
@@ -34,6 +35,8 @@ class Debug
          void fatal (mesTL... messages);
 
         std::string from() const noexcept;
+        std::string get_current_time (void) const noexcept;
+
         int set_output_stream ( std::ostream* oS_ptr);
     private:
         MACHINE_TYPE machine;
@@ -44,25 +47,27 @@ class Debug
 
 template <typename ...mesTL>
  void Debug::info (mesTL... messages)
-{    
+{       
+     *outp_stream <<get_current_time() << " [ INFO ] " << from();
     ((*outp_stream << messages << ' '), ...);
-    *outp_stream << " [ INFO ] " << from() << std::endl;
-
+    *outp_stream << std::endl;
 }
 
 template <typename ...mesTL>
  void Debug::warning (mesTL... messages)
 {
+    *outp_stream << get_current_time() << " [ WARINING ] " << from();
     ((*outp_stream << messages << ' '), ...);
-    *outp_stream << " [ WARINING ] " << from() << std::endl;
+    *outp_stream << std::endl;
 
 }
 
 template <typename ...mesTL>
  void Debug::fatal (mesTL... messages)
 {
+    *outp_stream << get_current_time() <<  " [ FATAL ] " << from();
     ((*outp_stream << messages << ' '), ...);
-    *outp_stream << " [ FATAL ] " << from() << std::endl;
+    *outp_stream << std::endl;
 
 }
 

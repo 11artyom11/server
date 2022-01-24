@@ -16,15 +16,37 @@ std::string Debug::from () const noexcept
     switch (machine)
     {
         case MACHINE_TYPE::SERVER:
-            return " : [ SERVER ]";
+            return "| [ SERVER ] ";
             break;
         case MACHINE_TYPE::CLIENT:
-            return " : [ CLIENT ]";
+            return "| [ CLIENT ] ";
             break;
         default:
-            return " : [ SERVER ]";
+            return "| [ SERVER ] ";
             break;
     }
+}
+
+/**
+ * @brief gets current time ov working machine in unix style
+ * used asctime_r instead of asctime in order to support multi-
+ * thread debugging
+ * 
+ * @return unix styled time converted into std::string 
+ */
+std::string Debug::get_current_time(void) const noexcept
+{
+    time_t rawtime;
+  struct tm * timeinfo;
+
+  time ( &rawtime );
+  timeinfo = localtime ( &rawtime );
+  char charbuf[30];
+  asctime_r(timeinfo, charbuf) ;
+  std::string timestr(charbuf);
+  timestr.pop_back();
+  return  "[ " + timestr + " ]";
+  
 }
 
 /**
