@@ -26,10 +26,6 @@ Server::ServerModel::ServerModel() :
 
     Debug().info("Constructed ServerModel instance");
 
-    Debug().info("Port : ", listen_port);
-    Debug().info("Protocol Family : ", protocol_family);
-    Debug().info("Listen IP : ", listen_ip);
-    
     server_addr = new struct sockaddr_in;
 
     server_addr->sin_port = htons(listen_port);
@@ -45,6 +41,7 @@ Server::ServerModel::ServerModel() :
  */
 bool Server::ServerModel::set_server_port(uint16_t port)
 {
+    Debug().info("Server port set to ", port);
     std::string debugMes = "Set server port to " +  ( port + '0');
     server_addr->sin_port = htons(port);
     //Debug() << std::string{debugMes};
@@ -61,6 +58,7 @@ bool Server::ServerModel::set_server_port(uint16_t port)
  */
 bool Server::ServerModel::set_protocol_family(uint16_t family)
 {
+    Debug().info("Server protocol family set to ", family);
     std::string debugMes = "Set protocol family to " + (family + '0');
     //Debug() << std::string{debugMes};
     server_addr->sin_family = family;
@@ -78,6 +76,7 @@ bool Server::ServerModel::set_protocol_family(uint16_t family)
  */
 bool Server::ServerModel::set_listen_ip(in_addr_t ip)
 {
+    Debug().info("Server listen ip set to ", ip);
     std::string debugMes = "Set listen ip to " + (ip + '0');
     //Debug() << std::string{debugMes};
     server_addr->sin_addr.s_addr = htons(ip);
@@ -90,7 +89,6 @@ bool Server::ServerModel::set_listen_ip(in_addr_t ip)
  * @brief bind socket file descriptor to server address
  * 
  * @param sockfd 
- * @return int 
  * @return On success, zero is returned.  On error, -1 is returned, and
        errno is set to indicate the error. 
  */
@@ -138,9 +136,9 @@ int Server::ServerModel::accept_connection_from_socket (int sockfd)
 
 void Server::ServerModel::dump_server_state(void) const noexcept
 {
-    //Debug() << server_addr->sin_addr.s_addr;
-    //Debug() << server_addr->sin_port;
-    //Debug() << server_addr->sin_family;
+    Debug().info("Server listen address : ",server_addr->sin_addr.s_addr);
+    Debug().info("Server listen port : ", server_addr->sin_port, "(", listen_port, ")");
+    Debug().info("Server protocol family : ",server_addr->sin_family);
     return;
 }
 
@@ -157,7 +155,7 @@ struct sockaddr_in* Server::ServerModel::get_server_addr() const
 Server::ServerModel::~ServerModel()
 {
     delete server_addr;
-     //Debug() << "Destructed Server Model object";
+    Debug().info("Destructed Server Model object");
 }
 
 /**

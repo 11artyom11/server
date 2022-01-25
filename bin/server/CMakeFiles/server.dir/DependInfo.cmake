@@ -4,6 +4,7 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
+  "/home/aram/workspace/clientserver/src/server/src/handler.cpp" "/home/aram/workspace/clientserver/bin/server/CMakeFiles/server.dir/src/handler.cpp.o"
   "/home/aram/workspace/clientserver/src/server/src/main.cpp" "/home/aram/workspace/clientserver/bin/server/CMakeFiles/server.dir/src/main.cpp.o"
   "/home/aram/workspace/clientserver/src/server/src/server.cpp" "/home/aram/workspace/clientserver/bin/server/CMakeFiles/server.dir/src/server.cpp.o"
   )

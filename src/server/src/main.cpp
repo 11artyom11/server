@@ -7,7 +7,7 @@ int main() {
   // Create a socket (IPv4, TCP)
   int sockfd = socket(AF_INET, SOCK_STREAM, 0);
   if (sockfd == -1) {
-    std::cout << "Failed to create socket. errno: " << errno << std::endl;
+    Debug().fatal("Failed to create socket, terminating....");
     exit(EXIT_FAILURE);
   }
 
@@ -16,13 +16,15 @@ int main() {
 
     servModel.dump_server_state();
 
-  if (servModel.bind_client_socket(sockfd)) {
-    exit(EXIT_FAILURE);
+  /*bind a socket to sockaddr*/
+  if (servModel.bind_client_socket(sockfd) != 0) {
+      Debug().fatal("Failed to bind socket to sockaddr_t instance, terminating...");
+      exit(EXIT_FAILURE);
   }
 
   // Start listening. Hold at most 10 connections in the queue
   if (listen(sockfd, 10) < 0) {
-    std::cout << "Failed to listen on socket. errno: " << errno << std::endl;
+    Debug().fatal("Failed to listen on socket. errno: ", errno , ", terminating...");
     exit(EXIT_FAILURE);
   }
 
@@ -30,14 +32,14 @@ int main() {
   auto addrlen = sizeof(*sockaddr);
   int connection = servModel.accept_connection_from_socket(sockfd);
   if (connection < 0) {
-    std::cout << "Failed to grab connection. errno: " << errno << std::endl;
+    Debug().fatal("Failed to grab connection. errno: ", errno, ", terminating...");
     exit(EXIT_FAILURE);
   }
 
   // Read from the connection
   char buffer[100];
   auto bytesRead = read(connection, buffer, 100);
-  std::cout << "The message was: " << buffer;
+  Debug().info("Recieved message : ", buffer);
 
   // Send a message to the connection
   std::string response = "Good talking to you\n";

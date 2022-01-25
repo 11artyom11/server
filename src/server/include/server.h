@@ -1,6 +1,9 @@
 #ifndef __SERVER__
 #define __SERVER__
+
 #include "../../../lib/include/helpers/debug_helper/debug_helper.h"
+#include "handler.h"
+
 #include <iostream>
 #include <string>
 #include <cstring>
@@ -56,6 +59,9 @@ namespace Server
         /*Ip from which connection requests are being accepted
             uint32_t*/
             in_addr_t           listen_ip;
+
+        /*Handler for write and read functions*/
+            Handler m_handler;
 
     };
 

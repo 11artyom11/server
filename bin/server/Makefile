@@ -171,6 +171,33 @@ server/fast:
 	cd /home/aram/workspace/clientserver && $(MAKE) -f bin/server/CMakeFiles/server.dir/build.make bin/server/CMakeFiles/server.dir/build
 .PHONY : server/fast
 
+src/handler.o: src/handler.cpp.o
+
+.PHONY : src/handler.o
+
+# target to build an object file
+src/handler.cpp.o:
+	cd /home/aram/workspace/clientserver && $(MAKE) -f bin/server/CMakeFiles/server.dir/build.make bin/server/CMakeFiles/server.dir/src/handler.cpp.o
+.PHONY : src/handler.cpp.o
+
+src/handler.i: src/handler.cpp.i
+
+.PHONY : src/handler.i
+
+# target to preprocess a source file
+src/handler.cpp.i:
+	cd /home/aram/workspace/clientserver && $(MAKE) -f bin/server/CMakeFiles/server.dir/build.make bin/server/CMakeFiles/server.dir/src/handler.cpp.i
+.PHONY : src/handler.cpp.i
+
+src/handler.s: src/handler.cpp.s
+
+.PHONY : src/handler.s
+
+# target to generate assembly for a file
+src/handler.cpp.s:
+	cd /home/aram/workspace/clientserver && $(MAKE) -f bin/server/CMakeFiles/server.dir/build.make bin/server/CMakeFiles/server.dir/src/handler.cpp.s
+.PHONY : src/handler.cpp.s
+
 src/main.o: src/main.cpp.o
 
 .PHONY : src/main.o
@@ -238,6 +265,9 @@ help:
 	@echo "... edit_cache"
 	@echo "... install/local"
 	@echo "... server"
+	@echo "... src/handler.o"
+	@echo "... src/handler.i"
+	@echo "... src/handler.s"
 	@echo "... src/main.o"
 	@echo "... src/main.i"
 	@echo "... src/main.s"
