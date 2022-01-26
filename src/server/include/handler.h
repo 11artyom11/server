@@ -27,11 +27,13 @@ namespace Server
         private:
             sem_t writer_sem;
             sem_t reader_sem;
+
             inline static int reader_ = 0;
+            inline static int writer_ = 0;
+
 
             std::thread writer_threads[MAX_WRITE_THREAD_COUNT];
             std::thread reader_threads[MAX_READ_THREAD_COUNT];
-            inline static uint32_t writer_count = 0;
             inline static uint32_t reader_count = 0;
 
     };

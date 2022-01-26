@@ -168,6 +168,8 @@ void Server::ServerModel::distribute_incoming_connections(int new_socket,
         Debug().info("Got READ ORDER");
         m_handler.provide_read_thread(new_socket);
         break;
+    default: 
+        return;
     }
 }
 

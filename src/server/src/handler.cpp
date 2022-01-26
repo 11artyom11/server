@@ -9,10 +9,10 @@ using namespace std;
  * @param RWBeacklog represents number of allowed thread count
  * to use reader & writer function at the same time
  */
-Server::Handler::Handler(int RWBeacklog)
+Server::Handler::Handler(int RWBacklog)
 {
-    sem_init (&writer_sem, 0, RWBeacklog);
-    sem_init (&reader_sem, 0, RWBeacklog);
+    sem_init (&writer_sem, 0, RWBacklog);
+    sem_init (&reader_sem, 0, RWBacklog);
 }
 
 /**
@@ -25,17 +25,20 @@ Server::Handler::Handler(int RWBeacklog)
  */
 void* Server::Handler::writer(void* param)
 {
-    printf("\nWriter is trying to enter");
  
-    // Lock the semaphore
+          // Lock the semaphore
     sem_wait(&writer_sem);
+    writer_++;
+    /*CRITICAL SECTION*/   
+    Debug().info(writer_, "writer is inside\n");
  
-    printf("\nWriter has entered");
+    this_thread::sleep_for(chrono::seconds(5));
  
-    // Unlock the semaphore
+    Debug().info(writer_, "Writers is leaving");
+    writer_--;
+    Debug().info("Writers left : " , writer_);
+    writer_threads[writer_].detach();
     sem_post(&writer_sem);
- 
-    printf("\nWriter is leaving");
     pthread_exit(NULL);
 }
 
@@ -58,13 +61,14 @@ void* Server::Handler::reader(void* param)
 
    
     Debug().info(reader_, "reader is inside\n");
- 
+    
     this_thread::sleep_for(chrono::seconds(5));
  
     Debug().info(reader_--, "Reader is leaving");
     Debug().info("Readers left : " , reader_);
 
     sem_post(&reader_sem);
+    reader_threads[reader_].detach();
     pthread_exit(NULL);
 }
 
@@ -105,7 +109,7 @@ int Server::Handler::join_read_thread_at(const uint32_t at_)
  */
 int Server::Handler::join_all_writer_threads(void)
 {
-    for (auto at_ = 0; at_ < writer_count; ++at_)
+    for (auto at_ = 0; at_ < writer_; ++at_)
     {
         if (join_write_thread_at(at_)) return EXIT_FAILURE;
     }
@@ -119,7 +123,7 @@ int Server::Handler::join_all_writer_threads(void)
  */
 int Server::Handler::join_all_reader_thread(void)
 {
-    for (auto at_ = 0; at_ < reader_count; ++at_)
+    for (auto at_ = 0; at_ < reader_; ++at_)
     {
         if (join_read_thread_at(at_)) return EXIT_FAILURE;
     }
@@ -134,14 +138,16 @@ int Server::Handler::join_all_reader_thread(void)
  */
 int Server::Handler::provide_write_thread(int new_write_socket)
 {
-    writer_threads[writer_count] = thread(&Server::Handler::writer,this, &new_write_socket);
-    bool success = writer_threads[writer_count].joinable();
+    Debug().fatal("BEFORE THREAD CREATING");
+    writer_threads[writer_] = thread(&Server::Handler::writer,this, &new_write_socket);
+        Debug().fatal("AFTER THREAD CREATING");
+
+    bool success = writer_threads[writer_].joinable();
     /*If succeeded to create a new thread
      for new socket increment writers count & return success code
       else return failure code */
     if (success)
     {
-        ++writer_count;
         return EXIT_SUCCESS;
     } 
     return EXIT_FAILURE;
@@ -156,11 +162,14 @@ int Server::Handler::provide_write_thread(int new_write_socket)
  */
 int Server::Handler::provide_read_thread(int new_read_socket)
 {
-    reader_threads[reader_count] = thread (&Server::Handler::reader,this, &new_read_socket);
-    bool success = reader_threads[reader_count].joinable();
+        Debug().fatal("BEFORE THREAD CREATING");
+
+        reader_threads[reader_] = thread (&Server::Handler::reader,this, &new_read_socket);
+        Debug().fatal("BEFORE THREAD CREATING");
+
+    bool success = reader_threads[reader_].joinable();
     if (success)
     {
-        ++reader_count;
         return EXIT_SUCCESS;
     }
     return EXIT_FAILURE;

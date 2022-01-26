@@ -47,14 +47,27 @@ int main() {
 
         /*Convert retrieved char array to long*/
         std::string tmp_response(buffer);
-        auto ld_response = std::stol(tmp_response.data(),nullptr, 10);
-        servModel.distribute_incoming_connections(connection,ld_response);
+        long ld_response;
+
+        try
+        {
+          ld_response = std::stol(tmp_response.data(),nullptr, 10);         
+
+          servModel.distribute_incoming_connections(connection,ld_response);
 
 
-        // Send a message to the connection
-        std::string response = "Good talking to you\n";
-        send(connection, response.c_str(), response.size(), 0);
-        bytesRead = read (connection, buffer, 100);
+          // Send a message to the connection
+          std::string response = "Good talking to you\n";
+          send(connection, response.c_str(), response.size(), 0);
+          bytesRead = read (connection, buffer, 100);
+
+        }
+        catch(const std::exception& e)
+        {
+          Debug().warning(e.what());
+            continue;
+        }
+        
     }
   }
   close(connection);
