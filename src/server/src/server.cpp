@@ -20,7 +20,8 @@ bool Server::is_client_connection_close(const char* msg)
 Server::ServerModel::ServerModel() :
     listen_port {DEFAULT_PORT},
         protocol_family {AF_INET},
-            listen_ip {INADDR_ANY}
+            listen_ip {INADDR_ANY},
+                m_handler {3}
 
 {
 
@@ -156,8 +157,18 @@ struct sockaddr_in* Server::ServerModel::get_server_addr() const
 void Server::ServerModel::distribute_incoming_connections(int new_socket, 
                                                                 uint8_t response)
 {
+    switch (response)
+    {
+    case WRITE_REQ:
+        Debug().info("Got WRITE ORDER");
+        m_handler.provide_write_thread(new_socket);
+        break;
     
-
+    case READ_REQ:
+        Debug().info("Got READ ORDER");
+        m_handler.provide_read_thread(new_socket);
+        break;
+    }
 }
 
 
