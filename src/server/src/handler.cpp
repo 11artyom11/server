@@ -51,24 +51,24 @@ void* Server::Handler::reader(void* param)
 {
         // Lock the semaphore
     sem_wait(&reader_sem);
-    readercount++;
+    reader_++;
  
-    if (readercount == 1)
+    if (reader_ == 1)
         sem_wait(&writer_sem);
  
     // Unlock the semaphore
     sem_post(&reader_sem);
  
     printf("\n%d reader is inside",
-           readercount);
+           reader_);
  
     this_thread::sleep_for(chrono::seconds(5));
  
     // Lock the semaphore
     sem_wait(&reader_sem);
-    readercount--;
+    reader_--;
  
-    if (readercount == 0) {
+    if (reader_ == 0) {
         sem_post(&writer_sem);
     }
  
@@ -76,6 +76,35 @@ void* Server::Handler::reader(void* param)
     sem_post(&reader_sem);
  
     printf("\n%d Reader is leaving",
-           readercount + 1);
+           reader_ + 1);
     pthread_exit(NULL);
+}
+
+
+int Server::Handler::provide_write_thread(int new_write_socket)
+{
+
+    writer_threads[writer_count] = thread(&Server::Handler::writer,this, &new_write_socket);
+    bool success = writer_threads[writer_count].joinable();
+    /*If succeeded to create a new thread
+     for new socket increment writers count & return success code
+      else return failure code */
+    if (success)
+    {
+        ++writer_count;
+        return EXIT_SUCCESS;
+    } 
+    return EXIT_FAILURE;
+}
+
+int Server::Handler::provide_read_thread(int new_read_socket)
+{
+    reader_threads[reader_count] = thread (&Server::Handler::reader,this, &new_read_socket);
+    bool success = reader_threads[reader_count].joinable();
+    if (success)
+    {
+        ++reader_count;
+        return EXIT_SUCCESS;
+    }
+    return EXIT_FAILURE;
 }

@@ -24,17 +24,17 @@ namespace Server
     class ServerModel
     {
         public:
-            ServerModel              ();
-            bool set_server_port     (uint16_t port = DEFAULT_PORT);
-            bool set_protocol_family (uint16_t family = AF_INET);
-            bool set_listen_ip       (in_addr_t ip = INADDR_ANY);
-            int bind_client_socket   (int sockfd);
-            int listen_to_socket     (int sockfd, 
-                                        uint32_t pending_connection_quantity = 1);
-            int accept_connection_from_socket (int sockfd);
-            void dump_server_state (void) const noexcept;
+            ServerModel                             ();
+            bool set_server_port                    (uint16_t port = DEFAULT_PORT);
+            bool set_protocol_family                (uint16_t family = AF_INET);
+            bool set_listen_ip                      (in_addr_t ip = INADDR_ANY);
+            int bind_client_socket                  (int sockfd);
+            int listen_to_socket                    (int sockfd, uint32_t pending_connection_quantity = 1);
+            int accept_connection_from_socket       (int sockfd);
+            void dump_server_state                  (void) const noexcept;
+            struct sockaddr_in* get_server_addr     () const;
+            void distribute_incoming_connections    (int new_socket, uint8_t response);
 
-            struct sockaddr_in* get_server_addr() const;
             ~ServerModel             ();
 
         

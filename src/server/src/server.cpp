@@ -142,11 +142,24 @@ void Server::ServerModel::dump_server_state(void) const noexcept
     return;
 }
 
-
+/**
+ * @brief Returns set upped server address struct
+ * 
+ * @return struct sockaddr_in* 
+ */
 struct sockaddr_in* Server::ServerModel::get_server_addr() const
 {
     return this->server_addr;
 }
+
+
+void Server::ServerModel::distribute_incoming_connections(int new_socket, 
+                                                                uint8_t response)
+{
+    
+
+}
+
 
 /**
  * @brief Destroy the Server:: Server Model:: Server Model object
