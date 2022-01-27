@@ -16,14 +16,10 @@ namespace Server
             void* writer (void* param);
             void* reader (void* param);
 
-            int join_write_thread_at    (const uint32_t at_);
-            int join_read_thread_at     (const uint32_t at_);
-        
+          
             int provide_write_thread (int new_write_socket);
             int provide_read_thread  (int new_read_socket);
 
-            int join_all_writer_threads (void);
-            int join_all_reader_thread (void);
         private:
             sem_t writer_sem;
             sem_t reader_sem;
