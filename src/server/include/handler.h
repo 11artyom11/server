@@ -3,6 +3,8 @@
 
 #include <semaphore.h>
 #include <thread>
+#include <unordered_map>
+#include <vector>
 
 
 namespace Server
@@ -13,10 +15,9 @@ namespace Server
             Handler (int RWBacklog = 1);
             ~Handler () = default;
 
-            void* writer (void* param);
-            void* reader (void* param);
+            void* writer (int sfd , uint32_t tid);
+            void* reader (int sfd , uint32_t tid);
 
-          
             int provide_write_thread (int new_write_socket);
             int provide_read_thread  (int new_read_socket);
 
@@ -28,9 +29,9 @@ namespace Server
             inline static int writer_ = 0;
 
 
-            std::thread writer_threads[MAX_WRITE_THREAD_COUNT];
-            std::thread reader_threads[MAX_READ_THREAD_COUNT];
-            inline static uint32_t reader_count = 0;
+            std::unordered_map <int, std::vector<std::thread*>> writer_threads;
+            std::unordered_map <int,std::vector<std::thread*>> reader_threads;
+           
 
     };
 };

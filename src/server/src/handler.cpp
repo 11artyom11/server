@@ -23,22 +23,26 @@ Server::Handler::Handler(int RWBacklog)
  * @param param 
  * @return void* 
  */
-void* Server::Handler::writer(void* param)
+void* Server::Handler::writer(int sfd, uint32_t tid)
 {
  
+    
           // Lock the semaphore
     sem_wait(&writer_sem);
     writer_++;
-    /*CRITICAL SECTION*/   
+
+    /*CRITICAL SECTION*/ 
+
     Debug().info(writer_, "writer is inside\n");
- 
     this_thread::sleep_for(chrono::seconds(5));
- 
-    Debug().info(writer_, "Writers is leaving");
+    Debug().info("Writer", writer_, " is leaving");
     writer_--;
     Debug().info("Writers left : " , writer_);
-    writer_threads[writer_].detach();
-    sem_post(&writer_sem);
+    writer_threads[sfd].at(tid)->detach();
+
+    /*CRITICAL SECTION*/
+
+    sem_post(&writer_sem);    
     pthread_exit(NULL);
 }
 
@@ -50,25 +54,27 @@ void* Server::Handler::writer(void* param)
  * @param param 
  * @return void* 
  */
-void* Server::Handler::reader(void* param)
+void* Server::Handler::reader(int sfd , uint32_t tid)
 {
-        // Lock the semaphore
+    Debug().warning("HERE 1.5");
+    // Lock the semaphore
     sem_wait(&reader_sem);
     reader_++;
  
 
     /*CRITICAL SECTION*/
-
    
     Debug().info(reader_, "reader is inside\n");
     
     this_thread::sleep_for(chrono::seconds(5));
  
-    Debug().info(reader_--, "Reader is leaving");
+    Debug().info("Reader", reader_--, " is leaving");
     Debug().info("Readers left : " , reader_);
 
     sem_post(&reader_sem);
-    reader_threads[reader_].detach();
+    /*CRITICAL SECTION*/
+
+    reader_threads[sfd].at(tid)->detach();
     pthread_exit(NULL);
 }
 
@@ -80,10 +86,18 @@ void* Server::Handler::reader(void* param)
  */
 int Server::Handler::provide_write_thread(int new_write_socket)
 {
+    /*Index of newly created thread to be passing to writer function*/
+    int tid = writer_threads[new_write_socket].size();
     
-    writer_threads[writer_] = thread(&Server::Handler::writer,this, &new_write_socket);
-
-    bool success = writer_threads[writer_].joinable();
+    /*Create new thread and push it into end of vector of threads of 
+        corresponding sfd*/
+     std::thread* new_thread = new std::thread(&Server::Handler::writer, this, new_write_socket, tid);
+    writer_threads[new_write_socket].push_back(new_thread);
+   Debug().warning("Before");
+    bool success = writer_threads[new_write_socket].at(tid)->joinable();
+   Debug().warning("After");
+   
+    
     /*If succeeded to create a new thread
      for new socket increment writers count & return success code
       else return failure code */
@@ -103,8 +117,14 @@ int Server::Handler::provide_write_thread(int new_write_socket)
  */
 int Server::Handler::provide_read_thread(int new_read_socket)
 {
-        reader_threads[reader_] = thread (&Server::Handler::reader,this, &new_read_socket);
-    bool success = reader_threads[reader_].joinable();
+    /*Index of newly created thread to be passing to reader function*/
+    int tid = reader_threads[new_read_socket].size();
+    
+    /*Create new thread and push it into end of vector of threads of 
+        corresponding sfd*/
+    std::thread* new_thread = new std::thread(&Server::Handler::reader, this, new_read_socket, tid);
+    reader_threads[new_read_socket].push_back(new_thread);
+    bool success = reader_threads[new_read_socket].at(tid)->joinable();
     if (success)
     {
         return EXIT_SUCCESS;

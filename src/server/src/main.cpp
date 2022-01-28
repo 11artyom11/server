@@ -49,7 +49,7 @@ int main() {
         std::string tmp_response(buffer);
         long ld_response;
 
-        try
+        // try
         {
           ld_response = std::stol(tmp_response.data(),nullptr, 10);         
 
@@ -62,11 +62,11 @@ int main() {
           bytesRead = read (connection, buffer, 100);
 
         }
-        catch(const std::exception& e)
-        {
-          Debug().warning(e.what());
-            continue;
-        }
+        // catch(const std::exception& e)
+        // {
+        //   Debug().fatal(e.what());
+        //     continue;
+        // }
         
     }
   }

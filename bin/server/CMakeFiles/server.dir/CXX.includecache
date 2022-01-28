@@ -23,6 +23,10 @@ semaphore.h
 -
 thread
 -
+unordered_map
+-
+vector
+-
 
 /home/aram/workspace/clientserver/src/server/include/server.h
 ../../../lib/include/helpers/debug_helper/debug_helper.h
