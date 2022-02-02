@@ -2,6 +2,46 @@
 
 using namespace Server;
 
+void handle_connection (int connection,  ServerModel servModel)
+{
+  if (connection < 0) {
+        Debug().fatal("Failed to grab connection. errno: ", errno, ", terminating...");
+        exit(EXIT_FAILURE);
+      }
+
+      // Read from the connection
+      char buffer[100];
+      auto bytesRead = read(connection, buffer, 100);
+      while (bytesRead)
+      {
+        Debug().info("Recieved message : ", buffer);
+
+        /*Convert retrieved char array to long*/
+        std::string tmp_response(buffer);
+        long ld_response;
+
+        // try
+        {
+          ld_response = std::stol(tmp_response.data(),nullptr, 10);         
+
+          servModel.distribute_incoming_connections(connection,ld_response);
+
+
+          // Send a message to the connection
+          std::string response = "Good talking to you\n";
+          send(connection, response.c_str(), response.size(), 0);
+          bytesRead = read (connection, buffer, 100);
+
+        }
+        
+        
+    }
+  
+  close(connection);
+  // Close the connections
+
+}
+
 int main() {
 
   // Create a socket (IPv4, TCP)
@@ -33,45 +73,7 @@ int main() {
       // Grab a connection from the queue
       auto addrlen = sizeof(*sockaddr);
       connection = servModel.accept_connection_from_socket(sockfd);
-      if (connection < 0) {
-        Debug().fatal("Failed to grab connection. errno: ", errno, ", terminating...");
-        exit(EXIT_FAILURE);
-      }
-
-      // Read from the connection
-      char buffer[100];
-      auto bytesRead = read(connection, buffer, 100);
-      while (bytesRead)
-      {
-        Debug().info("Recieved message : ", buffer);
-
-        /*Convert retrieved char array to long*/
-        std::string tmp_response(buffer);
-        long ld_response;
-
-        // try
-        {
-          ld_response = std::stol(tmp_response.data(),nullptr, 10);         
-
-          servModel.distribute_incoming_connections(connection,ld_response);
-
-
-          // Send a message to the connection
-          std::string response = "Good talking to you\n";
-          send(connection, response.c_str(), response.size(), 0);
-          bytesRead = read (connection, buffer, 100);
-
-        }
-        // catch(const std::exception& e)
-        // {
-        //   Debug().fatal(e.what());
-        //     continue;
-        // }
-        
-    }
+      std::thread *new_thread = new std::thread(handle_connection, connection, servModel);
   }
-  close(connection);
-  // Close the connections
-
   close(sockfd);
 }

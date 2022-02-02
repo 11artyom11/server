@@ -11,6 +11,8 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <unistd.h>
+
+#include <mutex>
 #include <arpa/inet.h>
 #include <sys/socket.h>
 #include <netdb.h>
@@ -42,6 +44,7 @@ namespace Server
             static int          connected_users_count;
             static int          pending_connections_count;
             std::vector <int>   sockfds;
+            
 
         private:
         /* Structure describing an Internet socket address.  */

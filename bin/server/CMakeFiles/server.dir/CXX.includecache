@@ -47,6 +47,8 @@ stdio.h
 -
 unistd.h
 -
+mutex
+-
 arpa/inet.h
 -
 sys/socket.h
@@ -55,12 +57,6 @@ netdb.h
 -
 netinet/in.h
 -
-
-/home/aram/workspace/clientserver/src/server/src/handler.cpp
-./../../../lib/include/helpers/debug_helper/debug_helper.h
-/home/aram/workspace/clientserver/lib/include/helpers/debug_helper/debug_helper.h
-../include/handler.h
-/home/aram/workspace/clientserver/src/server/include/handler.h
 
 /home/aram/workspace/clientserver/src/server/src/main.cpp
 ../include/server.h
