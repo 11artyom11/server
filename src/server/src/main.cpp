@@ -4,54 +4,66 @@ using namespace Server;
 
 void handle_connection (int connection,  ServerModel servModel)
 {
-  if (connection < 0) {
+      if (connection < 0) {
         Debug().fatal("Failed to grab connection. errno: ", errno, ", terminating...");
         exit(EXIT_FAILURE);
+      } else 
+      {
+        std::string success_message = "Connection established";
+        send(connection, success_message.c_str(), success_message.size(), 0);
+
       }
 
       // Read from the connection
       char buffer[100];
       auto bytesRead = read(connection, buffer, 100);
+
       while (bytesRead)
       {
+        if (!(buffer[0] >= 48 && buffer[0] <= 57))
+        {
+          bytesRead = read (connection, buffer, 100);   
+          continue;       
+        }
         Debug().info("Recieved message : ", buffer);
 
         /*Convert retrieved char array to long*/
         std::string tmp_response(buffer);
-        long ld_response;
-
-        // try
-        {
-          ld_response = std::stol(tmp_response.data(),nullptr, 10);         
-
-          servModel.distribute_incoming_connections(connection,ld_response);
-
-
-          // Send a message to the connection
-          std::string response = "Good talking to you\n";
-          send(connection, response.c_str(), response.size(), 0);
-          bytesRead = read (connection, buffer, 100);
-
-        }
+        long ld_response;            
+        ld_response = std::stol(tmp_response.data(),nullptr, 10);         
+        servModel.distribute_incoming_connections(connection,ld_response);
         
-        
-    }
-  
+        // Send a message to the connection
+        std::string response = "Message recieved\n";
+        send(connection, response.c_str(), response.size(), 0);
+        bytesRead = read (connection, buffer, 100);
+
+        }              
+    
   close(connection);
   // Close the connections
 
 }
 
-int main() {
+int main(int argc, char* argv[]) {
 
   // Create a socket (IPv4, TCP)
+
+  if (argc != 2)
+  {
+    Debug().fatal("1 parameter expected (port) 2 were given: terminating....");
+    return 0;
+  }
+
+  uint32_t port = atoi(argv[1]);
+
   int sockfd = socket(AF_INET, SOCK_STREAM, 0);
   if (sockfd == -1) {
     Debug().fatal("Failed to create socket, terminating....");
     exit(EXIT_FAILURE);
   }
 
-    ServerModel servModel;
+    ServerModel servModel(port);
     sockaddr_in *sockaddr = servModel.get_server_addr();
 
     servModel.dump_server_state();

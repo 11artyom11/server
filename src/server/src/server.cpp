@@ -17,8 +17,8 @@ bool Server::is_client_connection_close(const char* msg)
  *  default constructor
  * 
  */
-Server::ServerModel::ServerModel() :
-    listen_port {DEFAULT_PORT},
+Server::ServerModel::ServerModel(uint32_t port) :
+    listen_port {port},
         protocol_family {AF_INET},
             listen_ip {INADDR_ANY},
                 m_handler {3}

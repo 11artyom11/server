@@ -26,7 +26,7 @@ namespace Server
     class ServerModel
     {
         public:
-            ServerModel                             ();
+            ServerModel                             (uint32_t port = DEFAULT_PORT);
             bool set_server_port                    (uint16_t port = DEFAULT_PORT);
             bool set_protocol_family                (uint16_t family = AF_INET);
             bool set_listen_ip                      (in_addr_t ip = INADDR_ANY);
