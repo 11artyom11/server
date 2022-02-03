@@ -1,8 +1,9 @@
 #include "../include/server.h"
 
+
 using namespace Server;
 
-void handle_connection (int connection,  ServerModel servModel)
+void handle_connection (int connection,  ServerModel* servModel)
 {
       if (connection < 0) {
         Debug().fatal("Failed to grab connection. errno: ", errno, ", terminating...");
@@ -10,6 +11,7 @@ void handle_connection (int connection,  ServerModel servModel)
       } else 
       {
         std::string success_message = "Connection established";
+        Debug().info(success_message);
         send(connection, success_message.c_str(), success_message.size(), 0);
 
       }
@@ -31,7 +33,11 @@ void handle_connection (int connection,  ServerModel servModel)
         std::string tmp_response(buffer);
         long ld_response;            
         ld_response = std::stol(tmp_response.data(),nullptr, 10);         
-        servModel.distribute_incoming_connections(connection,ld_response);
+        if (ld_response == -1)
+        {
+          return;
+        }
+        servModel->distribute_incoming_connections(connection,ld_response);
         
         // Send a message to the connection
         std::string response = "Message recieved\n";
@@ -75,7 +81,7 @@ int main(int argc, char* argv[]) {
   }
 
   // Start listening. Hold at most 10 connections in the queue
-  if (listen(sockfd, 10) < 0) {
+  if (listen(sockfd, 1) < 0) {
     Debug().fatal("Failed to listen on socket. errno: ", errno , ", terminating...");
     exit(EXIT_FAILURE);
   }
@@ -85,7 +91,8 @@ int main(int argc, char* argv[]) {
       // Grab a connection from the queue
       auto addrlen = sizeof(*sockaddr);
       connection = servModel.accept_connection_from_socket(sockfd);
-      std::thread *new_thread = new std::thread(handle_connection, connection, servModel);
+      
+      std::thread *new_thread = new std::thread(handle_connection, connection, &servModel);
   }
   close(sockfd);
 }

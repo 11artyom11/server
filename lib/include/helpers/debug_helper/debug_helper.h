@@ -34,12 +34,10 @@ class Debug
         template <typename ...mesTL>
          void fatal (mesTL... messages);
 
-        std::string from() const noexcept;
         std::string get_current_time (void) const noexcept;
 
         int set_output_stream ( std::ostream* oS_ptr);
     private:
-        MACHINE_TYPE machine;
         std::ostream* outp_stream;
 
 
@@ -48,7 +46,7 @@ class Debug
 template <typename ...mesTL>
  void Debug::info (mesTL... messages)
 {       
-     *outp_stream <<get_current_time() << " [ INFO ] " << from();
+     *outp_stream <<get_current_time() << " [ INFO ] ";
     ((*outp_stream << messages << ' '), ...);
     *outp_stream << std::endl;
 }
@@ -56,7 +54,7 @@ template <typename ...mesTL>
 template <typename ...mesTL>
  void Debug::warning (mesTL... messages)
 {
-    *outp_stream << get_current_time() << " [ WARINING ] " << from();
+    *outp_stream << get_current_time() << " [ WARINING ] ";
     ((*outp_stream << messages << ' '), ...);
     *outp_stream << std::endl;
 
@@ -65,7 +63,7 @@ template <typename ...mesTL>
 template <typename ...mesTL>
  void Debug::fatal (mesTL... messages)
 {
-    *outp_stream << get_current_time() <<  " [ FATAL ] " << from();
+    *outp_stream << get_current_time() <<  " [ FATAL ] ";
     ((*outp_stream << messages << ' '), ...);
     *outp_stream << std::endl;
 

@@ -7,27 +7,6 @@ Debug::Debug()
 
 
 /**
- * @brief Returns whom current instance debugging belongs to
- * 
- * @return corresponding name of debuggable machine
- */
-std::string Debug::from () const noexcept
-{
-    switch (machine)
-    {
-        case MACHINE_TYPE::SERVER:
-            return "| [ SERVER ] ";
-            break;
-        case MACHINE_TYPE::CLIENT:
-            return "| [ CLIENT ] ";
-            break;
-        default:
-            return "| [ SERVER ] ";
-            break;
-    }
-}
-
-/**
  * @brief gets current time ov working machine in unix style
  * used asctime_r instead of asctime in order to support multi-
  * thread debugging

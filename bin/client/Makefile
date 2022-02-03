@@ -198,6 +198,114 @@ src/client.cpp.s:
 	cd /home/aram/workspace/clientserver && $(MAKE) -f bin/client/CMakeFiles/client.dir/build.make bin/client/CMakeFiles/client.dir/src/client.cpp.s
 .PHONY : src/client.cpp.s
 
+src/communication_unit.o: src/communication_unit.cpp.o
+
+.PHONY : src/communication_unit.o
+
+# target to build an object file
+src/communication_unit.cpp.o:
+	cd /home/aram/workspace/clientserver && $(MAKE) -f bin/client/CMakeFiles/client.dir/build.make bin/client/CMakeFiles/client.dir/src/communication_unit.cpp.o
+.PHONY : src/communication_unit.cpp.o
+
+src/communication_unit.i: src/communication_unit.cpp.i
+
+.PHONY : src/communication_unit.i
+
+# target to preprocess a source file
+src/communication_unit.cpp.i:
+	cd /home/aram/workspace/clientserver && $(MAKE) -f bin/client/CMakeFiles/client.dir/build.make bin/client/CMakeFiles/client.dir/src/communication_unit.cpp.i
+.PHONY : src/communication_unit.cpp.i
+
+src/communication_unit.s: src/communication_unit.cpp.s
+
+.PHONY : src/communication_unit.s
+
+# target to generate assembly for a file
+src/communication_unit.cpp.s:
+	cd /home/aram/workspace/clientserver && $(MAKE) -f bin/client/CMakeFiles/client.dir/build.make bin/client/CMakeFiles/client.dir/src/communication_unit.cpp.s
+.PHONY : src/communication_unit.cpp.s
+
+src/connection_handler.o: src/connection_handler.cpp.o
+
+.PHONY : src/connection_handler.o
+
+# target to build an object file
+src/connection_handler.cpp.o:
+	cd /home/aram/workspace/clientserver && $(MAKE) -f bin/client/CMakeFiles/client.dir/build.make bin/client/CMakeFiles/client.dir/src/connection_handler.cpp.o
+.PHONY : src/connection_handler.cpp.o
+
+src/connection_handler.i: src/connection_handler.cpp.i
+
+.PHONY : src/connection_handler.i
+
+# target to preprocess a source file
+src/connection_handler.cpp.i:
+	cd /home/aram/workspace/clientserver && $(MAKE) -f bin/client/CMakeFiles/client.dir/build.make bin/client/CMakeFiles/client.dir/src/connection_handler.cpp.i
+.PHONY : src/connection_handler.cpp.i
+
+src/connection_handler.s: src/connection_handler.cpp.s
+
+.PHONY : src/connection_handler.s
+
+# target to generate assembly for a file
+src/connection_handler.cpp.s:
+	cd /home/aram/workspace/clientserver && $(MAKE) -f bin/client/CMakeFiles/client.dir/build.make bin/client/CMakeFiles/client.dir/src/connection_handler.cpp.s
+.PHONY : src/connection_handler.cpp.s
+
+src/io_unit.o: src/io_unit.cpp.o
+
+.PHONY : src/io_unit.o
+
+# target to build an object file
+src/io_unit.cpp.o:
+	cd /home/aram/workspace/clientserver && $(MAKE) -f bin/client/CMakeFiles/client.dir/build.make bin/client/CMakeFiles/client.dir/src/io_unit.cpp.o
+.PHONY : src/io_unit.cpp.o
+
+src/io_unit.i: src/io_unit.cpp.i
+
+.PHONY : src/io_unit.i
+
+# target to preprocess a source file
+src/io_unit.cpp.i:
+	cd /home/aram/workspace/clientserver && $(MAKE) -f bin/client/CMakeFiles/client.dir/build.make bin/client/CMakeFiles/client.dir/src/io_unit.cpp.i
+.PHONY : src/io_unit.cpp.i
+
+src/io_unit.s: src/io_unit.cpp.s
+
+.PHONY : src/io_unit.s
+
+# target to generate assembly for a file
+src/io_unit.cpp.s:
+	cd /home/aram/workspace/clientserver && $(MAKE) -f bin/client/CMakeFiles/client.dir/build.make bin/client/CMakeFiles/client.dir/src/io_unit.cpp.s
+.PHONY : src/io_unit.cpp.s
+
+src/main.o: src/main.cpp.o
+
+.PHONY : src/main.o
+
+# target to build an object file
+src/main.cpp.o:
+	cd /home/aram/workspace/clientserver && $(MAKE) -f bin/client/CMakeFiles/client.dir/build.make bin/client/CMakeFiles/client.dir/src/main.cpp.o
+.PHONY : src/main.cpp.o
+
+src/main.i: src/main.cpp.i
+
+.PHONY : src/main.i
+
+# target to preprocess a source file
+src/main.cpp.i:
+	cd /home/aram/workspace/clientserver && $(MAKE) -f bin/client/CMakeFiles/client.dir/build.make bin/client/CMakeFiles/client.dir/src/main.cpp.i
+.PHONY : src/main.cpp.i
+
+src/main.s: src/main.cpp.s
+
+.PHONY : src/main.s
+
+# target to generate assembly for a file
+src/main.cpp.s:
+	cd /home/aram/workspace/clientserver && $(MAKE) -f bin/client/CMakeFiles/client.dir/build.make bin/client/CMakeFiles/client.dir/src/main.cpp.s
+.PHONY : src/main.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -214,6 +322,18 @@ help:
 	@echo "... src/client.o"
 	@echo "... src/client.i"
 	@echo "... src/client.s"
+	@echo "... src/communication_unit.o"
+	@echo "... src/communication_unit.i"
+	@echo "... src/communication_unit.s"
+	@echo "... src/connection_handler.o"
+	@echo "... src/connection_handler.i"
+	@echo "... src/connection_handler.s"
+	@echo "... src/io_unit.o"
+	@echo "... src/io_unit.i"
+	@echo "... src/io_unit.s"
+	@echo "... src/main.o"
+	@echo "... src/main.i"
+	@echo "... src/main.s"
 .PHONY : help
 
 

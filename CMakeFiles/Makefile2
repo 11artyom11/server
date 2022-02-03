@@ -134,7 +134,7 @@ lib/src/helpers/clean: lib/src/helpers/CMakeFiles/libdebug_helper.dir/clean
 bin/server/CMakeFiles/server.dir/all: lib/src/helpers/CMakeFiles/libdebug_helper.dir/all
 	$(MAKE) -f bin/server/CMakeFiles/server.dir/build.make bin/server/CMakeFiles/server.dir/depend
 	$(MAKE) -f bin/server/CMakeFiles/server.dir/build.make bin/server/CMakeFiles/server.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/aram/workspace/clientserver/CMakeFiles --progress-num=5,6,7,8 "Built target server"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/aram/workspace/clientserver/CMakeFiles --progress-num=9,10,11,12 "Built target server"
 .PHONY : bin/server/CMakeFiles/server.dir/all
 
 # Build rule for subdir invocation for target.
@@ -158,15 +158,15 @@ bin/server/CMakeFiles/server.dir/clean:
 # Target rules for target bin/client/CMakeFiles/client.dir
 
 # All Build rule for target.
-bin/client/CMakeFiles/client.dir/all:
+bin/client/CMakeFiles/client.dir/all: lib/src/helpers/CMakeFiles/libdebug_helper.dir/all
 	$(MAKE) -f bin/client/CMakeFiles/client.dir/build.make bin/client/CMakeFiles/client.dir/depend
 	$(MAKE) -f bin/client/CMakeFiles/client.dir/build.make bin/client/CMakeFiles/client.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/aram/workspace/clientserver/CMakeFiles --progress-num=1,2 "Built target client"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/aram/workspace/clientserver/CMakeFiles --progress-num=1,2,3,4,5,6 "Built target client"
 .PHONY : bin/client/CMakeFiles/client.dir/all
 
 # Build rule for subdir invocation for target.
 bin/client/CMakeFiles/client.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/aram/workspace/clientserver/CMakeFiles 2
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/aram/workspace/clientserver/CMakeFiles 8
 	$(MAKE) -f CMakeFiles/Makefile2 bin/client/CMakeFiles/client.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/aram/workspace/clientserver/CMakeFiles 0
 .PHONY : bin/client/CMakeFiles/client.dir/rule
@@ -188,7 +188,7 @@ bin/client/CMakeFiles/client.dir/clean:
 lib/src/helpers/CMakeFiles/libdebug_helper.dir/all:
 	$(MAKE) -f lib/src/helpers/CMakeFiles/libdebug_helper.dir/build.make lib/src/helpers/CMakeFiles/libdebug_helper.dir/depend
 	$(MAKE) -f lib/src/helpers/CMakeFiles/libdebug_helper.dir/build.make lib/src/helpers/CMakeFiles/libdebug_helper.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/aram/workspace/clientserver/CMakeFiles --progress-num=3,4 "Built target libdebug_helper"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/aram/workspace/clientserver/CMakeFiles --progress-num=7,8 "Built target libdebug_helper"
 .PHONY : lib/src/helpers/CMakeFiles/libdebug_helper.dir/all
 
 # Build rule for subdir invocation for target.
