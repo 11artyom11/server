@@ -22,12 +22,13 @@ void handle_connection (int connection,  ServerModel* servModel)
 
       while (bytesRead)
       {
+        Debug().info("Recieved message : ", buffer);
+
         if (!(buffer[0] >= 48 && buffer[0] <= 57))
         {
           bytesRead = read (connection, buffer, 100);   
           continue;       
         }
-        Debug().info("Recieved message : ", buffer);
 
         /*Convert retrieved char array to long*/
         std::string tmp_response(buffer);

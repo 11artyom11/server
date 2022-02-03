@@ -1,6 +1,7 @@
 #ifndef __CLIENT_H__
 #define __CLIENT_H__
 #include "connection_handler.h"
+#include "communication_unit.h"
 #include "../../../lib/include/helpers/constants.h"
 #include "../../../lib/include/helpers/debug_helper/debug_helper.h"
 
@@ -12,6 +13,7 @@ namespace Client{
             ~ClientModel();
         private:    
             Net::BasicConnectionHandler* con_handler;
+            Net::BasicCommunicationModel* comm_unit;
 
     };
 };

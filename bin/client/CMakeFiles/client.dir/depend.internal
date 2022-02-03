@@ -5,10 +5,16 @@ bin/client/CMakeFiles/client.dir/src/client.cpp.o
  /home/aram/workspace/clientserver/lib/include/helpers/constants.h
  /home/aram/workspace/clientserver/lib/include/helpers/debug_helper/debug_helper.h
  /home/aram/workspace/clientserver/src/client/include/client.h
+ /home/aram/workspace/clientserver/src/client/include/communication_unit.h
  /home/aram/workspace/clientserver/src/client/include/connection_handler.h
+ /home/aram/workspace/clientserver/src/client/include/io_unit.h
  /home/aram/workspace/clientserver/src/client/src/client.cpp
 bin/client/CMakeFiles/client.dir/src/communication_unit.cpp.o
+ /home/aram/workspace/clientserver/lib/include/helpers/constants.h
+ /home/aram/workspace/clientserver/lib/include/helpers/debug_helper/debug_helper.h
  /home/aram/workspace/clientserver/src/client/include/communication_unit.h
+ /home/aram/workspace/clientserver/src/client/include/connection_handler.h
+ /home/aram/workspace/clientserver/src/client/include/io_unit.h
  /home/aram/workspace/clientserver/src/client/src/communication_unit.cpp
 bin/client/CMakeFiles/client.dir/src/connection_handler.cpp.o
  /home/aram/workspace/clientserver/lib/include/helpers/constants.h
@@ -16,11 +22,15 @@ bin/client/CMakeFiles/client.dir/src/connection_handler.cpp.o
  /home/aram/workspace/clientserver/src/client/include/connection_handler.h
  /home/aram/workspace/clientserver/src/client/src/connection_handler.cpp
 bin/client/CMakeFiles/client.dir/src/io_unit.cpp.o
+ /home/aram/workspace/clientserver/lib/include/helpers/constants.h
+ /home/aram/workspace/clientserver/lib/include/helpers/debug_helper/debug_helper.h
  /home/aram/workspace/clientserver/src/client/include/io_unit.h
  /home/aram/workspace/clientserver/src/client/src/io_unit.cpp
 bin/client/CMakeFiles/client.dir/src/main.cpp.o
  /home/aram/workspace/clientserver/lib/include/helpers/constants.h
  /home/aram/workspace/clientserver/lib/include/helpers/debug_helper/debug_helper.h
  /home/aram/workspace/clientserver/src/client/include/client.h
+ /home/aram/workspace/clientserver/src/client/include/communication_unit.h
  /home/aram/workspace/clientserver/src/client/include/connection_handler.h
+ /home/aram/workspace/clientserver/src/client/include/io_unit.h
  /home/aram/workspace/clientserver/src/client/src/main.cpp

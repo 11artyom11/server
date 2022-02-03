@@ -14,6 +14,10 @@ BasicConnectionHandler::BasicConnectionHandler()
     this->server_addr = new struct sockaddr_in;
 }
 
+/**
+ * @brief Destroy the Basic Connection Handler:: Basic Connection Handler object
+ * 
+ */
 BasicConnectionHandler::~BasicConnectionHandler()
 {
     Debug().info("Destructed BasicConnectionHandler object at ", this);
@@ -102,6 +106,12 @@ bool BasicConnectionHandler::set_server_addr (struct sockaddr_in* new_serv_addr)
     return (bool)this->server_addr;
 }
 
+/**
+ * @brief Connects client model to certain host 
+ * 
+ * @param basic_CH : Basic implementation of client model
+ * @return true on connect success false on failure
+ */
 bool Net::connect_to_host (const BasicConnectionHandler& basic_CH)   
 {
     Debug().info("Called BasicConnectionHandler::connect_to_host(...) function");

@@ -13,5 +13,6 @@ int main(int argc, char* argv[])
   uint32_t port = atoi(argv[1]);
 
     ClientModel c_m(port);
+    
     return 0;
 }
