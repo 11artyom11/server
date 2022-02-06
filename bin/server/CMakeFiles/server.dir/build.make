@@ -109,7 +109,7 @@ bin/server/server: bin/server/CMakeFiles/server.dir/src/main.cpp.o
 bin/server/server: bin/server/CMakeFiles/server.dir/src/server.cpp.o
 bin/server/server: bin/server/CMakeFiles/server.dir/src/handler.cpp.o
 bin/server/server: bin/server/CMakeFiles/server.dir/build.make
-bin/server/server: lib/src/helpers/liblibdebug_helper.so.1.0.1
+bin/server/server: lib/src/helpers/libdebug_helper.so.1.0.1
 bin/server/server: bin/server/CMakeFiles/server.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/aram/workspace/clientserver/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Linking CXX executable server"
 	cd /home/aram/workspace/clientserver/bin/server && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/server.dir/link.txt --verbose=$(VERBOSE)

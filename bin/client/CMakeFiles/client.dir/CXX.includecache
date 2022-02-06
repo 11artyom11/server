@@ -90,6 +90,18 @@ istream
 ../include/communication_unit.h
 /home/aram/workspace/clientserver/src/client/include/communication_unit.h
 
+/home/aram/workspace/clientserver/src/client/src/connection_handler.cpp
+../include/connection_handler.h
+/home/aram/workspace/clientserver/src/client/include/connection_handler.h
+../../../lib/include/helpers/constants.h
+/home/aram/workspace/clientserver/lib/include/helpers/constants.h
+../../../lib/include/helpers/debug_helper/debug_helper.h
+/home/aram/workspace/clientserver/lib/include/helpers/debug_helper/debug_helper.h
+
+/home/aram/workspace/clientserver/src/client/src/io_unit.cpp
+../include/io_unit.h
+/home/aram/workspace/clientserver/src/client/include/io_unit.h
+
 /home/aram/workspace/clientserver/src/client/src/main.cpp
 ../include/client.h
 /home/aram/workspace/clientserver/src/client/include/client.h

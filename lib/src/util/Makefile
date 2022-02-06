@@ -68,6 +68,18 @@ install/strip/fast: preinstall/fast
 	/usr/bin/cmake -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
 .PHONY : install/strip/fast
 
+# Special rule for the target install/local
+install/local: preinstall
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
+	/usr/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
+.PHONY : install/local
+
+# Special rule for the target install/local
+install/local/fast: preinstall/fast
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
+	/usr/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
+.PHONY : install/local/fast
+
 # Special rule for the target install
 install: preinstall
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Install the project..."
@@ -112,28 +124,16 @@ edit_cache/fast: edit_cache
 
 .PHONY : edit_cache/fast
 
-# Special rule for the target install/local
-install/local: preinstall
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
-	/usr/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
-.PHONY : install/local
-
-# Special rule for the target install/local
-install/local/fast: preinstall/fast
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
-	/usr/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
-.PHONY : install/local/fast
-
 # The main all target
 all: cmake_check_build_system
-	cd /home/aram/workspace/clientserver && $(CMAKE_COMMAND) -E cmake_progress_start /home/aram/workspace/clientserver/CMakeFiles /home/aram/workspace/clientserver/lib/src/helpers/CMakeFiles/progress.marks
-	cd /home/aram/workspace/clientserver && $(MAKE) -f CMakeFiles/Makefile2 lib/src/helpers/all
+	cd /home/aram/workspace/clientserver && $(CMAKE_COMMAND) -E cmake_progress_start /home/aram/workspace/clientserver/CMakeFiles /home/aram/workspace/clientserver/lib/src/util/CMakeFiles/progress.marks
+	cd /home/aram/workspace/clientserver && $(MAKE) -f CMakeFiles/Makefile2 lib/src/util/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/aram/workspace/clientserver/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
 clean:
-	cd /home/aram/workspace/clientserver && $(MAKE) -f CMakeFiles/Makefile2 lib/src/helpers/clean
+	cd /home/aram/workspace/clientserver && $(MAKE) -f CMakeFiles/Makefile2 lib/src/util/clean
 .PHONY : clean
 
 # The main clean target
@@ -143,12 +143,12 @@ clean/fast: clean
 
 # Prepare targets for installation.
 preinstall: all
-	cd /home/aram/workspace/clientserver && $(MAKE) -f CMakeFiles/Makefile2 lib/src/helpers/preinstall
+	cd /home/aram/workspace/clientserver && $(MAKE) -f CMakeFiles/Makefile2 lib/src/util/preinstall
 .PHONY : preinstall
 
 # Prepare targets for installation.
 preinstall/fast:
-	cd /home/aram/workspace/clientserver && $(MAKE) -f CMakeFiles/Makefile2 lib/src/helpers/preinstall
+	cd /home/aram/workspace/clientserver && $(MAKE) -f CMakeFiles/Makefile2 lib/src/util/preinstall
 .PHONY : preinstall/fast
 
 # clear depends
@@ -157,46 +157,46 @@ depend:
 .PHONY : depend
 
 # Convenience name for target.
-lib/src/helpers/CMakeFiles/debug_helper.dir/rule:
-	cd /home/aram/workspace/clientserver && $(MAKE) -f CMakeFiles/Makefile2 lib/src/helpers/CMakeFiles/debug_helper.dir/rule
-.PHONY : lib/src/helpers/CMakeFiles/debug_helper.dir/rule
+lib/src/util/CMakeFiles/crypto_unit.dir/rule:
+	cd /home/aram/workspace/clientserver && $(MAKE) -f CMakeFiles/Makefile2 lib/src/util/CMakeFiles/crypto_unit.dir/rule
+.PHONY : lib/src/util/CMakeFiles/crypto_unit.dir/rule
 
 # Convenience name for target.
-debug_helper: lib/src/helpers/CMakeFiles/debug_helper.dir/rule
+crypto_unit: lib/src/util/CMakeFiles/crypto_unit.dir/rule
 
-.PHONY : debug_helper
+.PHONY : crypto_unit
 
 # fast build rule for target.
-debug_helper/fast:
-	cd /home/aram/workspace/clientserver && $(MAKE) -f lib/src/helpers/CMakeFiles/debug_helper.dir/build.make lib/src/helpers/CMakeFiles/debug_helper.dir/build
-.PHONY : debug_helper/fast
+crypto_unit/fast:
+	cd /home/aram/workspace/clientserver && $(MAKE) -f lib/src/util/CMakeFiles/crypto_unit.dir/build.make lib/src/util/CMakeFiles/crypto_unit.dir/build
+.PHONY : crypto_unit/fast
 
-debug/debug_helper.o: debug/debug_helper.cpp.o
+cryptolib/crypto_unit.o: cryptolib/crypto_unit.cpp.o
 
-.PHONY : debug/debug_helper.o
+.PHONY : cryptolib/crypto_unit.o
 
 # target to build an object file
-debug/debug_helper.cpp.o:
-	cd /home/aram/workspace/clientserver && $(MAKE) -f lib/src/helpers/CMakeFiles/debug_helper.dir/build.make lib/src/helpers/CMakeFiles/debug_helper.dir/debug/debug_helper.cpp.o
-.PHONY : debug/debug_helper.cpp.o
+cryptolib/crypto_unit.cpp.o:
+	cd /home/aram/workspace/clientserver && $(MAKE) -f lib/src/util/CMakeFiles/crypto_unit.dir/build.make lib/src/util/CMakeFiles/crypto_unit.dir/cryptolib/crypto_unit.cpp.o
+.PHONY : cryptolib/crypto_unit.cpp.o
 
-debug/debug_helper.i: debug/debug_helper.cpp.i
+cryptolib/crypto_unit.i: cryptolib/crypto_unit.cpp.i
 
-.PHONY : debug/debug_helper.i
+.PHONY : cryptolib/crypto_unit.i
 
 # target to preprocess a source file
-debug/debug_helper.cpp.i:
-	cd /home/aram/workspace/clientserver && $(MAKE) -f lib/src/helpers/CMakeFiles/debug_helper.dir/build.make lib/src/helpers/CMakeFiles/debug_helper.dir/debug/debug_helper.cpp.i
-.PHONY : debug/debug_helper.cpp.i
+cryptolib/crypto_unit.cpp.i:
+	cd /home/aram/workspace/clientserver && $(MAKE) -f lib/src/util/CMakeFiles/crypto_unit.dir/build.make lib/src/util/CMakeFiles/crypto_unit.dir/cryptolib/crypto_unit.cpp.i
+.PHONY : cryptolib/crypto_unit.cpp.i
 
-debug/debug_helper.s: debug/debug_helper.cpp.s
+cryptolib/crypto_unit.s: cryptolib/crypto_unit.cpp.s
 
-.PHONY : debug/debug_helper.s
+.PHONY : cryptolib/crypto_unit.s
 
 # target to generate assembly for a file
-debug/debug_helper.cpp.s:
-	cd /home/aram/workspace/clientserver && $(MAKE) -f lib/src/helpers/CMakeFiles/debug_helper.dir/build.make lib/src/helpers/CMakeFiles/debug_helper.dir/debug/debug_helper.cpp.s
-.PHONY : debug/debug_helper.cpp.s
+cryptolib/crypto_unit.cpp.s:
+	cd /home/aram/workspace/clientserver && $(MAKE) -f lib/src/util/CMakeFiles/crypto_unit.dir/build.make lib/src/util/CMakeFiles/crypto_unit.dir/cryptolib/crypto_unit.cpp.s
+.PHONY : cryptolib/crypto_unit.cpp.s
 
 # Help Target
 help:
@@ -205,15 +205,15 @@ help:
 	@echo "... clean"
 	@echo "... depend"
 	@echo "... install/strip"
+	@echo "... install/local"
 	@echo "... install"
 	@echo "... list_install_components"
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
-	@echo "... install/local"
-	@echo "... debug_helper"
-	@echo "... debug/debug_helper.o"
-	@echo "... debug/debug_helper.i"
-	@echo "... debug/debug_helper.s"
+	@echo "... crypto_unit"
+	@echo "... cryptolib/crypto_unit.o"
+	@echo "... cryptolib/crypto_unit.i"
+	@echo "... cryptolib/crypto_unit.s"
 .PHONY : help
 
 

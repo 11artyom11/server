@@ -12,7 +12,9 @@ set(CMAKE_MAKEFILE_DEPENDS
   "CMakeFiles/3.16.3/CMakeSystem.cmake"
   "CMakeLists.txt"
   "lib/src/helpers/CMakeLists.txt"
-  "lib/src/helpers/libdebug_helper.pc.in"
+  "lib/src/helpers/debug_helper.pc.in"
+  "lib/src/util/CMakeLists.txt"
+  "lib/src/util/crypto_unit.pc.in"
   "src/client/CMakeLists.txt"
   "src/server/CMakeLists.txt"
   "/usr/share/cmake-3.16/Modules/CMakeCInformation.cmake"
@@ -49,11 +51,13 @@ set(CMAKE_MAKEFILE_PRODUCTS
   "bin/server/CMakeFiles/CMakeDirectoryInformation.cmake"
   "bin/client/CMakeFiles/CMakeDirectoryInformation.cmake"
   "lib/src/helpers/CMakeFiles/CMakeDirectoryInformation.cmake"
+  "lib/src/util/CMakeFiles/CMakeDirectoryInformation.cmake"
   )
 
 # Dependency information for all targets:
 set(CMAKE_DEPEND_INFO_FILES
   "bin/server/CMakeFiles/server.dir/DependInfo.cmake"
   "bin/client/CMakeFiles/client.dir/DependInfo.cmake"
-  "lib/src/helpers/CMakeFiles/libdebug_helper.dir/DependInfo.cmake"
+  "lib/src/helpers/CMakeFiles/debug_helper.dir/DependInfo.cmake"
+  "lib/src/util/CMakeFiles/crypto_unit.dir/DependInfo.cmake"
   )

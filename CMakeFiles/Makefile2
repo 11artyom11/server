@@ -56,6 +56,7 @@ CMAKE_BINARY_DIR = /home/aram/workspace/clientserver
 all: bin/server/all
 all: bin/client/all
 all: lib/src/helpers/all
+all: lib/src/util/all
 
 .PHONY : all
 
@@ -63,6 +64,7 @@ all: lib/src/helpers/all
 preinstall: bin/server/preinstall
 preinstall: bin/client/preinstall
 preinstall: lib/src/helpers/preinstall
+preinstall: lib/src/util/preinstall
 
 .PHONY : preinstall
 
@@ -70,6 +72,7 @@ preinstall: lib/src/helpers/preinstall
 clean: bin/server/clean
 clean: bin/client/clean
 clean: lib/src/helpers/clean
+clean: lib/src/util/clean
 
 .PHONY : clean
 
@@ -113,7 +116,7 @@ bin/server/clean: bin/server/CMakeFiles/server.dir/clean
 # Directory level rules for directory lib/src/helpers
 
 # Recursive "all" directory target.
-lib/src/helpers/all: lib/src/helpers/CMakeFiles/libdebug_helper.dir/all
+lib/src/helpers/all: lib/src/helpers/CMakeFiles/debug_helper.dir/all
 
 .PHONY : lib/src/helpers/all
 
@@ -123,18 +126,36 @@ lib/src/helpers/preinstall:
 .PHONY : lib/src/helpers/preinstall
 
 # Recursive "clean" directory target.
-lib/src/helpers/clean: lib/src/helpers/CMakeFiles/libdebug_helper.dir/clean
+lib/src/helpers/clean: lib/src/helpers/CMakeFiles/debug_helper.dir/clean
 
 .PHONY : lib/src/helpers/clean
+
+#=============================================================================
+# Directory level rules for directory lib/src/util
+
+# Recursive "all" directory target.
+lib/src/util/all: lib/src/util/CMakeFiles/crypto_unit.dir/all
+
+.PHONY : lib/src/util/all
+
+# Recursive "preinstall" directory target.
+lib/src/util/preinstall:
+
+.PHONY : lib/src/util/preinstall
+
+# Recursive "clean" directory target.
+lib/src/util/clean: lib/src/util/CMakeFiles/crypto_unit.dir/clean
+
+.PHONY : lib/src/util/clean
 
 #=============================================================================
 # Target rules for target bin/server/CMakeFiles/server.dir
 
 # All Build rule for target.
-bin/server/CMakeFiles/server.dir/all: lib/src/helpers/CMakeFiles/libdebug_helper.dir/all
+bin/server/CMakeFiles/server.dir/all: lib/src/helpers/CMakeFiles/debug_helper.dir/all
 	$(MAKE) -f bin/server/CMakeFiles/server.dir/build.make bin/server/CMakeFiles/server.dir/depend
 	$(MAKE) -f bin/server/CMakeFiles/server.dir/build.make bin/server/CMakeFiles/server.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/aram/workspace/clientserver/CMakeFiles --progress-num=9,10,11,12 "Built target server"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/aram/workspace/clientserver/CMakeFiles --progress-num=11,12,13,14 "Built target server"
 .PHONY : bin/server/CMakeFiles/server.dir/all
 
 # Build rule for subdir invocation for target.
@@ -158,7 +179,7 @@ bin/server/CMakeFiles/server.dir/clean:
 # Target rules for target bin/client/CMakeFiles/client.dir
 
 # All Build rule for target.
-bin/client/CMakeFiles/client.dir/all: lib/src/helpers/CMakeFiles/libdebug_helper.dir/all
+bin/client/CMakeFiles/client.dir/all: lib/src/helpers/CMakeFiles/debug_helper.dir/all
 	$(MAKE) -f bin/client/CMakeFiles/client.dir/build.make bin/client/CMakeFiles/client.dir/depend
 	$(MAKE) -f bin/client/CMakeFiles/client.dir/build.make bin/client/CMakeFiles/client.dir/build
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/aram/workspace/clientserver/CMakeFiles --progress-num=1,2,3,4,5,6 "Built target client"
@@ -182,31 +203,58 @@ bin/client/CMakeFiles/client.dir/clean:
 .PHONY : bin/client/CMakeFiles/client.dir/clean
 
 #=============================================================================
-# Target rules for target lib/src/helpers/CMakeFiles/libdebug_helper.dir
+# Target rules for target lib/src/helpers/CMakeFiles/debug_helper.dir
 
 # All Build rule for target.
-lib/src/helpers/CMakeFiles/libdebug_helper.dir/all:
-	$(MAKE) -f lib/src/helpers/CMakeFiles/libdebug_helper.dir/build.make lib/src/helpers/CMakeFiles/libdebug_helper.dir/depend
-	$(MAKE) -f lib/src/helpers/CMakeFiles/libdebug_helper.dir/build.make lib/src/helpers/CMakeFiles/libdebug_helper.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/aram/workspace/clientserver/CMakeFiles --progress-num=7,8 "Built target libdebug_helper"
-.PHONY : lib/src/helpers/CMakeFiles/libdebug_helper.dir/all
+lib/src/helpers/CMakeFiles/debug_helper.dir/all:
+	$(MAKE) -f lib/src/helpers/CMakeFiles/debug_helper.dir/build.make lib/src/helpers/CMakeFiles/debug_helper.dir/depend
+	$(MAKE) -f lib/src/helpers/CMakeFiles/debug_helper.dir/build.make lib/src/helpers/CMakeFiles/debug_helper.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/aram/workspace/clientserver/CMakeFiles --progress-num=9,10 "Built target debug_helper"
+.PHONY : lib/src/helpers/CMakeFiles/debug_helper.dir/all
 
 # Build rule for subdir invocation for target.
-lib/src/helpers/CMakeFiles/libdebug_helper.dir/rule: cmake_check_build_system
+lib/src/helpers/CMakeFiles/debug_helper.dir/rule: cmake_check_build_system
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/aram/workspace/clientserver/CMakeFiles 2
-	$(MAKE) -f CMakeFiles/Makefile2 lib/src/helpers/CMakeFiles/libdebug_helper.dir/all
+	$(MAKE) -f CMakeFiles/Makefile2 lib/src/helpers/CMakeFiles/debug_helper.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/aram/workspace/clientserver/CMakeFiles 0
-.PHONY : lib/src/helpers/CMakeFiles/libdebug_helper.dir/rule
+.PHONY : lib/src/helpers/CMakeFiles/debug_helper.dir/rule
 
 # Convenience name for target.
-libdebug_helper: lib/src/helpers/CMakeFiles/libdebug_helper.dir/rule
+debug_helper: lib/src/helpers/CMakeFiles/debug_helper.dir/rule
 
-.PHONY : libdebug_helper
+.PHONY : debug_helper
 
 # clean rule for target.
-lib/src/helpers/CMakeFiles/libdebug_helper.dir/clean:
-	$(MAKE) -f lib/src/helpers/CMakeFiles/libdebug_helper.dir/build.make lib/src/helpers/CMakeFiles/libdebug_helper.dir/clean
-.PHONY : lib/src/helpers/CMakeFiles/libdebug_helper.dir/clean
+lib/src/helpers/CMakeFiles/debug_helper.dir/clean:
+	$(MAKE) -f lib/src/helpers/CMakeFiles/debug_helper.dir/build.make lib/src/helpers/CMakeFiles/debug_helper.dir/clean
+.PHONY : lib/src/helpers/CMakeFiles/debug_helper.dir/clean
+
+#=============================================================================
+# Target rules for target lib/src/util/CMakeFiles/crypto_unit.dir
+
+# All Build rule for target.
+lib/src/util/CMakeFiles/crypto_unit.dir/all:
+	$(MAKE) -f lib/src/util/CMakeFiles/crypto_unit.dir/build.make lib/src/util/CMakeFiles/crypto_unit.dir/depend
+	$(MAKE) -f lib/src/util/CMakeFiles/crypto_unit.dir/build.make lib/src/util/CMakeFiles/crypto_unit.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/aram/workspace/clientserver/CMakeFiles --progress-num=7,8 "Built target crypto_unit"
+.PHONY : lib/src/util/CMakeFiles/crypto_unit.dir/all
+
+# Build rule for subdir invocation for target.
+lib/src/util/CMakeFiles/crypto_unit.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/aram/workspace/clientserver/CMakeFiles 2
+	$(MAKE) -f CMakeFiles/Makefile2 lib/src/util/CMakeFiles/crypto_unit.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/aram/workspace/clientserver/CMakeFiles 0
+.PHONY : lib/src/util/CMakeFiles/crypto_unit.dir/rule
+
+# Convenience name for target.
+crypto_unit: lib/src/util/CMakeFiles/crypto_unit.dir/rule
+
+.PHONY : crypto_unit
+
+# clean rule for target.
+lib/src/util/CMakeFiles/crypto_unit.dir/clean:
+	$(MAKE) -f lib/src/util/CMakeFiles/crypto_unit.dir/build.make lib/src/util/CMakeFiles/crypto_unit.dir/clean
+.PHONY : lib/src/util/CMakeFiles/crypto_unit.dir/clean
 
 #=============================================================================
 # Special targets to cleanup operation of make.

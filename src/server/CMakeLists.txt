@@ -10,4 +10,4 @@ add_executable(server src/main.cpp
                  src/server.cpp 
                     src/handler.cpp)
 
-target_link_libraries( server libdebug_helper)
+target_link_libraries( server debug_helper)

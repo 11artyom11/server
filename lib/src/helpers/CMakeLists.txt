@@ -1,18 +1,19 @@
 cmake_minimum_required(VERSION 3.9)
-project(libdebug_helper VERSION 1.0.1 DESCRIPTION "libdebug_helper description")
+project(debug_helper VERSION 1.0.1 DESCRIPTION "debug_helper description")
 include(GNUInstallDirs)
 
-add_library(libdebug_helper SHARED debug_helper/debug_helper.cpp)
+add_library(debug_helper SHARED debug/debug_helper.cpp)
 
-set_target_properties(libdebug_helper PROPERTIES
+set_target_properties(debug_helper PROPERTIES
     VERSION ${PROJECT_VERSION}
     SOVERSION 1
-    PUBLIC_HEADER api/libdebug_helper.h)
+    PUBLIC_HEADER api/debug_helper.h)
     
-configure_file(libdebug_helper.pc.in libdebug_helper.pc @ONLY)
-target_include_directories(libdebug_helper PRIVATE .)
-install(TARGETS libdebug_helper
+configure_file(debug_helper.pc.in debug_helper.pc @ONLY)
+target_include_directories(debug_helper PRIVATE .)
+install(TARGETS debug_helper
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
     PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
-install(FILES ${CMAKE_BINARY_DIR}/libdebug_helper.pc
+install(FILES ${CMAKE_BINARY_DIR}/debug_helper.pc
     DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/pkgconfig)
+    

@@ -12,4 +12,4 @@ add_executable(client src/main.cpp
                                 src/connection_handler.cpp
                                     src/io_unit.cpp)
 
-target_link_libraries( client libdebug_helper)
+target_link_libraries( client debug_helper)

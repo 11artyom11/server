@@ -139,7 +139,7 @@ bin/client/client: bin/client/CMakeFiles/client.dir/src/communication_unit.cpp.o
 bin/client/client: bin/client/CMakeFiles/client.dir/src/connection_handler.cpp.o
 bin/client/client: bin/client/CMakeFiles/client.dir/src/io_unit.cpp.o
 bin/client/client: bin/client/CMakeFiles/client.dir/build.make
-bin/client/client: lib/src/helpers/liblibdebug_helper.so.1.0.1
+bin/client/client: lib/src/helpers/libdebug_helper.so.1.0.1
 bin/client/client: bin/client/CMakeFiles/client.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/aram/workspace/clientserver/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Linking CXX executable client"
 	cd /home/aram/workspace/clientserver/bin/client && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/client.dir/link.txt --verbose=$(VERBOSE)

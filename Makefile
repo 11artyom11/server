@@ -183,17 +183,30 @@ client/fast:
 .PHONY : client/fast
 
 #=============================================================================
-# Target rules for targets named libdebug_helper
+# Target rules for targets named debug_helper
 
 # Build rule for target.
-libdebug_helper: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 libdebug_helper
-.PHONY : libdebug_helper
+debug_helper: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 debug_helper
+.PHONY : debug_helper
 
 # fast build rule for target.
-libdebug_helper/fast:
-	$(MAKE) -f lib/src/helpers/CMakeFiles/libdebug_helper.dir/build.make lib/src/helpers/CMakeFiles/libdebug_helper.dir/build
-.PHONY : libdebug_helper/fast
+debug_helper/fast:
+	$(MAKE) -f lib/src/helpers/CMakeFiles/debug_helper.dir/build.make lib/src/helpers/CMakeFiles/debug_helper.dir/build
+.PHONY : debug_helper/fast
+
+#=============================================================================
+# Target rules for targets named crypto_unit
+
+# Build rule for target.
+crypto_unit: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 crypto_unit
+.PHONY : crypto_unit
+
+# fast build rule for target.
+crypto_unit/fast:
+	$(MAKE) -f lib/src/util/CMakeFiles/crypto_unit.dir/build.make lib/src/util/CMakeFiles/crypto_unit.dir/build
+.PHONY : crypto_unit/fast
 
 # Help Target
 help:
@@ -209,7 +222,8 @@ help:
 	@echo "... edit_cache"
 	@echo "... server"
 	@echo "... client"
-	@echo "... libdebug_helper"
+	@echo "... debug_helper"
+	@echo "... crypto_unit"
 .PHONY : help
 
 

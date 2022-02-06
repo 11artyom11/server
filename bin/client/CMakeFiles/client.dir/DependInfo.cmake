@@ -18,7 +18,7 @@ set(CMAKE_CXX_TARGET_INCLUDE_PATH
 
 # Targets to which this target links.
 set(CMAKE_TARGET_LINKED_INFO_FILES
-  "/home/aram/workspace/clientserver/lib/src/helpers/CMakeFiles/libdebug_helper.dir/DependInfo.cmake"
+  "/home/aram/workspace/clientserver/lib/src/helpers/CMakeFiles/debug_helper.dir/DependInfo.cmake"
   )
 
 # Fortran module output directory.
