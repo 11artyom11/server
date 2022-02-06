@@ -61,11 +61,18 @@ void BasicCommunicationModel::start_read_async(int sockfd)
             /*This infinite loop can hold maximum $max_read_thread_count
             connections*/
             sem_wait(&read_lock);
+            
             char buff[1024];
             int n;
             bzero(buff, sizeof(buff));
             
-            read(sockfd, buff, sizeof(buff));
+            int read_result = read(sockfd, buff, sizeof(buff));
+            if (read_result == 0)
+            {
+                Debug().fatal("Host is no longer available. Terminating...");
+                exit(0);
+            }
+            Debug().info("READ RESULT : ", read_result);
             /*Start new thread to print retrieved buffer*/
             m_io_model->read_q(buff);
             sem_post(&read_lock);
@@ -89,14 +96,11 @@ void BasicCommunicationModel::start_read_async(int sockfd)
 void BasicCommunicationModel::start_write_async(int sockfd, 
                                                     std::istream&)
 {          
-    char buff[1024];         
     std::string buf_s;
     while (getline(std::cin, buf_s) )
     {
-        int n = 0;
-        Debug().info("here");
         write(sockfd, buf_s.c_str(), sizeof(buf_s.c_str()));
-        bzero(buff, sizeof(buff)); 
+        buf_s.clear();
     }
 }
 
