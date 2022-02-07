@@ -1,13 +1,9 @@
-# Ignore everything
-*
-
 # But not these files...
 !.gitignore
 
 # etc...
-!lib/src/helpers/*.so*
-!bin/*
-!build/*
+lib/src/helpers/*.so*
+bin/*
+build/*
 # ...even if they are in subdirectories
-!*/
 
