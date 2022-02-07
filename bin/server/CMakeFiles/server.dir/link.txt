@@ -1,1 +1,0 @@
-/usr/bin/c++  -g -w -O2 -pthread  -rdynamic CMakeFiles/server.dir/src/main.cpp.o CMakeFiles/server.dir/src/server.cpp.o CMakeFiles/server.dir/src/handler.cpp.o  -o server  -Wl,-rpath,/home/aram/workspace/clientserver/lib/src/helpers ../../lib/src/helpers/libdebug_helper.so.1.0.1 

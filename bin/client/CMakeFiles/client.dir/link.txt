@@ -1,1 +1,0 @@
-/usr/bin/c++  -g -w -O2 -pthread  -rdynamic CMakeFiles/client.dir/src/main.cpp.o CMakeFiles/client.dir/src/client.cpp.o CMakeFiles/client.dir/src/communication_unit.cpp.o CMakeFiles/client.dir/src/connection_handler.cpp.o CMakeFiles/client.dir/src/io_unit.cpp.o  -o client  -Wl,-rpath,/home/aram/workspace/clientserver/lib/src/helpers ../../lib/src/helpers/libdebug_helper.so.1.0.1 
