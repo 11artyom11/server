@@ -39,7 +39,7 @@ EVP_PKEY* BaseCipherUnit::ReadPrivKey_FromFile(char* filename)
  * @param pass 
  * @return RSA* 
  */
-RSA* RSA_Unit::Generate_KeyPair(char* pass)
+EVP_PKEY* RSA_Unit::Generate_KeyPair(char* pass)
 {
   char rand_buff[16];
   EVP_PKEY *pkey = NULL;
@@ -58,16 +58,65 @@ RSA* RSA_Unit::Generate_KeyPair(char* pass)
   pkey = EVP_PKEY_new();
   EVP_PKEY_assign_RSA(pkey, r);
 
-  //Save private key
-  FILE* fp = fopen("private.key", "w");
-  PEM_write_PrivateKey(fp,pkey,EVP_aes_256_cbc(),NULL,0,NULL, pass);
-  fclose(fp);
-
-  //Save public key
-  fp = fopen("public.key", "w");
-  PEM_write_PUBKEY(fp, pkey);
-  fclose(fp);
-
-  return r;
+  return pkey;
 }
 
+int RSA_Unit::Generate_KeyPair_Ex(char* pass, 
+                                        EVP_PKEY* __pkey)
+
+{
+    __pkey = this->Generate_KeyPair(pass);
+    if (!__pkey)
+    {
+        return 1;
+    }
+    return 0;
+}
+
+int RSA_Unit::Generate_KeyPair_Im(char* pass,
+                                    char* pub_key_name,
+                                        char* priv_key_name)
+{
+    Debug().info("In function RSA_Unit::Generate_KeyPair_Im");
+    EVP_PKEY* pkey = EVP_PKEY_new();
+    pkey = this->Generate_KeyPair(pass);
+    if (!pkey)
+    {
+        Debug().fatal("Failed to create key pair...");
+        return 1;
+    }
+  
+    //Save private key
+    FILE* fp = fopen(priv_key_name, "w");
+    if (!fp)
+    {
+        Debug().fatal("Failed to open  file for private key");
+        return 1;
+    }
+    int res = PEM_write_PrivateKey(fp,pkey,EVP_aes_256_cbc(),NULL,0,NULL, pass);
+    if (res == 0)
+    {
+        Debug().fatal("Failed to write private key to file");
+    }
+    fclose(fp);
+
+    //Save public key
+    fp = fopen(pub_key_name, "w");
+    if (!fp) 
+    {
+        Debug().fatal("Failed to create public key  file");
+        return 1;
+    }
+
+    res = PEM_write_PUBKEY(fp, pkey);
+    if (res == 0)
+    {
+        Debug().fatal("Failed to write public key to file");
+    }
+    fclose(fp);
+
+    Debug().info("Out of function RSA_Unit::Generate_KeyPair_Im");
+    return 0;
+}
+/*
+  */

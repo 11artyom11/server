@@ -1,6 +1,8 @@
 #ifndef __CRYPTO_UNIT_H__
 #define __CRYPTO_UNIT_H__
 
+#include "../../helpers/debug_helper/debug_helper.h"
+
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -34,6 +36,10 @@ public:
     BaseCipherUnit() = default;
     ~BaseCipherUnit() = default;
 
+    /*
+    About EVP_PKEY structure 
+    https://www.openssl.org/docs/man3.0/man3/EVP_PKEY.html
+    */
     static EVP_PKEY* ReadPubKey_FromFile(char* filename);
     static EVP_PKEY* ReadPrivKey_FromFile(char* filename);
 };
@@ -45,14 +51,16 @@ class RSA_Unit : public BaseCipherUnit
         RSA_Unit() = default;
         ~RSA_Unit() = default;
 
-        RSA* Generate_KeyPair(char* pass);
-        
+   
+        int Generate_KeyPair_Ex(char* pass, EVP_PKEY* pkey);
+        int Generate_KeyPair_Im(char* pass, 
+                                    char* pub_key_name,
+                                        char* priv_key_name);
         
         int init_keys (void);
 
     private:
-        std::string priv_f_name;
-        std::string pub_f_name;
 
+         EVP_PKEY* Generate_KeyPair(char* pass);
 };
 #endif // __CRYPTO_UNIT_H__

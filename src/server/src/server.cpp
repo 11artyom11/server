@@ -31,6 +31,8 @@ Server::ServerModel::ServerModel(uint32_t port) :
     server_addr->sin_port = htons(listen_port);
     server_addr->sin_family = protocol_family;
     server_addr->sin_addr.s_addr = listen_ip;
+    RSA_Unit rsa_u;
+    rsa_u.Generate_KeyPair_Im("bf5gh4", "apashqyara", "po_sekretu");
 }
 
 /**
