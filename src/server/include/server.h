@@ -2,6 +2,8 @@
 #define __SERVER__
 
 #include "../../../lib/include/helpers/debug_helper/debug_helper.h"
+#include "../../../lib/include/util/cyptolib/crypto_unit.h"
+
 #include "handler.h"
 
 #include <iostream>

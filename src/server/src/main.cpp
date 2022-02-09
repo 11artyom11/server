@@ -1,6 +1,5 @@
 #include "../include/server.h"
 
-
 using namespace Server;
 
 void handle_connection (int connection,  ServerModel* servModel)

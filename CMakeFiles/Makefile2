@@ -153,6 +153,7 @@ lib/src/util/clean: lib/src/util/CMakeFiles/crypto_unit.dir/clean
 
 # All Build rule for target.
 bin/server/CMakeFiles/server.dir/all: lib/src/helpers/CMakeFiles/debug_helper.dir/all
+bin/server/CMakeFiles/server.dir/all: lib/src/util/CMakeFiles/crypto_unit.dir/all
 	$(MAKE) -f bin/server/CMakeFiles/server.dir/build.make bin/server/CMakeFiles/server.dir/depend
 	$(MAKE) -f bin/server/CMakeFiles/server.dir/build.make bin/server/CMakeFiles/server.dir/build
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/aram/workspace/clientserver/CMakeFiles --progress-num=11,12,13,14 "Built target server"
@@ -160,7 +161,7 @@ bin/server/CMakeFiles/server.dir/all: lib/src/helpers/CMakeFiles/debug_helper.di
 
 # Build rule for subdir invocation for target.
 bin/server/CMakeFiles/server.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/aram/workspace/clientserver/CMakeFiles 6
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/aram/workspace/clientserver/CMakeFiles 8
 	$(MAKE) -f CMakeFiles/Makefile2 bin/server/CMakeFiles/server.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/aram/workspace/clientserver/CMakeFiles 0
 .PHONY : bin/server/CMakeFiles/server.dir/rule

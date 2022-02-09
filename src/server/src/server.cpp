@@ -26,7 +26,6 @@ Server::ServerModel::ServerModel(uint32_t port) :
 {
 
     Debug().info("Constructed ServerModel instance");
-
     server_addr = new struct sockaddr_in;
 
     server_addr->sin_port = htons(listen_port);

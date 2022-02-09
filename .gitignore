@@ -5,5 +5,3 @@
 lib/src/helpers/*.so*
 bin/*
 build/*
-# ...even if they are in subdirectories
-

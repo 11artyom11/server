@@ -79,6 +79,7 @@ crypto_unit_EXTERNAL_OBJECTS =
 
 lib/src/util/libcrypto_unit.so.1.0.1: lib/src/util/CMakeFiles/crypto_unit.dir/cryptolib/crypto_unit.cpp.o
 lib/src/util/libcrypto_unit.so.1.0.1: lib/src/util/CMakeFiles/crypto_unit.dir/build.make
+lib/src/util/libcrypto_unit.so.1.0.1: /usr/lib/x86_64-linux-gnu/libcrypto.a
 lib/src/util/libcrypto_unit.so.1.0.1: lib/src/util/CMakeFiles/crypto_unit.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/aram/workspace/clientserver/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX shared library libcrypto_unit.so"
 	cd /home/aram/workspace/clientserver/lib/src/util && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/crypto_unit.dir/link.txt --verbose=$(VERBOSE)
