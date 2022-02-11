@@ -9,23 +9,24 @@ EVP_PKEY* BaseCipherUnit::ReadPubKey_FromFile(char* filename)
   EVP_PKEY* key = EVP_PKEY_new();
   if (key)
   {
-    EVP_PKEY_assign_RSA(key, PEM_read_RSAPublicKey(fp, NULL, NULL, NULL));
+    EVP_PKEY_assign_RSA(key, PEM_read_RSA_PUBKEY(fp, NULL, NULL, NULL));
   }
-
+    
   fclose(fp);
   return key;
 }
 
 
-EVP_PKEY* BaseCipherUnit::ReadPrivKey_FromFile(char* filename)
-{
+EVP_PKEY* BaseCipherUnit::ReadPrivKey_FromFile(char* filename, char* passphrase)
+{    
   FILE* fp = fopen(filename, "r");
   if (!fp) return nullptr;
 
   EVP_PKEY* key = EVP_PKEY_new();
+
   if (key)
   {
-    EVP_PKEY_assign_RSA(key, PEM_read_RSAPrivateKey(fp, NULL, NULL, NULL));
+    EVP_PKEY_assign_RSA(key, PEM_read_RSAPrivateKey(fp, NULL, NULL, passphrase));
   }
 
   fclose(fp);
@@ -41,6 +42,7 @@ EVP_PKEY* BaseCipherUnit::ReadPrivKey_FromFile(char* filename)
  */
 EVP_PKEY* RSA_Unit::Generate_KeyPair(char* pass)
 {
+
   char rand_buff[16];
   EVP_PKEY *pkey = NULL;
   RSA* r;
@@ -49,28 +51,29 @@ EVP_PKEY* RSA_Unit::Generate_KeyPair(char* pass)
   unsigned long exp = RSA_F4;     //      RSA_3
   OpenSSL_add_all_algorithms();
 
-  RAND_seed(rand_buff, 16); //On linux: RAND_load_file("/dev/urandom", 1024);
+  RAND_load_file("/dev/urandom", 1024); //RAND_seed(rand_buff, 16); On linux: RAND_load_file("/dev/urandom", 1024);
   r = RSA_generate_key(bits,exp,NULL,NULL);
 
   if (RSA_check_key(r)!=1);;; //Check key - error out
 
   //Create EVP to save to file.
   pkey = EVP_PKEY_new();
-  EVP_PKEY_assign_RSA(pkey, r);
+  
+  EVP_PKEY_set1_RSA(pkey, r);
 
+  RSA_free(r);
   return pkey;
 }
 
-int RSA_Unit::Generate_KeyPair_Ex(char* pass, 
-                                        EVP_PKEY* __pkey)
+EVP_PKEY* RSA_Unit::Generate_KeyPair_Ex(char* pass)
 
 {
-    __pkey = this->Generate_KeyPair(pass);
-    if (!__pkey)
+    EVP_PKEY* pkey = this->Generate_KeyPair(pass);
+    if (!pkey)
     {
-        return 1;
+        return nullptr;
     }
-    return 0;
+    return pkey;
 }
 
 int RSA_Unit::Generate_KeyPair_Im(char* pass,
@@ -78,16 +81,17 @@ int RSA_Unit::Generate_KeyPair_Im(char* pass,
                                         char* priv_key_name)
 {
     Debug().info("In function RSA_Unit::Generate_KeyPair_Im");
-    EVP_PKEY* pkey = EVP_PKEY_new();
-    pkey = this->Generate_KeyPair(pass);
+    EVP_PKEY* pkey = this->Generate_KeyPair(pass);
+    
     if (!pkey)
     {
         Debug().fatal("Failed to create key pair...");
         return 1;
     }
   
-    //Save private key
+    // //Save private key
     FILE* fp = fopen(priv_key_name, "w");
+    
     if (!fp)
     {
         Debug().fatal("Failed to open  file for private key");
@@ -99,6 +103,7 @@ int RSA_Unit::Generate_KeyPair_Im(char* pass,
         Debug().fatal("Failed to write private key to file");
     }
     fclose(fp);
+
 
     //Save public key
     fp = fopen(pub_key_name, "w");
@@ -113,7 +118,9 @@ int RSA_Unit::Generate_KeyPair_Im(char* pass,
     {
         Debug().fatal("Failed to write public key to file");
     }
+
     fclose(fp);
+    EVP_PKEY_free(pkey);
 
     Debug().info("Out of function RSA_Unit::Generate_KeyPair_Im");
     return 0;

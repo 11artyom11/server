@@ -208,6 +208,97 @@ crypto_unit/fast:
 	$(MAKE) -f lib/src/util/CMakeFiles/crypto_unit.dir/build.make lib/src/util/CMakeFiles/crypto_unit.dir/build
 .PHONY : crypto_unit/fast
 
+#=============================================================================
+# Target rules for targets named gmock_main
+
+# Build rule for target.
+gmock_main: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 gmock_main
+.PHONY : gmock_main
+
+# fast build rule for target.
+gmock_main/fast:
+	$(MAKE) -f tests/googletest/googlemock/CMakeFiles/gmock_main.dir/build.make tests/googletest/googlemock/CMakeFiles/gmock_main.dir/build
+.PHONY : gmock_main/fast
+
+#=============================================================================
+# Target rules for targets named gmock
+
+# Build rule for target.
+gmock: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 gmock
+.PHONY : gmock
+
+# fast build rule for target.
+gmock/fast:
+	$(MAKE) -f tests/googletest/googlemock/CMakeFiles/gmock.dir/build.make tests/googletest/googlemock/CMakeFiles/gmock.dir/build
+.PHONY : gmock/fast
+
+#=============================================================================
+# Target rules for targets named gtest_main
+
+# Build rule for target.
+gtest_main: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 gtest_main
+.PHONY : gtest_main
+
+# fast build rule for target.
+gtest_main/fast:
+	$(MAKE) -f tests/googletest/googletest/CMakeFiles/gtest_main.dir/build.make tests/googletest/googletest/CMakeFiles/gtest_main.dir/build
+.PHONY : gtest_main/fast
+
+#=============================================================================
+# Target rules for targets named gtest
+
+# Build rule for target.
+gtest: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 gtest
+.PHONY : gtest
+
+# fast build rule for target.
+gtest/fast:
+	$(MAKE) -f tests/googletest/googletest/CMakeFiles/gtest.dir/build.make tests/googletest/googletest/CMakeFiles/gtest.dir/build
+.PHONY : gtest/fast
+
+#=============================================================================
+# Target rules for targets named t_client
+
+# Build rule for target.
+t_client: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 t_client
+.PHONY : t_client
+
+# fast build rule for target.
+t_client/fast:
+	$(MAKE) -f tests/client_tests/CMakeFiles/t_client.dir/build.make tests/client_tests/CMakeFiles/t_client.dir/build
+.PHONY : t_client/fast
+
+#=============================================================================
+# Target rules for targets named t_lib
+
+# Build rule for target.
+t_lib: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 t_lib
+.PHONY : t_lib
+
+# fast build rule for target.
+t_lib/fast:
+	$(MAKE) -f tests/lib_tests/CMakeFiles/t_lib.dir/build.make tests/lib_tests/CMakeFiles/t_lib.dir/build
+.PHONY : t_lib/fast
+
+#=============================================================================
+# Target rules for targets named t_server
+
+# Build rule for target.
+t_server: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 t_server
+.PHONY : t_server
+
+# fast build rule for target.
+t_server/fast:
+	$(MAKE) -f tests/server_tests/CMakeFiles/t_server.dir/build.make tests/server_tests/CMakeFiles/t_server.dir/build
+.PHONY : t_server/fast
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -224,6 +315,13 @@ help:
 	@echo "... client"
 	@echo "... debug_helper"
 	@echo "... crypto_unit"
+	@echo "... gmock_main"
+	@echo "... gmock"
+	@echo "... gtest_main"
+	@echo "... gtest"
+	@echo "... t_client"
+	@echo "... t_lib"
+	@echo "... t_server"
 .PHONY : help
 
 

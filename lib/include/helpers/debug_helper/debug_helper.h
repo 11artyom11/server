@@ -25,6 +25,7 @@ class Debug
 {
     public:
         Debug ();
+        ~Debug();
         template <typename ...mesTL>
          void info (mesTL... messages);
 
@@ -37,7 +38,10 @@ class Debug
         std::string get_current_time (void) const noexcept;
 
         int set_output_stream ( std::ostream* oS_ptr);
-    private:
+        static void disable_debug   (void);
+        static void enable_debug    (void);
+    private:        
+        inline static bool debug_state = true;
         std::ostream* outp_stream;
 
 
@@ -46,6 +50,7 @@ class Debug
 template <typename ...mesTL>
  void Debug::info (mesTL... messages)
 {       
+    if (!Debug::debug_state) return;
      *outp_stream <<get_current_time() << " [ INFO ] ";
     ((*outp_stream << messages << ' '), ...);
     *outp_stream << std::endl;
@@ -54,6 +59,7 @@ template <typename ...mesTL>
 template <typename ...mesTL>
  void Debug::warning (mesTL... messages)
 {
+    if (!Debug::debug_state) return;
     *outp_stream << get_current_time() << " [ WARINING ] ";
     ((*outp_stream << messages << ' '), ...);
     *outp_stream << std::endl;
@@ -63,6 +69,7 @@ template <typename ...mesTL>
 template <typename ...mesTL>
  void Debug::fatal (mesTL... messages)
 {
+    if (!Debug::debug_state) return;
     *outp_stream << get_current_time() <<  " [ FATAL ] ";
     ((*outp_stream << messages << ' '), ...);
     *outp_stream << std::endl;

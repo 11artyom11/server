@@ -43,6 +43,7 @@ if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   include("/home/aram/workspace/clientserver/bin/client/cmake_install.cmake")
   include("/home/aram/workspace/clientserver/lib/src/helpers/cmake_install.cmake")
   include("/home/aram/workspace/clientserver/lib/src/util/cmake_install.cmake")
+  include("/home/aram/workspace/clientserver/tests/cmake_install.cmake")
 
 endif()
 

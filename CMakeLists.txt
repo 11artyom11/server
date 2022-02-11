@@ -15,3 +15,6 @@ add_subdirectory(lib/src/helpers)
 
 #adding shared lib utilities
 add_subdirectory(lib/src/util)
+
+#adding unit tests
+add_subdirectory(tests)

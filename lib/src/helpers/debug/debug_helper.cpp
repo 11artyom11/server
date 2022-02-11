@@ -5,6 +5,10 @@ Debug::Debug()
     this->outp_stream = &std::cout;
 }
 
+Debug::~Debug()
+{
+
+}
 
 /**
  * @brief gets current time ov working machine in unix style
@@ -46,4 +50,28 @@ int Debug::set_output_stream( std::ostream* oS_ptr)
     {
         return -1;
     }
+}
+
+/**
+ * @brief If this function has been called
+ * further Debug messages will be disabled 
+ * untill Debug::enable_debug function will
+ *  be called
+ * 
+ */
+void Debug::disable_debug(void)
+{
+    Debug::debug_state = false;
+}
+
+/**
+ * @brief If this function has been called
+ * further Debug messages will be enabled 
+ * untill Debug::disable_debug function will
+ *  be called
+ * 
+ */
+void Debug::enable_debug(void)
+{
+    Debug::debug_state = true;
 }

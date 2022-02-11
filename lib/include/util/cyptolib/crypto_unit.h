@@ -41,7 +41,7 @@ public:
     https://www.openssl.org/docs/man3.0/man3/EVP_PKEY.html
     */
     static EVP_PKEY* ReadPubKey_FromFile(char* filename);
-    static EVP_PKEY* ReadPrivKey_FromFile(char* filename);
+    static EVP_PKEY* ReadPrivKey_FromFile(char* filename, char* passphrase = nullptr);
 };
 
 
@@ -52,7 +52,7 @@ class RSA_Unit : public BaseCipherUnit
         ~RSA_Unit() = default;
 
    
-        int Generate_KeyPair_Ex(char* pass, EVP_PKEY* pkey);
+        EVP_PKEY* Generate_KeyPair_Ex(char* pass);
         int Generate_KeyPair_Im(char* pass, 
                                     char* pub_key_name,
                                         char* priv_key_name);
