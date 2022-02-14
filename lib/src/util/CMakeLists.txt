@@ -9,6 +9,7 @@ set_target_properties(crypto_unit PROPERTIES
     SOVERSION 1
     PUBLIC_HEADER api/crypto_unit.h)
     
+SET(GCC_COVERAGE_LINK_FLAGS    "-lssl" "-lcrypto")
 configure_file(crypto_unit.pc.in crypto_unit.pc @ONLY)
 target_include_directories(crypto_unit PRIVATE .)
 install(TARGETS crypto_unit
