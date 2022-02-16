@@ -38,7 +38,7 @@ namespace Server
             void dump_server_state                  (void) const noexcept;
             struct sockaddr_in* get_server_addr     () const;
             void distribute_incoming_connections    (int new_socket, uint8_t response);
-
+            void handle_connection (int connection);
             ~ServerModel             ();
 
         

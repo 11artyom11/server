@@ -2,54 +2,6 @@
 
 using namespace Server;
 
-void handle_connection (int connection,  ServerModel* servModel)
-{
-      if (connection < 0) {
-        Debug().fatal("Failed to grab connection. errno: ", errno, ", terminating...");
-        exit(EXIT_FAILURE);
-      } else 
-      {
-        std::string success_message = "Connection established";
-        Debug().info(success_message);
-        send(connection, success_message.c_str(), success_message.size(), 0);
-
-      }
-
-      // Read from the connection
-      char buffer[100];
-      auto bytesRead = read(connection, buffer, 100);
-
-      while (bytesRead)
-      {
-        Debug().info("Recieved message : ", buffer);
-
-        if (!(buffer[0] >= 48 && buffer[0] <= 57))
-        {
-          bytesRead = read (connection, buffer, 100);   
-          continue;       
-        }
-
-        /*Convert retrieved char array to long*/
-        std::string tmp_response(buffer);
-        long ld_response;            
-        ld_response = std::stol(tmp_response.data(),nullptr, 10);         
-        if (ld_response == -1)
-        {
-          return;
-        }
-        servModel->distribute_incoming_connections(connection,ld_response);
-        
-        // Send a message to the connection
-        std::string response = "Message recieved\n";
-        send(connection, response.c_str(), response.size(), 0);
-        bytesRead = read (connection, buffer, 100);
-
-        }              
-    
-  close(connection);
-  // Close the connections
-
-}
 
 int main(int argc, char* argv[]) {
 
@@ -92,7 +44,7 @@ int main(int argc, char* argv[]) {
       auto addrlen = sizeof(*sockaddr);
       connection = servModel.accept_connection_from_socket(sockfd);
       
-      std::thread *new_thread = new std::thread(handle_connection, connection, &servModel);
+      std::thread *new_thread = new std::thread([&servModel, &connection]{ servModel.handle_connection(connection);});
   }
   close(sockfd);
 }

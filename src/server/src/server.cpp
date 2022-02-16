@@ -174,6 +174,56 @@ void Server::ServerModel::distribute_incoming_connections(int new_socket,
     }
 }
 
+void Server::ServerModel::handle_connection(int connection)
+{
+      if (connection < 0) {
+        Debug().fatal("Failed to grab connection. errno: ", errno, ", terminating...");
+        exit(EXIT_FAILURE);
+      } else 
+      {
+        std::string success_message = "Connection established";
+        Debug().info(success_message);
+        send(connection, success_message.c_str(), success_message.size(), 0);
+
+      }
+
+      // Read from the connection
+      char buffer[100];
+      auto bytesRead = read(connection, buffer, 100);
+
+      while (bytesRead)
+      {
+        Debug().info("Recieved message : ", buffer);
+
+        if (!(buffer[0] >= 48 && buffer[0] <= 57))
+        {
+          bytesRead = read (connection, buffer, 100);   
+          continue;       
+        }
+
+        /*Convert retrieved char array to long*/
+        std::string tmp_response(buffer);
+        long ld_response;            
+        ld_response = std::stol(tmp_response.data(),nullptr, 10);         
+        if (ld_response == -1)
+        {
+          return;
+        }
+        this->distribute_incoming_connections(connection,ld_response);
+        
+        // Send a message to the connection
+        std::string response = "Message recieved\n";
+        send(connection, response.c_str(), response.size(), 0);
+        bytesRead = read (connection, buffer, 100);
+
+        }              
+    
+  close(connection);
+  // Close the connections
+
+}
+
+
 
 /**
  * @brief Destroy the Server:: Server Model:: Server Model object
