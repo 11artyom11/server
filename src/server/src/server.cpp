@@ -27,12 +27,10 @@ Server::ServerModel::ServerModel(uint32_t port) :
 
     Debug().info("Constructed ServerModel instance");
     server_addr = new struct sockaddr_in;
-
     server_addr->sin_port = htons(listen_port);
     server_addr->sin_family = protocol_family;
     server_addr->sin_addr.s_addr = listen_ip;
-    RSA_Unit rsa_u;
-    
+
 }
 
 /**
@@ -155,70 +153,55 @@ struct sockaddr_in* Server::ServerModel::get_server_addr() const
 }
 
 
-void Server::ServerModel::distribute_incoming_connections(int new_socket, 
-                                                                uint8_t response)
+int Server::ServerModel::distribute_incoming_connections(int socket, 
+                                                                char* response)
 {
-    switch (response)
+    std::string response_s (response);
+    response_s = response_s.substr(0, 1);
+    Debug().info("RESS SIZE IS ", response_s.size());
+
+
+    auto mem_function = m_handler.get_command(response_s);
+    if (!mem_function)
     {
-    case WRITE_REQ:
-        Debug().info("Got WRITE ORDER");
-        m_handler.provide_write_thread(new_socket);
-        break;
-    
-    case READ_REQ:
-        Debug().info("Got READ ORDER");
-        m_handler.provide_read_thread(new_socket);
-        break;
-    default: 
-        return;
+        return UNKNOWN_COMMAND_ERROR;
     }
+    int res = (m_handler.*mem_function)(socket);
+    return res;
 }
 
 void Server::ServerModel::handle_connection(int connection)
 {
-      if (connection < 0) {
-        Debug().fatal("Failed to grab connection. errno: ", errno, ", terminating...");
-        exit(EXIT_FAILURE);
-      } else 
-      {
-        std::string success_message = "Connection established";
-        Debug().info(success_message);
-        send(connection, success_message.c_str(), success_message.size(), 0);
+    if (connection < 0) {
+    Debug().fatal("Failed to grab connection. errno: ", errno, ", terminating...");
+    exit(EXIT_FAILURE);
+    } else 
+    {
+    std::string success_message = "Connection established";
+    Debug().info(success_message);
+    send(connection, success_message.c_str(), success_message.size(), 0);
 
-      }
+    }
 
-      // Read from the connection
-      char buffer[100];
-      auto bytesRead = read(connection, buffer, 100);
-
-      while (bytesRead)
-      {
+    // Read from the connection
+    char buffer[100];
+    int bytesRead = 0;
+    do 
+    {
+        bytesRead = read (connection, buffer, 100);
         Debug().info("Recieved message : ", buffer);
-
-        if (!(buffer[0] >= 48 && buffer[0] <= 57))
+        int distribute_result = this->distribute_incoming_connections(connection,buffer);
+        if (distribute_result == TERMINATE_CODE_SUCCESS || 
+                distribute_result == TERMINATE_CODE_FAILURE)
         {
-          bytesRead = read (connection, buffer, 100);   
-          continue;       
+            return;
         }
-
-        /*Convert retrieved char array to long*/
-        std::string tmp_response(buffer);
-        long ld_response;            
-        ld_response = std::stol(tmp_response.data(),nullptr, 10);         
-        if (ld_response == -1)
-        {
-          return;
-        }
-        this->distribute_incoming_connections(connection,ld_response);
-        
         // Send a message to the connection
         std::string response = "Message recieved\n";
         send(connection, response.c_str(), response.size(), 0);
-        bytesRead = read (connection, buffer, 100);
+    }while (bytesRead);           
 
-        }              
-    
-  close(connection);
+    close(connection);
   // Close the connections
 
 }
@@ -236,7 +219,7 @@ Server::ServerModel::~ServerModel()
 }
 
 /**
- * create sockete
+ * create socket
  * bind with ip and port 
  * listen socket to port 
  * accept messages

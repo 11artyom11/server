@@ -2,7 +2,6 @@
 #define __SERVER__
 
 #include "../../../lib/include/helpers/debug_helper/debug_helper.h"
-#include "../../../lib/include/util/cyptolib/crypto_unit.h"
 
 #include "handler.h"
 
@@ -23,6 +22,7 @@
 /*Namespace purposed to store server-related functions and classes*/
 namespace Server
 {
+    
     bool is_client_connection_close(const char* msg);
 
     class ServerModel
@@ -37,9 +37,9 @@ namespace Server
             int accept_connection_from_socket       (int sockfd);
             void dump_server_state                  (void) const noexcept;
             struct sockaddr_in* get_server_addr     () const;
-            void distribute_incoming_connections    (int new_socket, uint8_t response);
-            void handle_connection (int connection);
-            ~ServerModel             ();
+            int distribute_incoming_connections     (int new_socket, char* response);
+            void handle_connection                  (int connection);
+            ~ServerModel                            ();
 
         
         private:
@@ -68,6 +68,7 @@ namespace Server
         /*Handler for write and read functions*/
             Handler m_handler;
 
+        
     };
 
 }

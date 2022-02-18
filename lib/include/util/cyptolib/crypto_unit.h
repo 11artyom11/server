@@ -34,8 +34,8 @@ enum class INIT_TYPE
 class BaseCipherUnit
 {
 public:
-    BaseCipherUnit() = default;
-    ~BaseCipherUnit() = default;
+    BaseCipherUnit()    = default;
+    ~BaseCipherUnit()   = default;
 
   
     static char* get_file_content(char* filename);
@@ -70,6 +70,7 @@ class RSA_Unit : public BaseCipherUnit
     private:
          EVP_PKEY* Generate_KeyPair(char* pass);
 };
+
 
 class AES_Unit : public BaseCipherUnit
 {

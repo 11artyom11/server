@@ -100,9 +100,10 @@ EVP_PKEY *RSA_Unit::Generate_KeyPair(char *pass)
     r = RSA_generate_key(bits, exp, NULL, NULL);
 
     if (RSA_check_key(r) != 1)
-        ;
     ;
-    ; // Check key - error out
+    ;
+    ; 
+    // Check key - error out
 
     // Create EVP to save to file.
     pkey = EVP_PKEY_new();

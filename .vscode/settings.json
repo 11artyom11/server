@@ -67,7 +67,10 @@
         "mutex": "cpp",
         "sstream": "cpp",
         "typeindex": "cpp",
-        "variant": "cpp"
+        "variant": "cpp",
+        "any": "cpp",
+        "forward_list": "cpp",
+        "unordered_set": "cpp"
     },
     "C_Cpp.errorSquiggles": "Disabled"
 }
