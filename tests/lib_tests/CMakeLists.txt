@@ -10,3 +10,9 @@ add_executable(t_lib test_1.cpp)
 target_link_libraries(t_lib gtest_main)
 target_link_libraries(t_lib crypto_unit)
 target_link_libraries(t_lib debug_helper)
+
+add_executable(t_lib2 test2.cpp)
+target_link_libraries(t_lib2 gtest_main)
+target_link_libraries(t_lib2 message_model)
+target_link_libraries(t_lib2 debug_helper)
+

@@ -157,6 +157,21 @@ depend:
 .PHONY : depend
 
 # Convenience name for target.
+tests/lib_tests/CMakeFiles/t_lib2.dir/rule:
+	cd /home/aram/workspace/clientserver && $(MAKE) -f CMakeFiles/Makefile2 tests/lib_tests/CMakeFiles/t_lib2.dir/rule
+.PHONY : tests/lib_tests/CMakeFiles/t_lib2.dir/rule
+
+# Convenience name for target.
+t_lib2: tests/lib_tests/CMakeFiles/t_lib2.dir/rule
+
+.PHONY : t_lib2
+
+# fast build rule for target.
+t_lib2/fast:
+	cd /home/aram/workspace/clientserver && $(MAKE) -f tests/lib_tests/CMakeFiles/t_lib2.dir/build.make tests/lib_tests/CMakeFiles/t_lib2.dir/build
+.PHONY : t_lib2/fast
+
+# Convenience name for target.
 tests/lib_tests/CMakeFiles/t_lib.dir/rule:
 	cd /home/aram/workspace/clientserver && $(MAKE) -f CMakeFiles/Makefile2 tests/lib_tests/CMakeFiles/t_lib.dir/rule
 .PHONY : tests/lib_tests/CMakeFiles/t_lib.dir/rule
@@ -170,6 +185,33 @@ t_lib: tests/lib_tests/CMakeFiles/t_lib.dir/rule
 t_lib/fast:
 	cd /home/aram/workspace/clientserver && $(MAKE) -f tests/lib_tests/CMakeFiles/t_lib.dir/build.make tests/lib_tests/CMakeFiles/t_lib.dir/build
 .PHONY : t_lib/fast
+
+test2.o: test2.cpp.o
+
+.PHONY : test2.o
+
+# target to build an object file
+test2.cpp.o:
+	cd /home/aram/workspace/clientserver && $(MAKE) -f tests/lib_tests/CMakeFiles/t_lib2.dir/build.make tests/lib_tests/CMakeFiles/t_lib2.dir/test2.cpp.o
+.PHONY : test2.cpp.o
+
+test2.i: test2.cpp.i
+
+.PHONY : test2.i
+
+# target to preprocess a source file
+test2.cpp.i:
+	cd /home/aram/workspace/clientserver && $(MAKE) -f tests/lib_tests/CMakeFiles/t_lib2.dir/build.make tests/lib_tests/CMakeFiles/t_lib2.dir/test2.cpp.i
+.PHONY : test2.cpp.i
+
+test2.s: test2.cpp.s
+
+.PHONY : test2.s
+
+# target to generate assembly for a file
+test2.cpp.s:
+	cd /home/aram/workspace/clientserver && $(MAKE) -f tests/lib_tests/CMakeFiles/t_lib2.dir/build.make tests/lib_tests/CMakeFiles/t_lib2.dir/test2.cpp.s
+.PHONY : test2.cpp.s
 
 test_1.o: test_1.cpp.o
 
@@ -210,7 +252,11 @@ help:
 	@echo "... list_install_components"
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
+	@echo "... t_lib2"
 	@echo "... t_lib"
+	@echo "... test2.o"
+	@echo "... test2.i"
+	@echo "... test2.s"
 	@echo "... test_1.o"
 	@echo "... test_1.i"
 	@echo "... test_1.s"

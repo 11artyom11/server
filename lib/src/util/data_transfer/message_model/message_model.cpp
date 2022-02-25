@@ -4,6 +4,11 @@ using json = nlohmann::json;
 using string = std::string;
 using namespace DataTransfer;
 
+MessageModel::MessageModel()
+{
+
+}
+
 /**
  * @brief Construct a new Message Model:: Message Model object
  * 
@@ -11,18 +16,6 @@ using namespace DataTransfer;
  */
 MessageModel::MessageModel (const string& json_s) __THROW :
     m_message(json_s)
-{
-    Debug().info("Constructed new MessageModel object");
-}
-
-/**
- * @brief Construct a new Message Model:: Message Model object
- * 
- * @param other_rv 
- */
-template <typename T>
-MessageModel::MessageModel(T&& other_)__THROW :
-  m_message{std::forward<T>(other_)}
 {
     Debug().info("Constructed new MessageModel object");
 }
