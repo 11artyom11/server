@@ -2,10 +2,18 @@
 
 using namespace Customer;
 
-CustomerModel::CustomerModel(int sfd) :
-    sfd{sfd}
+CustomerModel::CustomerModel(int sfd, 
+                                const std::string& unique_token) :
+    sfd{sfd},
+    unique_token{unique_token}
 {
+    Debug().info("Retrieved data SFD : ", sfd, " UNIQUE TOKEN : ", unique_token);
     crypto_unit = new Security::CustomerCryptoUnit(sfd);
+}
+
+int CustomerModel::get_sfd(void) const noexcept
+{
+    return this->sfd;
 }
 
 CustomerModel::~CustomerModel()

@@ -10,6 +10,8 @@ add_subdirectory( src/server/ ./bin/server)
 #adding subproject client
 add_subdirectory( src/client/ ./bin/client)
 
+add_subdirectory(outter_modules/json)
+
 #adding shared lib helpers
 add_subdirectory(lib/src/helpers)
 

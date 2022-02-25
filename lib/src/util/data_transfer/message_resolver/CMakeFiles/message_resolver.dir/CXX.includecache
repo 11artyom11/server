@@ -1,0 +1,14 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/aram/workspace/clientserver/lib/include/util/data_transfer/message_resolver/message_resolver.h
+
+/home/aram/workspace/clientserver/lib/src/util/data_transfer/message_resolver/message_resolver.cpp
+../../../../include/util/data_transfer/message_resolver/message_resolver.h
+/home/aram/workspace/clientserver/lib/include/util/data_transfer/message_resolver/message_resolver.h
+

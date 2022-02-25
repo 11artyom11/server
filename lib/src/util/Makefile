@@ -156,48 +156,6 @@ depend:
 	cd /home/aram/workspace/clientserver && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
 .PHONY : depend
 
-# Convenience name for target.
-lib/src/util/CMakeFiles/crypto_unit.dir/rule:
-	cd /home/aram/workspace/clientserver && $(MAKE) -f CMakeFiles/Makefile2 lib/src/util/CMakeFiles/crypto_unit.dir/rule
-.PHONY : lib/src/util/CMakeFiles/crypto_unit.dir/rule
-
-# Convenience name for target.
-crypto_unit: lib/src/util/CMakeFiles/crypto_unit.dir/rule
-
-.PHONY : crypto_unit
-
-# fast build rule for target.
-crypto_unit/fast:
-	cd /home/aram/workspace/clientserver && $(MAKE) -f lib/src/util/CMakeFiles/crypto_unit.dir/build.make lib/src/util/CMakeFiles/crypto_unit.dir/build
-.PHONY : crypto_unit/fast
-
-cryptolib/crypto_unit.o: cryptolib/crypto_unit.cpp.o
-
-.PHONY : cryptolib/crypto_unit.o
-
-# target to build an object file
-cryptolib/crypto_unit.cpp.o:
-	cd /home/aram/workspace/clientserver && $(MAKE) -f lib/src/util/CMakeFiles/crypto_unit.dir/build.make lib/src/util/CMakeFiles/crypto_unit.dir/cryptolib/crypto_unit.cpp.o
-.PHONY : cryptolib/crypto_unit.cpp.o
-
-cryptolib/crypto_unit.i: cryptolib/crypto_unit.cpp.i
-
-.PHONY : cryptolib/crypto_unit.i
-
-# target to preprocess a source file
-cryptolib/crypto_unit.cpp.i:
-	cd /home/aram/workspace/clientserver && $(MAKE) -f lib/src/util/CMakeFiles/crypto_unit.dir/build.make lib/src/util/CMakeFiles/crypto_unit.dir/cryptolib/crypto_unit.cpp.i
-.PHONY : cryptolib/crypto_unit.cpp.i
-
-cryptolib/crypto_unit.s: cryptolib/crypto_unit.cpp.s
-
-.PHONY : cryptolib/crypto_unit.s
-
-# target to generate assembly for a file
-cryptolib/crypto_unit.cpp.s:
-	cd /home/aram/workspace/clientserver && $(MAKE) -f lib/src/util/CMakeFiles/crypto_unit.dir/build.make lib/src/util/CMakeFiles/crypto_unit.dir/cryptolib/crypto_unit.cpp.s
-.PHONY : cryptolib/crypto_unit.cpp.s
-
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -210,10 +168,6 @@ help:
 	@echo "... list_install_components"
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
-	@echo "... crypto_unit"
-	@echo "... cryptolib/crypto_unit.o"
-	@echo "... cryptolib/crypto_unit.i"
-	@echo "... cryptolib/crypto_unit.s"
 .PHONY : help
 
 

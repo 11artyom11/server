@@ -55,6 +55,7 @@ CMAKE_BINARY_DIR = /home/aram/workspace/clientserver
 # The main recursive "all" target.
 all: bin/server/all
 all: bin/client/all
+all: outter_modules/json/all
 all: lib/src/helpers/all
 all: lib/src/util/all
 all: tests/all
@@ -64,6 +65,7 @@ all: tests/all
 # The main recursive "preinstall" target.
 preinstall: bin/server/preinstall
 preinstall: bin/client/preinstall
+preinstall: outter_modules/json/preinstall
 preinstall: lib/src/helpers/preinstall
 preinstall: lib/src/util/preinstall
 preinstall: tests/preinstall
@@ -73,6 +75,7 @@ preinstall: tests/preinstall
 # The main recursive "clean" target.
 clean: bin/server/clean
 clean: bin/client/clean
+clean: outter_modules/json/clean
 clean: lib/src/helpers/clean
 clean: lib/src/util/clean
 clean: tests/clean
@@ -137,19 +140,115 @@ lib/src/helpers/clean: lib/src/helpers/CMakeFiles/debug_helper.dir/clean
 # Directory level rules for directory lib/src/util
 
 # Recursive "all" directory target.
-lib/src/util/all: lib/src/util/CMakeFiles/crypto_unit.dir/all
+lib/src/util/all: lib/src/util/cryptolib/all
+lib/src/util/all: lib/src/util/data_transfer/all
 
 .PHONY : lib/src/util/all
 
 # Recursive "preinstall" directory target.
-lib/src/util/preinstall:
+lib/src/util/preinstall: lib/src/util/cryptolib/preinstall
+lib/src/util/preinstall: lib/src/util/data_transfer/preinstall
 
 .PHONY : lib/src/util/preinstall
 
 # Recursive "clean" directory target.
-lib/src/util/clean: lib/src/util/CMakeFiles/crypto_unit.dir/clean
+lib/src/util/clean: lib/src/util/cryptolib/clean
+lib/src/util/clean: lib/src/util/data_transfer/clean
 
 .PHONY : lib/src/util/clean
+
+#=============================================================================
+# Directory level rules for directory lib/src/util/cryptolib
+
+# Recursive "all" directory target.
+lib/src/util/cryptolib/all: lib/src/util/cryptolib/CMakeFiles/crypto_unit.dir/all
+
+.PHONY : lib/src/util/cryptolib/all
+
+# Recursive "preinstall" directory target.
+lib/src/util/cryptolib/preinstall:
+
+.PHONY : lib/src/util/cryptolib/preinstall
+
+# Recursive "clean" directory target.
+lib/src/util/cryptolib/clean: lib/src/util/cryptolib/CMakeFiles/crypto_unit.dir/clean
+
+.PHONY : lib/src/util/cryptolib/clean
+
+#=============================================================================
+# Directory level rules for directory lib/src/util/data_transfer
+
+# Recursive "all" directory target.
+lib/src/util/data_transfer/all: lib/src/util/data_transfer/message_resolver/all
+lib/src/util/data_transfer/all: lib/src/util/data_transfer/message_model/all
+
+.PHONY : lib/src/util/data_transfer/all
+
+# Recursive "preinstall" directory target.
+lib/src/util/data_transfer/preinstall: lib/src/util/data_transfer/message_resolver/preinstall
+lib/src/util/data_transfer/preinstall: lib/src/util/data_transfer/message_model/preinstall
+
+.PHONY : lib/src/util/data_transfer/preinstall
+
+# Recursive "clean" directory target.
+lib/src/util/data_transfer/clean: lib/src/util/data_transfer/message_resolver/clean
+lib/src/util/data_transfer/clean: lib/src/util/data_transfer/message_model/clean
+
+.PHONY : lib/src/util/data_transfer/clean
+
+#=============================================================================
+# Directory level rules for directory lib/src/util/data_transfer/message_model
+
+# Recursive "all" directory target.
+lib/src/util/data_transfer/message_model/all: lib/src/util/data_transfer/message_model/CMakeFiles/message_model.dir/all
+
+.PHONY : lib/src/util/data_transfer/message_model/all
+
+# Recursive "preinstall" directory target.
+lib/src/util/data_transfer/message_model/preinstall:
+
+.PHONY : lib/src/util/data_transfer/message_model/preinstall
+
+# Recursive "clean" directory target.
+lib/src/util/data_transfer/message_model/clean: lib/src/util/data_transfer/message_model/CMakeFiles/message_model.dir/clean
+
+.PHONY : lib/src/util/data_transfer/message_model/clean
+
+#=============================================================================
+# Directory level rules for directory lib/src/util/data_transfer/message_resolver
+
+# Recursive "all" directory target.
+lib/src/util/data_transfer/message_resolver/all: lib/src/util/data_transfer/message_resolver/CMakeFiles/message_resolver.dir/all
+
+.PHONY : lib/src/util/data_transfer/message_resolver/all
+
+# Recursive "preinstall" directory target.
+lib/src/util/data_transfer/message_resolver/preinstall:
+
+.PHONY : lib/src/util/data_transfer/message_resolver/preinstall
+
+# Recursive "clean" directory target.
+lib/src/util/data_transfer/message_resolver/clean: lib/src/util/data_transfer/message_resolver/CMakeFiles/message_resolver.dir/clean
+
+.PHONY : lib/src/util/data_transfer/message_resolver/clean
+
+#=============================================================================
+# Directory level rules for directory outter_modules/json
+
+# Recursive "all" directory target.
+outter_modules/json/all:
+
+.PHONY : outter_modules/json/all
+
+# Recursive "preinstall" directory target.
+outter_modules/json/preinstall:
+
+.PHONY : outter_modules/json/preinstall
+
+# Recursive "clean" directory target.
+outter_modules/json/clean:
+
+.PHONY : outter_modules/json/clean
 
 #=============================================================================
 # Directory level rules for directory tests
@@ -297,10 +396,10 @@ tests/server_tests/clean: tests/server_tests/CMakeFiles/t_server.dir/clean
 
 # All Build rule for target.
 bin/server/CMakeFiles/server.dir/all: lib/src/helpers/CMakeFiles/debug_helper.dir/all
-bin/server/CMakeFiles/server.dir/all: lib/src/util/CMakeFiles/crypto_unit.dir/all
+bin/server/CMakeFiles/server.dir/all: lib/src/util/cryptolib/CMakeFiles/crypto_unit.dir/all
 	$(MAKE) -f bin/server/CMakeFiles/server.dir/build.make bin/server/CMakeFiles/server.dir/depend
 	$(MAKE) -f bin/server/CMakeFiles/server.dir/build.make bin/server/CMakeFiles/server.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/aram/workspace/clientserver/CMakeFiles --progress-num=19,20,21,22,23,24 "Built target server"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/aram/workspace/clientserver/CMakeFiles --progress-num=23,24,25,26,27,28 "Built target server"
 .PHONY : bin/server/CMakeFiles/server.dir/all
 
 # Build rule for subdir invocation for target.
@@ -375,31 +474,85 @@ lib/src/helpers/CMakeFiles/debug_helper.dir/clean:
 .PHONY : lib/src/helpers/CMakeFiles/debug_helper.dir/clean
 
 #=============================================================================
-# Target rules for target lib/src/util/CMakeFiles/crypto_unit.dir
+# Target rules for target lib/src/util/cryptolib/CMakeFiles/crypto_unit.dir
 
 # All Build rule for target.
-lib/src/util/CMakeFiles/crypto_unit.dir/all:
-	$(MAKE) -f lib/src/util/CMakeFiles/crypto_unit.dir/build.make lib/src/util/CMakeFiles/crypto_unit.dir/depend
-	$(MAKE) -f lib/src/util/CMakeFiles/crypto_unit.dir/build.make lib/src/util/CMakeFiles/crypto_unit.dir/build
+lib/src/util/cryptolib/CMakeFiles/crypto_unit.dir/all:
+	$(MAKE) -f lib/src/util/cryptolib/CMakeFiles/crypto_unit.dir/build.make lib/src/util/cryptolib/CMakeFiles/crypto_unit.dir/depend
+	$(MAKE) -f lib/src/util/cryptolib/CMakeFiles/crypto_unit.dir/build.make lib/src/util/cryptolib/CMakeFiles/crypto_unit.dir/build
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/aram/workspace/clientserver/CMakeFiles --progress-num=7,8 "Built target crypto_unit"
-.PHONY : lib/src/util/CMakeFiles/crypto_unit.dir/all
+.PHONY : lib/src/util/cryptolib/CMakeFiles/crypto_unit.dir/all
 
 # Build rule for subdir invocation for target.
-lib/src/util/CMakeFiles/crypto_unit.dir/rule: cmake_check_build_system
+lib/src/util/cryptolib/CMakeFiles/crypto_unit.dir/rule: cmake_check_build_system
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/aram/workspace/clientserver/CMakeFiles 2
-	$(MAKE) -f CMakeFiles/Makefile2 lib/src/util/CMakeFiles/crypto_unit.dir/all
+	$(MAKE) -f CMakeFiles/Makefile2 lib/src/util/cryptolib/CMakeFiles/crypto_unit.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/aram/workspace/clientserver/CMakeFiles 0
-.PHONY : lib/src/util/CMakeFiles/crypto_unit.dir/rule
+.PHONY : lib/src/util/cryptolib/CMakeFiles/crypto_unit.dir/rule
 
 # Convenience name for target.
-crypto_unit: lib/src/util/CMakeFiles/crypto_unit.dir/rule
+crypto_unit: lib/src/util/cryptolib/CMakeFiles/crypto_unit.dir/rule
 
 .PHONY : crypto_unit
 
 # clean rule for target.
-lib/src/util/CMakeFiles/crypto_unit.dir/clean:
-	$(MAKE) -f lib/src/util/CMakeFiles/crypto_unit.dir/build.make lib/src/util/CMakeFiles/crypto_unit.dir/clean
-.PHONY : lib/src/util/CMakeFiles/crypto_unit.dir/clean
+lib/src/util/cryptolib/CMakeFiles/crypto_unit.dir/clean:
+	$(MAKE) -f lib/src/util/cryptolib/CMakeFiles/crypto_unit.dir/build.make lib/src/util/cryptolib/CMakeFiles/crypto_unit.dir/clean
+.PHONY : lib/src/util/cryptolib/CMakeFiles/crypto_unit.dir/clean
+
+#=============================================================================
+# Target rules for target lib/src/util/data_transfer/message_resolver/CMakeFiles/message_resolver.dir
+
+# All Build rule for target.
+lib/src/util/data_transfer/message_resolver/CMakeFiles/message_resolver.dir/all:
+	$(MAKE) -f lib/src/util/data_transfer/message_resolver/CMakeFiles/message_resolver.dir/build.make lib/src/util/data_transfer/message_resolver/CMakeFiles/message_resolver.dir/depend
+	$(MAKE) -f lib/src/util/data_transfer/message_resolver/CMakeFiles/message_resolver.dir/build.make lib/src/util/data_transfer/message_resolver/CMakeFiles/message_resolver.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/aram/workspace/clientserver/CMakeFiles --progress-num=21,22 "Built target message_resolver"
+.PHONY : lib/src/util/data_transfer/message_resolver/CMakeFiles/message_resolver.dir/all
+
+# Build rule for subdir invocation for target.
+lib/src/util/data_transfer/message_resolver/CMakeFiles/message_resolver.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/aram/workspace/clientserver/CMakeFiles 2
+	$(MAKE) -f CMakeFiles/Makefile2 lib/src/util/data_transfer/message_resolver/CMakeFiles/message_resolver.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/aram/workspace/clientserver/CMakeFiles 0
+.PHONY : lib/src/util/data_transfer/message_resolver/CMakeFiles/message_resolver.dir/rule
+
+# Convenience name for target.
+message_resolver: lib/src/util/data_transfer/message_resolver/CMakeFiles/message_resolver.dir/rule
+
+.PHONY : message_resolver
+
+# clean rule for target.
+lib/src/util/data_transfer/message_resolver/CMakeFiles/message_resolver.dir/clean:
+	$(MAKE) -f lib/src/util/data_transfer/message_resolver/CMakeFiles/message_resolver.dir/build.make lib/src/util/data_transfer/message_resolver/CMakeFiles/message_resolver.dir/clean
+.PHONY : lib/src/util/data_transfer/message_resolver/CMakeFiles/message_resolver.dir/clean
+
+#=============================================================================
+# Target rules for target lib/src/util/data_transfer/message_model/CMakeFiles/message_model.dir
+
+# All Build rule for target.
+lib/src/util/data_transfer/message_model/CMakeFiles/message_model.dir/all:
+	$(MAKE) -f lib/src/util/data_transfer/message_model/CMakeFiles/message_model.dir/build.make lib/src/util/data_transfer/message_model/CMakeFiles/message_model.dir/depend
+	$(MAKE) -f lib/src/util/data_transfer/message_model/CMakeFiles/message_model.dir/build.make lib/src/util/data_transfer/message_model/CMakeFiles/message_model.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/aram/workspace/clientserver/CMakeFiles --progress-num=19,20 "Built target message_model"
+.PHONY : lib/src/util/data_transfer/message_model/CMakeFiles/message_model.dir/all
+
+# Build rule for subdir invocation for target.
+lib/src/util/data_transfer/message_model/CMakeFiles/message_model.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/aram/workspace/clientserver/CMakeFiles 2
+	$(MAKE) -f CMakeFiles/Makefile2 lib/src/util/data_transfer/message_model/CMakeFiles/message_model.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/aram/workspace/clientserver/CMakeFiles 0
+.PHONY : lib/src/util/data_transfer/message_model/CMakeFiles/message_model.dir/rule
+
+# Convenience name for target.
+message_model: lib/src/util/data_transfer/message_model/CMakeFiles/message_model.dir/rule
+
+.PHONY : message_model
+
+# clean rule for target.
+lib/src/util/data_transfer/message_model/CMakeFiles/message_model.dir/clean:
+	$(MAKE) -f lib/src/util/data_transfer/message_model/CMakeFiles/message_model.dir/build.make lib/src/util/data_transfer/message_model/CMakeFiles/message_model.dir/clean
+.PHONY : lib/src/util/data_transfer/message_model/CMakeFiles/message_model.dir/clean
 
 #=============================================================================
 # Target rules for target tests/googletest/googlemock/CMakeFiles/gmock_main.dir
@@ -518,7 +671,7 @@ tests/client_tests/CMakeFiles/t_client.dir/all: tests/googletest/googletest/CMak
 tests/client_tests/CMakeFiles/t_client.dir/all: tests/googletest/googletest/CMakeFiles/gtest.dir/all
 	$(MAKE) -f tests/client_tests/CMakeFiles/t_client.dir/build.make tests/client_tests/CMakeFiles/t_client.dir/depend
 	$(MAKE) -f tests/client_tests/CMakeFiles/t_client.dir/build.make tests/client_tests/CMakeFiles/t_client.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/aram/workspace/clientserver/CMakeFiles --progress-num=25,26 "Built target t_client"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/aram/workspace/clientserver/CMakeFiles --progress-num=29,30 "Built target t_client"
 .PHONY : tests/client_tests/CMakeFiles/t_client.dir/all
 
 # Build rule for subdir invocation for target.
@@ -543,12 +696,12 @@ tests/client_tests/CMakeFiles/t_client.dir/clean:
 
 # All Build rule for target.
 tests/lib_tests/CMakeFiles/t_lib.dir/all: lib/src/helpers/CMakeFiles/debug_helper.dir/all
-tests/lib_tests/CMakeFiles/t_lib.dir/all: lib/src/util/CMakeFiles/crypto_unit.dir/all
+tests/lib_tests/CMakeFiles/t_lib.dir/all: lib/src/util/cryptolib/CMakeFiles/crypto_unit.dir/all
 tests/lib_tests/CMakeFiles/t_lib.dir/all: tests/googletest/googletest/CMakeFiles/gtest_main.dir/all
 tests/lib_tests/CMakeFiles/t_lib.dir/all: tests/googletest/googletest/CMakeFiles/gtest.dir/all
 	$(MAKE) -f tests/lib_tests/CMakeFiles/t_lib.dir/build.make tests/lib_tests/CMakeFiles/t_lib.dir/depend
 	$(MAKE) -f tests/lib_tests/CMakeFiles/t_lib.dir/build.make tests/lib_tests/CMakeFiles/t_lib.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/aram/workspace/clientserver/CMakeFiles --progress-num=27,28 "Built target t_lib"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/aram/workspace/clientserver/CMakeFiles --progress-num=31,32 "Built target t_lib"
 .PHONY : tests/lib_tests/CMakeFiles/t_lib.dir/all
 
 # Build rule for subdir invocation for target.
@@ -576,7 +729,7 @@ tests/server_tests/CMakeFiles/t_server.dir/all: tests/googletest/googletest/CMak
 tests/server_tests/CMakeFiles/t_server.dir/all: tests/googletest/googletest/CMakeFiles/gtest.dir/all
 	$(MAKE) -f tests/server_tests/CMakeFiles/t_server.dir/build.make tests/server_tests/CMakeFiles/t_server.dir/depend
 	$(MAKE) -f tests/server_tests/CMakeFiles/t_server.dir/build.make tests/server_tests/CMakeFiles/t_server.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/aram/workspace/clientserver/CMakeFiles --progress-num=29,30 "Built target t_server"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/aram/workspace/clientserver/CMakeFiles --progress-num=33,34 "Built target t_server"
 .PHONY : tests/server_tests/CMakeFiles/t_server.dir/all
 
 # Build rule for subdir invocation for target.

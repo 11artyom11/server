@@ -157,6 +157,8 @@ int Server::ServerModel::distribute_incoming_connections(int socket,
                                                                 char* response)
 {
     std::string response_s (response);
+    //here must be executed XML resolver in order to divide message 
+    //into essential command list
     response_s = response_s.substr(0, 1);
     Debug().info("RESS SIZE IS ", response_s.size());
 
@@ -166,7 +168,7 @@ int Server::ServerModel::distribute_incoming_connections(int socket,
     {
         return UNKNOWN_COMMAND_ERROR;
     }
-    int res = (m_handler.*mem_function)(socket);
+    int res = (m_handler.*mem_function)(socket, response_s);
     return res;
 }
 
@@ -175,13 +177,7 @@ void Server::ServerModel::handle_connection(int connection)
     if (connection < 0) {
     Debug().fatal("Failed to grab connection. errno: ", errno, ", terminating...");
     exit(EXIT_FAILURE);
-    } else 
-    {
-    std::string success_message = "Connection established";
-    Debug().info(success_message);
-    send(connection, success_message.c_str(), success_message.size(), 0);
-
-    }
+    } 
 
     // Read from the connection
     char buffer[100];

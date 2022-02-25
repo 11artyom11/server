@@ -80,7 +80,7 @@ t_lib_EXTERNAL_OBJECTS =
 bin/tests/lib_tests/t_lib: tests/lib_tests/CMakeFiles/t_lib.dir/test_1.cpp.o
 bin/tests/lib_tests/t_lib: tests/lib_tests/CMakeFiles/t_lib.dir/build.make
 bin/tests/lib_tests/t_lib: lib/libgtest_main.a
-bin/tests/lib_tests/t_lib: lib/src/util/libcrypto_unit.so.1.0.1
+bin/tests/lib_tests/t_lib: lib/src/util/cryptolib/libcrypto_unit.so.1.0.1
 bin/tests/lib_tests/t_lib: lib/src/helpers/libdebug_helper.so.1.0.1
 bin/tests/lib_tests/t_lib: lib/libgtest.a
 bin/tests/lib_tests/t_lib: /usr/lib/x86_64-linux-gnu/libcrypto.a

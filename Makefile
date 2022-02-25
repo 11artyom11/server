@@ -205,8 +205,34 @@ crypto_unit: cmake_check_build_system
 
 # fast build rule for target.
 crypto_unit/fast:
-	$(MAKE) -f lib/src/util/CMakeFiles/crypto_unit.dir/build.make lib/src/util/CMakeFiles/crypto_unit.dir/build
+	$(MAKE) -f lib/src/util/cryptolib/CMakeFiles/crypto_unit.dir/build.make lib/src/util/cryptolib/CMakeFiles/crypto_unit.dir/build
 .PHONY : crypto_unit/fast
+
+#=============================================================================
+# Target rules for targets named message_resolver
+
+# Build rule for target.
+message_resolver: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 message_resolver
+.PHONY : message_resolver
+
+# fast build rule for target.
+message_resolver/fast:
+	$(MAKE) -f lib/src/util/data_transfer/message_resolver/CMakeFiles/message_resolver.dir/build.make lib/src/util/data_transfer/message_resolver/CMakeFiles/message_resolver.dir/build
+.PHONY : message_resolver/fast
+
+#=============================================================================
+# Target rules for targets named message_model
+
+# Build rule for target.
+message_model: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 message_model
+.PHONY : message_model
+
+# fast build rule for target.
+message_model/fast:
+	$(MAKE) -f lib/src/util/data_transfer/message_model/CMakeFiles/message_model.dir/build.make lib/src/util/data_transfer/message_model/CMakeFiles/message_model.dir/build
+.PHONY : message_model/fast
 
 #=============================================================================
 # Target rules for targets named gmock_main
@@ -315,6 +341,8 @@ help:
 	@echo "... client"
 	@echo "... debug_helper"
 	@echo "... crypto_unit"
+	@echo "... message_resolver"
+	@echo "... message_model"
 	@echo "... gmock_main"
 	@echo "... gmock"
 	@echo "... gtest_main"

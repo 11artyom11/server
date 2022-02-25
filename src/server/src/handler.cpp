@@ -95,11 +95,26 @@ void* Server::Handler::reader(int sfd , uint32_t tid)
     pthread_exit(NULL);
 }
 
-int Server::Handler::sign_new_customer(int sfd)
+
+std::string Server::random_str(int len)
+{
+    std::string str("0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz");
+
+    std::random_device rd;
+    std::mt19937 generator(rd());
+
+    std::shuffle(str.begin(), str.end(), generator);
+
+    return str.substr(0, len); // assumes 32 < number of characters in str
+}
+
+int Server::Handler::sign_new_customer(int sfd, const std::string&)
 {
     Debug().info("Called Server::Handler::sign_new_customer( ", sfd, ")");
-    this->recent_customers[sfd] = new Customer::CustomerModel(sfd);
-    this->recent_customers[sfd]->get_crypto_unit()->init_server_keypair((char*)RSA_DEFAULT_PASSPHRASE);
+    std::string new_unique_token = Server::random_str();
+
+    this->recent_customers[new_unique_token] = new Customer::CustomerModel(sfd, new_unique_token);
+    this->recent_customers[new_unique_token]->get_crypto_unit()->init_server_keypair((char*)RSA_DEFAULT_PASSPHRASE);
 
     return 0;
 }
@@ -112,7 +127,7 @@ int Server::Handler::sign_new_customer(int sfd)
  * @param new_write_socket 
  * @return 0 on success 1 on opposite result 
  */
-int Server::Handler::provide_write_thread(int new_write_socket)
+int Server::Handler::provide_write_thread(int new_write_socket, const std::string&)
 {
     Debug().info("WRITE THREAD");
     /*Index of newly created thread to be passing to writer function*/
@@ -141,7 +156,7 @@ int Server::Handler::provide_write_thread(int new_write_socket)
  * @param new_read_socket 
  * @return 0 on success 1 on opposite result 
  */
-int Server::Handler::provide_read_thread(int new_read_socket)
+int Server::Handler::provide_read_thread(int new_read_socket, const std::string&)
 {
     /*Index of newly created thread to be passing to reader function*/
     int tid = reader_threads[new_read_socket].size();
@@ -166,7 +181,7 @@ int Server::Handler::provide_read_thread(int new_read_socket)
  * @param sfd socket to close
  * @return close success code 
  */
-int Server::Handler::terminate_socket( int sfd)
+int Server::Handler::terminate_socket( int sfd, const std::string&)
 {
     Debug().info("Connection terminated");
     /*
@@ -254,6 +269,13 @@ Server::Handler::get_command (std::string command)
     }
 }
 
+
+int Server::Handler::find_in_customer_cache(const std::string& unique_token)
+{
+    auto customer = recent_customers[unique_token];
+    if (customer == nullptr) return -1;
+    else return customer->get_sfd();
+}
 
 /**
  * @brief Destroy the Server:: Handler:: Handler object
