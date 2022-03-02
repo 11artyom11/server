@@ -1,5 +1,7 @@
 #include "../include/server.h"
 
+using namespace DataTransfer;
+
 bool Server::is_client_connection_close(const char* msg)
 {
     for (int i = 0; i < strlen (msg); ++i)
@@ -157,11 +159,14 @@ int Server::ServerModel::distribute_incoming_connections(int socket,
                                                                 char* response)
 {
     std::string response_s (response);
-    //here must be executed XML resolver in order to divide message 
-    //into essential command list
-    response_s = response_s.substr(0, 1);
-    Debug().info("RESS SIZE IS ", response_s.size());
 
+    //here must be executed JSON resolver in order to divide message 
+    //into essential command list
+    MessageModel message (response_s);//(nlohmann::json::parse(R"({"command" : 1})"));
+    Debug().info(response_s);
+    Debug().info("Retrieved commamd is : " , message.get_json_instance()->dump(4));
+
+    response_s = message.get<decltype(response_s)>("command");
 
     auto mem_function = m_handler.get_command(response_s);
     if (!mem_function)
@@ -180,11 +185,13 @@ void Server::ServerModel::handle_connection(int connection)
     } 
 
     // Read from the connection
-    char buffer[100];
-    int bytesRead = 0;
+    char buffer[1024];
+    int bytes, buflen; // for bytes written and size of buffer
+
     do 
     {
-        bytesRead = read (connection, buffer, 100);
+        bytes = read (connection, buffer, sizeof(buffer)-1);
+        buffer [bytes] = 0x00;
         Debug().info("Recieved message : ", buffer);
         int distribute_result = this->distribute_incoming_connections(connection,buffer);
         if (distribute_result == TERMINATE_CODE_SUCCESS || 
@@ -195,7 +202,7 @@ void Server::ServerModel::handle_connection(int connection)
         // Send a message to the connection
         std::string response = "Message recieved\n";
         send(connection, response.c_str(), response.size(), 0);
-    }while (bytesRead);           
+    }while (bytes);           
 
     close(connection);
   // Close the connections

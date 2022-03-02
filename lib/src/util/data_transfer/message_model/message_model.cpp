@@ -15,7 +15,24 @@ MessageModel::MessageModel()
  * @param json_s 
  */
 MessageModel::MessageModel (const string& json_s) __THROW :
-    m_message(json_s)
+    m_message(json::parse(json_s))
 {
     Debug().info("Constructed new MessageModel object");
+    Debug().info("IN MMESAGE : : : : :", m_message["command"]);
 }
+
+
+
+
+/**
+ * @brief return pointer const to json object
+ * means that pointed object cannot be edited via returned ptr
+ * 
+ * @return json* const pointer to json object
+ */
+json* const MessageModel::get_json_instance (void) const noexcept
+{
+    json* const js_obj_ptr = (json* const)(&this->m_message);
+    return js_obj_ptr;
+}
+

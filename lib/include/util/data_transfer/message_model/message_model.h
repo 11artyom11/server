@@ -16,11 +16,11 @@ namespace DataTransfer
         public:
 
              MessageModel();
-             MessageModel(const string& json_s) __THROW;
+             explicit MessageModel(const string& json_s) __THROW;
             
-            template <typename T>
-             MessageModel (T&& other_) __THROW;
+             MessageModel (MessageModel&& other_) = delete;
 
+            
             ~MessageModel() = default;
 
             template <typename ValType>
@@ -34,29 +34,20 @@ namespace DataTransfer
             void   set (const string& key, 
                             const ValType& value);
 
+            json* const get_json_instance (void) const noexcept;
+        private:
         
             json m_message;            
     };
 
 
 
-/**
- * @brief Construct a new Message Model:: Message Model object
- * 
- * @param other_rv 
- */
-template <typename T>
-MessageModel::MessageModel(T&& other_)__THROW :
-  m_message{std::forward<T>(other_)}
-{
-    Debug().info("Constructed new MessageModel object");
-}
 
 
 template <typename ValType>
 ValType MessageModel::get (const string& key)
 {
-    return this->m_message[key];
+    return this->m_message.at(key).get<ValType>();
 }
             
 
@@ -71,7 +62,7 @@ template <typename ValType>
 void MessageModel::get_into (const string& key,
                             ValType& into)
 {
-    into = m_message[key];
+    into = m_message.at(key).get<ValType>();
 }
 
 /**
@@ -85,7 +76,7 @@ template <typename ValType>
 void MessageModel::set (const string& key,
                             const ValType& value)
 {
-    this->m_message[key] = value;   
+    this->m_message.at(key) = value;   
 }
 
 };

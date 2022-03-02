@@ -5,7 +5,7 @@
 #include <string>
 #include <algorithm>
 #include "../../lib/include/util/data_transfer/message_model/message_model.h"
-
+#include "../../lib/include/helpers/debug_helper/debug_helper.h"
 
 int randint ()
 {
@@ -77,6 +77,43 @@ TEST (MESSAGE_JSON_TEST4, JSONTEST)
 
         EXPECT_EQ (nvalue, value);
     }
+}
+
+TEST (JSON_TO_STRING_TEST, JSONTEST)
+{
+    DataTransfer::MessageModel mes;
+
+    for (auto times =0 ; times < TEST_COMPLICATION; times++)
+    {
+    string key = random_string(12);
+    string value = random_string(12);        
+    mes.set(key, value);
+
+    }
+        string nvalue = mes.get_json_instance()->dump();
+
+
+    EXPECT_EQ (bool(!false), (bool)strlen(nvalue.c_str()));
+}
+
+TEST (JSON_PARSE_TEST, JSONTEST)
+{
+    DataTransfer::MessageModel mes;
+
+    for (auto times =0 ; times < TEST_COMPLICATION; times++)
+    {
+    string key = random_string(12);
+    string value = random_string(12);        
+    mes.set(key, value);
+
+    }
+    string nvalue = mes.get_json_instance()->dump();
+    DataTransfer::MessageModel helpobj(nvalue);
+
+    /*compare firstly defined and secondly parsed json objects*/
+    bool eqty = strcmp((char*)mes.get_json_instance()->dump().c_str(), 
+                        (char*)helpobj.get_json_instance()->dump().c_str());
+    EXPECT_EQ (!0, eqty);
 }
 
 int main(int argc, char *argv[])

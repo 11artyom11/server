@@ -12,6 +12,7 @@ add_executable(server src/main.cpp
                         src/customer_model/customer.cpp
                            src/customer_model/customer_crypto_unit.cpp )
 
+target_link_libraries( server message_model)
 
 target_link_libraries( server debug_helper)
 

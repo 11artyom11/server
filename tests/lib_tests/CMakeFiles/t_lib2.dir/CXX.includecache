@@ -399,6 +399,8 @@ algorithm
 -
 ../../lib/include/util/data_transfer/message_model/message_model.h
 /home/aram/workspace/clientserver/lib/include/util/data_transfer/message_model/message_model.h
+../../lib/include/helpers/debug_helper/debug_helper.h
+/home/aram/workspace/clientserver/lib/include/helpers/debug_helper/debug_helper.h
 
 tests/googletest/googletest/include/gtest/gtest-death-test.h
 gtest/internal/gtest-death-test-internal.h
