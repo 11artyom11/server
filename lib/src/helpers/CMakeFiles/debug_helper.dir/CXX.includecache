@@ -7,6 +7,10 @@
 #IncludeRegexTransform: 
 
 /home/aram/workspace/clientserver/lib/include/helpers/constants.h
+vector
+-
+string
+-
 
 /home/aram/workspace/clientserver/lib/include/helpers/debug_helper/debug_helper.h
 iostream

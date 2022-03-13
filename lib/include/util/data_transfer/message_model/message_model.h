@@ -34,7 +34,8 @@ namespace DataTransfer
             void   set (const string& key, 
                             const ValType& value);
 
-            json* const get_json_instance (void) const noexcept;
+            json* const get_json_instance (void)  noexcept;
+            string to_str (void) const noexcept;
         private:
         
             json m_message;            

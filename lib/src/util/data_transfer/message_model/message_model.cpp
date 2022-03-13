@@ -29,9 +29,14 @@ MessageModel::MessageModel (const string& json_s) __THROW :
  * 
  * @return json* const pointer to json object
  */
-json* const MessageModel::get_json_instance (void) const noexcept
+json* const MessageModel::get_json_instance (void)  noexcept
 {
     json* const js_obj_ptr = (json* const)(&this->m_message);
     return js_obj_ptr;
 }
 
+
+string MessageModel::to_str(void) const noexcept
+{
+            return this->m_message.dump();
+}

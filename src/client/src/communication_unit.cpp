@@ -50,14 +50,15 @@ BasicCommunicationModel::~BasicCommunicationModel()
 void BasicCommunicationModel::start_read_async(int sockfd)
 {
     Debug().info("Called BasicCommunicationModel::start_read_async(..)");
-    /*Lambda which is called to frok another thread in order to 
+    /*Lambda which is called to forkk another thread in order to 
         support async read model and not to mess with write model*/
     auto wait_to_read_and_start_read_q = [this, &sockfd]()
     {
         for (;;) 
         {
         /*While conenction has not been 
-            terminated keep reading from sockfd*/
+        terminated keep reading from sockfd*/
+
             /*This infinite loop can hold maximum $max_read_thread_count
             connections*/
             sem_wait(&read_lock);
@@ -75,6 +76,7 @@ void BasicCommunicationModel::start_read_async(int sockfd)
             Debug().info("READ RESULT : ", read_result);
             /*Start new thread to print retrieved buffer*/
             m_io_model->read_q(buff);
+
             sem_post(&read_lock);
         }
     };
@@ -90,6 +92,8 @@ void BasicCommunicationModel::start_read_async(int sockfd)
  * don't need to support multi stream work yet. Maybe later feature 
  * will be added.
  * 
+ * P.S. Yes it will be added because input eays will be extending 
+ * exponentinlly :))
  * @param sockfd 
  * @return void* 
  */
@@ -97,9 +101,14 @@ void BasicCommunicationModel::start_write_async(int sockfd,
                                                     std::istream&)
 {          
     std::string buf_s;
+    /*Collect input data until '\n' has been hit */
     while (getline(std::cin, buf_s) )
     {
-        write(sockfd, buf_s.c_str(), sizeof(buf_s.c_str()));
+        /*Here must be set message resolver to resolve inputted data*/
+        DataTransfer::MessageModel model (buf_s);
+        DataTransfer::MessageResolver MRes;
+        // // bool is_valid = DataTransfer::is_message_initial_data_valid()
+        write(sockfd, buf_s.c_str(), strlen(buf_s.c_str()));
         buf_s.clear();
     }
 }

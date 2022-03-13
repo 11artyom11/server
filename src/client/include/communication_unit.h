@@ -1,7 +1,10 @@
 #ifndef __COMM_UNIT_H__
 #define __COMM_UNIT_H__
 #include "connection_handler.h"
+#include "../../../lib/include/util/data_transfer/message_model/message_model.h"
+#include "../../../lib/include/util/data_transfer/message_resolver/message_resolver.h"
 #include "io_unit.h"
+
 #include <future>
 #include <thread>
 #include <semaphore.h>
@@ -33,9 +36,6 @@ namespace Net
             /*Maximum count of forked read and write threads*/
             uint32_t max_read_thread_count;
             uint32_t max_write_thread_count;
-
-            
-
     };
 };  
 #endif

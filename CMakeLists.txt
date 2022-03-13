@@ -4,6 +4,7 @@ cmake_minimum_required(VERSION 2.8.9)
 #project name : client_server
 project (client_server)
 
+set(CMAKE_CXX_STANDARD 17)
 #adding subproject server 
 add_subdirectory( src/server/ ./bin/server)
 

@@ -29,8 +29,6 @@ ClientModel::ClientModel(int __port)
    auto read_th = std::async(std::launch::async ,&Net::BasicCommunicationModel::start_read_async, this->comm_unit, main_socket);
    auto write_th = std::async(std::launch::async, &Net::BasicCommunicationModel::start_write_async, this->comm_unit, main_socket, std::ref(std::cin));
 
-    // write_th.get();
-    // read_th.get();
     Debug().info("Out of Client Model C-tor");
 
 }

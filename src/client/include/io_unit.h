@@ -43,6 +43,11 @@ void iounit::IOModel::write_q(mesType... istreams)
         empty subject write queue*/
     write_mutex.lock();
 
+    /*From here must be DB manager write functions released*/
+
+    /********************************************/
+    /*Think over turning mutexes into semaphores*/
+    /********************************************/
 
     write_mutex.unlock();
 }
@@ -52,10 +57,11 @@ template <typename... mesType>
 void iounit::IOModel::read_q(mesType... messages)
 {
 
-    /*Lock mutex to do atomic write to queue and check in 
-        empty subject write queue*/
+    /*Lock mutex to do atomic read to queue and check in 
+        empty subject read queue*/
     read_mutex.lock();
-                        Debug().info(messages...);
+    
+    Debug().info(messages...);
 
     read_mutex.unlock();
 }

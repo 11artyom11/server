@@ -16,3 +16,5 @@ add_executable(client src/main.cpp
                                     src/io_unit.cpp)
 
 target_link_libraries( client debug_helper)
+target_link_libraries( client message_model)
+target_link_libraries( client message_resolver)
