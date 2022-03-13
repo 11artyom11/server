@@ -4,7 +4,8 @@ using json = nlohmann::json;
 using string = std::string;
 using namespace DataTransfer;
 
-MessageModel::MessageModel()
+MessageModel::MessageModel() :
+    MessageModel ("{}")
 {
 
 }
@@ -18,9 +19,7 @@ MessageModel::MessageModel (const string& json_s) __THROW :
     m_message(json::parse(json_s))
 {
     Debug().info("Constructed new MessageModel object");
-    Debug().info("IN MMESAGE : : : : :", m_message["command"]);
 }
-
 
 
 

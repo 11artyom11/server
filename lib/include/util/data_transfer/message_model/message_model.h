@@ -62,7 +62,7 @@ template <typename ValType>
 void MessageModel::get_into (const string& key,
                             ValType& into)
 {
-    into = m_message.at(key).get<ValType>();
+    into = m_message[key].get<ValType>();
 }
 
 /**
@@ -76,7 +76,9 @@ template <typename ValType>
 void MessageModel::set (const string& key,
                             const ValType& value)
 {
-    this->m_message.at(key) = value;   
+    // Debug().info("In void MessageModel::set ");
+    this->m_message[key] = value;   
+    // Debug().info("Out void MessageModel::set ");
 }
 
 };

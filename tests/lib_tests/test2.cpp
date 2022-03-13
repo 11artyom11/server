@@ -31,9 +31,10 @@ TEST (MESSAGE_JSON_TEST1, JSONTEST)
     DataTransfer::MessageModel mes;
     for (int times = 0; times < TEST_COMPLICATION; ++times)
     {
-        string key = random_string(times);
+        string key = random_string(12);
         int value = randint();
         mes.set(key, value);
+        // Debug().info(mes.get<int>(key));
         EXPECT_EQ (mes.get<int>(key), value);
     }
 }
@@ -113,7 +114,7 @@ TEST (JSON_PARSE_TEST, JSONTEST)
     /*compare firstly defined and secondly parsed json objects*/
     bool eqty = strcmp((char*)mes.get_json_instance()->dump().c_str(), 
                         (char*)helpobj.get_json_instance()->dump().c_str());
-    EXPECT_EQ (!0, eqty);
+    EXPECT_EQ (0, eqty);
 }
 
 int main(int argc, char *argv[])
