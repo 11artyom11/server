@@ -68,18 +68,6 @@ install/strip/fast: preinstall/fast
 	/usr/bin/cmake -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
 .PHONY : install/strip/fast
 
-# Special rule for the target install/local
-install/local: preinstall
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
-	/usr/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
-.PHONY : install/local
-
-# Special rule for the target install/local
-install/local/fast: preinstall/fast
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
-	/usr/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
-.PHONY : install/local/fast
-
 # Special rule for the target install
 install: preinstall
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Install the project..."
@@ -124,6 +112,18 @@ edit_cache/fast: edit_cache
 
 .PHONY : edit_cache/fast
 
+# Special rule for the target install/local
+install/local: preinstall
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
+	/usr/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
+.PHONY : install/local
+
+# Special rule for the target install/local
+install/local/fast: preinstall/fast
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
+	/usr/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
+.PHONY : install/local/fast
+
 # The main all target
 all: cmake_check_build_system
 	cd /home/aram/workspace/clientserver && $(CMAKE_COMMAND) -E cmake_progress_start /home/aram/workspace/clientserver/CMakeFiles /home/aram/workspace/clientserver/tests/lib_tests/CMakeFiles/progress.marks
@@ -155,6 +155,21 @@ preinstall/fast:
 depend:
 	cd /home/aram/workspace/clientserver && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
 .PHONY : depend
+
+# Convenience name for target.
+tests/lib_tests/CMakeFiles/t_lib3.dir/rule:
+	cd /home/aram/workspace/clientserver && $(MAKE) -f CMakeFiles/Makefile2 tests/lib_tests/CMakeFiles/t_lib3.dir/rule
+.PHONY : tests/lib_tests/CMakeFiles/t_lib3.dir/rule
+
+# Convenience name for target.
+t_lib3: tests/lib_tests/CMakeFiles/t_lib3.dir/rule
+
+.PHONY : t_lib3
+
+# fast build rule for target.
+t_lib3/fast:
+	cd /home/aram/workspace/clientserver && $(MAKE) -f tests/lib_tests/CMakeFiles/t_lib3.dir/build.make tests/lib_tests/CMakeFiles/t_lib3.dir/build
+.PHONY : t_lib3/fast
 
 # Convenience name for target.
 tests/lib_tests/CMakeFiles/t_lib2.dir/rule:
@@ -213,6 +228,33 @@ test2.cpp.s:
 	cd /home/aram/workspace/clientserver && $(MAKE) -f tests/lib_tests/CMakeFiles/t_lib2.dir/build.make tests/lib_tests/CMakeFiles/t_lib2.dir/test2.cpp.s
 .PHONY : test2.cpp.s
 
+test3.o: test3.cpp.o
+
+.PHONY : test3.o
+
+# target to build an object file
+test3.cpp.o:
+	cd /home/aram/workspace/clientserver && $(MAKE) -f tests/lib_tests/CMakeFiles/t_lib3.dir/build.make tests/lib_tests/CMakeFiles/t_lib3.dir/test3.cpp.o
+.PHONY : test3.cpp.o
+
+test3.i: test3.cpp.i
+
+.PHONY : test3.i
+
+# target to preprocess a source file
+test3.cpp.i:
+	cd /home/aram/workspace/clientserver && $(MAKE) -f tests/lib_tests/CMakeFiles/t_lib3.dir/build.make tests/lib_tests/CMakeFiles/t_lib3.dir/test3.cpp.i
+.PHONY : test3.cpp.i
+
+test3.s: test3.cpp.s
+
+.PHONY : test3.s
+
+# target to generate assembly for a file
+test3.cpp.s:
+	cd /home/aram/workspace/clientserver && $(MAKE) -f tests/lib_tests/CMakeFiles/t_lib3.dir/build.make tests/lib_tests/CMakeFiles/t_lib3.dir/test3.cpp.s
+.PHONY : test3.cpp.s
+
 test_1.o: test_1.cpp.o
 
 .PHONY : test_1.o
@@ -247,16 +289,20 @@ help:
 	@echo "... clean"
 	@echo "... depend"
 	@echo "... install/strip"
-	@echo "... install/local"
 	@echo "... install"
 	@echo "... list_install_components"
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
+	@echo "... install/local"
+	@echo "... t_lib3"
 	@echo "... t_lib2"
 	@echo "... t_lib"
 	@echo "... test2.o"
 	@echo "... test2.i"
 	@echo "... test2.s"
+	@echo "... test3.o"
+	@echo "... test3.i"
+	@echo "... test3.s"
 	@echo "... test_1.o"
 	@echo "... test_1.i"
 	@echo "... test_1.s"

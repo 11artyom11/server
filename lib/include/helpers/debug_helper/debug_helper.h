@@ -6,6 +6,21 @@
 #include "../constants.h"
 
 
+#ifndef _COLORS_
+#define _COLORS_
+
+/* FOREGROUND */
+#define RST  "\x1B[0m"
+#define KRED  "\x1B[31m"
+#define KGRN  "\x1B[32m"
+#define KYEL  "\x1B[33m"
+#define KBLU  "\x1B[34m"
+#define KMAG  "\x1B[35m"
+#define KCYN  "\x1B[36m"
+#define KWHT  "\x1B[37m"
+#endif  /* _COLORS_ */
+
+
 enum class DEBUG_TYPE
 {
     ERROR_T,
@@ -51,18 +66,18 @@ template <typename ...mesTL>
  void Debug::info (mesTL... messages)
 {       
     if (!Debug::debug_state) return;
-     *outp_stream <<get_current_time() << " [ INFO ] ";
-    ((*outp_stream << messages << ' '), ...);
-    *outp_stream << std::endl;
+     *outp_stream << KBLU /*Blue code*/ <<  get_current_time() << " [ INFO ] ";
+    ((*outp_stream  << messages << ' '), ...);
+    *outp_stream << KWHT /*White code*/<<  std::endl;
 }
 
 template <typename ...mesTL>
  void Debug::warning (mesTL... messages)
 {
     if (!Debug::debug_state) return;
-    *outp_stream << get_current_time() << " [ WARINING ] ";
+    *outp_stream << KYEL <<  get_current_time() << " [ WARINING ] ";
     ((*outp_stream << messages << ' '), ...);
-    *outp_stream << std::endl;
+    *outp_stream << KWHT <<std::endl;
 
 }
 
@@ -70,9 +85,9 @@ template <typename ...mesTL>
  void Debug::fatal (mesTL... messages)
 {
     if (!Debug::debug_state) return;
-    *outp_stream << get_current_time() <<  " [ FATAL ] ";
+    *outp_stream  << KRED << get_current_time() <<  " [ FATAL ] ";
     ((*outp_stream << messages << ' '), ...);
-    *outp_stream << std::endl;
+*outp_stream << KWHT << std::endl;
 
 }
 

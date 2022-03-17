@@ -3,6 +3,7 @@
 
 #include <string>
 #include <map>
+#include <algorithm>
 #include <any>
 
 
@@ -47,7 +48,7 @@ namespace DataTransfer
     bool is_message_initial_data_valid (COMMAND_NAME cN, 
                                         const std::map<string, JsonValType> &);
 
-    bool is_message_initial_data_valid ( MessageModel& mModel);
+    bool is_message_valid ( MessageModel& mModel);
 
     COMMAND_NAME get_command_from_s (std::string command) ;
 }

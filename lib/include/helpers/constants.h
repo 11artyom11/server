@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <string>
+#include <map>
 
 constexpr auto RSA_DEFAULT_PASSPHRASE = "123";
 
@@ -35,7 +36,19 @@ constexpr auto UNKNOWN_TEMPLATE_MESSAGE_COMMAND = 0x000014;
 constexpr auto SIGN_UP_COMMAND = "sign_up";
 constexpr auto LOG_IN_COMMAND  = "log_in";
 
-const std::vector <std::string> SIGN_UP_KEY_COMMANDS {"sign_up"};
-const std::vector <std::string> LOG_IN_KEY_COMMANDS  {"log_in"};
+const std::vector <std::string> COMMAND_LIST {SIGN_UP_COMMAND, 
+                                                LOG_IN_COMMAND
+                                                /*etc....*/};
+
+
+const std::vector <std::string> SIGN_UP_DATA_KEYS{"command"};
+const std::vector <std::string> LOG_IN_DATA_KEYS {"log_in"};
+
+const std::map    <std::string, std::vector <std::string>>
+COMMAND_DATA_KEY_BINDINGS
+{
+    {SIGN_UP_COMMAND, {SIGN_UP_DATA_KEYS}},
+    {LOG_IN_COMMAND,  {LOG_IN_DATA_KEYS}}
+};
 
 #endif //__CONSTS

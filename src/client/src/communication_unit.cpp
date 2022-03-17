@@ -106,8 +106,11 @@ void BasicCommunicationModel::start_write_async(int sockfd,
     {
         /*Here must be set message resolver to resolve inputted data*/
         DataTransfer::MessageModel model (buf_s);
-        DataTransfer::MessageResolver MRes;
-        // // bool is_valid = DataTransfer::is_message_initial_data_valid()
+        if (!DataTransfer::is_message_valid(model))
+        {
+            Debug().fatal ("Bad Message");
+            continue;
+        }
         write(sockfd, buf_s.c_str(), strlen(buf_s.c_str()));
         buf_s.clear();
     }

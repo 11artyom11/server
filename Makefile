@@ -300,6 +300,19 @@ t_client/fast:
 .PHONY : t_client/fast
 
 #=============================================================================
+# Target rules for targets named t_lib3
+
+# Build rule for target.
+t_lib3: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 t_lib3
+.PHONY : t_lib3
+
+# fast build rule for target.
+t_lib3/fast:
+	$(MAKE) -f tests/lib_tests/CMakeFiles/t_lib3.dir/build.make tests/lib_tests/CMakeFiles/t_lib3.dir/build
+.PHONY : t_lib3/fast
+
+#=============================================================================
 # Target rules for targets named t_lib2
 
 # Build rule for target.
@@ -361,6 +374,7 @@ help:
 	@echo "... gtest_main"
 	@echo "... gtest"
 	@echo "... t_client"
+	@echo "... t_lib3"
 	@echo "... t_lib2"
 	@echo "... t_lib"
 	@echo "... t_server"

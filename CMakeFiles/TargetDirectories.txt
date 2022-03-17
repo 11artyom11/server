@@ -100,11 +100,12 @@
 /home/aram/workspace/clientserver/tests/client_tests/CMakeFiles/install/strip.dir
 /home/aram/workspace/clientserver/tests/client_tests/CMakeFiles/t_client.dir
 /home/aram/workspace/clientserver/tests/lib_tests/CMakeFiles/install/strip.dir
-/home/aram/workspace/clientserver/tests/lib_tests/CMakeFiles/install/local.dir
 /home/aram/workspace/clientserver/tests/lib_tests/CMakeFiles/install.dir
 /home/aram/workspace/clientserver/tests/lib_tests/CMakeFiles/list_install_components.dir
 /home/aram/workspace/clientserver/tests/lib_tests/CMakeFiles/rebuild_cache.dir
 /home/aram/workspace/clientserver/tests/lib_tests/CMakeFiles/edit_cache.dir
+/home/aram/workspace/clientserver/tests/lib_tests/CMakeFiles/install/local.dir
+/home/aram/workspace/clientserver/tests/lib_tests/CMakeFiles/t_lib3.dir
 /home/aram/workspace/clientserver/tests/lib_tests/CMakeFiles/t_lib2.dir
 /home/aram/workspace/clientserver/tests/lib_tests/CMakeFiles/t_lib.dir
 /home/aram/workspace/clientserver/tests/server_tests/CMakeFiles/install/strip.dir

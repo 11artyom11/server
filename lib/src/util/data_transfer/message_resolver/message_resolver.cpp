@@ -93,11 +93,12 @@ bool DataTransfer::is_message_initial_data_valid( DataTransfer::COMMAND_NAME cN,
     {
         case DataTransfer::COMMAND_NAME::SIGN_UP :
         {
-            for ( auto c_key : SIGN_UP_KEY_COMMANDS)
+            for ( auto c_key : COMMAND_DATA_KEY_BINDINGS.at(SIGN_UP_COMMAND))
             {
                 try
                 {
                     (void)data.at(c_key);
+                    
                 }
                 catch(const std::exception& e)
                 {
@@ -109,7 +110,7 @@ bool DataTransfer::is_message_initial_data_valid( DataTransfer::COMMAND_NAME cN,
         }
         case DataTransfer::COMMAND_NAME::LOG_IN :
         {
-            for ( auto c_key : LOG_IN_KEY_COMMANDS)
+            for ( auto c_key :  COMMAND_DATA_KEY_BINDINGS.at(SIGN_UP_COMMAND))
             {
                 try
                 {
@@ -138,20 +139,24 @@ bool DataTransfer::is_message_initial_data_valid( DataTransfer::COMMAND_NAME cN,
  * @return true if all OK
  * @return false if at least one of ESSENTIAL data doesnt exist
  */
-bool DataTransfer::is_message_initial_data_valid ( MessageModel& mModel)
+bool DataTransfer::is_message_valid ( MessageModel& mModel)
 {
-    DataTransfer::COMMAND_NAME command;
+    std::string command;
     try
     {
-        command = get_command_from_s(mModel.get<std::string>("command"));
+        command = mModel.get<std::string>("command");
+        bool is_command_valid = false;
+        Debug().info (std::find(COMMAND_LIST.begin(), COMMAND_LIST.end(), command) != COMMAND_LIST.end());
+        return std::find(COMMAND_LIST.begin(), COMMAND_LIST.end(), command) != COMMAND_LIST.end();
+        
     }
     catch(const std::exception& e)
     {
-        throw INVALID_INITIAL_MESSAGE_DATA;
+        Debug().fatal("Thrown INVALID_INITIAL_MESSAGE_DATA exception");
+        Debug().fatal("message_resolver.cpp :151");
+        return false;
     }
     auto map = static_cast<nlohmann::json*>(mModel.get_json_instance())->get<std::map<string, JsonValType>>();
-
-    
 }
 
 DataTransfer::COMMAND_NAME DataTransfer::get_command_from_s (std::string command) 
