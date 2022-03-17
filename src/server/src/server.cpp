@@ -154,7 +154,15 @@ struct sockaddr_in* Server::ServerModel::get_server_addr() const
     return this->server_addr;
 }
 
-
+/**
+ * @brief Call corresponding function based on retrieved message
+ * construction (Json template model)
+ * 
+ * @param socket : connection descriptor    
+ * @param response : returved message in char array
+ * @return 0 retrieved from handler function in case of success 
+ * otherwise return 1 
+ */
 int Server::ServerModel::distribute_incoming_connections(int socket, 
                                                                 char* response)
 {
@@ -162,9 +170,20 @@ int Server::ServerModel::distribute_incoming_connections(int socket,
 
     //here must be executed JSON resolver in order to divide message 
     //into essential command list
+    
+    /*
+    Additional layer of message-cheking in case of 
+    client message check
+    lack
+
+    returns handler return error (1) in case of "bad" message
+    */ 
     MessageModel message (response_s);//(nlohmann::json::parse(R"({"command" : 1})"));
-    Debug().info(response_s);
-    Debug().info("Retrieved commamd is : " , message.get_json_instance()->dump(4));
+    if (!DataTransfer::is_message_valid (message))
+    {
+        Debug().fatal("Bad Message");
+        return 1;
+    }
 
     response_s = message.get<decltype(response_s)>("command");
 

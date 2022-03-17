@@ -401,6 +401,7 @@ tests/server_tests/clean: tests/server_tests/CMakeFiles/t_server.dir/clean
 # All Build rule for target.
 bin/server/CMakeFiles/server.dir/all: lib/src/helpers/CMakeFiles/debug_helper.dir/all
 bin/server/CMakeFiles/server.dir/all: lib/src/util/cryptolib/CMakeFiles/crypto_unit.dir/all
+bin/server/CMakeFiles/server.dir/all: lib/src/util/data_transfer/message_resolver/CMakeFiles/message_resolver.dir/all
 bin/server/CMakeFiles/server.dir/all: lib/src/util/data_transfer/message_model/CMakeFiles/message_model.dir/all
 	$(MAKE) -f bin/server/CMakeFiles/server.dir/build.make bin/server/CMakeFiles/server.dir/depend
 	$(MAKE) -f bin/server/CMakeFiles/server.dir/build.make bin/server/CMakeFiles/server.dir/build
@@ -409,7 +410,7 @@ bin/server/CMakeFiles/server.dir/all: lib/src/util/data_transfer/message_model/C
 
 # Build rule for subdir invocation for target.
 bin/server/CMakeFiles/server.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/aram/workspace/clientserver/CMakeFiles 12
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/aram/workspace/clientserver/CMakeFiles 14
 	$(MAKE) -f CMakeFiles/Makefile2 bin/server/CMakeFiles/server.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/aram/workspace/clientserver/CMakeFiles 0
 .PHONY : bin/server/CMakeFiles/server.dir/rule

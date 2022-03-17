@@ -28,24 +28,27 @@ as value , which will be implicitly called when according command was called
 void Server::Handler::commap_init (void)
 {
     Debug().info("Cted commap");
-    commap[WRITE_REQ] = &Server::Handler::provide_write_thread;
-    commap[READ_REQ]  = &Server::Handler::provide_read_thread;
-    commap[EXIT_MESSAGE] = &Server::Handler::terminate_socket;
-    commap[SIGN_NEW_CUSTOMER_MESSAGE] = &Server::Handler::sign_new_customer;
+
+    commap[LOG_IN_REQUEST]  = &Server::Handler::log_in_to_system;
+    commap[SIGN_UP_REQUEST]  = &Server::Handler::log_in_to_system;
+    commap[LOG_IN_COMMAND]  = &Server::Handler::log_in_to_system;
+    commap[SIGN_UP_COMMAND] = &Server::Handler::sign_new_customer;
+    commap[WRITE_COMMAND]   = &Server::Handler::provide_write_thread;
+    commap[READ_COMMAND]    = &Server::Handler::provide_read_thread;
+    commap[EXIT_COMMAND]    = &Server::Handler::terminate_socket;
+
 }
 
 /**
  * @brief Function that will be called in function intended for
  * handling socket-writing stuff, and will be called in 
- * separate thread : semultieanously
+ * separate thread : simultieanously
  * 
  * @param param 
  * @return void* 
  */
 void* Server::Handler::writer(int sfd, uint32_t tid)
 {
- 
-    
           // Lock the semaphore
     sem_wait(&writer_sem);
     writer_++;
@@ -95,7 +98,12 @@ void* Server::Handler::reader(int sfd , uint32_t tid)
     pthread_exit(NULL);
 }
 
-
+/**
+ * @brief String randomizer
+ * 
+ * @param len string length to be returned
+ * @return std::string 
+ */
 std::string Server::random_str(int len)
 {
     std::string str("0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz");
@@ -108,6 +116,40 @@ std::string Server::random_str(int len)
     return str.substr(0, len); // assumes 32 < number of characters in str
 }
 
+
+/* HANDLERS */
+
+/**
+ * @brief Send request to server in order to take an "OK" to send 
+ * sign up command (NOT REQUEST)
+ * 
+ * @param sfd connection descriptor
+ * @return 0 on success 1 otherwise
+ */
+int Server::Handler::request_customer_sign_up(int sfd, const std::string&)
+{
+
+}
+
+/**
+ * @brief Send request to server in order to take an "OK" to send 
+ * log in command (NOT REQUEST)
+ * 
+ * @param sfd connection descriptor
+ * @return 0 on success 1 otherwise
+ */
+int Server::Handler::request_user_login(int sfd, const std::string&)
+{
+
+}
+
+/**
+ * @brief Send $SIGN_UP_COMMAND command with corresponding credentials to server
+ * in order to sign up as new customer
+ * 
+ * @param sfd connection descriptor
+ * @return 0 on success 1 otherwise 
+ */
 int Server::Handler::sign_new_customer(int sfd, const std::string&)
 {
     Debug().info("Called Server::Handler::sign_new_customer( ", sfd, ")");
@@ -119,6 +161,20 @@ int Server::Handler::sign_new_customer(int sfd, const std::string&)
     return 0;
 }
 
+/**
+ * @brief Send $LOG_IN_COMMAND command in with corresponding credentials
+ * in order to log in as existing user 
+ * 
+ * @param sfd 
+ * @return int 
+ */
+int Server::Handler::log_in_to_system(int sfd, const std::string&)
+{
+    /*Request to DB in order to make some calculations , still have 
+    nothing to do
+    Last edit : Mar 17 2022
+    */
+}
 
 
 /**
