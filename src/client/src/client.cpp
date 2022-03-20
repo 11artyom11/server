@@ -3,6 +3,11 @@
 using namespace Client;
 using namespace Net;
 
+/**
+ * @brief Construct a new Client Model:: Client Model object
+ * 
+ * @param __port Port number to set connection
+ */
 ClientModel::ClientModel(int __port)
 {
     con_handler = new BasicConnectionHandler();
@@ -33,6 +38,10 @@ ClientModel::ClientModel(int __port)
 
 }
 
+/**
+ * @brief Destroy the Client Model:: Client Model object
+ * 
+ */
 ClientModel::~ClientModel()
 {
 

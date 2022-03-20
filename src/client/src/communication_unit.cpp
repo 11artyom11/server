@@ -41,12 +41,11 @@ BasicCommunicationModel::~BasicCommunicationModel()
 /**
  * @brief Starting N count of forked threads which are async-ly 
  * reading from socket and sent to function of output
- * 
- * @param sockfd 
+ * [*need to think over*] maybe add std::ostream to pass to io->read function
+ * @param sockfd Socket file descriptor
  * @return void* 
  */
 
-//[*need to think over*] maybe add std::ostream to pass to io->read function
 void BasicCommunicationModel::start_read_async(int sockfd)
 {
     Debug().info("Called BasicCommunicationModel::start_read_async(..)");

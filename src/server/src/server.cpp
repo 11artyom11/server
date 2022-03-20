@@ -2,6 +2,15 @@
 
 using namespace DataTransfer;
 
+/**
+ * @brief this function is deprecated since 20 Mar 2022
+ * use generic connnection handlers instead
+ * 
+ * @param msg 
+ * @return true if close command in $msg found 
+ * @return false otherwise
+ * 
+ */
 bool Server::is_client_connection_close(const char* msg)
 {
     for (int i = 0; i < strlen (msg); ++i)
@@ -135,7 +144,11 @@ int Server::ServerModel::accept_connection_from_socket (int sockfd)
                         &size);
 }
 
-
+/**
+ * @brief Output common server configs to log
+ * using Debug module
+ * 
+ */
 void Server::ServerModel::dump_server_state(void) const noexcept
 {
     Debug().info("Server listen address : ",server_addr->sin_addr.s_addr);
@@ -196,6 +209,15 @@ int Server::ServerModel::distribute_incoming_connections(int socket,
     return res;
 }
 
+/**
+ * @brief Main function which listens to open port 
+ * and distributes connections between according handler functions
+ * 
+ * @note This function uses multithread mechanism and forks 
+ * another thread for each incoming connections
+ * 
+ * @param connection 
+ */
 void Server::ServerModel::handle_connection(int connection)
 {
     if (connection < 0) {

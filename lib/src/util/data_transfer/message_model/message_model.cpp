@@ -35,7 +35,11 @@ json* const MessageModel::get_json_instance (void)  noexcept
     return js_obj_ptr;
 }
 
-
+/**
+ * @brief Format message model to string and return
+ * 
+ * @return string indroduction of $(*this) message model
+ */
 string MessageModel::to_str(void) const noexcept
 {
             return this->m_message.dump();

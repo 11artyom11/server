@@ -1,10 +1,18 @@
 #include "../../../include/helpers/debug_helper/debug_helper.h"
 
+/**
+ * @brief Construct a new Debug:: Debug object
+ * 
+ */
 Debug::Debug()
 {
     this->outp_stream = &std::cout;
 }
 
+/**
+ * @brief Destroy the Debug:: Debug object
+ * 
+ */
 Debug::~Debug()
 {
 

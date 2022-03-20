@@ -1,3 +1,16 @@
+/**
+ * @file message_resolver.h
+ * @author Artyom Grigorian (grigorianartyom1@gmail.com)
+ * @brief 
+ * @version 0.1
+ * @date 2022-03-20
+ * @section DESCRIPTION
+ * This class is made to provide Formatters for inputted data, and 
+ * turn string literals into transferable data model , and so on.
+ * Is defined in DataTransfer namespace
+ * @copyright Copyright (c) 2022
+ * 
+ */
 #ifndef __MESSAGE_RESOLVER_H__
 #define __MESSAGE_RESOLVER_H__
 
@@ -19,8 +32,17 @@ namespace DataTransfer
 {
     enum class COMMAND_NAME 
     {
-        SIGN_UP, 
-            LOG_IN
+        SIGN_UP         , 
+        LOG_IN          ,
+        WRITE_COMMAND   ,
+        READ_COMMAND    ,
+        EXIT_COMMAND    ,
+        LOG_IN_REQUEST  ,
+        SIGN_UP_REQUEST ,
+        LOG_IN_VERIFY   ,
+        LOG_IN_ACCEPT   ,
+        SIGN_UP_VERIFY  ,
+        SIGN_UP_ACCEPT   
     };
 
     /**

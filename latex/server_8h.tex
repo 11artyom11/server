@@ -1,0 +1,64 @@
+\hypertarget{server_8h}{}\doxysection{src/server/include/server.h File Reference}
+\label{server_8h}\index{src/server/include/server.h@{src/server/include/server.h}}
+{\ttfamily \#include \char`\"{}../../../lib/include/helpers/debug\+\_\+helper/debug\+\_\+helper.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}../../../lib/include/util/data\+\_\+transfer/message\+\_\+model/message\+\_\+model.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}../../../lib/include/util/data\+\_\+transfer/message\+\_\+resolver/message\+\_\+resolver.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}handler.\+h\char`\"{}}\newline
+{\ttfamily \#include $<$iostream$>$}\newline
+{\ttfamily \#include $<$stdlib.\+h$>$}\newline
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include $<$unistd.\+h$>$}\newline
+{\ttfamily \#include $<$mutex$>$}\newline
+{\ttfamily \#include $<$arpa/inet.\+h$>$}\newline
+{\ttfamily \#include $<$sys/socket.\+h$>$}\newline
+{\ttfamily \#include $<$netdb.\+h$>$}\newline
+{\ttfamily \#include $<$netinet/in.\+h$>$}\newline
+\doxysubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{classServer_1_1ServerModel}{Server\+::\+Server\+Model}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+bool \mbox{\hyperlink{server_8h_a0f9b9562fae62c5a53b5a6baa3c3dcad}{Server\+::is\+\_\+client\+\_\+connection\+\_\+close}} (const char $\ast$msg)
+\begin{DoxyCompactList}\small\item\em this function is deprecated since 20 Mar 2022 use generic connnection handlers instead \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\begin{DoxyAuthor}{Author}
+Artyom Grigorian (\href{mailto:grigorianartyom1@gmail.com}{\texttt{ grigorianartyom1@gmail.\+com}}) 
+\end{DoxyAuthor}
+\begin{DoxyVersion}{Version}
+0.\+1 
+\end{DoxyVersion}
+\begin{DoxyDate}{Date}
+2022-\/03-\/20 
+\end{DoxyDate}
+\hypertarget{server_8h_DESCRIPTION}{}\doxysubsection{D\+E\+S\+C\+R\+I\+P\+T\+I\+ON}\label{server_8h_DESCRIPTION}
+This class is made to provide high level server A\+PI\textquotesingle{}s This class calls corresponding functions and runs commands to handle particular client-\/side request Is defined in Server namespace \begin{DoxyCopyright}{Copyright}
+Copyright (c) 2022 
+\end{DoxyCopyright}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{server_8h_a0f9b9562fae62c5a53b5a6baa3c3dcad}\label{server_8h_a0f9b9562fae62c5a53b5a6baa3c3dcad}} 
+\index{server.h@{server.h}!is\_client\_connection\_close@{is\_client\_connection\_close}}
+\index{is\_client\_connection\_close@{is\_client\_connection\_close}!server.h@{server.h}}
+\doxysubsubsection{\texorpdfstring{is\_client\_connection\_close()}{is\_client\_connection\_close()}}
+{\footnotesize\ttfamily bool Server\+::is\+\_\+client\+\_\+connection\+\_\+close (\begin{DoxyParamCaption}\item[{const char $\ast$}]{msg }\end{DoxyParamCaption})}
+
+
+
+this function is deprecated since 20 Mar 2022 use generic connnection handlers instead 
+
+
+\begin{DoxyParams}{Parameters}
+{\em msg} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if close command in \$msg found 
+
+false otherwise 
+\end{DoxyReturn}

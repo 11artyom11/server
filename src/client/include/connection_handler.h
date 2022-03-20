@@ -1,3 +1,14 @@
+/**
+ * @file connection_handler.h
+ * @author Artyom Grigorian (grigorianartyom1@gmail.com)
+ * @version 0.1
+ * @date 2022-03-20
+ * @section DESCRIPTION
+ * This class is made to establish stable connection 
+ * between server and remote node (client)
+ * @copyright Copyright (c) 2022
+ * 
+ */
 #ifndef __CONNECTION_HANDLER_H__
 #define __CONNECTION_HANDLER_H__
 #define SA struct sockaddr

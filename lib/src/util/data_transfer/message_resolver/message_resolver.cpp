@@ -155,10 +155,16 @@ bool DataTransfer::is_message_valid ( MessageModel& mModel)
         Debug().fatal("Thrown INVALID_INITIAL_MESSAGE_DATA exception");
         Debug().fatal("message_resolver.cpp :151");
         return false;
-    }
-    auto map = static_cast<nlohmann::json*>(mModel.get_json_instance())->get<std::map<string, JsonValType>>();
+    }`
 }
 
+/**
+ * @brief Return according command number from enum 
+ * based on passed string (also command , but as variable)
+ * 
+ * @param command 
+ * @return DataTransfer::COMMAND_NAME 
+ */
 DataTransfer::COMMAND_NAME DataTransfer::get_command_from_s (std::string command) 
 {
     if (command == SIGN_UP_COMMAND)
@@ -169,8 +175,44 @@ DataTransfer::COMMAND_NAME DataTransfer::get_command_from_s (std::string command
     {
         return DataTransfer::COMMAND_NAME::LOG_IN;
     }
+    if (command == WRITE_COMMAND)
+    {
+        return DataTransfer::COMMAND_NAME::WRITE_COMMAND;
+    }
+    if (command == EXIT_COMMAND)
+    {
+        return DataTransfer::COMMAND_NAME::EXIT_COMMAND;
+    }
+    if (command == SIGN_UP_REQUEST)
+    {
+        return DataTransfer::COMMAND_NAME::SIGN_UP_REQUEST;
+    }
+    if (command == LOG_IN_REQUEST)
+    {
+        return DataTransfer::COMMAND_NAME::LOG_IN_REQUEST;
+    }
+    if (command == SIGN_UP_ACCEPT)
+    {
+        return DataTransfer::COMMAND_NAME::SIGN_UP_ACCEPT;
+    }
+    if (command == SIGN_UP_VERIFY)
+    {
+        return DataTransfer::COMMAND_NAME::SIGN_UP_VERIFY;
+    }
+    if (command == LOG_IN_ACCEPT)
+    {
+        return DataTransfer::COMMAND_NAME::LOG_IN_ACCEPT;
+    }
+    if (command == LOG_IN_VERIFY)
+    {
+        return DataTransfer::COMMAND_NAME::LOG_IN_VERIFY;
+    }
 }
 
+/**
+ * @brief Destroy the Data Transfer:: Message Resolver:: Message Resolver object
+ * 
+ */
 DataTransfer::MessageResolver::~MessageResolver()
 {
 

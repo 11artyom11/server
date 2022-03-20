@@ -1,0 +1,141 @@
+\hypertarget{classNet_1_1BasicConnectionHandler}{}\doxysection{Net\+::Basic\+Connection\+Handler Class Reference}
+\label{classNet_1_1BasicConnectionHandler}\index{Net::BasicConnectionHandler@{Net::BasicConnectionHandler}}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classNet_1_1BasicConnectionHandler_a5f711ae131fbea7951b8459bc53509dc}{Basic\+Connection\+Handler}} ()
+\begin{DoxyCompactList}\small\item\em Construct a new Basic Connection Handler\+:\+: Basic Connection Handler object. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classNet_1_1BasicConnectionHandler_af065002a175d71fb9df3800aaba0fa4c}{$\sim$\+Basic\+Connection\+Handler}} ()
+\begin{DoxyCompactList}\small\item\em Destroy the Basic Connection Handler\+:\+: Basic Connection Handler object. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{classNet_1_1BasicConnectionHandler_a54a5b906475349754dec55e1936ab298}{get\+\_\+sockfd}} (void) const noexcept
+\begin{DoxyCompactList}\small\item\em returns main socket file descriptor \end{DoxyCompactList}\item 
+struct sockaddr\+\_\+in $\ast$ \mbox{\hyperlink{classNet_1_1BasicConnectionHandler_a737b5d24926f679cb2281f0f678e4c06}{get\+\_\+sockaddr}} (void) const noexcept
+\begin{DoxyCompactList}\small\item\em returns basic representation of network unit for more info see \href{https://www.gta.ufrj.br/ensino/eel878/sockets/sockaddr_inman.html}{\texttt{ https\+://www.\+gta.\+ufrj.\+br/ensino/eel878/sockets/sockaddr\+\_\+inman.\+html}} \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classNet_1_1BasicConnectionHandler_ac70d4cd957f50d69795d672b5edbf789}{setup\+\_\+socket}} (int \+\_\+\+\_\+domain, int \+\_\+\+\_\+type, int \+\_\+\+\_\+protocol)
+\begin{DoxyCompactList}\small\item\em Setup socket for communicating. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classNet_1_1BasicConnectionHandler_a1c3c8ffdd2dc7c7bb3e146343a0d5cd2}{setup\+\_\+server\+\_\+addr}} (int \+\_\+\+\_\+family, std\+::string \+\_\+\+\_\+host, uint32\+\_\+t \+\_\+\+\_\+port)
+\begin{DoxyCompactList}\small\item\em Setup server addr object. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classNet_1_1BasicConnectionHandler_a18fac910cf8466662049b5fe04a9ee59}{set\+\_\+server\+\_\+addr}} (struct sockaddr\+\_\+in $\ast$new\+\_\+serv\+\_\+addr)
+\begin{DoxyCompactList}\small\item\em Sets basic server model to new instance. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classNet_1_1BasicConnectionHandler_a5f711ae131fbea7951b8459bc53509dc}\label{classNet_1_1BasicConnectionHandler_a5f711ae131fbea7951b8459bc53509dc}} 
+\index{Net::BasicConnectionHandler@{Net::BasicConnectionHandler}!BasicConnectionHandler@{BasicConnectionHandler}}
+\index{BasicConnectionHandler@{BasicConnectionHandler}!Net::BasicConnectionHandler@{Net::BasicConnectionHandler}}
+\doxysubsubsection{\texorpdfstring{BasicConnectionHandler()}{BasicConnectionHandler()}}
+{\footnotesize\ttfamily Basic\+Connection\+Handler\+::\+Basic\+Connection\+Handler (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Construct a new Basic Connection Handler\+:\+: Basic Connection Handler object. 
+
+\mbox{\Hypertarget{classNet_1_1BasicConnectionHandler_af065002a175d71fb9df3800aaba0fa4c}\label{classNet_1_1BasicConnectionHandler_af065002a175d71fb9df3800aaba0fa4c}} 
+\index{Net::BasicConnectionHandler@{Net::BasicConnectionHandler}!````~BasicConnectionHandler@{$\sim$BasicConnectionHandler}}
+\index{````~BasicConnectionHandler@{$\sim$BasicConnectionHandler}!Net::BasicConnectionHandler@{Net::BasicConnectionHandler}}
+\doxysubsubsection{\texorpdfstring{$\sim$BasicConnectionHandler()}{~BasicConnectionHandler()}}
+{\footnotesize\ttfamily Basic\+Connection\+Handler\+::$\sim$\+Basic\+Connection\+Handler (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Destroy the Basic Connection Handler\+:\+: Basic Connection Handler object. 
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classNet_1_1BasicConnectionHandler_a737b5d24926f679cb2281f0f678e4c06}\label{classNet_1_1BasicConnectionHandler_a737b5d24926f679cb2281f0f678e4c06}} 
+\index{Net::BasicConnectionHandler@{Net::BasicConnectionHandler}!get\_sockaddr@{get\_sockaddr}}
+\index{get\_sockaddr@{get\_sockaddr}!Net::BasicConnectionHandler@{Net::BasicConnectionHandler}}
+\doxysubsubsection{\texorpdfstring{get\_sockaddr()}{get\_sockaddr()}}
+{\footnotesize\ttfamily struct sockaddr\+\_\+in $\ast$ Basic\+Connection\+Handler\+::get\+\_\+sockaddr (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [noexcept]}}
+
+
+
+returns basic representation of network unit for more info see \href{https://www.gta.ufrj.br/ensino/eel878/sockets/sockaddr_inman.html}{\texttt{ https\+://www.\+gta.\+ufrj.\+br/ensino/eel878/sockets/sockaddr\+\_\+inman.\+html}} 
+
+\begin{DoxyReturn}{Returns}
+struct sockaddr\+\_\+in$\ast$ 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classNet_1_1BasicConnectionHandler_a54a5b906475349754dec55e1936ab298}\label{classNet_1_1BasicConnectionHandler_a54a5b906475349754dec55e1936ab298}} 
+\index{Net::BasicConnectionHandler@{Net::BasicConnectionHandler}!get\_sockfd@{get\_sockfd}}
+\index{get\_sockfd@{get\_sockfd}!Net::BasicConnectionHandler@{Net::BasicConnectionHandler}}
+\doxysubsubsection{\texorpdfstring{get\_sockfd()}{get\_sockfd()}}
+{\footnotesize\ttfamily int Basic\+Connection\+Handler\+::get\+\_\+sockfd (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [noexcept]}}
+
+
+
+returns main socket file descriptor 
+
+\begin{DoxyReturn}{Returns}
+int which represents sockfd in fd table 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classNet_1_1BasicConnectionHandler_a18fac910cf8466662049b5fe04a9ee59}\label{classNet_1_1BasicConnectionHandler_a18fac910cf8466662049b5fe04a9ee59}} 
+\index{Net::BasicConnectionHandler@{Net::BasicConnectionHandler}!set\_server\_addr@{set\_server\_addr}}
+\index{set\_server\_addr@{set\_server\_addr}!Net::BasicConnectionHandler@{Net::BasicConnectionHandler}}
+\doxysubsubsection{\texorpdfstring{set\_server\_addr()}{set\_server\_addr()}}
+{\footnotesize\ttfamily bool Basic\+Connection\+Handler\+::set\+\_\+server\+\_\+addr (\begin{DoxyParamCaption}\item[{struct sockaddr\+\_\+in $\ast$}]{new\+\_\+serv\+\_\+addr }\end{DoxyParamCaption})}
+
+
+
+Sets basic server model to new instance. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em new\+\_\+serv\+\_\+addr} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true 
+
+false 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classNet_1_1BasicConnectionHandler_a1c3c8ffdd2dc7c7bb3e146343a0d5cd2}\label{classNet_1_1BasicConnectionHandler_a1c3c8ffdd2dc7c7bb3e146343a0d5cd2}} 
+\index{Net::BasicConnectionHandler@{Net::BasicConnectionHandler}!setup\_server\_addr@{setup\_server\_addr}}
+\index{setup\_server\_addr@{setup\_server\_addr}!Net::BasicConnectionHandler@{Net::BasicConnectionHandler}}
+\doxysubsubsection{\texorpdfstring{setup\_server\_addr()}{setup\_server\_addr()}}
+{\footnotesize\ttfamily bool Basic\+Connection\+Handler\+::setup\+\_\+server\+\_\+addr (\begin{DoxyParamCaption}\item[{int}]{\+\_\+\+\_\+family,  }\item[{std\+::string}]{\+\_\+\+\_\+host,  }\item[{uint32\+\_\+t}]{\+\_\+\+\_\+port }\end{DoxyParamCaption})}
+
+
+
+Setup server addr object. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em \+\_\+\+\_\+family} & \+: Protocol family for instance \\
+\hline
+{\em \+\_\+\+\_\+host} & \+: Recv and Send Host address \\
+\hline
+{\em \+\_\+\+\_\+port} & \+: Port on which connection will be released \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true on setup success false on failure 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classNet_1_1BasicConnectionHandler_ac70d4cd957f50d69795d672b5edbf789}\label{classNet_1_1BasicConnectionHandler_ac70d4cd957f50d69795d672b5edbf789}} 
+\index{Net::BasicConnectionHandler@{Net::BasicConnectionHandler}!setup\_socket@{setup\_socket}}
+\index{setup\_socket@{setup\_socket}!Net::BasicConnectionHandler@{Net::BasicConnectionHandler}}
+\doxysubsubsection{\texorpdfstring{setup\_socket()}{setup\_socket()}}
+{\footnotesize\ttfamily bool Basic\+Connection\+Handler\+::setup\+\_\+socket (\begin{DoxyParamCaption}\item[{int}]{\+\_\+\+\_\+domain,  }\item[{int}]{\+\_\+\+\_\+type,  }\item[{int}]{\+\_\+\+\_\+protocol }\end{DoxyParamCaption})}
+
+
+
+Setup socket for communicating. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em \+\_\+\+\_\+domain} & \+: The domain to which future connection will be requested \\
+\hline
+{\em \+\_\+\+\_\+type} & \+: Connection type \\
+\hline
+{\em \+\_\+\+\_\+protocol} & \+: Protocol using for communication \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True on socket creating success. False on socket creating failure 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+src/client/include/\mbox{\hyperlink{connection__handler_8h}{connection\+\_\+handler.\+h}}\item 
+src/client/src/connection\+\_\+handler.\+cpp\end{DoxyCompactItemize}

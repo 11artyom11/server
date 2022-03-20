@@ -1,0 +1,81 @@
+\hypertarget{connection__handler_8h}{}\doxysection{src/client/include/connection\+\_\+handler.h File Reference}
+\label{connection__handler_8h}\index{src/client/include/connection\_handler.h@{src/client/include/connection\_handler.h}}
+{\ttfamily \#include $<$iostream$>$}\newline
+{\ttfamily \#include $<$string$>$}\newline
+{\ttfamily \#include $<$cstring$>$}\newline
+{\ttfamily \#include $<$vector$>$}\newline
+{\ttfamily \#include $<$stdlib.\+h$>$}\newline
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include $<$unistd.\+h$>$}\newline
+{\ttfamily \#include $<$mutex$>$}\newline
+{\ttfamily \#include $<$arpa/inet.\+h$>$}\newline
+{\ttfamily \#include $<$sys/socket.\+h$>$}\newline
+{\ttfamily \#include $<$netdb.\+h$>$}\newline
+{\ttfamily \#include $<$netinet/in.\+h$>$}\newline
+Include dependency graph for connection\+\_\+handler.\+h\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{connection__handler_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=252pt]{connection__handler_8h__dep__incl}
+\end{center}
+\end{figure}
+\doxysubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{classNet_1_1BasicConnectionHandler}{Net\+::\+Basic\+Connection\+Handler}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{connection__handler_8h_a1e43924adac4ae865aa0acf79710261c}\label{connection__handler_8h_a1e43924adac4ae865aa0acf79710261c}} 
+\#define {\bfseries SA}~struct sockaddr
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+bool \mbox{\hyperlink{connection__handler_8h_ac369a5b3f1ff6c56acc01dba6f1699ff}{Net\+::connect\+\_\+to\+\_\+host}} (const \mbox{\hyperlink{classNet_1_1BasicConnectionHandler}{Basic\+Connection\+Handler}} \&basic\+\_\+\+CH)
+\begin{DoxyCompactList}\small\item\em Connects client model to certain host. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\begin{DoxyAuthor}{Author}
+Artyom Grigorian (\href{mailto:grigorianartyom1@gmail.com}{\texttt{ grigorianartyom1@gmail.\+com}}) 
+\end{DoxyAuthor}
+\begin{DoxyVersion}{Version}
+0.\+1 
+\end{DoxyVersion}
+\begin{DoxyDate}{Date}
+2022-\/03-\/20 
+\end{DoxyDate}
+\hypertarget{io__unit_8h_DESCRIPTION}{}\doxysubsection{D\+E\+S\+C\+R\+I\+P\+T\+I\+ON}\label{io__unit_8h_DESCRIPTION}
+This class is made to establish stable connection between server and remote node (client) \begin{DoxyCopyright}{Copyright}
+Copyright (c) 2022 
+\end{DoxyCopyright}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{connection__handler_8h_ac369a5b3f1ff6c56acc01dba6f1699ff}\label{connection__handler_8h_ac369a5b3f1ff6c56acc01dba6f1699ff}} 
+\index{connection\_handler.h@{connection\_handler.h}!connect\_to\_host@{connect\_to\_host}}
+\index{connect\_to\_host@{connect\_to\_host}!connection\_handler.h@{connection\_handler.h}}
+\doxysubsubsection{\texorpdfstring{connect\_to\_host()}{connect\_to\_host()}}
+{\footnotesize\ttfamily bool Net\+::connect\+\_\+to\+\_\+host (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classNet_1_1BasicConnectionHandler}{Basic\+Connection\+Handler}} \&}]{basic\+\_\+\+CH }\end{DoxyParamCaption})}
+
+
+
+Connects client model to certain host. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em basic\+\_\+\+CH} & \+: Basic implementation of client model \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true on connect success false on failure 
+\end{DoxyReturn}

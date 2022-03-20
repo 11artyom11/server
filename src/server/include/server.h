@@ -1,3 +1,17 @@
+/**
+ * @file server.h
+ * @author Artyom Grigorian (grigorianartyom1@gmail.com)
+ * @brief 
+ * @version 0.1
+ * @date 2022-03-20
+ * @section DESCRIPTION 
+ * This class is made to provide high level server API's 
+ * This class calls corresponding functions and runs commands to 
+ * handle particular client-side request
+ * Is defined in Server namespace
+ * @copyright Copyright (c) 2022
+ * 
+ */
 #ifndef __SERVER__
 #define __SERVER__
 

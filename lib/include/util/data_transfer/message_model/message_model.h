@@ -1,3 +1,18 @@
+/**
+ * @file message_model.h
+ * @author Artyom Grigorian (grigorianartyom1@gmail.com)
+ * @brief 
+ * @version 0.1
+ * @date 2022-03-20
+ * @section DESCRIPTION
+ * This class is made to provide high level visualization of 
+ * Data Transfer.
+ * Mainly defines API's essential to format message into different
+ * data standards such as JSON.
+ * Is defined in DataTransfer namespace
+ * @copyright Copyright (c) 2022
+ * 
+ */
 #ifndef __MESSAGE_MODEL_H__
 #define __MESSAGE_MODEL_H__
 

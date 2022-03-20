@@ -1,3 +1,18 @@
+/**
+ * @file constants.h
+ * @author Artyom Grigorian (grigorianartyom1@gmail.com)
+ * @brief 
+ * @version 0.1
+ * @date 2022-03-20
+ * 
+ * @section DESCRIPTION
+ * This file includes all essential and widely used values all over 
+ * this project
+ * 
+ * @copyright Copyright (c) 2022
+ * 
+ */
+
 #ifndef __CONSTS__
 #define __CONSTS__
 
@@ -22,11 +37,20 @@ constexpr auto EXIT_SYM     = '#';
 constexpr auto MAX_WRITE_THREAD_COUNT   = 10;
 constexpr auto MAX_READ_THREAD_COUNT    = 10;
 
+/* Server Responses */
+constexpr auto SIGN_UP_ACCEPT   = "sign_up_accept";
+constexpr auto SIGN_UP_VERIFY   = "sign_up_verify";
+constexpr auto LOG_IN_ACCEPT    = "log_in_accept";
+constexpr auto LOG_IN_VERIFY    = "log_in_verify";
+
+/*Client Requestes*/
 constexpr auto SIGN_UP_REQUEST  = "req_sign_up";
 constexpr auto LOG_IN_REQUEST   = "req_log_in";
 
+/* Two sided Commands */
 constexpr auto SIGN_UP_COMMAND  = "com_sign_up";
 constexpr auto LOG_IN_COMMAND   = "com_log_in";
+
 constexpr auto WRITE_COMMAND    = "com_write";
 constexpr auto READ_COMMAND     = "com_read";
 constexpr auto EXIT_COMMAND     = "com_exit";

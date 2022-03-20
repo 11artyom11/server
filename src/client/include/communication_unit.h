@@ -1,3 +1,18 @@
+/**
+ * @file communication_unit.h
+ * @author Artyom Grigorian (grigorianartyom1@gmail.com)
+ * @brief 
+ * @version 0.1
+ * @date 2022-03-20
+ * @section DESCRIPTION
+ * This class is made to provide communication bridge between 
+ * client and server core
+ * Is Used at both sides.
+ * Is defined in Net namespace
+ * 
+ * @copyright Copyright (c) 2022
+ * 
+ */
 #ifndef __COMM_UNIT_H__
 #define __COMM_UNIT_H__
 #include "connection_handler.h"

@@ -1,3 +1,17 @@
+/**
+ * @file io_unit.h
+ * @author Artyom Grigorian (grigorianartyom1@gmail.com)
+ * @brief 
+ * @version 0.1
+ * @date 2022-03-20
+ * @section DESCRIPTION
+ * This IOModel class is made to handle client input and output 
+ * and provide multiprocess mechanism for this process
+ * Is defined in iounit namespace
+ * 
+ * @copyright Copyright (c) 2022
+ * 
+ */
 #ifndef __IO_UNIT_H__
 #define __IO_UNIT_H__
 

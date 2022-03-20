@@ -1,3 +1,18 @@
+/**
+ * @file handler.h
+ * @author Artyom Grigorian (grigorianartyom1@gmail.com)
+ * @brief 
+ * @version 0.1
+ * @date 2022-03-20
+ * @section DESCRIPTION
+ * This Handler class is made to develop initial distibruting
+ * of incoming commands from remote nodes (clients)
+ * and to provide DB and Server Core resources for requesting connections 
+ * Is Defined in Server namespace
+ * @copyright Copyright (c) 2022
+ * 
+ */
+
 #ifndef __HANDLER__
 #define __HANDLER__
 
@@ -56,8 +71,8 @@ std::string random_str(int len = 40);
 
             /*HANDLER FUNCTIONS*/
             /* these functions are required to process all retrieved sanctioned data */
-            int request_customer_sign_up            (int sfd, const std::string&);
-            int request_user_login                  (int sfd, const std::string&);
+            int response_to_customer_sign_up        (int sfd, const std::string&);
+            int response_to_user_login              (int sfd, const std::string&);
             int sign_new_customer                   (int sfd, const std::string&);
             int log_in_to_system                    (int sfd, const std::string&);
             int provide_write_thread                (int sfd, const std::string&);
@@ -68,7 +83,7 @@ std::string random_str(int len = 40);
             int cleanup_socket_garbage              (int sfd);
             int cleanup_reader_thread_for_socket    (int sfd);
             int cleanup_writer_thread_for_socket    (int sfd);
-            
+
             decltype(&Server::Handler::provide_write_thread) get_command  ( std::string command);
             int find_in_customer_cache(const std::string& unique_token);
         private:

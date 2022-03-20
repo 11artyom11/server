@@ -1,0 +1,237 @@
+\hypertarget{classServer_1_1ServerModel}{}\doxysection{Server\+::Server\+Model Class Reference}
+\label{classServer_1_1ServerModel}\index{Server::ServerModel@{Server::ServerModel}}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classServer_1_1ServerModel_ad76cf7e417a6becdb64cb6e1b491615a}{Server\+Model}} (uint32\+\_\+t port=D\+E\+F\+A\+U\+L\+T\+\_\+\+P\+O\+RT)
+\begin{DoxyCompactList}\small\item\em Construct a new Server\+:\+: Server Model object =$>$ default constructor. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classServer_1_1ServerModel_a508a27d56eca5fe28cc1e14b5574e60b}{set\+\_\+server\+\_\+port}} (uint16\+\_\+t port=D\+E\+F\+A\+U\+L\+T\+\_\+\+P\+O\+RT)
+\begin{DoxyCompactList}\small\item\em sets working port on which server will be listening to \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classServer_1_1ServerModel_aa4fe4718a226d39a13607c24bc45e496}{set\+\_\+protocol\+\_\+family}} (uint16\+\_\+t family=A\+F\+\_\+\+I\+N\+ET)
+\begin{DoxyCompactList}\small\item\em sets working protocol family (ip\+V4 as default) \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classServer_1_1ServerModel_ab7a8b168f095cf37ad7b2bf93db06625}{set\+\_\+listen\+\_\+ip}} (in\+\_\+addr\+\_\+t ip=I\+N\+A\+D\+D\+R\+\_\+\+A\+NY)
+\begin{DoxyCompactList}\small\item\em Sets ip on which server will be listening to (I\+N\+A\+D\+D\+R\+\_\+\+A\+NY (default parameter) means server will listen to all pending addresses) \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{classServer_1_1ServerModel_a73c6a1124aa45a9ab4ab387dcce2d4c3}{bind\+\_\+client\+\_\+socket}} (int sockfd)
+\begin{DoxyCompactList}\small\item\em bind socket file descriptor to server address \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{classServer_1_1ServerModel_af92217744fd046187c67939e06019d07}{listen\+\_\+to\+\_\+socket}} (int sockfd, uint32\+\_\+t pending\+\_\+connection\+\_\+quantity=1)
+\begin{DoxyCompactList}\small\item\em Prepare to accept connections on socket FD. N connection requests will be queued before further requests are refused. Returns 0 on success, -\/1 for errors. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{classServer_1_1ServerModel_a245820ffc480138601490965eafb63ff}{accept\+\_\+connection\+\_\+from\+\_\+socket}} (int sockfd)
+\begin{DoxyCompactList}\small\item\em Await a connection on socket FD. When a connection arrives, open a new socket to communicate with it, set $\ast$\+A\+D\+DR (which is $\ast$\+A\+D\+D\+R\+\_\+\+L\+EN bytes long) to the address of the connecting peer and $\ast$\+A\+D\+D\+R\+\_\+\+L\+EN to the address\textquotesingle{}s actual length. r. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classServer_1_1ServerModel_a437de39e94be7af9ac8c880fa9b78f71}{dump\+\_\+server\+\_\+state}} (void) const noexcept
+\begin{DoxyCompactList}\small\item\em Output common server configs to log using Debug module. \end{DoxyCompactList}\item 
+struct sockaddr\+\_\+in $\ast$ \mbox{\hyperlink{classServer_1_1ServerModel_ac10435a3952023f1a69190a7100f346a}{get\+\_\+server\+\_\+addr}} () const
+\begin{DoxyCompactList}\small\item\em Returns set upped server address struct. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{classServer_1_1ServerModel_a8549c3d81ab7cfa11fec440f5bb33ab2}{distribute\+\_\+incoming\+\_\+connections}} (int new\+\_\+socket, char $\ast$response)
+\begin{DoxyCompactList}\small\item\em Call corresponding function based on retrieved message construction (Json template model) \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classServer_1_1ServerModel_a2366bd74dec57d58e3364256a338065f}{handle\+\_\+connection}} (int connection)
+\begin{DoxyCompactList}\small\item\em Main function which listens to open port and distributes connections between according handler functions. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classServer_1_1ServerModel_ab8db1da1c7f58cce102ca9aa4fa05f53}{$\sim$\+Server\+Model}} ()
+\begin{DoxyCompactList}\small\item\em Destroy the Server\+:\+: Server Model\+:\+: Server Model object. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classServer_1_1ServerModel_ad76cf7e417a6becdb64cb6e1b491615a}\label{classServer_1_1ServerModel_ad76cf7e417a6becdb64cb6e1b491615a}} 
+\index{Server::ServerModel@{Server::ServerModel}!ServerModel@{ServerModel}}
+\index{ServerModel@{ServerModel}!Server::ServerModel@{Server::ServerModel}}
+\doxysubsubsection{\texorpdfstring{ServerModel()}{ServerModel()}}
+{\footnotesize\ttfamily Server\+::\+Server\+Model\+::\+Server\+Model (\begin{DoxyParamCaption}\item[{uint32\+\_\+t}]{port = {\ttfamily DEFAULT\+\_\+PORT} }\end{DoxyParamCaption})}
+
+
+
+Construct a new Server\+:\+: Server Model object =$>$ default constructor. 
+
+\mbox{\Hypertarget{classServer_1_1ServerModel_ab8db1da1c7f58cce102ca9aa4fa05f53}\label{classServer_1_1ServerModel_ab8db1da1c7f58cce102ca9aa4fa05f53}} 
+\index{Server::ServerModel@{Server::ServerModel}!````~ServerModel@{$\sim$ServerModel}}
+\index{````~ServerModel@{$\sim$ServerModel}!Server::ServerModel@{Server::ServerModel}}
+\doxysubsubsection{\texorpdfstring{$\sim$ServerModel()}{~ServerModel()}}
+{\footnotesize\ttfamily Server\+::\+Server\+Model\+::$\sim$\+Server\+Model (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Destroy the Server\+:\+: Server Model\+:\+: Server Model object. 
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classServer_1_1ServerModel_a245820ffc480138601490965eafb63ff}\label{classServer_1_1ServerModel_a245820ffc480138601490965eafb63ff}} 
+\index{Server::ServerModel@{Server::ServerModel}!accept\_connection\_from\_socket@{accept\_connection\_from\_socket}}
+\index{accept\_connection\_from\_socket@{accept\_connection\_from\_socket}!Server::ServerModel@{Server::ServerModel}}
+\doxysubsubsection{\texorpdfstring{accept\_connection\_from\_socket()}{accept\_connection\_from\_socket()}}
+{\footnotesize\ttfamily int Server\+::\+Server\+Model\+::accept\+\_\+connection\+\_\+from\+\_\+socket (\begin{DoxyParamCaption}\item[{int}]{sockfd }\end{DoxyParamCaption})}
+
+
+
+Await a connection on socket FD. When a connection arrives, open a new socket to communicate with it, set $\ast$\+A\+D\+DR (which is $\ast$\+A\+D\+D\+R\+\_\+\+L\+EN bytes long) to the address of the connecting peer and $\ast$\+A\+D\+D\+R\+\_\+\+L\+EN to the address\textquotesingle{}s actual length. r. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em sockfd} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns the new socket\textquotesingle{}s descriptor, or -\/1 for errors 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classServer_1_1ServerModel_a73c6a1124aa45a9ab4ab387dcce2d4c3}\label{classServer_1_1ServerModel_a73c6a1124aa45a9ab4ab387dcce2d4c3}} 
+\index{Server::ServerModel@{Server::ServerModel}!bind\_client\_socket@{bind\_client\_socket}}
+\index{bind\_client\_socket@{bind\_client\_socket}!Server::ServerModel@{Server::ServerModel}}
+\doxysubsubsection{\texorpdfstring{bind\_client\_socket()}{bind\_client\_socket()}}
+{\footnotesize\ttfamily int Server\+::\+Server\+Model\+::bind\+\_\+client\+\_\+socket (\begin{DoxyParamCaption}\item[{int}]{sockfd }\end{DoxyParamCaption})}
+
+
+
+bind socket file descriptor to server address 
+
+
+\begin{DoxyParams}{Parameters}
+{\em sockfd} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+On success, zero is returned. On error, -\/1 is returned, and errno is set to indicate the error. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classServer_1_1ServerModel_a8549c3d81ab7cfa11fec440f5bb33ab2}\label{classServer_1_1ServerModel_a8549c3d81ab7cfa11fec440f5bb33ab2}} 
+\index{Server::ServerModel@{Server::ServerModel}!distribute\_incoming\_connections@{distribute\_incoming\_connections}}
+\index{distribute\_incoming\_connections@{distribute\_incoming\_connections}!Server::ServerModel@{Server::ServerModel}}
+\doxysubsubsection{\texorpdfstring{distribute\_incoming\_connections()}{distribute\_incoming\_connections()}}
+{\footnotesize\ttfamily int Server\+::\+Server\+Model\+::distribute\+\_\+incoming\+\_\+connections (\begin{DoxyParamCaption}\item[{int}]{socket,  }\item[{char $\ast$}]{response }\end{DoxyParamCaption})}
+
+
+
+Call corresponding function based on retrieved message construction (Json template model) 
+
+
+\begin{DoxyParams}{Parameters}
+{\em socket} & \+: connection descriptor ~\newline
+ \\
+\hline
+{\em response} & \+: returved message in char array \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 retrieved from handler function in case of success otherwise return 1 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classServer_1_1ServerModel_a437de39e94be7af9ac8c880fa9b78f71}\label{classServer_1_1ServerModel_a437de39e94be7af9ac8c880fa9b78f71}} 
+\index{Server::ServerModel@{Server::ServerModel}!dump\_server\_state@{dump\_server\_state}}
+\index{dump\_server\_state@{dump\_server\_state}!Server::ServerModel@{Server::ServerModel}}
+\doxysubsubsection{\texorpdfstring{dump\_server\_state()}{dump\_server\_state()}}
+{\footnotesize\ttfamily void Server\+::\+Server\+Model\+::dump\+\_\+server\+\_\+state (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [noexcept]}}
+
+
+
+Output common server configs to log using Debug module. 
+
+\mbox{\Hypertarget{classServer_1_1ServerModel_ac10435a3952023f1a69190a7100f346a}\label{classServer_1_1ServerModel_ac10435a3952023f1a69190a7100f346a}} 
+\index{Server::ServerModel@{Server::ServerModel}!get\_server\_addr@{get\_server\_addr}}
+\index{get\_server\_addr@{get\_server\_addr}!Server::ServerModel@{Server::ServerModel}}
+\doxysubsubsection{\texorpdfstring{get\_server\_addr()}{get\_server\_addr()}}
+{\footnotesize\ttfamily struct sockaddr\+\_\+in $\ast$ Server\+::\+Server\+Model\+::get\+\_\+server\+\_\+addr (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Returns set upped server address struct. 
+
+\begin{DoxyReturn}{Returns}
+struct sockaddr\+\_\+in$\ast$ 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classServer_1_1ServerModel_a2366bd74dec57d58e3364256a338065f}\label{classServer_1_1ServerModel_a2366bd74dec57d58e3364256a338065f}} 
+\index{Server::ServerModel@{Server::ServerModel}!handle\_connection@{handle\_connection}}
+\index{handle\_connection@{handle\_connection}!Server::ServerModel@{Server::ServerModel}}
+\doxysubsubsection{\texorpdfstring{handle\_connection()}{handle\_connection()}}
+{\footnotesize\ttfamily void Server\+::\+Server\+Model\+::handle\+\_\+connection (\begin{DoxyParamCaption}\item[{int}]{connection }\end{DoxyParamCaption})}
+
+
+
+Main function which listens to open port and distributes connections between according handler functions. 
+
+\begin{DoxyNote}{Note}
+This function uses multithread mechanism and forks another thread for each incoming connections
+\end{DoxyNote}
+
+\begin{DoxyParams}{Parameters}
+{\em connection} & \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classServer_1_1ServerModel_af92217744fd046187c67939e06019d07}\label{classServer_1_1ServerModel_af92217744fd046187c67939e06019d07}} 
+\index{Server::ServerModel@{Server::ServerModel}!listen\_to\_socket@{listen\_to\_socket}}
+\index{listen\_to\_socket@{listen\_to\_socket}!Server::ServerModel@{Server::ServerModel}}
+\doxysubsubsection{\texorpdfstring{listen\_to\_socket()}{listen\_to\_socket()}}
+{\footnotesize\ttfamily int Server\+::\+Server\+Model\+::listen\+\_\+to\+\_\+socket (\begin{DoxyParamCaption}\item[{int}]{sockfd,  }\item[{uint32\+\_\+t}]{pending\+\_\+connection\+\_\+quantity = {\ttfamily 1} }\end{DoxyParamCaption})}
+
+
+
+Prepare to accept connections on socket FD. N connection requests will be queued before further requests are refused. Returns 0 on success, -\/1 for errors. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em sockfd} & \\
+\hline
+{\em pending\+\_\+connection\+\_\+quantity} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns 0 on success, -\/1 for errors. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classServer_1_1ServerModel_ab7a8b168f095cf37ad7b2bf93db06625}\label{classServer_1_1ServerModel_ab7a8b168f095cf37ad7b2bf93db06625}} 
+\index{Server::ServerModel@{Server::ServerModel}!set\_listen\_ip@{set\_listen\_ip}}
+\index{set\_listen\_ip@{set\_listen\_ip}!Server::ServerModel@{Server::ServerModel}}
+\doxysubsubsection{\texorpdfstring{set\_listen\_ip()}{set\_listen\_ip()}}
+{\footnotesize\ttfamily bool Server\+::\+Server\+Model\+::set\+\_\+listen\+\_\+ip (\begin{DoxyParamCaption}\item[{in\+\_\+addr\+\_\+t}]{ip = {\ttfamily INADDR\+\_\+ANY} }\end{DoxyParamCaption})}
+
+
+
+Sets ip on which server will be listening to (I\+N\+A\+D\+D\+R\+\_\+\+A\+NY (default parameter) means server will listen to all pending addresses) 
+
+
+\begin{DoxyParams}{Parameters}
+{\em ip} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if succeed to set listen ip 
+
+false if failed to set listen ip 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classServer_1_1ServerModel_aa4fe4718a226d39a13607c24bc45e496}\label{classServer_1_1ServerModel_aa4fe4718a226d39a13607c24bc45e496}} 
+\index{Server::ServerModel@{Server::ServerModel}!set\_protocol\_family@{set\_protocol\_family}}
+\index{set\_protocol\_family@{set\_protocol\_family}!Server::ServerModel@{Server::ServerModel}}
+\doxysubsubsection{\texorpdfstring{set\_protocol\_family()}{set\_protocol\_family()}}
+{\footnotesize\ttfamily bool Server\+::\+Server\+Model\+::set\+\_\+protocol\+\_\+family (\begin{DoxyParamCaption}\item[{uint16\+\_\+t}]{family = {\ttfamily AF\+\_\+INET} }\end{DoxyParamCaption})}
+
+
+
+sets working protocol family (ip\+V4 as default) 
+
+
+\begin{DoxyParams}{Parameters}
+{\em family} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if succeed to set protocol family 
+
+false if failed to set protocol family 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classServer_1_1ServerModel_a508a27d56eca5fe28cc1e14b5574e60b}\label{classServer_1_1ServerModel_a508a27d56eca5fe28cc1e14b5574e60b}} 
+\index{Server::ServerModel@{Server::ServerModel}!set\_server\_port@{set\_server\_port}}
+\index{set\_server\_port@{set\_server\_port}!Server::ServerModel@{Server::ServerModel}}
+\doxysubsubsection{\texorpdfstring{set\_server\_port()}{set\_server\_port()}}
+{\footnotesize\ttfamily bool Server\+::\+Server\+Model\+::set\+\_\+server\+\_\+port (\begin{DoxyParamCaption}\item[{uint16\+\_\+t}]{port = {\ttfamily DEFAULT\+\_\+PORT} }\end{DoxyParamCaption})}
+
+
+
+sets working port on which server will be listening to 
+
+
+\begin{DoxyParams}{Parameters}
+{\em port} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if succeed to set listen port else false 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+src/server/include/\mbox{\hyperlink{server_8h}{server.\+h}}\item 
+src/server/src/server.\+cpp\end{DoxyCompactItemize}

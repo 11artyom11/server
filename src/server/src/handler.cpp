@@ -29,8 +29,8 @@ void Server::Handler::commap_init (void)
 {
     Debug().info("Cted commap");
 
-    commap[LOG_IN_REQUEST]  = &Server::Handler::log_in_to_system;
-    commap[SIGN_UP_REQUEST]  = &Server::Handler::log_in_to_system;
+    commap[LOG_IN_REQUEST]  = &Server::Handler::response_to_user_login;
+    commap[SIGN_UP_REQUEST]  = &Server::Handler::response_to_customer_sign_up;
     commap[LOG_IN_COMMAND]  = &Server::Handler::log_in_to_system;
     commap[SIGN_UP_COMMAND] = &Server::Handler::sign_new_customer;
     commap[WRITE_COMMAND]   = &Server::Handler::provide_write_thread;
@@ -120,27 +120,29 @@ std::string Server::random_str(int len)
 /* HANDLERS */
 
 /**
- * @brief Send request to server in order to take an "OK" to send 
- * sign up command (NOT REQUEST)
+  * @brief Send response to client  in order to give to the client
+ * an information about log_in (reject or accept request)
  * 
  * @param sfd connection descriptor
  * @return 0 on success 1 otherwise
  */
-int Server::Handler::request_customer_sign_up(int sfd, const std::string&)
+int Server::Handler::response_to_customer_sign_up(int sfd, const std::string&)
 {
-
+    Debug().warning("Called Server::Handler::request_customer_sign_up STILL NOT IMPLEMENTED");
+    return 0;
 }
 
 /**
- * @brief Send request to server in order to take an "OK" to send 
- * log in command (NOT REQUEST)
+ * @brief Send response to client  in order to give to the client
+ * an information about sign_up (reject or accept request)
  * 
  * @param sfd connection descriptor
  * @return 0 on success 1 otherwise
  */
-int Server::Handler::request_user_login(int sfd, const std::string&)
+int Server::Handler::response_to_user_login(int sfd, const std::string&)
 {
-
+    Debug().warning("Called Server::Handler::request_user_login STILL NOT IMPLEMENTED");
+    return 0;
 }
 
 /**
@@ -195,6 +197,7 @@ int Server::Handler::provide_write_thread(int new_write_socket, const std::strin
     writer_threads[new_write_socket].push_back(new_thread);
     bool success = writer_threads[new_write_socket].at(tid)->joinable();
     alive_writer_sockets.push_back(new_write_socket);
+
        /*If succeeded to create a new thread
      for new socket increment writers count & return success code
       else return failure code */
@@ -305,9 +308,11 @@ int Server::Handler::cleanup_writer_thread_for_socket (int sfd)
 }
 
 /**
- * @brief 
+ * @brief Return according handler-function pointer based on passed
+ * command name 
+ * these bindings are stored in associative containers
  * 
- * @param command 
+ * @param command string indroduction of command 
  * @return decltype (&Server::Handler::provide_write_thread) 
  */
 decltype (&Server::Handler::provide_write_thread) 
@@ -325,7 +330,13 @@ Server::Handler::get_command (std::string command)
     }
 }
 
-
+/**
+ * @brief Request DB or local tmp cache in order to find according 
+ * user by particular credentials
+ * 
+ * @param unique_token  Particular unique credential
+ * @return int 
+ */
 int Server::Handler::find_in_customer_cache(const std::string& unique_token)
 {
     auto customer = recent_customers[unique_token];
