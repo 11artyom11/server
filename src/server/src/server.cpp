@@ -201,6 +201,7 @@ int Server::ServerModel::distribute_incoming_connections(int socket,
     response_s = message.get<decltype(response_s)>("command");
 
     auto mem_function = m_handler.get_command(response_s);
+    Debug().warning((mem_function ? "IS VALID FUNCTION" : "FUNCTION IS INVALID"));
     if (!mem_function)
     {
         return UNKNOWN_COMMAND_ERROR;

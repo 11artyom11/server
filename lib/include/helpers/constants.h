@@ -2,8 +2,8 @@
  * @file constants.h
  * @author Artyom Grigorian (grigorianartyom1@gmail.com)
  * @brief 
- * @version 0.1
- * @date 2022-03-20
+ * @version 0.2
+ * @date 2022-03-21
  * 
  * @section DESCRIPTION
  * This file includes all essential and widely used values all over 
@@ -65,11 +65,17 @@ constexpr auto UNKNOWN_TEMPLATE_MESSAGE_COMMAND = 0x000014;
 
 
 
-const std::vector <std::string> COMMAND_LIST {SIGN_UP_COMMAND, 
-                                                LOG_IN_COMMAND,
+const std::vector <std::string> COMMAND_LIST {   SIGN_UP_COMMAND, 
+                                                 LOG_IN_COMMAND,
                                                  WRITE_COMMAND,
                                                  READ_COMMAND,
-                                                 EXIT_COMMAND
+                                                 EXIT_COMMAND,
+                                                SIGN_UP_ACCEPT,
+                                                SIGN_UP_VERIFY,
+                                                LOG_IN_ACCEPT,
+                                                LOG_IN_VERIFY,
+                                                SIGN_UP_REQUEST,
+                                                LOG_IN_REQUEST
                                                 /*etc....*/};
 
 

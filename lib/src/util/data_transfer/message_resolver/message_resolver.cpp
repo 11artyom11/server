@@ -155,7 +155,7 @@ bool DataTransfer::is_message_valid ( MessageModel& mModel)
         Debug().fatal("Thrown INVALID_INITIAL_MESSAGE_DATA exception");
         Debug().fatal("message_resolver.cpp :151");
         return false;
-    }`
+    }
 }
 
 /**

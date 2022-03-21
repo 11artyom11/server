@@ -66,7 +66,7 @@ template <typename ...mesTL>
  void Debug::info (mesTL... messages)
 {       
     if (!Debug::debug_state) return;
-     *outp_stream << KBLU /*Blue code*/ <<  get_current_time() << " [ INFO ] ";
+     *outp_stream << KGRN /*Blue code*/ <<  get_current_time() << " [ INFO ] ";
     ((*outp_stream  << messages << ' '), ...);
     *outp_stream << KWHT /*White code*/<<  std::endl;
 }
