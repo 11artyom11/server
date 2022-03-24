@@ -6,7 +6,7 @@ using namespace Server;
 int main(int argc, char* argv[]) {
 
   // Create a socket (IPv4, TCP)
-
+  
   if (argc != 2)
   {
     Debug().fatal("1 parameter expected (port) 2 were given: terminating....");

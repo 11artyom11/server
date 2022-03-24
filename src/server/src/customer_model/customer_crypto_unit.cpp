@@ -2,6 +2,30 @@
 
 using namespace Security;
 
+/**
+     * @brief Written to find out wether 
+     * dir exists or not
+     * 
+     * @param dirpath 
+     * @return true if exists
+     * @return false otherwise
+     */
+bool Security::is_dir_exist (char const *dirpath)
+    {        
+        DIR* dir = opendir(dirpath);
+        if (dir) {
+            /*Dir exists*/
+            closedir(dir);
+            return true;
+        } else if (ENOENT == errno) {
+            /*Dir does not exist*/
+            return false;
+        } else {
+            /* opendir() failed for some other reason. */
+            return false;
+        }
+}
+
 CustomerCryptoUnit::CustomerCryptoUnit(int sfd)
 {
 
@@ -33,23 +57,52 @@ int CustomerCryptoUnit::init_server_keypair (char* passphrase)
     RSA_Unit rsaU;
     /*grab character under ascii firecode of sfd which is also unique*/
     /*if sfd is not given do generating in common buffer Public.key*/
-    char pub_file_name[1024] = "keystore/Public.key.";
+    char keystore_dir[MAX_FILE_PATH_LENGTH] = "./keystore/";
+    char pub_file_name[MAX_FILE_NAME_LENGTH] = "Public.key.";
+    char priv_file_name[MAX_FILE_NAME_LENGTH] = "Private.key.";
+    char pub_file_path[MAX_FILE_PATH_LENGTH+MAX_FILE_NAME_LENGTH];
+    char priv_file_path[MAX_FILE_PATH_LENGTH+MAX_FILE_NAME_LENGTH];
+
+
+    if (is_dir_exist(""))
+    {
+
+    }
+
     Debug().info ("In init_server_keypair ", c_sfd);
-    strcat (pub_file_name, c_sfd);
 
-    char priv_file_name[1024] = "keystore/Private.key.";
-    strcat (priv_file_name, c_sfd);
-
-    rsaU.Generate_KeyPair_Im(passphrase, pub_file_name, priv_file_name);
+    /*
+        Example =>
+                $priv_file_path
+        sprintf( "     ",       
+               "%s%s", 
+               Relative path for keys
+               "./keystore", 
+               File name (same is done for private key)
+               "Public.key.");
+        Result =>
+            ./keystore/Public.key.* is stored in $pub_file_name
     
-    EVP_PKEY *pubkey = rsaU.ReadPubKey_FromFile(pub_file_name);
-    char     *c_pubkey = rsaU.get_file_content(pub_file_name);
+    */
+    sprintf(pub_file_path, "%s%s", keystore_dir, pub_file_name);
+    sprintf(priv_file_path, "%s%s", keystore_dir, priv_file_name);
 
-    EVP_PKEY *privkey = rsaU.ReadPrivKey_FromFile(priv_file_name, passphrase);
-    char     *c_privkey = rsaU.get_file_content(priv_file_name);
+    Debug().warning (pub_file_path);
+    Debug().warning (priv_file_path);
+
+    strcat (pub_file_path, c_sfd);
+    strcat (priv_file_path, c_sfd);
+
+    rsaU.Generate_KeyPair_Im(passphrase, pub_file_path, priv_file_path);
+    
+    EVP_PKEY *pubkey = rsaU.ReadPubKey_FromFile(pub_file_path);
+    char     *c_pubkey = rsaU.get_file_content(pub_file_path);
+
+    EVP_PKEY *privkey = rsaU.ReadPrivKey_FromFile(priv_file_path, passphrase);
+    char     *c_privkey = rsaU.get_file_content(priv_file_path);
     
     Debug().info("Retrieved pubkey \n", c_pubkey);
-    Debug().info("Rettrieved privkey \n", c_privkey);
+    Debug().info("Retrieved privkey \n", c_privkey);
 
     this->server_keypair = {RSA_UNAR_KEY{pubkey, c_pubkey}, 
                             RSA_UNAR_KEY{privkey, c_privkey}};

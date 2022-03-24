@@ -7,16 +7,28 @@
  * @section DESCRIPTION
  * This class is made to add absraction level to customer signing 
  * process is defined in Security namespace
- * @section Last Changes 23-03-2022 Artyom Grigorian
- * 
- * Modified RSA_UNAR_KEY structure 
- * and incepted smart pointers
+ * @section Last Changes 24-03-2022 Artyom Grigorian
+ *
+ * Added macros to define max path lengths 
+ * in particular systems
  * 
  * @copyright Copyright (c) 2022
  * 
  */
 #ifndef __CUSTOMER_CRYPTO_UNIT_H__
 #define __CUSTOMER_CRYPTO_UNIT_H__
+
+#if defined  (__unix)
+#define MAX_FILE_NAME_LENGTH 255 /*bytes*/
+#define MAX_FILE_PATH_LENGTH 4096 /*bytes*/
+#endif /*__UNIX__*/
+
+#if defined (__WIN32) || (__WIN64)
+#define MAX_FILE_NAME_LENGTH 260 /*bytes*/
+#define MAX_FILE_PATH_LENGTH 260 /*bytes*/
+#endif /*__WIN32__*/
+
+
 
 #include "../../../../lib/include/util/cyptolib/crypto_unit.h"
 #include <map>
@@ -47,6 +59,8 @@ namespace Security
             EVP_PKEY_free(evp_key);
         }
     };
+       
+    bool is_dir_exist (char const *dirpath);    
 
     class CustomerCryptoUnit
     {
