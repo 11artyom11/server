@@ -15,9 +15,18 @@ MessageModel::MessageModel() :
  * 
  * @param json_s 
  */
-MessageModel::MessageModel (const string& json_s) __THROW :
-    m_message(json::parse(json_s))
+MessageModel::MessageModel (const string& json_s) __THROW
+    
 {
+    try
+    {
+        m_message = nlohmann::json(json::parse(json_s));
+    }
+    catch(const std::exception& e)
+    {
+        Debug().fatal("Parse Error !!!");
+    }
+    
     Debug().info("Constructed new MessageModel object");
 }
 

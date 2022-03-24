@@ -1,3 +1,20 @@
+/**
+ * @file customer_crypto_unit.h
+ * @author Artyom Grigorian (grigorianartyom1@gmail.com)
+ * @brief 
+ * @version 0.1
+ * @date 2022-03-23
+ * @section DESCRIPTION
+ * This class is made to add absraction level to customer signing 
+ * process is defined in Security namespace
+ * @section Last Changes 23-03-2022 Artyom Grigorian
+ * 
+ * Modified RSA_UNAR_KEY structure 
+ * and incepted smart pointers
+ * 
+ * @copyright Copyright (c) 2022
+ * 
+ */
 #ifndef __CUSTOMER_CRYPTO_UNIT_H__
 #define __CUSTOMER_CRYPTO_UNIT_H__
 
@@ -5,25 +22,29 @@
 #include <map>
 #include <algorithm>
 #include <cmath>
+#include <memory>
 #include <stdio.h>
 #include <stdlib.h>
+#include <dirent.h>
+
 namespace Security
 {
     class CustomerCryptoUnit;
     struct RSA_UNAR_KEY;
 
-    typedef std::pair <RSA_UNAR_KEY, Security::RSA_UNAR_KEY> RSA_Keypair;
+    typedef std::pair <RSA_UNAR_KEY, RSA_UNAR_KEY> RSA_Keypair;
 
+    
     /*singleton struct to generate key <<unions>> */
     struct RSA_UNAR_KEY
     {
-        EVP_PKEY* evp_key;
-        char* c_key;
+        EVP_PKEY*   evp_key;
+        char*       c_key;
 
-        ~RSA_UNAR_KEY () 
+        void free_all (void) noexcept
         {
-            // EVP_PKEY_free (evp_key);
-            // delete c_key;
+            delete[] c_key;
+            EVP_PKEY_free(evp_key);
         }
     };
 

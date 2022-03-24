@@ -10,6 +10,10 @@
  * Is Used at both sides.
  * Is defined in Net namespace
  * 
+ * @section Last Changes 2022-03-21 Artyom Grigorian
+ * Changed iomodel instance from naked ptr
+ * to smart ptr
+ * 
  * @copyright Copyright (c) 2022
  * 
  */
@@ -21,6 +25,7 @@
 #include "io_unit.h"
 
 #include <future>
+#include <memory>
 #include <thread>
 #include <semaphore.h>
 
@@ -30,6 +35,12 @@ constexpr auto max_write_th_count = 3;
 
 namespace Net
 {
+    template <typename T>
+    using unique_ptr = std::unique_ptr<T>;
+
+    typedef unique_ptr<iounit::IOModel> \
+                 IOModel_unq_ptr;
+
     class BasicCommunicationModel
     {   
         public:
@@ -42,7 +53,7 @@ namespace Net
             void start_read_async(int sockfd);
             void start_write_async(int sockfd, std::istream& is);
         private:
-            iounit::IOModel* m_io_model;
+            IOModel_unq_ptr m_io_model;
 
             /*Semaphores to keep maximum N threads forked to read & write*/
             sem_t read_lock;

@@ -8,6 +8,8 @@
  * between server and remote node (client)
  * @copyright Copyright (c) 2022
  * 
+ * @section Last Changes 2022-03-21 Artyom Grigorian
+ * Make naked pointers to smart pointers
  */
 #ifndef __CONNECTION_HANDLER_H__
 #define __CONNECTION_HANDLER_H__
@@ -16,6 +18,7 @@
 #include <iostream>
 #include <string>
 #include <cstring>
+#include <memory>
 #include <vector>
 #include <stdlib.h>
 #include <stdio.h>
@@ -29,10 +32,21 @@
 
 namespace Net
 {
+    template <typename T>
+    using shared_ptr = std::shared_ptr<T>;
+
+    template <typename T>
+    using unique_ptr = std::unique_ptr<T>;
+
+    typedef unique_ptr <struct sockaddr_in> \
+                sockaddr_in_unq_ptr;
+    
+
     class BasicConnectionHandler
     {
         public:
             BasicConnectionHandler();
+            // BasicConnectionHandler(const BasicConnectionHandler&) = delete;
             ~BasicConnectionHandler();
 
             int get_sockfd      (void) const noexcept;
@@ -51,7 +65,7 @@ namespace Net
         private:
         /*Main connection socket file descriptior*/
             int  m_connection;
-            struct sockaddr_in*  server_addr;
+            sockaddr_in_unq_ptr  server_addr;
             
 
     };

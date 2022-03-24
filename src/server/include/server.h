@@ -9,6 +9,9 @@
  * This class calls corresponding functions and runs commands to 
  * handle particular client-side request
  * Is defined in Server namespace
+ * 
+ * @section Last Changes 2022-03-21 Artyom Grigorian
+ * Changed Handler instance to Handler smart pointer
  * @copyright Copyright (c) 2022
  * 
  */
@@ -24,6 +27,7 @@
 #include <iostream>
 #include <string>
 #include <cstring>
+#include <memory>
 #include <vector>
 #include <stdlib.h>
 #include <stdio.h>
@@ -38,7 +42,17 @@
 /*Namespace purposed to store server-related functions and classes*/
 namespace Server
 {
+    template <typename T>
+    using unique_ptr = std::unique_ptr<T>;
+
     
+
+    typedef unique_ptr<Handler> \
+                Handler_unq_ptr;
+
+    typedef unique_ptr<struct sockaddr_in> \
+            sockaddr_in_unq_ptr;
+
     bool is_client_connection_close(const char* msg);
 
     class ServerModel
@@ -66,7 +80,7 @@ namespace Server
 
         private:
         /* Structure describing an Internet socket address.  */
-            struct sockaddr_in*  server_addr;
+            sockaddr_in_unq_ptr  server_addr;
 
         /*variable (int) that stores port server listens to  in host byte order*/
             uint16_t            listen_port;
@@ -82,7 +96,7 @@ namespace Server
             in_addr_t           listen_ip;
 
         /*Handler for write and read functions*/
-            Handler m_handler;
+            Handler_unq_ptr m_handler;
 
         
     };

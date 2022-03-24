@@ -157,8 +157,11 @@ int Server::Handler::sign_new_customer(int sfd, const std::string&)
     Debug().info("Called Server::Handler::sign_new_customer( ", sfd, ")");
     std::string new_unique_token = Server::random_str();
 
-    this->recent_customers[new_unique_token] = new Customer::CustomerModel(sfd, new_unique_token);
-    this->recent_customers[new_unique_token]->get_crypto_unit()->init_server_keypair((char*)RSA_DEFAULT_PASSPHRASE);
+
+    this->recent_customers[new_unique_token] = std::make_shared <Customer::CustomerModel> (Customer::CustomerModel(sfd, new_unique_token));
+
+    (*this).recent_customers[new_unique_token].get()->get_crypto_unit()->init_server_keypair((char*)RSA_DEFAULT_PASSPHRASE);
+
 
     return 0;
 }

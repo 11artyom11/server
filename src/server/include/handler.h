@@ -9,6 +9,11 @@
  * of incoming commands from remote nodes (clients)
  * and to provide DB and Server Core resources for requesting connections 
  * Is Defined in Server namespace
+ * 
+ * @section Last Changes 23-03-2022 Artyom Grigorian\
+ * Changed recent customer's naked pointer model
+ * into smart pointers
+ * 
  * @copyright Copyright (c) 2022
  * 
  */
@@ -18,6 +23,7 @@
 
 #include <unistd.h>
 #include <semaphore.h>
+#include <memory>
 #include <thread>
 #include <unordered_map>
 #include <map>
@@ -36,7 +42,10 @@ struct delete_ptr {
 };
 
 
-
+/**
+ * @brief class to define string comparison in vector
+ * 
+ */
 class strless {
    public:
       bool operator() (const std::string & first, const std::string & second ) const  { 
@@ -44,17 +53,25 @@ class strless {
       }
 };
 
-/*Thread container type to hold binded socket and provided threads for it*/
 
 namespace Server
 {
     class Handler;
 
-    typedef std::unordered_map <int, std::vector<std::thread*>> thCT ;
+    template <typename T>
+    using shared_ptr = std::shared_ptr<T>;
 
+    /*socket file descriptor and thhread vector container (MAP)*/
+    typedef std::unordered_map <int, std::vector<std::thread*>> thCT ;   
     
+    /*Binding which help to add new handler functions genreically*/
     typedef std::map <std::string, int (Handler::*) (int, const std::string&), ::strless> CommMapType;
-    typedef std::map <std::string, Customer::CustomerModel*, ::strless> CustomerCacheMapType;
+    
+    /*Shared ptr type for Customer Model*/
+    typedef shared_ptr<Customer::CustomerModel> CustomerModel_shrd_ptr;
+
+    /*Recent Customer cache type stores in trivial way*/
+    typedef std::map <std::string, CustomerModel_shrd_ptr, ::strless> CustomerCacheMapType;
 
 /*Function for random string generating*/
 std::string random_str(int len = 40);

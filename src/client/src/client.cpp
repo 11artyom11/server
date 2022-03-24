@@ -10,8 +10,8 @@ using namespace Net;
  */
 ClientModel::ClientModel(int __port)
 {
-    con_handler = new BasicConnectionHandler();
-    comm_unit = new BasicCommunicationModel();
+    con_handler = std::make_shared<Net::BasicConnectionHandler>();
+    comm_unit = std::make_shared<Net::BasicCommunicationModel>();
     
     bool sock_res = con_handler->setup_socket(AF_INET, SOCK_STREAM, 0);
     bool serv_res = con_handler->setup_server_addr(AF_INET, SERVER_IP, __port);
@@ -23,7 +23,7 @@ ClientModel::ClientModel(int __port)
         Debug().fatal("Failed to create socket. terminating...");
         exit(0);
     }
-    int connect_result = connect_to_host(*con_handler);
+    int connect_result = connect_to_host(*con_handler.get());
     if (!connect_result)
     {
         Debug().fatal("Failed to connect to host, ... terminating...");
@@ -44,5 +44,5 @@ ClientModel::ClientModel(int __port)
  */
 ClientModel::~ClientModel()
 {
-
+    Debug().info("Desctructed Client Model");
 }

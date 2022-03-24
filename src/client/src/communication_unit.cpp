@@ -22,7 +22,7 @@ BasicCommunicationModel::BasicCommunicationModel() :
 BasicCommunicationModel::BasicCommunicationModel(uint32_t _max_read_thread_count,
                                                     uint32_t _max_write_thread_count)
 {
-    this->m_io_model = new iounit::IOModel();
+    this->m_io_model = std::make_unique<iounit::IOModel>();
     this->max_read_thread_count = _max_read_thread_count;
     this->max_write_thread_count = _max_write_thread_count;
     sem_init (&read_lock,0, _max_read_thread_count);
@@ -35,7 +35,7 @@ BasicCommunicationModel::BasicCommunicationModel(uint32_t _max_read_thread_count
  */
 BasicCommunicationModel::~BasicCommunicationModel()
 {
-    delete this->m_io_model;
+
 }
 
 /**

@@ -11,18 +11,17 @@ using namespace Net;
 BasicConnectionHandler::BasicConnectionHandler()
 {
     Debug().info("Created BasicConnectionHandler object at ", this);
-    this->server_addr = new struct sockaddr_in;
-}
+    this->server_addr = std::make_unique <struct sockaddr_in>( );
+}  
 
 /**
- * @brief Destroy the Basic Connection Handler:: Basic Connection Handler object
+ * @brief Destroy the Basic Connection Handler:: Basic Connect ion Handler object
  * 
  */
-BasicConnectionHandler::~BasicConnectionHandler()
-{
-    Debug().info("Destructed BasicConnectionHandler object at ", this);
-    delete this->server_addr;
-}
+BasicConnectionHandler::~BasicConnectionHandler()  
+{  
+    Debug().info("Destructed BasicConnectionHandler object at  ", this);
+}  
 
 /**
  * @brief returns main socket file descriptor 
@@ -43,7 +42,7 @@ int BasicConnectionHandler::get_sockfd(void) const noexcept
  */
 struct sockaddr_in* BasicConnectionHandler::get_sockaddr(void) const noexcept
 {
-    return (*this).server_addr;
+    return (*this).server_addr.get();
 }
 
 
@@ -102,7 +101,7 @@ bool BasicConnectionHandler::set_server_addr (struct sockaddr_in* new_serv_addr)
 {
     Debug().info("Called BasicConnectionHandler::set_server_addr(...) function");
     
-    this->server_addr = new_serv_addr;
+    this->server_addr = std::make_unique <struct sockaddr_in> (*new_serv_addr);
     return (bool)this->server_addr;
 }
 
@@ -118,11 +117,11 @@ bool Net::connect_to_host (const BasicConnectionHandler& basic_CH)
     
     int sockfd = basic_CH.get_sockfd();
     
-    sockaddr_in* sockaddr  = basic_CH.get_sockaddr();
+    sockaddr_in_unq_ptr sockaddr  = std::make_unique<struct sockaddr_in>(*basic_CH.get_sockaddr());
     Debug().info(sockaddr->sin_addr.s_addr, 
                     sockaddr->sin_family,
                          sockaddr->sin_port);
 
-    int result = connect (sockfd, (SA*)sockaddr, sizeof (*sockaddr));    
+    int result = connect (sockfd, (SA*)(sockaddr.get()), sizeof (*sockaddr));    
     return (result == -1 ? false : true);
 }

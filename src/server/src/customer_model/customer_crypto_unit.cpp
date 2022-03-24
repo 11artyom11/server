@@ -16,7 +16,7 @@ CustomerCryptoUnit::CustomerCryptoUnit(int sfd)
 
 CustomerCryptoUnit::~CustomerCryptoUnit()
 {
-    delete c_sfd;
+    // delete c_sfd;
     Debug().info("Destroyed CustomerCryptoUnit::~CustomerCryptoUnit()");
 }
 
@@ -34,12 +34,14 @@ int CustomerCryptoUnit::init_server_keypair (char* passphrase)
     /*grab character under ascii firecode of sfd which is also unique*/
     /*if sfd is not given do generating in common buffer Public.key*/
     char pub_file_name[1024] = "keystore/Public.key.";
+    Debug().info ("In init_server_keypair ", c_sfd);
     strcat (pub_file_name, c_sfd);
 
     char priv_file_name[1024] = "keystore/Private.key.";
     strcat (priv_file_name, c_sfd);
 
     rsaU.Generate_KeyPair_Im(passphrase, pub_file_name, priv_file_name);
+    
     EVP_PKEY *pubkey = rsaU.ReadPubKey_FromFile(pub_file_name);
     char     *c_pubkey = rsaU.get_file_content(pub_file_name);
 

@@ -8,7 +8,7 @@ CustomerModel::CustomerModel(int sfd,
     unique_token{unique_token}
 {
     Debug().info("Retrieved data SFD : ", sfd, " UNIQUE TOKEN : ", unique_token);
-    crypto_unit = new Security::CustomerCryptoUnit(sfd);
+    crypto_unit = std::make_unique<Security::CustomerCryptoUnit>(Security::CustomerCryptoUnit(sfd));
 }
 
 int CustomerModel::get_sfd(void) const noexcept
@@ -18,7 +18,7 @@ int CustomerModel::get_sfd(void) const noexcept
 
 CustomerModel::~CustomerModel()
 {
-    delete this->crypto_unit;
+
 }
 
 /**
@@ -28,5 +28,5 @@ CustomerModel::~CustomerModel()
  */
 Security::CustomerCryptoUnit* CustomerModel::get_crypto_unit(void)
 {
-    return this->crypto_unit;
+    return this->crypto_unit.get();
 }

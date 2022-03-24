@@ -125,6 +125,15 @@ EVP_PKEY *RSA_Unit::Generate_KeyPair_Ex(char *pass)
     return pkey;
 }
 
+/**
+ * @brief Create RSA keypair and write them into 
+ * files
+ * 
+ * @param pass password for private key
+ * @param pub_key_name  filename for public key
+ * @param priv_key_name  filename for privaye key
+ * @return int 
+ */
 int RSA_Unit::Generate_KeyPair_Im(char *pass,
                                   char *pub_key_name,
                                   char *priv_key_name)
@@ -137,11 +146,11 @@ int RSA_Unit::Generate_KeyPair_Im(char *pass,
         Debug().fatal("Failed to create key pair...");
         return 1;
     }
-
+    Debug().info(pub_key_name, " | ", priv_key_name);
     // //Save private key
     FILE *fp = fopen(priv_key_name, "w");
 
-    if (!fp)
+    if (fp == nullptr)
     {
         Debug().fatal("Failed to open  file for private key");
         return 1;
@@ -167,7 +176,11 @@ int RSA_Unit::Generate_KeyPair_Im(char *pass,
         Debug().fatal("Failed to write public key to file");
     }
 
-    fclose(fp);
+    if (fclose(fp))
+    {
+        Debug().fatal ("Something gone wrong while closing file...");
+        exit(-1);
+    }
     EVP_PKEY_free(pkey);
 
     Debug().info("Out of function RSA_Unit::Generate_KeyPair_Im");
@@ -203,6 +216,13 @@ char *RSA_Unit::rsa_encrypt(char *raw_str,
     return (char *)encrypted_str;
 }
 
+/**
+ * @brief Encrypt given C string with key
+ * 
+ * @param raw_str C string to be encrypted
+ * @param key Rsa key
+ * @return char* 
+ */
 char *RSA_Unit::rsa_encrypt(char *raw_str,
                             RSA *key)
 {
@@ -248,6 +268,14 @@ char *RSA_Unit::rsa_decrypt(char *enc_str,
     return (char *)decrypted_str;
 }
 
+/**
+ * @brief Decrypt encrypted string passed as c string by
+ * RSA* struct pointer
+ * 
+ * @param enc_str 
+ * @param key 
+ * @return char* 
+ */
 char *RSA_Unit::rsa_decrypt(char *enc_str,
                             RSA *key)
 {
@@ -280,7 +308,7 @@ unsigned char *AES_Unit::generate_key(const uint16_t len)
     unsigned char *key = new unsigned char[len];
     if (!RAND_bytes(key, sizeof key))
     {
-        Debug().fatal("FUCKKKK");
+        Debug().fatal("Something gone wrong in generating keys");
     }
     return key;
 }

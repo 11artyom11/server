@@ -32,12 +32,12 @@ Server::ServerModel::ServerModel(uint32_t port) :
     listen_port {port},
         protocol_family {AF_INET},
             listen_ip {INADDR_ANY},
-                m_handler {3}
+                m_handler {std::make_unique<Handler>(3)}
 
 {
 
     Debug().info("Constructed ServerModel instance");
-    server_addr = new struct sockaddr_in;
+    server_addr = std::make_unique<struct sockaddr_in>();
     server_addr->sin_port = htons(listen_port);
     server_addr->sin_family = protocol_family;
     server_addr->sin_addr.s_addr = listen_ip;
@@ -107,7 +107,7 @@ int Server::ServerModel::bind_client_socket(int sockfd)
 {
     /*for more info see https://man7.org/linux/man-pages/man2/bind.2.html*/
     return bind(sockfd, 
-                   reinterpret_cast<sockaddr*>(this->server_addr), 
+                   reinterpret_cast<sockaddr*>(this->server_addr.get()), 
                         sizeof(*server_addr));
 }
 
@@ -140,7 +140,7 @@ int Server::ServerModel::accept_connection_from_socket (int sockfd)
 {
     socklen_t size = sizeof (*this->server_addr);
     return accept (sockfd, 
-                    reinterpret_cast<sockaddr*>(this->server_addr),
+                    reinterpret_cast<sockaddr*>(this->server_addr.get()),
                         &size);
 }
 
@@ -164,7 +164,7 @@ void Server::ServerModel::dump_server_state(void) const noexcept
  */
 struct sockaddr_in* Server::ServerModel::get_server_addr() const
 {
-    return this->server_addr;
+    return this->server_addr.get();
 }
 
 /**
@@ -200,13 +200,13 @@ int Server::ServerModel::distribute_incoming_connections(int socket,
 
     response_s = message.get<decltype(response_s)>("command");
 
-    auto mem_function = m_handler.get_command(response_s);
+    auto mem_function = (*m_handler.get()).get_command(response_s);
     Debug().warning((mem_function ? "IS VALID FUNCTION" : "FUNCTION IS INVALID"));
     if (!mem_function)
     {
         return UNKNOWN_COMMAND_ERROR;
     }
-    int res = (m_handler.*mem_function)(socket, response_s);
+    int res = ((*m_handler.get()).*mem_function)(socket, response_s);
     return res;
 }
 
@@ -259,7 +259,6 @@ void Server::ServerModel::handle_connection(int connection)
  */
 Server::ServerModel::~ServerModel()
 {
-    delete server_addr;
     Debug().info("Destructed Server Model object");
 }
 
