@@ -15,7 +15,6 @@ Server::Handler::Handler(int RWBacklog)
     sem_init (&writer_sem, 0, RWBacklog);
     sem_init (&reader_sem, 0, RWBacklog);
     commap_init();
-    DataTransfer::ConnectRequest cR("192.168.1.1");
 }
 
 /**
@@ -148,9 +147,15 @@ int Server::Handler::on_login_request_recieved(int sfd, const DataTransfer::Mess
  * @param sfd 
  * @return int 
  */
-int Server::Handler::on_connect_request_recieved(int sfd, const DataTransfer::MessageModel&)
+int Server::Handler::on_connect_request_recieved(int sfd, const DataTransfer::MessageModel& message)
 {
-
+    /*
+        Check if server's ready to accept connection (new)
+    */
+    Debug().info("Called Server::Handler::on_connect_request_recieved( ", sfd, ")");
+    
+    send_connect_accept(sfd, message);
+    return 0;
 }
 
 
@@ -163,7 +168,22 @@ int Server::Handler::on_connect_request_recieved(int sfd, const DataTransfer::Me
  */
 int Server::Handler::send_connect_accept(int sfd, const DataTransfer::MessageModel&)
 {
+    std::string new_unique_token = Server::random_str();
 
+    Debug().warning (new_unique_token);
+    this->recent_customers[new_unique_token] = std::make_shared <Customer::CustomerModel> (Customer::CustomerModel(sfd, new_unique_token));
+
+    (*this).recent_customers[new_unique_token].get()->get_crypto_unit()->init_server_keypair((char*)RSA_DEFAULT_PASSPHRASE);
+    auto keypair = (*this).recent_customers[new_unique_token].get()->get_crypto_unit()->get_server_keypair();
+
+
+    DataTransfer::ConnectAccept cA(keypair.first.c_key);
+    
+    /*Send public key to remote node (key is generated on server side)*/
+    send (sfd, cA.to_str().c_str(), cA.to_str().length(), NULL);
+    keypair.first.free_all();
+    keypair.second.free_all();
+    return 0;
 }
 
 /**
@@ -187,7 +207,12 @@ int Server::Handler::send_login_accept(int sfd, const DataTransfer::MessageModel
  */
 int Server::Handler::on_connect_command_recieved(int sfd, const DataTransfer::MessageModel&)
 {
-
+    Debug().warning ("here");
+    /*check message content*/ /*FIX ME*/
+    /* tmp uid*/
+    DataTransfer::ConnectVerify cV("0");
+    send (sfd, cV.to_str().c_str(), cV.to_str().length(), NULL);
+    return 0;
 }
 
 
@@ -218,18 +243,7 @@ int Server::Handler::on_login_command_recieved(int sfd, const DataTransfer::Mess
  */
 int Server::Handler::on_sign_up_command_recieved(int sfd, const DataTransfer::MessageModel&)
 {
-    Debug().info("Called Server::Handler::sign_new_customer( ", sfd, ")");
-    std::string new_unique_token = Server::random_str();
-
-    Debug().warning (new_unique_token);
-    this->recent_customers[new_unique_token] = std::make_shared <Customer::CustomerModel> (Customer::CustomerModel(sfd, new_unique_token));
-
-    (*this).recent_customers[new_unique_token].get()->get_crypto_unit()->init_server_keypair((char*)RSA_DEFAULT_PASSPHRASE);
-    auto keypair = (*this).recent_customers[new_unique_token].get()->get_crypto_unit()->get_server_keypair();
-
-    /*Send public key to remote node (key is generated on server side)*/
-    send (sfd, keypair.first.c_key, strlen(keypair.first.c_key), NULL);
-
+   
     return 0;
 }
 
