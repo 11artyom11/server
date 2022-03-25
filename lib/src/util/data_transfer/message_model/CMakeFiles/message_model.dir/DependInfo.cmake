@@ -5,6 +5,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
   "/home/aram/workspace/clientserver/lib/src/util/data_transfer/message_model/message_model.cpp" "/home/aram/workspace/clientserver/lib/src/util/data_transfer/message_model/CMakeFiles/message_model.dir/message_model.cpp.o"
+  "/home/aram/workspace/clientserver/lib/src/util/data_transfer/message_model/message_templates.cpp" "/home/aram/workspace/clientserver/lib/src/util/data_transfer/message_model/CMakeFiles/message_model.dir/message_templates.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 

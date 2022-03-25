@@ -206,7 +206,7 @@ int Server::ServerModel::distribute_incoming_connections(int socket,
     {
         return UNKNOWN_COMMAND_ERROR;
     }
-    int res = ((*m_handler.get()).*mem_function)(socket, response_s);
+    int res = ((*m_handler.get()).*mem_function)(socket, message);
     return res;
 }
 

@@ -119,7 +119,16 @@ int CustomerCryptoUnit::init_server_keypair (char* passphrase)
  */
 int CustomerCryptoUnit::set_server_keypair (const RSA_Keypair& __other)
 {
-
+   try
+   {
+        server_keypair = __other;
+        return 0;       
+   }
+   catch(const std::exception& e)
+   {
+        return 1;
+   }
+   
 }
 
 /**
@@ -130,7 +139,16 @@ int CustomerCryptoUnit::set_server_keypair (const RSA_Keypair& __other)
  */
 int CustomerCryptoUnit::set_client_key (const RSA_UNAR_KEY& __other)
 {
-
+    try
+    {
+        this->client_key = __other;
+        return 0;
+    }
+    catch(const std::exception& e)
+    {
+        return 1;
+    }
+    
 }
 
 /**
@@ -140,7 +158,7 @@ int CustomerCryptoUnit::set_client_key (const RSA_UNAR_KEY& __other)
  */
 RSA_Keypair& CustomerCryptoUnit::get_server_keypair (void)
 {
-
+    return this->server_keypair;
 }
 
 /**
@@ -150,5 +168,5 @@ RSA_Keypair& CustomerCryptoUnit::get_server_keypair (void)
  */
 RSA_UNAR_KEY& CustomerCryptoUnit::get_client_key (void)
 {
-
+    return this->client_key;
 }

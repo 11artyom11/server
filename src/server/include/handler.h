@@ -10,9 +10,8 @@
  * and to provide DB and Server Core resources for requesting connections 
  * Is Defined in Server namespace
  * 
- * @section Last Changes 23-03-2022 Artyom Grigorian\
- * Changed recent customer's naked pointer model
- * into smart pointers
+ * @section Last Changes 25-03-2022 Artyom Grigorian
+ * Changed argument passing to handlers as string into MessageModel
  * 
  * @copyright Copyright (c) 2022
  * 
@@ -31,7 +30,13 @@
 #include <random>
 #include <string>
 #include <algorithm>
+#include <arpa/inet.h>
+#include <sys/socket.h>
+#include <netdb.h>
+#include <netinet/in.h>
 #include "../include/customer_model/customer.h"
+#include "../../../lib/include/util/data_transfer/message_model/message_templates.h"
+#include "../../../lib/include/util/data_transfer/message_resolver/message_resolver.h"
 
 // Helper functor to ease cleanup of container
 struct delete_ptr { 
@@ -40,7 +45,6 @@ struct delete_ptr {
         delete p;
     }
 };
-
 
 /**
  * @brief class to define string comparison in vector
@@ -53,7 +57,6 @@ class strless {
       }
 };
 
-
 namespace Server
 {
     class Handler;
@@ -65,7 +68,7 @@ namespace Server
     typedef std::unordered_map <int, std::vector<std::thread*>> thCT ;   
     
     /*Binding which help to add new handler functions genreically*/
-    typedef std::map <std::string, int (Handler::*) (int, const std::string&), ::strless> CommMapType;
+    typedef std::map <std::string, int (Handler::*) (int, const DataTransfer::MessageModel&), ::strless> CommMapType;
     
     /*Shared ptr type for Customer Model*/
     typedef shared_ptr<Customer::CustomerModel> CustomerModel_shrd_ptr;
@@ -88,13 +91,23 @@ std::string random_str(int len = 40);
 
             /*HANDLER FUNCTIONS*/
             /* these functions are required to process all retrieved sanctioned data */
-            int response_to_customer_sign_up        (int sfd, const std::string&);
-            int response_to_user_login              (int sfd, const std::string&);
-            int sign_new_customer                   (int sfd, const std::string&);
-            int log_in_to_system                    (int sfd, const std::string&);
-            int provide_write_thread                (int sfd, const std::string&);
-            int provide_read_thread                 (int sfd, const std::string&);
-            int terminate_socket                    (int sfd, const std::string&);
+            int on_login_request_recieved           (int sfd, const DataTransfer::MessageModel&);
+            int on_connect_request_recieved         (int sfd, const DataTransfer::MessageModel&);
+            
+            int send_connect_accept                 (int sfd, const DataTransfer::MessageModel&);
+            int send_login_accept                   (int sfd, const DataTransfer::MessageModel&);        
+
+            int on_connect_command_recieved         (int sfd, const DataTransfer::MessageModel&);
+            int on_login_command_recieved           (int sfd, const DataTransfer::MessageModel&);
+            int on_sign_up_command_recieved         (int sfd, const DataTransfer::MessageModel&);
+            
+            int send_connect_verify                 (int sfd, const DataTransfer::MessageModel&);
+            int send_sign_up_verify                 (int sfd, const DataTransfer::MessageModel&);
+            int send_login_verify                   (int sfd, const DataTransfer::MessageModel&);
+
+            int provide_write_thread                (int sfd, const DataTransfer::MessageModel&);
+            int provide_read_thread                 (int sfd, const DataTransfer::MessageModel&);
+            int terminate_socket                    (int sfd, const DataTransfer::MessageModel&);
             
             /* CLEANERS */
             int cleanup_socket_garbage              (int sfd);

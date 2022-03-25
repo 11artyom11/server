@@ -32,17 +32,22 @@ namespace DataTransfer
 {
     enum class COMMAND_NAME 
     {
-        SIGN_UP         , 
-        LOG_IN          ,
-        WRITE_COMMAND   ,
-        READ_COMMAND    ,
-        EXIT_COMMAND    ,
-        LOG_IN_REQUEST  ,
-        SIGN_UP_REQUEST ,
-        LOG_IN_VERIFY   ,
-        LOG_IN_ACCEPT   ,
-        SIGN_UP_VERIFY  ,
-        SIGN_UP_ACCEPT   
+        LOG_IN_REQUEST,
+        CONNECT_REQUEST,
+
+        LOG_IN_ACCEPT,
+        CONNECT_ACCEPT,
+
+        CONNECT_COMMAND, 
+        SIGN_UP_COMMAND, 
+        LOG_IN_COMMAND,
+        WRITE_COMMAND,
+        READ_COMMAND,
+        EXIT_COMMAND, 
+                                            
+        SIGN_UP_VERIFY,
+        LOG_IN_VERIFY,
+        CONNECT_VERIFY  
     };
 
     /**

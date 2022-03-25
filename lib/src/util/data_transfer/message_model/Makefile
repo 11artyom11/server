@@ -198,6 +198,33 @@ message_model.cpp.s:
 	cd /home/aram/workspace/clientserver && $(MAKE) -f lib/src/util/data_transfer/message_model/CMakeFiles/message_model.dir/build.make lib/src/util/data_transfer/message_model/CMakeFiles/message_model.dir/message_model.cpp.s
 .PHONY : message_model.cpp.s
 
+message_templates.o: message_templates.cpp.o
+
+.PHONY : message_templates.o
+
+# target to build an object file
+message_templates.cpp.o:
+	cd /home/aram/workspace/clientserver && $(MAKE) -f lib/src/util/data_transfer/message_model/CMakeFiles/message_model.dir/build.make lib/src/util/data_transfer/message_model/CMakeFiles/message_model.dir/message_templates.cpp.o
+.PHONY : message_templates.cpp.o
+
+message_templates.i: message_templates.cpp.i
+
+.PHONY : message_templates.i
+
+# target to preprocess a source file
+message_templates.cpp.i:
+	cd /home/aram/workspace/clientserver && $(MAKE) -f lib/src/util/data_transfer/message_model/CMakeFiles/message_model.dir/build.make lib/src/util/data_transfer/message_model/CMakeFiles/message_model.dir/message_templates.cpp.i
+.PHONY : message_templates.cpp.i
+
+message_templates.s: message_templates.cpp.s
+
+.PHONY : message_templates.s
+
+# target to generate assembly for a file
+message_templates.cpp.s:
+	cd /home/aram/workspace/clientserver && $(MAKE) -f lib/src/util/data_transfer/message_model/CMakeFiles/message_model.dir/build.make lib/src/util/data_transfer/message_model/CMakeFiles/message_model.dir/message_templates.cpp.s
+.PHONY : message_templates.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -214,6 +241,9 @@ help:
 	@echo "... message_model.o"
 	@echo "... message_model.i"
 	@echo "... message_model.s"
+	@echo "... message_templates.o"
+	@echo "... message_templates.i"
+	@echo "... message_templates.s"
 .PHONY : help
 
 

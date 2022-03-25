@@ -70,18 +70,33 @@ lib/src/util/data_transfer/message_model/CMakeFiles/message_model.dir/message_mo
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/message_model.dir/message_model.cpp.s"
 	cd /home/aram/workspace/clientserver/lib/src/util/data_transfer/message_model && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/aram/workspace/clientserver/lib/src/util/data_transfer/message_model/message_model.cpp -o CMakeFiles/message_model.dir/message_model.cpp.s
 
+lib/src/util/data_transfer/message_model/CMakeFiles/message_model.dir/message_templates.cpp.o: lib/src/util/data_transfer/message_model/CMakeFiles/message_model.dir/flags.make
+lib/src/util/data_transfer/message_model/CMakeFiles/message_model.dir/message_templates.cpp.o: lib/src/util/data_transfer/message_model/message_templates.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/aram/workspace/clientserver/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object lib/src/util/data_transfer/message_model/CMakeFiles/message_model.dir/message_templates.cpp.o"
+	cd /home/aram/workspace/clientserver/lib/src/util/data_transfer/message_model && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/message_model.dir/message_templates.cpp.o -c /home/aram/workspace/clientserver/lib/src/util/data_transfer/message_model/message_templates.cpp
+
+lib/src/util/data_transfer/message_model/CMakeFiles/message_model.dir/message_templates.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/message_model.dir/message_templates.cpp.i"
+	cd /home/aram/workspace/clientserver/lib/src/util/data_transfer/message_model && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/aram/workspace/clientserver/lib/src/util/data_transfer/message_model/message_templates.cpp > CMakeFiles/message_model.dir/message_templates.cpp.i
+
+lib/src/util/data_transfer/message_model/CMakeFiles/message_model.dir/message_templates.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/message_model.dir/message_templates.cpp.s"
+	cd /home/aram/workspace/clientserver/lib/src/util/data_transfer/message_model && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/aram/workspace/clientserver/lib/src/util/data_transfer/message_model/message_templates.cpp -o CMakeFiles/message_model.dir/message_templates.cpp.s
+
 # Object files for target message_model
 message_model_OBJECTS = \
-"CMakeFiles/message_model.dir/message_model.cpp.o"
+"CMakeFiles/message_model.dir/message_model.cpp.o" \
+"CMakeFiles/message_model.dir/message_templates.cpp.o"
 
 # External object files for target message_model
 message_model_EXTERNAL_OBJECTS =
 
 lib/src/util/data_transfer/message_model/libmessage_model.so.1.0.1: lib/src/util/data_transfer/message_model/CMakeFiles/message_model.dir/message_model.cpp.o
+lib/src/util/data_transfer/message_model/libmessage_model.so.1.0.1: lib/src/util/data_transfer/message_model/CMakeFiles/message_model.dir/message_templates.cpp.o
 lib/src/util/data_transfer/message_model/libmessage_model.so.1.0.1: lib/src/util/data_transfer/message_model/CMakeFiles/message_model.dir/build.make
 lib/src/util/data_transfer/message_model/libmessage_model.so.1.0.1: /usr/lib/x86_64-linux-gnu/libcrypto.a
 lib/src/util/data_transfer/message_model/libmessage_model.so.1.0.1: lib/src/util/data_transfer/message_model/CMakeFiles/message_model.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/aram/workspace/clientserver/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX shared library libmessage_model.so"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/aram/workspace/clientserver/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking CXX shared library libmessage_model.so"
 	cd /home/aram/workspace/clientserver/lib/src/util/data_transfer/message_model && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/message_model.dir/link.txt --verbose=$(VERBOSE)
 	cd /home/aram/workspace/clientserver/lib/src/util/data_transfer/message_model && $(CMAKE_COMMAND) -E cmake_symlink_library libmessage_model.so.1.0.1 libmessage_model.so.1 libmessage_model.so
 

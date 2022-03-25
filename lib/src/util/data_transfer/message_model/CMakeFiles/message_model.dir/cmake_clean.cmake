@@ -1,5 +1,6 @@
 file(REMOVE_RECURSE
   "CMakeFiles/message_model.dir/message_model.cpp.o"
+  "CMakeFiles/message_model.dir/message_templates.cpp.o"
   "libmessage_model.pdb"
   "libmessage_model.so"
   "libmessage_model.so.1"

@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.9)
 project(message_model VERSION 1.0.1 DESCRIPTION "message_model description")
 include(GNUInstallDirs)
 
-add_library(message_model SHARED message_model.cpp)
+add_library(message_model SHARED message_model.cpp message_templates.cpp)
 
 set_target_properties(message_model PROPERTIES
     VERSION ${PROJECT_VERSION}

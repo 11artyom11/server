@@ -32,10 +32,10 @@ MessageModel MessageResolver::distribute_command(const std::map<string, JsonValT
 
     switch (command)
     {
-    case DataTransfer::COMMAND_NAME::SIGN_UP:
+    case DataTransfer::COMMAND_NAME::SIGN_UP_COMMAND:
         return init_sign_up_message(init_data);    
 
-    case DataTransfer::COMMAND_NAME::LOG_IN:
+    case DataTransfer::COMMAND_NAME::LOG_IN_COMMAND:
         return init_log_in_message(init_data);
 
     default:
@@ -91,7 +91,7 @@ bool DataTransfer::is_message_initial_data_valid( DataTransfer::COMMAND_NAME cN,
 {
     switch (cN)
     {
-        case DataTransfer::COMMAND_NAME::SIGN_UP :
+        case DataTransfer::COMMAND_NAME::SIGN_UP_COMMAND :
         {
             for ( auto c_key : COMMAND_DATA_KEY_BINDINGS.at(SIGN_UP_COMMAND))
             {
@@ -108,7 +108,7 @@ bool DataTransfer::is_message_initial_data_valid( DataTransfer::COMMAND_NAME cN,
             }
             return true;
         }
-        case DataTransfer::COMMAND_NAME::LOG_IN :
+        case DataTransfer::COMMAND_NAME::LOG_IN_COMMAND :
         {
             for ( auto c_key :  COMMAND_DATA_KEY_BINDINGS.at(SIGN_UP_COMMAND))
             {
@@ -169,11 +169,11 @@ DataTransfer::COMMAND_NAME DataTransfer::get_command_from_s (std::string command
 {
     if (command == SIGN_UP_COMMAND)
     {
-        return DataTransfer::COMMAND_NAME::SIGN_UP;
+        return DataTransfer::COMMAND_NAME::SIGN_UP_COMMAND;
     }
     if (command == LOG_IN_COMMAND)
     {
-        return DataTransfer::COMMAND_NAME::LOG_IN;
+        return DataTransfer::COMMAND_NAME::LOG_IN_COMMAND;
     }
     if (command == WRITE_COMMAND)
     {
@@ -183,18 +183,31 @@ DataTransfer::COMMAND_NAME DataTransfer::get_command_from_s (std::string command
     {
         return DataTransfer::COMMAND_NAME::EXIT_COMMAND;
     }
-    if (command == SIGN_UP_REQUEST)
-    {
-        return DataTransfer::COMMAND_NAME::SIGN_UP_REQUEST;
-    }
+   
     if (command == LOG_IN_REQUEST)
     {
         return DataTransfer::COMMAND_NAME::LOG_IN_REQUEST;
     }
-    if (command == SIGN_UP_ACCEPT)
+    
+    if (command == SIGN_UP_VERIFY)
     {
-        return DataTransfer::COMMAND_NAME::SIGN_UP_ACCEPT;
+        return DataTransfer::COMMAND_NAME::SIGN_UP_VERIFY;
     }
+    if (command == LOG_IN_ACCEPT)
+    {
+        return DataTransfer::COMMAND_NAME::LOG_IN_ACCEPT;
+    }
+    if (command == LOG_IN_VERIFY)
+    {
+        return DataTransfer::COMMAND_NAME::LOG_IN_VERIFY;
+    }
+    
+
+    if (command == LOG_IN_REQUEST)
+    {
+        return DataTransfer::COMMAND_NAME::LOG_IN_REQUEST;
+    }
+    
     if (command == SIGN_UP_VERIFY)
     {
         return DataTransfer::COMMAND_NAME::SIGN_UP_VERIFY;

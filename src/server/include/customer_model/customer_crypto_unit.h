@@ -9,8 +9,7 @@
  * process is defined in Security namespace
  * @section Last Changes 24-03-2022 Artyom Grigorian
  *
- * Added macros to define max path lengths 
- * in particular systems
+ *  Added getters and setters for key retrieving
  * 
  * @copyright Copyright (c) 2022
  * 
@@ -89,8 +88,11 @@ namespace Security
         /*Key-pair which has been generated on server side*/
             RSA_Keypair server_keypair;
 
-        /*Key which has been retrieved from client side*/
-            RSA_UNAR_KEY client_keypair;
+        /*
+        Key which has been retrieved from client side
+        PUBLIC probably
+            */
+            RSA_UNAR_KEY client_key;
 
         /*Unique token (int) yet is sfd of connection as 
             one connection can be hold by only and only one customer*/

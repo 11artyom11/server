@@ -15,6 +15,7 @@ Server::Handler::Handler(int RWBacklog)
     sem_init (&writer_sem, 0, RWBacklog);
     sem_init (&reader_sem, 0, RWBacklog);
     commap_init();
+    DataTransfer::ConnectRequest cR("192.168.1.1");
 }
 
 /**
@@ -29,13 +30,22 @@ void Server::Handler::commap_init (void)
 {
     Debug().info("Cted commap");
 
-    commap[LOG_IN_REQUEST]  = &Server::Handler::response_to_user_login;
-    commap[SIGN_UP_REQUEST]  = &Server::Handler::response_to_customer_sign_up;
-    commap[LOG_IN_COMMAND]  = &Server::Handler::log_in_to_system;
-    commap[SIGN_UP_COMMAND] = &Server::Handler::sign_new_customer;
-    commap[WRITE_COMMAND]   = &Server::Handler::provide_write_thread;
-    commap[READ_COMMAND]    = &Server::Handler::provide_read_thread;
-    commap[EXIT_COMMAND]    = &Server::Handler::terminate_socket;
+
+
+    commap[CONNECT_REQUEST]   = &Server::Handler::on_connect_request_recieved;
+    commap[LOG_IN_REQUEST]    = &Server::Handler::on_login_request_recieved;
+    commap[CONNECT_ACCEPT]    = &Server::Handler::send_connect_accept;
+    commap[LOG_IN_ACCEPT]     = &Server::Handler::send_login_accept;
+    commap[CONNECT_COMMAND]   = &Server::Handler::on_connect_command_recieved;
+    commap[LOG_IN_COMMAND]    = &Server::Handler::on_login_command_recieved;
+    commap[SIGN_UP_COMMAND]   = &Server::Handler::on_sign_up_command_recieved;
+    commap[WRITE_COMMAND]     = &Server::Handler::provide_write_thread;
+    commap[READ_COMMAND]      = &Server::Handler::provide_read_thread;
+    commap[EXIT_COMMAND]      = &Server::Handler::terminate_socket;
+    commap[CONNECT_VERIFY]    = &Server::Handler::send_connect_verify;
+    commap[LOG_IN_VERIFY]     = &Server::Handler::send_login_verify;
+    commap[SIGN_UP_VERIFY]    = &Server::Handler::send_sign_up_verify;
+
 
 }
 
@@ -119,52 +129,67 @@ std::string Server::random_str(int len)
 
 /* HANDLERS */
 
+
+
 /**
-  * @brief Send response to client  in order to give to the client
- * an information about log_in (reject or accept request)
+ * @brief Called when client sends the login request
  * 
- * @param sfd connection descriptor
- * @return 0 on success 1 otherwise
+ * @param sfd 
+ * @return int 
  */
-int Server::Handler::response_to_customer_sign_up(int sfd, const std::string&)
+int Server::Handler::on_login_request_recieved(int sfd, const DataTransfer::MessageModel&)
 {
-    Debug().warning("Called Server::Handler::request_customer_sign_up STILL NOT IMPLEMENTED");
-    return 0;
+
 }
 
 /**
- * @brief Send response to client  in order to give to the client
- * an information about sign_up (reject or accept request)
+ * @brief Call when recieved the very first messsage of session
  * 
- * @param sfd connection descriptor
- * @return 0 on success 1 otherwise
+ * @param sfd 
+ * @return int 
  */
-int Server::Handler::response_to_user_login(int sfd, const std::string&)
+int Server::Handler::on_connect_request_recieved(int sfd, const DataTransfer::MessageModel&)
 {
-    Debug().warning("Called Server::Handler::request_user_login STILL NOT IMPLEMENTED");
-    return 0;
+
+}
+
+
+/**
+ * @brief Accept handshake
+ * Sending to client willing to recieve connect command
+ * 
+ * @param sfd 
+ * @return int 
+ */
+int Server::Handler::send_connect_accept(int sfd, const DataTransfer::MessageModel&)
+{
+
 }
 
 /**
- * @brief Send $SIGN_UP_COMMAND command with corresponding credentials to server
- * in order to sign up as new customer
+ * @brief Accept login retireving
+ * Sending to client willing to recieve login command
  * 
- * @param sfd connection descriptor
- * @return 0 on success 1 otherwise 
+ * @param sfd 
+ * @return int 
  */
-int Server::Handler::sign_new_customer(int sfd, const std::string&)
+int Server::Handler::send_login_accept(int sfd, const DataTransfer::MessageModel&)
 {
-    Debug().info("Called Server::Handler::sign_new_customer( ", sfd, ")");
-    std::string new_unique_token = Server::random_str();
 
-
-    this->recent_customers[new_unique_token] = std::make_shared <Customer::CustomerModel> (Customer::CustomerModel(sfd, new_unique_token));
-
-    (*this).recent_customers[new_unique_token].get()->get_crypto_unit()->init_server_keypair((char*)RSA_DEFAULT_PASSPHRASE);
-
-
-    return 0;
 }
+
+
+/**
+ * @brief Main Handshake command recieved
+ * 
+ * @param sfd 
+ * @return int 
+ */
+int Server::Handler::on_connect_command_recieved(int sfd, const DataTransfer::MessageModel&)
+{
+
+}
+
 
 /**
  * @brief Send $LOG_IN_COMMAND command in with corresponding credentials
@@ -173,7 +198,7 @@ int Server::Handler::sign_new_customer(int sfd, const std::string&)
  * @param sfd 
  * @return int 
  */
-int Server::Handler::log_in_to_system(int sfd, const std::string&)
+int Server::Handler::on_login_command_recieved(int sfd, const DataTransfer::MessageModel&)
 {
     /*Request to DB in order to make some calculations , still have 
     nothing to do
@@ -183,13 +208,75 @@ int Server::Handler::log_in_to_system(int sfd, const std::string&)
 }
 
 
+
 /**
- * @brief provide new socket a writ - support with separate thread
+ * @brief Send $SIGN_UP_COMMAND command with corresponding credentials to server
+ * in order to sign up as new customer
+ * 
+ * @param sfd connection descriptor
+ * @return 0 on success 1 otherwise 
+ */
+int Server::Handler::on_sign_up_command_recieved(int sfd, const DataTransfer::MessageModel&)
+{
+    Debug().info("Called Server::Handler::sign_new_customer( ", sfd, ")");
+    std::string new_unique_token = Server::random_str();
+
+    Debug().warning (new_unique_token);
+    this->recent_customers[new_unique_token] = std::make_shared <Customer::CustomerModel> (Customer::CustomerModel(sfd, new_unique_token));
+
+    (*this).recent_customers[new_unique_token].get()->get_crypto_unit()->init_server_keypair((char*)RSA_DEFAULT_PASSPHRASE);
+    auto keypair = (*this).recent_customers[new_unique_token].get()->get_crypto_unit()->get_server_keypair();
+
+    /*Send public key to remote node (key is generated on server side)*/
+    send (sfd, keypair.first.c_key, strlen(keypair.first.c_key), NULL);
+
+    return 0;
+}
+
+/**
+ * @brief If handshake succeeds send verify message to client
+ * 
+ * @param sfd 
+ * @return int 
+ */
+int Server::Handler::send_connect_verify(int sfd, const DataTransfer::MessageModel&)
+{
+
+}
+
+/**
+ * @brief If signing_up succeeds send verify message to client
+ * 
+ * @param sfd 
+ * @return int 
+ */
+int Server::Handler::send_sign_up_verify(int sfd, const DataTransfer::MessageModel&)
+{
+
+}
+
+
+/**
+ * @brief If logging in succeeds send verify message to client
+ * 
+ * @param sfd 
+ * @return int 
+ */
+int Server::Handler::send_login_verify(int sfd, const DataTransfer::MessageModel&)
+{
+
+}
+
+
+
+
+/**
+ * @brief provide new socket a write thread - support with separate thread
  * 
  * @param new_write_socket 
  * @return 0 on success 1 on opposite result 
  */
-int Server::Handler::provide_write_thread(int new_write_socket, const std::string&)
+int Server::Handler::provide_write_thread(int new_write_socket, const DataTransfer::MessageModel&)
 {
     Debug().info("WRITE THREAD");
     /*Index of newly created thread to be passing to writer function*/
@@ -219,7 +306,7 @@ int Server::Handler::provide_write_thread(int new_write_socket, const std::strin
  * @param new_read_socket 
  * @return 0 on success 1 on opposite result 
  */
-int Server::Handler::provide_read_thread(int new_read_socket, const std::string&)
+int Server::Handler::provide_read_thread(int new_read_socket, const DataTransfer::MessageModel&)
 {
     /*Index of newly created thread to be passing to reader function*/
     int tid = reader_threads[new_read_socket].size();
@@ -244,7 +331,7 @@ int Server::Handler::provide_read_thread(int new_read_socket, const std::string&
  * @param sfd socket to close
  * @return close success code 
  */
-int Server::Handler::terminate_socket( int sfd, const std::string&)
+int Server::Handler::terminate_socket( int sfd, const DataTransfer::MessageModel&)
 {
     Debug().info("Connection terminated");
     /*

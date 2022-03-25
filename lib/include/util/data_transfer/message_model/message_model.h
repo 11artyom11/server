@@ -51,8 +51,8 @@ namespace DataTransfer
 
             json* const get_json_instance (void)  noexcept;
             string to_str (void) const noexcept;
-        private:
-        
+
+        protected:        
             json m_message;            
     };
 
