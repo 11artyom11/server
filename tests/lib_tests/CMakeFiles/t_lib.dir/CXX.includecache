@@ -53,7 +53,13 @@ openssl/rand.h
 -
 openssl/aes.h
 -
-string
+stdexcept
+-
+sstream
+-
+iomanip
+-
+cstdint
 -
 
 /home/aram/workspace/clientserver/tests/lib_tests/test_1.cpp

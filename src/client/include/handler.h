@@ -24,7 +24,10 @@
 
 #include <map>
 #include <string>
-
+#include <arpa/inet.h>
+#include <sys/socket.h>
+#include <netdb.h>
+#include <netinet/in.h>
 
 // Helper functor to ease cleanup of container
 struct delete_ptr { 
@@ -43,6 +46,12 @@ class strless {
       bool operator() (const std::string & first, const std::string & second ) const  { 
          return first < second; 
       }
+};
+
+struct ClientPrototype
+{
+    std::string AES_token;
+    std::string unique_token;
 };
 
 namespace Client
@@ -73,6 +82,8 @@ class Handler
 
     private:
         CommMapType commap;
+        /*Conciously didn't added getter for aes token*/
+        ClientPrototype cP;
 
 };
 

@@ -78,6 +78,7 @@ namespace Server
 
 /*Function for random string generating*/
 std::string random_str(int len = 40);
+
 class Handler
 {
     public:

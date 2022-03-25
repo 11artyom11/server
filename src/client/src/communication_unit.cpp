@@ -64,7 +64,7 @@ void BasicCommunicationModel::start_read_async(int sockfd)
             
             char buff[1024];
             int n;
-            bzero(buff, sizeof(buff));
+            bzero(buff, 1024);
             
             int read_result = read(sockfd, buff, sizeof(buff));
             if (read_result == 0)
@@ -72,9 +72,8 @@ void BasicCommunicationModel::start_read_async(int sockfd)
                 Debug().fatal("Host is no longer available. Terminating...");
                 exit(0);
             }
-            Debug().info("READ RESULT : ", read_result);
             /*Start new thread to print retrieved buffer*/
-            m_io_model->read_q(buff);
+            m_io_model->read_q(sockfd, buff);
 
             sem_post(&read_lock);
         }
@@ -82,7 +81,6 @@ void BasicCommunicationModel::start_read_async(int sockfd)
     
         /*Async-ly start read lambda (see :43) */
     std::async(std::launch::async, wait_to_read_and_start_read_q);          
-    
     Debug().info("Ended BasicCommunicationModel::start_read_async(..)");
 }
 

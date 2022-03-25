@@ -40,10 +40,10 @@ namespace DataTransfer
 
             template <typename ValType>
             void get_into (const string& key, 
-                                ValType& into);
+                                ValType& into) const;
 
             template <typename ValType>
-            ValType get (const string& key);
+            ValType get (const string& key) const;
 
             template <typename ValType>
             void   set (const string& key, 
@@ -61,7 +61,7 @@ namespace DataTransfer
 
 
 template <typename ValType>
-ValType MessageModel::get (const string& key)
+ValType MessageModel::get (const string& key) const 
 {
     return this->m_message.at(key).get<ValType>();
 }
@@ -76,7 +76,7 @@ ValType MessageModel::get (const string& key)
  */
 template <typename ValType>
 void MessageModel::get_into (const string& key,
-                            ValType& into)
+                            ValType& into) const
 {
     into = m_message[key].get<ValType>();
 }

@@ -242,8 +242,7 @@ void Server::ServerModel::handle_connection(int connection)
             return;
         }
         // Send a message to the connection
-        std::string response = "Message recieved\n";
-        send(connection, response.c_str(), response.size(), 0);
+       
     }while (bytes);           
 
     close(connection);

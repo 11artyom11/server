@@ -10,27 +10,30 @@ ConnectRequest::ConnectRequest(const string& ip)
     this->set ("ip", ip);
 }
 
-ConnectAccept::ConnectAccept(const string& pkey)
+ConnectAccept::ConnectAccept(const string& unique_token, const string& pkey)
 {
     Debug().info ("Constructed ConnectAccept Message");
     this->set ("command", this->command);
     this->set ("pkey", pkey);
+    this->set ("unique_token", unique_token);
 }
 
 ConnectCommand::ConnectCommand(const string& ip ,
-                                    const string& AES_token)
+                                    const string& AES_token,
+                                        const string& unique_token)
 {
     Debug().info ("Constructed ConnectCommand Message");
     this->set("command", command);
     this->set("ip", ip);
     this->set("aes_token", AES_token);
+    this->set("unique_token", unique_token);
 }
 
-ConnectVerify::ConnectVerify(const string& tmp_uid)
+ConnectVerify::ConnectVerify(const string& unique_token)
 {
     Debug().info ("Constructed ConnectVerify Message");
     this->set ("command", command);
-    this->set ("tmp_uid", tmp_uid);
+    this->set ("tmp_uid", unique_token);
 }
 
 LoginRequest::LoginRequest(const string& ip)
@@ -55,11 +58,11 @@ LoginCommand::LoginCommand(const string& name,
     this->set ("passwd", password);
 }
 
-LoginVerify::LoginVerify(const string&  perm_uid)
+LoginVerify::LoginVerify(const string&  unique_token)
 {
     Debug().info ("Constructed LoginVerify Message");
     this->set ("command", command);
-    this->set ("perm_uid", perm_uid);
+    this->set ("perm_uid", unique_token);
 }
 
 SignUpCommand::SignUpCommand(const string& ip,
@@ -77,9 +80,9 @@ SignUpCommand::SignUpCommand(const string& ip,
     this->set ("passwd", passwd);
 }
 
-SignUpVerify::SignUpVerify(const string& perm_uid)
+SignUpVerify::SignUpVerify(const string& unique_token)
 {
     Debug().info ("Constructed SignUpVerify Message");
     this->set ("command", command);
-    this->set ("perm_uid", perm_uid);
+    this->set ("perm_uid", unique_token);
 }

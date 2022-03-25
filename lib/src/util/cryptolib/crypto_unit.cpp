@@ -1,5 +1,49 @@
 #include "../../../include/util/cyptolib/crypto_unit.h"
 
+/**
+ * @brief Helper function to convert raw string to hex string
+ * 
+ * @param in 
+ * @return std::string 
+ */
+std::string string_to_hex(const std::string& in) 
+{
+    std::stringstream ss;
+    ss << std::hex << std::setfill('0');
+    for (size_t i = 0; in.length() > i; ++i) {
+        ss << std::setw(2) << static_cast<unsigned int>(static_cast<unsigned char>(in[i]));
+    }
+
+    return ss.str(); 
+}
+
+/**
+ * @brief Helper function to convert hex string to raw string
+ * 
+ * @param in 
+ * @return std::string 
+ */
+std::string hex_to_string(const std::string& in) {
+    std::string output;
+
+    if ((in.length() % 2) != 0) {
+        throw std::runtime_error("String is not valid length ...");
+    }
+
+    size_t cnt = in.length() / 2;
+
+    for (size_t i = 0; cnt > i; ++i) {
+        uint32_t s = 0;
+        std::stringstream ss;
+        ss << std::hex << in.substr(i * 2, 2);
+        ss >> s;
+
+        output.push_back(static_cast<unsigned char>(s));
+    }
+
+    return output;
+}
+
 /*
 +---------------------------------------------------+
 |              class BaseCipherUnit                 |
@@ -50,6 +94,7 @@ EVP_PKEY *RSA_Unit::ReadPubKey_FromFile(char *filename)
     {
         EVP_PKEY_assign_RSA(key, PEM_read_RSA_PUBKEY(fp, NULL, NULL, NULL));
     }
+    
 
     fclose(fp);
     return key;
@@ -203,6 +248,9 @@ char *RSA_Unit::rsa_encrypt(char *raw_str,
     BIO_free(bio);
 
     uint64_t len = strlen(raw_str);
+    Debug().info("Hello\n", key);
+    Debug().info("RSA SIZE ",RSA_size(rsa));
+
     unsigned char *encrypted_str = (unsigned char *)malloc(RSA_size(rsa));
 
     int result = RSA_public_encrypt(len,

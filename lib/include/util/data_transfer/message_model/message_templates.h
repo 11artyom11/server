@@ -33,7 +33,7 @@ class ConnectRequest : public MessageModel
 class ConnectAccept : public MessageModel
 {
     public:
-        ConnectAccept(const string& pkey);
+        ConnectAccept(const string& unique_token, const string& pkey);
     private:
         static constexpr auto command = CONNECT_ACCEPT;
 };
@@ -42,7 +42,8 @@ class ConnectCommand : public MessageModel
 {
     public:
         ConnectCommand(const string& ip ,
-                            const string& AES_token);
+                            const string& AES_token,
+                                const string& unique_token);
     private:
         static constexpr auto command = CONNECT_COMMAND;
 };
@@ -50,7 +51,7 @@ class ConnectCommand : public MessageModel
 class ConnectVerify : public MessageModel
 {
     public:
-        ConnectVerify(const string& tmp_uid);
+        ConnectVerify(const string& unique_token);
     private:
         static constexpr auto command = CONNECT_VERIFY;
 };
@@ -84,7 +85,7 @@ class LoginCommand : public MessageModel
 class LoginVerify : public MessageModel
 {
     public:
-        LoginVerify(const string&  perm_uid);
+        LoginVerify(const string&  unique_token);
     private:
         static constexpr auto command = LOG_IN_VERIFY;
 };
@@ -104,7 +105,7 @@ class SignUpCommand : public MessageModel
 class SignUpVerify : public MessageModel
 {
     public:
-        SignUpVerify(const string& perm_uid);
+        SignUpVerify(const string& unqiue_token);
     private:
         static constexpr auto command = SIGN_UP_VERIFY;
 };

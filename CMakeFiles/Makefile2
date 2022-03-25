@@ -430,6 +430,7 @@ bin/server/CMakeFiles/server.dir/clean:
 
 # All Build rule for target.
 bin/client/CMakeFiles/client.dir/all: lib/src/helpers/CMakeFiles/debug_helper.dir/all
+bin/client/CMakeFiles/client.dir/all: lib/src/util/cryptolib/CMakeFiles/crypto_unit.dir/all
 bin/client/CMakeFiles/client.dir/all: lib/src/util/data_transfer/message_resolver/CMakeFiles/message_resolver.dir/all
 bin/client/CMakeFiles/client.dir/all: lib/src/util/data_transfer/message_model/CMakeFiles/message_model.dir/all
 	$(MAKE) -f bin/client/CMakeFiles/client.dir/build.make bin/client/CMakeFiles/client.dir/depend
@@ -439,7 +440,7 @@ bin/client/CMakeFiles/client.dir/all: lib/src/util/data_transfer/message_model/C
 
 # Build rule for subdir invocation for target.
 bin/client/CMakeFiles/client.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/aram/workspace/clientserver/CMakeFiles 14
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/aram/workspace/clientserver/CMakeFiles 16
 	$(MAKE) -f CMakeFiles/Makefile2 bin/client/CMakeFiles/client.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/aram/workspace/clientserver/CMakeFiles 0
 .PHONY : bin/client/CMakeFiles/client.dir/rule

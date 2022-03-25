@@ -24,6 +24,7 @@
 #include <ostream>
 #include <istream>
 #include <memory>
+#include <utility>
 
 #include "handler.h"
 #include "../../../lib/include/helpers/constants.h"
@@ -47,7 +48,7 @@ namespace iounit
             void write_q (mesType... istreams);
 
             template <typename mesType>
-            void read_q (mesType messages);
+            void read_q (int sfd, mesType messages);
 
         private:
         /*Queues in which we store output and input streams which 
@@ -85,17 +86,29 @@ void iounit::IOModel::write_q(mesType... istreams)
 
 /*This function works in atomic way*/
 template <typename mesType>
-void iounit::IOModel::read_q(mesType message)
+void iounit::IOModel::read_q(int sfd, mesType message)
 {
 
-
+    Debug().warning ("In read_q function");
     /*Lock mutex to do atomic read to queue and check in 
         empty subject read queue*/
     read_mutex.lock();
-    
     DataTransfer::MessageModel mesModel(message);
     /*Must be check of retrieved message (..later) FIXXX*/
+    /*is_message_valid (message) knd of this*/
+    std::string response_s = mesModel.get<decltype (response_s)>("command");
     
+    Debug().info (response_s , " Retrieved response");
+    auto mem_function = (*m_handler.get()).get_command(response_s);
+    if (mem_function)
+    {
+        int res = ((*m_handler.get()).*mem_function)(sfd, mesModel);
+    }
+    else
+    {
+        Debug().fatal("Handler function does not exist!!!");
+    }
+
     read_mutex.unlock();
 }
 

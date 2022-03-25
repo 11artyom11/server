@@ -62,8 +62,8 @@ int CustomerCryptoUnit::init_server_keypair (char* passphrase)
     char priv_file_name[MAX_FILE_NAME_LENGTH] = "Private.key.";
     char pub_file_path[MAX_FILE_PATH_LENGTH+MAX_FILE_NAME_LENGTH];
     char priv_file_path[MAX_FILE_PATH_LENGTH+MAX_FILE_NAME_LENGTH];
-
-
+    
+    /*TOBEDONE*/
     if (is_dir_exist(""))
     {
 

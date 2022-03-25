@@ -53,7 +53,13 @@ openssl/rand.h
 -
 openssl/aes.h
 -
-string
+stdexcept
+-
+sstream
+-
+iomanip
+-
+cstdint
 -
 
 /home/aram/workspace/clientserver/lib/src/util/cryptolib/crypto_unit.cpp

@@ -168,6 +168,7 @@ int Server::Handler::on_connect_request_recieved(int sfd, const DataTransfer::Me
  */
 int Server::Handler::send_connect_accept(int sfd, const DataTransfer::MessageModel&)
 {
+    Debug().info ("IN send_connect_accept()");
     std::string new_unique_token = Server::random_str();
 
     Debug().warning (new_unique_token);
@@ -177,7 +178,7 @@ int Server::Handler::send_connect_accept(int sfd, const DataTransfer::MessageMod
     auto keypair = (*this).recent_customers[new_unique_token].get()->get_crypto_unit()->get_server_keypair();
 
 
-    DataTransfer::ConnectAccept cA(keypair.first.c_key);
+    DataTransfer::ConnectAccept cA(new_unique_token ,keypair.first.c_key);
     
     /*Send public key to remote node (key is generated on server side)*/
     send (sfd, cA.to_str().c_str(), cA.to_str().length(), NULL);
@@ -205,14 +206,14 @@ int Server::Handler::send_login_accept(int sfd, const DataTransfer::MessageModel
  * @param sfd 
  * @return int 
  */
-int Server::Handler::on_connect_command_recieved(int sfd, const DataTransfer::MessageModel&)
+int Server::Handler::on_connect_command_recieved(int sfd, const DataTransfer::MessageModel& message)
 {
     Debug().warning ("here");
     /*check message content*/ /*FIX ME*/
-    /* tmp uid*/
-    DataTransfer::ConnectVerify cV("0");
-    send (sfd, cV.to_str().c_str(), cV.to_str().length(), NULL);
-    return 0;
+    string unique_token = message.get<string>("unique_token");
+    Debug().info("SFD : ", (recent_customers[unique_token].get()->get_sfd()));
+    send_connect_verify (sfd, message);
+     return 0;
 }
 
 
@@ -255,7 +256,10 @@ int Server::Handler::on_sign_up_command_recieved(int sfd, const DataTransfer::Me
  */
 int Server::Handler::send_connect_verify(int sfd, const DataTransfer::MessageModel&)
 {
-
+/* tmp uid*/
+    DataTransfer::ConnectVerify cV("0");
+    send (sfd, cV.to_str().c_str(), cV.to_str().length(), NULL);
+   return 0;
 }
 
 /**

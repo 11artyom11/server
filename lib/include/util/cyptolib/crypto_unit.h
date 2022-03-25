@@ -16,7 +16,10 @@
 #include <openssl/engine.h>
 #include <openssl/rand.h>
 #include <openssl/aes.h>
-#include <string>
+#include <stdexcept>
+#include <sstream>
+#include <iomanip>
+#include <cstdint>
 
 /*
 Enum which describes way of generating key pair
@@ -29,6 +32,12 @@ enum class INIT_TYPE
     //save pairs in filesystem
     FILE_
 };
+
+
+std::string string_to_hex(const std::string& in);
+
+std::string hex_to_string(const std::string& in);
+
 
 /*Base class for cipher node of project*/
 class BaseCipherUnit
