@@ -40,7 +40,8 @@ Server::ServerModel::ServerModel(uint32_t port) :
     server_addr->sin_port = htons(listen_port);
     server_addr->sin_family = protocol_family;
     server_addr->sin_addr.s_addr = listen_ip;
-    init_server_keypair();
+    int res = init_server_keypair();
+    Debug().info("INIT RSULT : ", res);
     m_handler = std::make_unique<Handler>(keypair,3);
 
 }
@@ -180,8 +181,18 @@ struct sockaddr_in* Server::ServerModel::get_server_addr() const
 int Server::ServerModel::distribute_incoming_connections(int socket, 
                                                                 char* response)
 {
-    std::string response_s (response);
 
+    std::string response_s (response);
+    RSA_Unit rsaU;
+
+    Debug().info ("Encoded String Recieved");
+    Debug().info (response); 
+    string mes{base64decode(response, strlen(response))};
+    Debug().info ("Decoded String Recieved");
+
+    char* decr_mes = rsaU.rsa_decrypt((char*)mes.c_str(), keypair->second.c_key);
+
+    Debug().info (decr_mes);
     //here must be executed JSON resolver in order to divide message 
     //into essential command list
     
@@ -306,8 +317,12 @@ int Server::ServerModel::init_server_keypair (char* passphrase)
     Debug().info("Retrieved pubkey \n", c_pubkey);
     Debug().info("Retrieved privkey \n", c_privkey);
 
-    this->keypair = std::make_shared<Security::RSA_Keypair> (Security::RSA_UNAR_KEY{pubkey, c_pubkey}, 
-                                                              Security::RSA_UNAR_KEY{privkey, c_privkey});
+    Security::RSA_Keypair kp =  {
+                                Security::RSA_UNAR_KEY{pubkey, c_pubkey},
+                                Security::RSA_UNAR_KEY{privkey, c_privkey}
+                                };
+
+    this->keypair = std::make_shared<Security::RSA_Keypair> (kp);
     
     Debug().info("Out of function init_server_keypair");
     return (int)!(sizeof (c_pubkey) & sizeof (c_privkey));

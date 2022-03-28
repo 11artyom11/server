@@ -35,9 +35,9 @@ enum class INIT_TYPE
 
 
 std::string string_to_hex(const std::string& in);
-
 std::string hex_to_string(const std::string& in);
-
+char *base64encode (const void *b64_encode_this, int encode_this_many_bytes);
+char *base64decode (const void *b64_decode_this, int decode_this_many_bytes);
 
 /*Base class for cipher node of project*/
 class BaseCipherUnit

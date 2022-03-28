@@ -57,17 +57,21 @@ int Handler::send_connect_command(int sfd,
     RSA_Unit rsaU;
     AES_Unit aesU;
 
-    string key = message.get<string>("pkey"); 
-    
+    string key = message.get<string>("pkey").c_str();
+    Debug().warning(key);
+
     cP.AES_token = string_to_hex((char*)aesU.generate_key(256));
     cP.unique_token = message.get<string> ("unique_token");
 
     DataTransfer::ConnectCommand cC ("192.168.1.1",cP.AES_token, cP.unique_token);
 
-    auto mes_raw_str = cC.to_str().c_str();
-    Debug().info (cC.to_str().c_str());
-
-    send (sfd, cC.to_str().c_str(), strlen(cC.to_str().c_str()), NULL);
+    char* mes_raw_str = "ABCDEF123456";//cC.to_str().c_str();
+    /*@note make tmp function call*/
+    char* mes_enc_str =  rsaU.rsa_encrypt(mes_raw_str, (char*)key.c_str());
+    char* mes_b64_enc_str = base64encode(mes_enc_str, strlen(mes_enc_str));
+    Debug().warning("To be sent~!!!");
+    Debug().info (mes_b64_enc_str);
+    send (sfd, mes_b64_enc_str, strlen(mes_b64_enc_str), NULL);
     return 0;
 }
 

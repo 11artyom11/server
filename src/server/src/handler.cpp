@@ -180,8 +180,7 @@ int Server::Handler::send_connect_accept(int sfd, const DataTransfer::MessageMod
     
     /*Send public key to remote node (key is generated on server side)*/
     send (sfd, cA.to_str().c_str(), cA.to_str().length(), NULL);
-    keypair->first.free_all();
-    keypair->second.free_all();
+    
     return 0;
 }
 
