@@ -31,8 +31,7 @@ bool Server::is_client_connection_close(const char* msg)
 Server::ServerModel::ServerModel(uint32_t port) :
     listen_port {port},
         protocol_family {AF_INET},
-            listen_ip {INADDR_ANY},
-                m_handler {std::make_unique<Handler>(3)}
+            listen_ip {INADDR_ANY}
 
 {
 
@@ -41,6 +40,8 @@ Server::ServerModel::ServerModel(uint32_t port) :
     server_addr->sin_port = htons(listen_port);
     server_addr->sin_family = protocol_family;
     server_addr->sin_addr.s_addr = listen_ip;
+    init_server_keypair();
+    m_handler = std::make_unique<Handler>(keypair,3);
 
 }
 
@@ -248,6 +249,98 @@ void Server::ServerModel::handle_connection(int connection)
     close(connection);
   // Close the connections
 
+}
+
+
+
+/**
+ * @brief generate rsa keypair (considered as server side) and save in in
+ * pair in objet member field
+ * 
+ * @param passphrase passwor for private key
+ * @return 0 on success other value on failure 
+ */
+int Server::ServerModel::init_server_keypair (char* passphrase)
+{
+    Debug().info("ServerModel::init_server_keypair (char* passphrase)");
+    RSA_Unit rsaU;
+    /*grab character under ascii firecode of sfd which is also unique*/
+    /*if sfd is not given do generating in common buffer Public.key*/
+    char keystore_dir[MAX_FILE_PATH_LENGTH] = "./keystore/";
+    char pub_file_name[MAX_FILE_NAME_LENGTH] = "Public.key";
+    char priv_file_name[MAX_FILE_NAME_LENGTH] = "Private.key";
+    char pub_file_path[MAX_FILE_PATH_LENGTH+MAX_FILE_NAME_LENGTH];
+    char priv_file_path[MAX_FILE_PATH_LENGTH+MAX_FILE_NAME_LENGTH];
+    
+    /*TOBEDONE*/
+    if (Security::is_dir_exist(""))
+    {
+
+    }
+
+
+    /*
+        Example =>
+                $priv_file_path
+        sprintf( "     ",       
+               "%s%s", 
+               Relative path for keys
+               "./keystore", 
+               File name (same is done for private key)
+               "Public.key.");
+        Result =>
+            ./keystore/Public.key.* is stored in $pub_file_name
+    
+    */
+    sprintf(pub_file_path, "%s%s", keystore_dir, pub_file_name);
+    sprintf(priv_file_path, "%s%s", keystore_dir, priv_file_name);
+
+    rsaU.Generate_KeyPair_Im(passphrase, pub_file_path, priv_file_path);
+    
+    EVP_PKEY *pubkey = rsaU.ReadPubKey_FromFile(pub_file_path);
+    char     *c_pubkey = rsaU.get_file_content(pub_file_path);
+
+    EVP_PKEY *privkey = rsaU.ReadPrivKey_FromFile(priv_file_path, passphrase);
+    char     *c_privkey = rsaU.get_file_content(priv_file_path);
+    
+    Debug().info("Retrieved pubkey \n", c_pubkey);
+    Debug().info("Retrieved privkey \n", c_privkey);
+
+    this->keypair = std::make_shared<Security::RSA_Keypair> (Security::RSA_UNAR_KEY{pubkey, c_pubkey}, 
+                                                              Security::RSA_UNAR_KEY{privkey, c_privkey});
+    
+    Debug().info("Out of function init_server_keypair");
+    return (int)!(sizeof (c_pubkey) & sizeof (c_privkey));
+}
+
+/**
+ * @brief Set already existing RSA_Keypair (typedef) to model
+ * 
+ * @param __other init keypair from other pair instance
+ * @return int 
+ */
+int Server::ServerModel::set_server_keypair (const Security::RSA_Keypair& __other)
+{
+   try
+   {
+        keypair = std::make_shared<Security::RSA_Keypair> (std::move(__other));
+        return 0;       
+   }
+   catch(const std::exception& e)
+   {
+        return 1;
+   }
+   
+}
+
+/**
+ * @brief Return RSA_Keypair of $this model
+ * 
+ * @return Security::RSA_Keypair& 
+ */
+Security::RSA_Keypair const * Server::ServerModel::get_server_keypair (void)
+{
+    return this->keypair.get();
 }
 
 

@@ -7,3 +7,5 @@ bin/*
 lib/*.a
 build/*
 *.key
+./'Client Docs'/*
+./'Server Docs'/*

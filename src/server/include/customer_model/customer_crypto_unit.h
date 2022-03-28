@@ -45,6 +45,11 @@ namespace Security
 
     typedef std::pair <RSA_UNAR_KEY, RSA_UNAR_KEY> RSA_Keypair;
 
+    template <typename T>
+        using shared_ptr = std::shared_ptr<T>;
+
+    typedef shared_ptr<Security::RSA_Keypair> \
+        RSA_Keypair_shrd_ptr; 
     
     /*singleton struct to generate key <<unions>> */
     struct RSA_UNAR_KEY
@@ -66,27 +71,20 @@ namespace Security
         public:
             /*Model of this class allows only to generate or/and assign server side keypair*/
             /*And only assign client public key*/
-            CustomerCryptoUnit (int sfd = 0);
+            CustomerCryptoUnit (const RSA_Keypair_shrd_ptr&,  int sfd = 0);
 
             ~CustomerCryptoUnit ();
-            /*Generate and assign RSA keypair for server side*/
-            int init_server_keypair (char* passphrase = nullptr);
-
-            /*Set already existing RSA_Keypair (typedef) to model*/
-            int set_server_keypair (const RSA_Keypair& __other);
-
+            
             /*Set retrieved cliend-created public RSA key*/
             int set_client_key (const RSA_UNAR_KEY& __other);
 
-            /*Return RSA_Keypair of $this model*/
-            RSA_Keypair& get_server_keypair (void);
-
+            
             /*Return RSA_UNAR_KEY of $this model*/
             RSA_UNAR_KEY& get_client_key (void);
             
         private:
         /*Key-pair which has been generated on server side*/
-            RSA_Keypair server_keypair;
+            RSA_Keypair_shrd_ptr keypair;
 
         /*
         Key which has been retrieved from client side

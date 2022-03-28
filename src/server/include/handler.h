@@ -82,7 +82,7 @@ std::string random_str(int len = 40);
 class Handler
 {
     public:
-            Handler (int RWBacklog = 1);
+            Handler (const Security::RSA_Keypair_shrd_ptr&, int RWBacklog = 1);
             ~Handler ();
             void commap_init (void);
 
@@ -139,6 +139,8 @@ class Handler
 
             /*Cache which holds recent customers*/
             CustomerCacheMapType recent_customers;
+
+            Security::RSA_Keypair_shrd_ptr keypair;
 
     };
 };

@@ -9,12 +9,14 @@ using namespace std;
  * @param RWBeacklog represents number of allowed thread count
  * to use reader & writer function at the same time
  */
-Server::Handler::Handler(int RWBacklog)
+Server::Handler::Handler(const Security::RSA_Keypair_shrd_ptr& kp, int RWBacklog) 
+    
 {
     Debug().info("Called handel ctor");
     sem_init (&writer_sem, 0, RWBacklog);
     sem_init (&reader_sem, 0, RWBacklog);
     commap_init();
+    keypair = kp;
 }
 
 /**
@@ -172,18 +174,14 @@ int Server::Handler::send_connect_accept(int sfd, const DataTransfer::MessageMod
     std::string new_unique_token = Server::random_str();
 
     Debug().warning (new_unique_token);
-    this->recent_customers[new_unique_token] = std::make_shared <Customer::CustomerModel> (Customer::CustomerModel(sfd, new_unique_token));
+    this->recent_customers[new_unique_token] = std::make_shared <Customer::CustomerModel> (Customer::CustomerModel(sfd, new_unique_token, keypair));
 
-    (*this).recent_customers[new_unique_token].get()->get_crypto_unit()->init_server_keypair((char*)RSA_DEFAULT_PASSPHRASE);
-    auto keypair = (*this).recent_customers[new_unique_token].get()->get_crypto_unit()->get_server_keypair();
-
-
-    DataTransfer::ConnectAccept cA(new_unique_token ,keypair.first.c_key);
+    DataTransfer::ConnectAccept cA(new_unique_token ,keypair->first.c_key);
     
     /*Send public key to remote node (key is generated on server side)*/
     send (sfd, cA.to_str().c_str(), cA.to_str().length(), NULL);
-    keypair.first.free_all();
-    keypair.second.free_all();
+    keypair->first.free_all();
+    keypair->second.free_all();
     return 0;
 }
 

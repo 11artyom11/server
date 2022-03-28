@@ -45,13 +45,15 @@ namespace Server
     template <typename T>
     using unique_ptr = std::unique_ptr<T>;
 
-    
+      
 
     typedef unique_ptr<Handler> \
                 Handler_unq_ptr;
 
     typedef unique_ptr<struct sockaddr_in> \
             sockaddr_in_unq_ptr;
+
+
 
     bool is_client_connection_close(const char* msg);
 
@@ -69,6 +71,16 @@ namespace Server
             struct sockaddr_in* get_server_addr     () const;
             int distribute_incoming_connections     (int new_socket, char* response);
             void handle_connection                  (int connection);
+            /*Generate and assign RSA keypair for server side*/
+            int init_server_keypair (char* passphrase = nullptr);
+
+            /*Set already existing RSA_Keypair (typedef) to model*/
+            int set_server_keypair (const Security::RSA_Keypair& __other);
+
+            /*Return RSA_Keypair of $this model*/
+            Security::RSA_Keypair const * get_server_keypair (void);
+
+
             ~ServerModel                            ();
 
         
@@ -97,7 +109,7 @@ namespace Server
 
         /*Handler for write and read functions*/
             Handler_unq_ptr m_handler;
-
+            Security::RSA_Keypair_shrd_ptr keypair;
         
     };
 

@@ -200,7 +200,7 @@ int RSA_Unit::Generate_KeyPair_Im(char *pass,
         Debug().fatal("Failed to open  file for private key");
         return 1;
     }
-    int res = PEM_write_PrivateKey(fp, pkey, EVP_aes_256_cbc(), NULL, 0, NULL, pass);
+    int res = PEM_write_PrivateKey(fp, pkey, nullptr, NULL, 0, NULL, nullptr);
     if (res == 0)
     {
         Debug().fatal("Failed to write private key to file");
