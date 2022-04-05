@@ -141,10 +141,10 @@ bool DataTransfer::is_message_initial_data_valid( DataTransfer::COMMAND_NAME cN,
  */
 bool DataTransfer::is_message_valid ( MessageModel& mModel)
 {
-    std::string command;
     try
     {
-        command = mModel.get<std::string>("command");
+        
+        std::string command = mModel.get<std::string>("command");
         bool is_command_valid = false;
         Debug().info (std::find(COMMAND_LIST.begin(), COMMAND_LIST.end(), command) != COMMAND_LIST.end());
         return std::find(COMMAND_LIST.begin(), COMMAND_LIST.end(), command) != COMMAND_LIST.end();
@@ -152,6 +152,7 @@ bool DataTransfer::is_message_valid ( MessageModel& mModel)
     }
     catch(const std::exception& e)
     {
+        Debug().fatal (e.what());
         Debug().fatal("Thrown INVALID_INITIAL_MESSAGE_DATA exception");
         Debug().fatal("message_resolver.cpp :151");
         return false;

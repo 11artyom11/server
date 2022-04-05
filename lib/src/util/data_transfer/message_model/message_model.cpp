@@ -24,6 +24,7 @@ MessageModel::MessageModel (const string& json_s) __THROW
     }
     catch(const std::exception& e)
     {
+        Debug().fatal(e.what());
         Debug().fatal("Parse Error !!!");
     }
     

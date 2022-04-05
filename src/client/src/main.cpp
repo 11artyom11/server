@@ -6,7 +6,7 @@ int main(int argc, char* argv[])
 
   if (argc != 2)
   {
-    Debug().fatal("1 parameter expected (port) 2 were given: terminating....");
+    Debug().fatal("1 parameter expected (port) ",argc ," were given: terminating....");
     return 0;
   }
 

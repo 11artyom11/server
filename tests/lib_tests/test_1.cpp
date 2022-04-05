@@ -145,18 +145,18 @@ TEST(ENCRYPT_DECRYPT_RSA_STRUCT_FUNCTIONS, ENCRYPT_DECRYPT_TEST)
     EVP_PKEY *privkey = rsaU.ReadPrivKey_FromFile("Private.key", "a");
     RSA *rsa_d = EVP_PKEY_get1_RSA(privkey);
 
-    char* es;
+    unsigned char* es;
     char* ds;
     for (int times = 0; times < TEST_COMPLICATION; times++)
     {
-        auto rand_str = random_string();
+        unsigned char* rand_str = (unsigned char*)random_string().c_str();
     /*Encrypt*/
-        es = rsaU.rsa_encrypt((char*)rand_str.c_str(), rsa_e);
+        es = rsaU.rsa_encrypt(rand_str, rsa_e);
         
     /*Decrypt*/
-        ds = rsaU.rsa_decrypt(es, rsa_d);
+        ds = rsaU.rsa_decrypt((char*)es, rsa_d);
     
-        EXPECT_EQ(0, strcmp((char*)rand_str.c_str(), ds));
+        EXPECT_EQ(0, strcmp((char*)rand_str, ds));
         delete[] es;
         delete[] ds;
     }
@@ -170,26 +170,32 @@ TEST(ENCRYPT_DECRYPT_RSA_STRUCT_FUNCTIONS, ENCRYPT_DECRYPT_TEST)
 
 
 
-// TEST(ENCRYPT_DECRYPT_C_STRING_KEYS, ENCRYPT_DECRYPT_TEST)
-// {
-//     RSA_Unit rsaU;
-//     rsaU.Generate_KeyPair_Im("a", "Public.key", "Private.key");
-//     char* pubkey = BaseCipherUnit::get_file_content("Public.key");
-//     char* privkey = BaseCipherUnit::get_file_content("Private.key");
-//     char* es;
-//     char* ds;
-//     auto rand_str = random_string();
-//         /*Encrypt*/
-//     es = rsaU.rsa_encrypt((char*)rand_str.c_str(), pubkey);
-//         /*Decrypt*/
-//     ds = rsaU.rsa_decrypt(es, privkey);
-//     EXPECT_EQ(0, strcmp((char*)rand_str.c_str(), ds));
+TEST(ENCRYPT_DECRYPT_C_STRING_KEYS, ENCRYPT_DECRYPT_TEST)
+{
+    RSA_Unit rsaU;
+    rsaU.Generate_KeyPair_Im("a", "Public.key", "Private.key");
+    char* pubkey = BaseCipherUnit::get_file_content("Public.key");
+    char* privkey = BaseCipherUnit::get_file_content("Private.key");
+    unsigned char* es;
+    char* ds;
+    // for (auto i = 0; i < TEST_COMPLICATION; ++i)
+    {
+        unsigned char* rand_str = (unsigned char*)"ABCDEF123456";
+        /*Encrypt*/
+        es = rsaU.rsa_encrypt(rand_str, pubkey);
+            /*Decrypt*/
+        ds = rsaU.rsa_decrypt((char*)es, privkey);
+        
+        Debug().info (rand_str, " :: ", ds);
+        EXPECT_EQ(0, strcmp((char*)rand_str, ds));
     
-//     delete[] es;
-//     delete[] ds;
-//     delete[] pubkey;
-//     delete[] privkey;
-// }
+    }
+    
+    delete[] es;
+    delete[] ds;
+    delete[] pubkey;
+    delete[] privkey;
+}
 
 TEST (AES_ENCRYPT_DECRYPT, AES_UNIT)
 {
@@ -232,9 +238,31 @@ TEST (AES_ENCRYPT_DECRYPT, AES_UNIT)
 }
 int main(int argc, char *argv[])
 {
-     
-    ::testing::InitGoogleTest(&argc, argv);
-    return RUN_ALL_TESTS();
+      RSA_Unit rsaU;
+    rsaU.Generate_KeyPair_Im("a", "Public.key", "Private.key");
+    std::string pubkey = BaseCipherUnit::get_file_content("Public.key");
+    char* privkey = BaseCipherUnit::get_file_content("Private.key");
+    unsigned char* es;
+     char* ds;
+    for (auto i = 0; i < TEST_COMPLICATION; ++i)
+    {
+        unsigned char* rand_str = (unsigned char*)"ABCDEF123456";
+        /*Encrypt*/
+        es = rsaU.rsa_encrypt(rand_str, (char*)pubkey.c_str());
+            /*Decrypt*/
+        ds = rsaU.rsa_decrypt((char*)es, privkey);
+        
+        assert (!strcmp(ds, (const char*)rand_str));
+        // EXPECT_EQ(0, strcmp((char*)rand_str.c_str(), ds));
+    
+    }
+    
+    delete[] es;
+    delete[] ds;
+    // delete[] pubkey;
+    delete[] privkey;
+    // ::testing::InitGoogleTest(&argc, argv);
+    // return RUN_ALL_TESTS();
 }
 
 

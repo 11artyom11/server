@@ -32,21 +32,9 @@ time.h
 string
 -
 
-/home/aram/workspace/clientserver/lib/include/util/data_transfer/message_model/message_templates.h
-message_model.h
-/home/aram/workspace/clientserver/lib/include/util/data_transfer/message_model/message_model.h
-../../../helpers/constants.h
-/home/aram/workspace/clientserver/lib/include/helpers/constants.h
-string
--
-
 /home/aram/workspace/clientserver/lib/src/util/data_transfer/message_model/message_model.cpp
 ../../../../include/util/data_transfer/message_model/message_model.h
 /home/aram/workspace/clientserver/lib/include/util/data_transfer/message_model/message_model.h
-
-/home/aram/workspace/clientserver/lib/src/util/data_transfer/message_model/message_templates.cpp
-../../../../include/util/data_transfer/message_model/message_templates.h
-/home/aram/workspace/clientserver/lib/include/util/data_transfer/message_model/message_templates.h
 
 /home/aram/workspace/clientserver/outter_modules/json/single_include/nlohmann/json.hpp
 algorithm

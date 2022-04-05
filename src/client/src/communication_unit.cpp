@@ -48,6 +48,10 @@ BasicCommunicationModel::~BasicCommunicationModel()
 
 void BasicCommunicationModel::start_read_async(int sockfd)
 {
+    /*Here must be set message resolver to resolve inputted data*/
+        
+        /******/
+
     Debug().info("Called BasicCommunicationModel::start_read_async(..)");
     /*Lambda which is called to forkk another thread in order to 
         support async read model and not to mess with write model*/
@@ -96,12 +100,12 @@ void BasicCommunicationModel::start_read_async(int sockfd)
  */
 void BasicCommunicationModel::start_write_async(int sockfd, 
                                                     std::istream&)
-{          
+{                 
     std::string buf_s;
-    /*Collect input data until '\n' has been hit */
-    while (getline(std::cin, buf_s) )
+
+do
     {
-        /*Here must be set message resolver to resolve inputted data*/
+        std::cin >> buf_s;
         DataTransfer::MessageModel model (buf_s);
         if (!DataTransfer::is_message_valid(model))
         {
@@ -109,8 +113,24 @@ void BasicCommunicationModel::start_write_async(int sockfd,
             continue;
         }
         write(sockfd, buf_s.c_str(), strlen(buf_s.c_str()));
-        buf_s.clear();
-    }
+        // buf_s.clear();
+    }     while (buf_s.length());
+        
+
+    // std::string buf_s;
+    // /*Collect input data until '\n' has been hit */
+    // while (getline(std::cin, buf_s) )
+    // {
+    //     /*Here must be set message resolver to resolve inputted data*/
+    //     DataTransfer::MessageModel model (buf_s);
+    //     if (!DataTransfer::is_message_valid(model))
+    //     {
+    //         Debug().fatal ("Bad Message");
+    //         continue;
+    //     }
+    //     write(sockfd, buf_s.c_str(), strlen(buf_s.c_str()));
+    //     buf_s.clear();
+    // }
 }
 
 

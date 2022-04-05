@@ -39,10 +39,32 @@ int Handler::on_connect_accept_recieved(int sfd,
     ecncrypted token to server
     */
 
-   
-   send_connect_command(sfd, message);
-    
+    RSA_Unit rsaU;
+    AES_Unit aesU;
+    string key = message.get<std::string>("pkey");
+    unsigned char* mes = (unsigned char*)"{\"command\":\"com_connect\"}\0";
+    unsigned char* enc = rsaU.rsa_encrypt(mes,(char*)key.c_str());
+    for (size_t i = 0; i < 128; i++) 
+    {
+        fprintf(stderr, "0x%02x/", enc[i]);
+    }
+    fprintf(stderr, "\n");
+
+    char* b64 = base64encode(enc, strlen ((const char*)enc));
+    char* d64 = base64decode(b64, strlen(b64));
+    Debug().fatal("---------");
+    for (size_t i = 0; i < 128; i++) 
+    {
+        fprintf(stderr, "0x%02x/", d64[i]);
+    }
+    fprintf(stderr, "\n");
+
+    send(sfd, b64, strlen(b64), NULL );
+    // delete[] mes;
+    delete[] b64;
+    delete[] enc;
     return 0;
+
 }   
 
 int Handler::on_login_accept_recieved(int sfd,
@@ -54,24 +76,27 @@ int Handler::on_login_accept_recieved(int sfd,
 int Handler::send_connect_command(int sfd,
                                     const DataTransfer::MessageModel& message)
 {
+    
     RSA_Unit rsaU;
     AES_Unit aesU;
 
     string key = message.get<string>("pkey").c_str();
     Debug().warning(key);
 
-    cP.AES_token = string_to_hex((char*)aesU.generate_key(256));
-    cP.unique_token = message.get<string> ("unique_token");
+    cP.AES_token = base64encode((char*)aesU.generate_key(256), 256);
+    // cP.unique_token = message.get<string> ("unique_token");
 
     DataTransfer::ConnectCommand cC ("192.168.1.1",cP.AES_token, cP.unique_token);
 
-    char* mes_raw_str = "ABCDEF123456";//cC.to_str().c_str();
+    // unsigned char* mes_raw_str = (unsigned char*)(cC.to_str().c_str());
     /*@note make tmp function call*/
-    char* mes_enc_str =  rsaU.rsa_encrypt(mes_raw_str, (char*)key.c_str());
-    char* mes_b64_enc_str = base64encode(mes_enc_str, strlen(mes_enc_str));
-    Debug().warning("To be sent~!!!");
-    Debug().info (mes_b64_enc_str);
-    send (sfd, mes_b64_enc_str, strlen(mes_b64_enc_str), NULL);
+    
+    Debug().info ((unsigned char*)(cC.to_str().c_str()), "\n!!!!!!!!!");
+    unsigned char* mes_enc_str =  rsaU.rsa_encrypt((unsigned char*)(cC.to_str().c_str()), (char*)key.c_str());
+    // char* mes_b64_enc_str = base64encode(mes_enc_str, strlen((const char*)mes_enc_str));
+    // Debug().warning("To be sent~!!!");
+    // Debug().info (mes_b64_enc_str);
+    send (sfd, mes_enc_str, 128, NULL);
     return 0;
 }
 

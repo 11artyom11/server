@@ -21,6 +21,7 @@
 #include <iomanip>
 #include <cstdint>
 
+#include <mutex>
 /*
 Enum which describes way of generating key pair
 */
@@ -67,9 +68,9 @@ class RSA_Unit : public BaseCipherUnit
                                     char* pub_key_name,
                                         char* priv_key_name);
         /*Encrypt Decrypt function overloaded versions with std::string*/
-        char* rsa_encrypt (char* raw_str,
+         unsigned char* rsa_encrypt (const unsigned char* raw_str,
                                 char* key);
-        char* rsa_encrypt (char* raw_str,
+         unsigned char* rsa_encrypt (const unsigned char* raw_str,
                                 RSA* key);
         char* rsa_decrypt (char* enc_str, 
                                 char* key);

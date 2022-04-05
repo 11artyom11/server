@@ -21,7 +21,6 @@
 #include "../../../lib/include/util/cyptolib/crypto_unit.h"
 #include "../../../lib/include/helpers/constants.h"
 #include "../../../lib/include/helpers/debug_helper/debug_helper.h"
-
 #include <map>
 #include <string>
 #include <arpa/inet.h>

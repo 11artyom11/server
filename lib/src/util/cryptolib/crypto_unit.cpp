@@ -274,50 +274,58 @@ int RSA_Unit::Generate_KeyPair_Im(char *pass,
  * @param pub_key public key
  * @return encrypted string
  */
-char *RSA_Unit::rsa_encrypt(char *raw_str,
-                            char *key)
+ unsigned char *RSA_Unit::rsa_encrypt(const unsigned char *raw_str,
+                                        char *key)
 {
+
     BIO *bio = BIO_new_mem_buf((void *)key, strlen(key));
     RSA *rsa = PEM_read_bio_RSA_PUBKEY(bio, NULL, NULL, NULL);
     BIO_free(bio);
 
-    uint64_t len = strlen(raw_str);
-    Debug().info("Hello\n", key);
-    Debug().info("RSA SIZE ",RSA_size(rsa));
+    int len = strlen((const char*)raw_str);
+    // Debug().info("Hello\n", strlen(key));
+    // Debug().info("RSA SIZE ",RSA_size(rsa));
 
-    unsigned char *encrypted_str = (unsigned char *)malloc(RSA_size(rsa));
-
+    unsigned char *encrypted_str = new unsigned char [RSA_size(rsa)];
+    // memset(encrypted_str,'\0', RSA_size(rsa));
+    // Debug().warning("len : ", len);
+    // Debug().warning("raw_str : ", raw_str);
+    // Debug().warning("encrypted_str : ", encrypted_str);
+    // Debug().warning("rsa : ", rsa);
     int result = RSA_public_encrypt(len,
-                                    (const unsigned char *)(raw_str),
+                                    raw_str,
                                     encrypted_str,
                                     rsa,
                                     RSA_PKCS1_OAEP_PADDING);
-
+    // Debug().info ((result == -1 ? "ERRPR" : "OK ECIPHRT"));
+    
     RSA_free(rsa);
 
-    return (char *)encrypted_str;
+    return encrypted_str;
 }
 
 /**
- * @brief Encrypt given C string with key
+ * @brief 
+ * 
+ *
  * 
  * @param raw_str C string to be encrypted
  * @param key Rsa key
  * @return char* 
  */
-char *RSA_Unit::rsa_encrypt(char *raw_str,
+ unsigned char *RSA_Unit::rsa_encrypt(const unsigned char *raw_str,
                             RSA *key)
 {
-    uint64_t len = strlen(raw_str);
+    uint64_t len = strlen((const char*)raw_str);
 
     unsigned char *encrypted_str = (unsigned char *)malloc(RSA_size(key));
 
     int result = RSA_public_encrypt(len,
-                                    (const unsigned char *)(raw_str),
+                                    raw_str,
                                     encrypted_str,
                                     key,
                                     RSA_PKCS1_OAEP_PADDING);
-    return (char *)encrypted_str;
+    return encrypted_str;
 }
 
 /**
