@@ -187,12 +187,14 @@ int Server::ServerModel::distribute_incoming_connections(int socket,
 
     Debug().info ("Encoded String Recieved");
     Debug().info (response); 
-    string mes{base64decode(response, strlen(response))};
+    // string mes{base64decode(response, strlen(response))};
+    string mes{response};
+    
     Debug().info ("Decoded String Recieved");
 
-    char* decr_mes = rsaU.rsa_decrypt((char*)mes.c_str(), keypair->second.c_key);
+    // char* decr_mes = rsaU.rsa_decrypt((char*)mes.c_str(), keypair->second.c_key);
 
-    Debug().info (decr_mes);
+    // Debug().info (decr_mes);
     //here must be executed JSON resolver in order to divide message 
     //into essential command list
     
@@ -203,7 +205,7 @@ int Server::ServerModel::distribute_incoming_connections(int socket,
 
     returns handler return error (1) in case of "bad" message
     */ 
-    MessageModel message (response_s);//(nlohmann::json::parse(R"({"command" : 1})"));
+    MessageModel message (mes);//(nlohmann::json::parse(R"({"command" : 1})"));
     if (!DataTransfer::is_message_valid (message))
     {
         Debug().fatal("Bad Message");

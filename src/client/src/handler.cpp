@@ -41,28 +41,16 @@ int Handler::on_connect_accept_recieved(int sfd,
 
     RSA_Unit rsaU;
     AES_Unit aesU;
-    string key = message.get<std::string>("pkey");
-    unsigned char* mes = (unsigned char*)"{\"command\":\"com_connect\"}\0";
-    unsigned char* enc = rsaU.rsa_encrypt(mes,(char*)key.c_str());
-    for (size_t i = 0; i < 128; i++) 
-    {
-        fprintf(stderr, "0x%02x/", enc[i]);
-    }
-    fprintf(stderr, "\n");
+    auto key = base64encode (aesU.generate_key(256), 256);
+    auto utoken = message.get<string>("unique_token");
 
-    char* b64 = base64encode(enc, strlen ((const char*)enc));
-    char* d64 = base64decode(b64, strlen(b64));
-    Debug().fatal("---------");
-    for (size_t i = 0; i < 128; i++) 
-    {
-        fprintf(stderr, "0x%02x/", d64[i]);
-    }
-    fprintf(stderr, "\n");
+    DataTransfer::ConnectCommand cC{"localhost",std::string{key},utoken};
 
-    send(sfd, b64, strlen(b64), NULL );
-    // delete[] mes;
-    delete[] b64;
-    delete[] enc;
+    // char* response = (char*)(cC.to_str().c_str());
+    auto str = cC.to_str();
+    const auto str_length = str.length();
+    Debug().info ((char*)str.c_str());
+    send (sfd, (char*)str.c_str(), str_length, NULL);
     return 0;
 
 }   
