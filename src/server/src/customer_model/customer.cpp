@@ -23,6 +23,12 @@ CustomerModel::~CustomerModel()
 
 }
 
+void CustomerModel::set_aes_token (const std::string& token)
+{
+    this->aes_token = token;
+    return;
+}
+
 /**
  * @brief Return crpytounit
  * 

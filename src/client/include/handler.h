@@ -23,6 +23,7 @@
 #include "../../../lib/include/helpers/debug_helper/debug_helper.h"
 #include <map>
 #include <string>
+#include <memory>
 #include <arpa/inet.h>
 #include <sys/socket.h>
 #include <netdb.h>
@@ -59,10 +60,14 @@ namespace Client
 
     /*Binding which help to add new handler functions genreically*/
     typedef std::map <std::string, int (Handler::*) (int, const DataTransfer::MessageModel&), ::strless> CommMapType;
+    
+    typedef std::unique_ptr <RSA_Unit> RSA_Unit_unq_ptr;
+    typedef std::unique_ptr <AES_Unit> AES_Unit_unq_ptr;
 
 class Handler
 {
     public:
+        Handler ();
         void commap_init (void);
 
         int send_login_request         (int sfd, const DataTransfer::MessageModel&);
@@ -81,8 +86,10 @@ class Handler
 
     private:
         CommMapType commap;
-        /*Conciously didn't added getter for aes token*/
+        /*Conciously hadn't added getter for aes token*/
         ClientPrototype cP;
+        RSA_Unit_unq_ptr rsa_unq_ptr;
+        AES_Unit_unq_ptr aes_unq_ptr;
 
 };
 

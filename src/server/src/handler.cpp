@@ -207,8 +207,8 @@ int Server::Handler::on_connect_command_recieved(int sfd, const DataTransfer::Me
 {
     Debug().warning ("here");
     /*check message content*/ /*FIX ME*/
-    string unique_token = message.get<string>("unique_token");
-    Debug().info("SFD : ", (recent_customers[unique_token].get()->get_sfd()));
+
+
     send_connect_verify (sfd, message);
      return 0;
 }
@@ -251,10 +251,16 @@ int Server::Handler::on_sign_up_command_recieved(int sfd, const DataTransfer::Me
  * @param sfd 
  * @return int 
  */
-int Server::Handler::send_connect_verify(int sfd, const DataTransfer::MessageModel&)
+int Server::Handler::send_connect_verify(int sfd, const DataTransfer::MessageModel& message)
 {
 /* tmp uid*/
     DataTransfer::ConnectVerify cV("0");
+    string unique_token = message.get<string>("unique_token");
+
+    std::string aes_token = message.get<std::string>("aes_token");
+    Debug().info (aes_token);
+    recent_customers[unique_token]->set_aes_token(aes_token);
+
     send (sfd, cV.to_str().c_str(), cV.to_str().length(), NULL);
    return 0;
 }

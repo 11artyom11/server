@@ -2,6 +2,12 @@
 
 using Handler = Client::Handler;
 
+Handler::Handler ()
+{
+    aes_unq_ptr = std::make_unique<AES_Unit>();
+    rsa_unq_ptr = std::make_unique<RSA_Unit>();
+}
+
 void Handler::commap_init (void)
 {
     commap[CONNECT_REQUEST]   = &Handler::send_connect_request;
@@ -38,19 +44,8 @@ int Handler::on_connect_accept_recieved(int sfd,
     Recieve RSA public key from server, cipher by it aes token and send 
     ecncrypted token to server
     */
-
-    RSA_Unit rsaU;
-    AES_Unit aesU;
-    auto key = base64encode (aesU.generate_key(256), 256);
-    auto utoken = message.get<string>("unique_token");
-
-    DataTransfer::ConnectCommand cC{"localhost",std::string{key},utoken};
-
-    // char* response = (char*)(cC.to_str().c_str());
-    auto str = cC.to_str();
-    const auto str_length = str.length();
-    Debug().info ((char*)str.c_str());
-    send (sfd, (char*)str.c_str(), str_length, NULL);
+   send_connect_command(sfd, message);
+   
     return 0;
 
 }   
@@ -65,26 +60,20 @@ int Handler::send_connect_command(int sfd,
                                     const DataTransfer::MessageModel& message)
 {
     
-    RSA_Unit rsaU;
-    AES_Unit aesU;
-
-    string key = message.get<string>("pkey").c_str();
-    Debug().warning(key);
-
-    cP.AES_token = base64encode((char*)aesU.generate_key(256), 256);
-    // cP.unique_token = message.get<string> ("unique_token");
-
-    DataTransfer::ConnectCommand cC ("192.168.1.1",cP.AES_token, cP.unique_token);
-
-    // unsigned char* mes_raw_str = (unsigned char*)(cC.to_str().c_str());
-    /*@note make tmp function call*/
     
-    Debug().info ((unsigned char*)(cC.to_str().c_str()), "\n!!!!!!!!!");
-    unsigned char* mes_enc_str =  rsaU.rsa_encrypt((unsigned char*)(cC.to_str().c_str()), (char*)key.c_str());
-    // char* mes_b64_enc_str = base64encode(mes_enc_str, strlen((const char*)mes_enc_str));
-    // Debug().warning("To be sent~!!!");
-    // Debug().info (mes_b64_enc_str);
-    send (sfd, mes_enc_str, 128, NULL);
+    auto key = base64encode (aes_unq_ptr->generate_key(256), 256);
+    auto utoken = message.get<string>("unique_token");
+    
+    cP.AES_token = key;
+    cP.unique_token = utoken;
+
+    DataTransfer::ConnectCommand cC{"localhost",std::string{key},utoken};
+
+    // char* response = (char*)(cC.to_str().c_str());
+    auto str = cC.to_str();
+    const auto str_length = str.length();
+    Debug().info ((char*)str.c_str());
+    send (sfd, (char*)str.c_str(), str_length, NULL);
     return 0;
 }
 
