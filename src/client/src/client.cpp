@@ -35,8 +35,19 @@ ClientModel::ClientModel(int __port)
    auto write_th = std::async(std::launch::async, &Net::BasicCommunicationModel::start_write_async, this->comm_unit, main_socket, std::ref(std::cin));
 
     Debug().info("Out of Client Model C-tor");
-
+    connect_to_default_host();
 }
+
+/**
+ * @brief Connect to default setted up host
+ * 
+ * @return int result of connection trial
+ */
+int ClientModel::connect_to_default_host (void)
+{
+    return comm_unit->get_io_model()->get_handler()->send_connect_request(con_handler->get_sockfd(), DataTransfer::MessageModel{""});
+}
+
 
 /**
  * @brief Destroy the Client Model:: Client Model object

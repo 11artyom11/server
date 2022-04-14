@@ -33,11 +33,11 @@
 namespace iounit
 {
     template <typename T>
-    using unique_ptr = std::unique_ptr<T>;
+    using shared_ptr = std::shared_ptr<T>;
 
 
-    typedef unique_ptr<Client::Handler> \
-                 Handler_unq_ptr;
+    typedef shared_ptr<Client::Handler> \
+                 Handler_shrd_ptr;
 
     class IOModel
     {
@@ -50,6 +50,8 @@ namespace iounit
             template <typename mesType>
             void read_q (int sfd, mesType messages);
 
+            Handler_shrd_ptr get_handler(void) const;
+
         private:
         /*Queues in which we store output and input streams which 
         will be released in near future*/
@@ -61,7 +63,7 @@ namespace iounit
         Handler to handle incoming and outgoing
         messages
         */    
-            Handler_unq_ptr m_handler;
+            Handler_shrd_ptr m_handler;
             
 
     };

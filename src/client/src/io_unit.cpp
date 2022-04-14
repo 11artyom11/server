@@ -12,6 +12,12 @@ IOModel::IOModel()
     m_handler.get()->commap_init();
 }
 
+Handler_shrd_ptr IOModel::get_handler(void) const
+{
+    return m_handler;
+}
+
+
 /**
  * @brief Destroy the IOModel::IOModel object
  * 

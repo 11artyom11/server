@@ -22,7 +22,7 @@ BasicCommunicationModel::BasicCommunicationModel() :
 BasicCommunicationModel::BasicCommunicationModel(uint32_t _max_read_thread_count,
                                                     uint32_t _max_write_thread_count)
 {
-    this->m_io_model = std::make_unique<iounit::IOModel>();
+    this->m_io_model = std::make_shared<iounit::IOModel>();
     this->max_read_thread_count = _max_read_thread_count;
     this->max_write_thread_count = _max_write_thread_count;
     sem_init (&read_lock,0, _max_read_thread_count);
@@ -88,6 +88,14 @@ void BasicCommunicationModel::start_read_async(int sockfd)
     Debug().info("Ended BasicCommunicationModel::start_read_async(..)");
 }
 
+
+IOModel_shrd_ptr 
+BasicCommunicationModel::get_io_model (void) const
+{
+    return this->m_io_model;
+}
+
+
 /**
  * @brief Function to support async writing function 
  * don't need to support multi stream work yet. Maybe later feature 
@@ -115,22 +123,7 @@ do
         write(sockfd, buf_s.c_str(), strlen(buf_s.c_str()));
         // buf_s.clear();
     }     while (buf_s.length());
-        
-
-    // std::string buf_s;
-    // /*Collect input data until '\n' has been hit */
-    // while (getline(std::cin, buf_s) )
-    // {
-    //     /*Here must be set message resolver to resolve inputted data*/
-    //     DataTransfer::MessageModel model (buf_s);
-    //     if (!DataTransfer::is_message_valid(model))
-    //     {
-    //         Debug().fatal ("Bad Message");
-    //         continue;
-    //     }
-    //     write(sockfd, buf_s.c_str(), strlen(buf_s.c_str()));
-    //     buf_s.clear();
-    // }
+       
 }
 
 

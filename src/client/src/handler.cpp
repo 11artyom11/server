@@ -35,6 +35,10 @@ int Handler::send_connect_request(int sfd,
                                     const DataTransfer::MessageModel&)
 {
     this->current_state = CONNECT_STATE::conn_request;
+    DataTransfer::ConnectRequest cR{"127.0.0.1"};
+    string to_send = cR.to_str();
+    int res = send(sfd, (char*)to_send.c_str(), to_send.length(), NULL);
+    return res;
 }
 
 int Handler::on_connect_accept_recieved(int sfd,

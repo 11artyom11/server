@@ -39,8 +39,8 @@ namespace Net
     template <typename T>
     using unique_ptr = std::unique_ptr<T>;
 
-    typedef unique_ptr<iounit::IOModel> \
-                 IOModel_unq_ptr;
+    typedef shared_ptr<iounit::IOModel> \
+                 IOModel_shrd_ptr;
 
     class BasicCommunicationModel
     {   
@@ -53,8 +53,10 @@ namespace Net
             /*functions for async reading and writing*/
             void start_read_async(int sockfd);
             void start_write_async(int sockfd, std::istream& is);
+
+            IOModel_shrd_ptr get_io_model (void) const;
         private:
-            IOModel_unq_ptr m_io_model;
+            IOModel_shrd_ptr m_io_model;
 
             /*Semaphores to keep maximum N threads forked to read & write*/
             sem_t read_lock;

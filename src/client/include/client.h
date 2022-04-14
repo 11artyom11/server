@@ -46,6 +46,7 @@ namespace Client{
     {
         public:
             ClientModel(int __port = DEFAULT_PORT);
+            int connect_to_default_host (void);
             ~ClientModel();
         private:    
             BasicConnectionHandlerSharedPtr con_handler;
