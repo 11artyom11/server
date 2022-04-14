@@ -238,31 +238,9 @@ TEST (AES_ENCRYPT_DECRYPT, AES_UNIT)
 }
 int main(int argc, char *argv[])
 {
-      RSA_Unit rsaU;
-    rsaU.Generate_KeyPair_Im("a", "Public.key", "Private.key");
-    std::string pubkey = BaseCipherUnit::get_file_content("Public.key");
-    char* privkey = BaseCipherUnit::get_file_content("Private.key");
-    unsigned char* es;
-     char* ds;
-    for (auto i = 0; i < TEST_COMPLICATION; ++i)
-    {
-        unsigned char* rand_str = (unsigned char*)"ABCDEF123456";
-        /*Encrypt*/
-        es = rsaU.rsa_encrypt(rand_str, (char*)pubkey.c_str());
-            /*Decrypt*/
-        ds = rsaU.rsa_decrypt((char*)es, privkey);
-        
-        assert (!strcmp(ds, (const char*)rand_str));
-        // EXPECT_EQ(0, strcmp((char*)rand_str.c_str(), ds));
     
-    }
-    
-    delete[] es;
-    delete[] ds;
-    // delete[] pubkey;
-    delete[] privkey;
-    // ::testing::InitGoogleTest(&argc, argv);
-    // return RUN_ALL_TESTS();
+    ::testing::InitGoogleTest(&argc, argv);
+    return RUN_ALL_TESTS();
 }
 
 

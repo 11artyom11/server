@@ -76,6 +76,11 @@ namespace Server
     /*Recent Customer cache type stores in trivial way*/
     typedef std::map <std::string, CustomerModel_shrd_ptr, ::strless> CustomerCacheMapType;
 
+    /*Name binding to cipher units and unique pointer accessors*/
+    typedef std::unique_ptr <RSA_Unit> RSA_Unit_unq_ptr;
+    typedef std::unique_ptr <AES_Unit> AES_Unit_unq_ptr;
+
+
 /*Function for random string generating*/
 std::string random_str(int len = 40);
 
@@ -141,6 +146,9 @@ class Handler
             CustomerCacheMapType recent_customers;
 
             Security::RSA_Keypair_shrd_ptr keypair;
+
+            RSA_Unit_unq_ptr rsa_unq_ptr;
+            AES_Unit_unq_ptr aes_unq_ptr;
 
     };
 };

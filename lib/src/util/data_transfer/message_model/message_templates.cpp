@@ -33,7 +33,7 @@ ConnectVerify::ConnectVerify(const string& unique_token)
 {
     Debug().info ("Constructed ConnectVerify Message");
     this->set ("command", command);
-    this->set ("tmp_uid", unique_token);
+    this->set ("unique_token", unique_token);
 }
 
 LoginRequest::LoginRequest(const string& ip)

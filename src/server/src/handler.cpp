@@ -12,6 +12,8 @@ using namespace std;
 Server::Handler::Handler(const Security::RSA_Keypair_shrd_ptr& kp, int RWBacklog) 
     
 {
+    aes_unq_ptr = std::make_unique<AES_Unit>();
+    rsa_unq_ptr = std::make_unique<RSA_Unit>();
     Debug().info("Called handel ctor");
     sem_init (&writer_sem, 0, RWBacklog);
     sem_init (&reader_sem, 0, RWBacklog);
@@ -254,14 +256,17 @@ int Server::Handler::on_sign_up_command_recieved(int sfd, const DataTransfer::Me
 int Server::Handler::send_connect_verify(int sfd, const DataTransfer::MessageModel& message)
 {
 /* tmp uid*/
-    DataTransfer::ConnectVerify cV("0");
     string unique_token = message.get<string>("unique_token");
+    DataTransfer::ConnectVerify cV(unique_token);
 
-    std::string aes_token = message.get<std::string>("aes_token");
-    Debug().info (aes_token);
-    recent_customers[unique_token]->set_aes_token(aes_token);
+   
+    std::string to_send = cV.to_str();
+   
 
-    send (sfd, cV.to_str().c_str(), cV.to_str().length(), NULL);
+    // aes_unq_ptr->decrypt (enc_mes,strlen ((char*)enc_mes), (unsigned char*)aes_token.c_str(), dec_mes);
+
+
+    send (sfd,  (char*)to_send.c_str(), to_send.length(), NULL);
    return 0;
 }
 

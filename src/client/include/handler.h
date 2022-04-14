@@ -29,6 +29,11 @@
 #include <netdb.h>
 #include <netinet/in.h>
 
+
+    typedef std::shared_ptr <RSA_Unit> RSA_Unit_shrd_ptr;
+    typedef std::shared_ptr <AES_Unit> AES_Unit_shrd_ptr;
+
+
 // Helper functor to ease cleanup of container
 struct delete_ptr { 
     template <typename P>
@@ -48,6 +53,14 @@ class strless {
       }
 };
 
+enum class CONNECT_STATE
+{
+    conn_request,
+    conn_accept,
+    conn_commnd,
+    conn_verify
+};
+
 struct ClientPrototype
 {
     std::string AES_token;
@@ -61,9 +74,6 @@ namespace Client
     /*Binding which help to add new handler functions genreically*/
     typedef std::map <std::string, int (Handler::*) (int, const DataTransfer::MessageModel&), ::strless> CommMapType;
     
-    typedef std::unique_ptr <RSA_Unit> RSA_Unit_unq_ptr;
-    typedef std::unique_ptr <AES_Unit> AES_Unit_unq_ptr;
-
 class Handler
 {
     public:
@@ -82,14 +92,20 @@ class Handler
         int on_login_verify_recieved   (int sfd, const DataTransfer::MessageModel&);
         int send_terminate_connection  (int sfd, const DataTransfer::MessageModel&);
 
+        RSA_Unit_shrd_ptr get_rsa_ptr (void) const;
+        AES_Unit_shrd_ptr get_aes_ptr (void) const;
+        CONNECT_STATE get_net_state (void) const;
+        ClientPrototype const* get_client_prototype_ptr_c (void) const;
+        
         decltype(&Client::Handler::send_connect_request) get_command  ( std::string command);
 
     private:
         CommMapType commap;
         /*Conciously hadn't added getter for aes token*/
         ClientPrototype cP;
-        RSA_Unit_unq_ptr rsa_unq_ptr;
-        AES_Unit_unq_ptr aes_unq_ptr;
+        RSA_Unit_shrd_ptr rsa_shrd_ptr;
+        AES_Unit_shrd_ptr aes_shrd_ptr;
+        CONNECT_STATE current_state;
 
 };
 

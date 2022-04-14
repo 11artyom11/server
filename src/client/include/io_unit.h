@@ -93,6 +93,10 @@ void iounit::IOModel::read_q(int sfd, mesType message)
     /*Lock mutex to do atomic read to queue and check in 
         empty subject read queue*/
     read_mutex.lock();
+
+
+
+
     DataTransfer::MessageModel mesModel(message);
     /*Must be check of retrieved message (..later) FIXXX*/
     /*is_message_valid (message) knd of this*/

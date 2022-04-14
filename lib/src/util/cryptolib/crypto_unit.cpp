@@ -396,7 +396,7 @@ char *RSA_Unit::rsa_decrypt(char *enc_str,
 unsigned char *AES_Unit::generate_key(const uint16_t len)
 {
     unsigned char *key = new unsigned char[len];
-    if (!RAND_bytes(key, sizeof key))
+    if (!RAND_bytes(key, len))
     {
         Debug().fatal("Something gone wrong in generating keys");
     }
