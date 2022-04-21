@@ -46,7 +46,23 @@ bool validate_pkey(EVP_PKEY *pkey)
     return (bool)res.length();
 }
 
+TEST (RSA_1, RSA_TEST)
+{
+    RSA_Unit ru;
+    unsigned char* pr_key = (unsigned char*)ru.get_file_content("Private.key");
+    unsigned char* pb_key = (unsigned char*)ru.get_file_content("Public.key");
 
+    ru.init_keys(pr_key, pb_key);
+
+    unsigned char* data = (unsigned char*)"abcdefghijk12345678910253636";
+    int data_len = strlen ((char*)data);
+    unsigned char encrypted[1024];
+    unsigned char decrypted[1024];
+    int len = ru.public_encrypt (data, data_len, encrypted);
+    ru.private_decrypt (encrypted, len, decrypted);
+    Debug().info ("D MES : ", decrypted);
+
+}
 
 
 int main(int argc, char *argv[])

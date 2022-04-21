@@ -54,13 +54,13 @@ namespace Security
     /*singleton struct to generate key <<unions>> */
     struct RSA_UNAR_KEY
     {
-        EVP_PKEY*   evp_key;
+        RSA*        r_key;
         char*       c_key;
 
         void free_all (void) noexcept
         {
             delete[] c_key;
-            EVP_PKEY_free(evp_key);
+            RSA_free(r_key);
         }
     };
        

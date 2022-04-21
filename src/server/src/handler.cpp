@@ -157,7 +157,7 @@ int Server::Handler::on_connect_request_recieved(int sfd, const DataTransfer::Me
         Check if server's ready to accept connection (new)
     */
     Debug().info("Called Server::Handler::on_connect_request_recieved( ", sfd, ")");
-    
+    current_state = CONNECT_STATE::conn_accept;
     send_connect_accept(sfd, message);
     return 0;
 }
@@ -179,6 +179,9 @@ int Server::Handler::send_connect_accept(int sfd, const DataTransfer::MessageMod
     this->recent_customers[new_unique_token] = std::make_shared <Customer::CustomerModel> (Customer::CustomerModel(sfd, new_unique_token, keypair));
 
     DataTransfer::ConnectAccept cA(new_unique_token ,keypair->first.c_key);
+    
+    /*Set current state as recieving connect_command*/
+    current_state = CONNECT_STATE::conn_commnd;
     
     /*Send public key to remote node (key is generated on server side)*/
     send (sfd, cA.to_str().c_str(), cA.to_str().length(), NULL);
@@ -207,12 +210,25 @@ int Server::Handler::send_login_accept(int sfd, const DataTransfer::MessageModel
  */
 int Server::Handler::on_connect_command_recieved(int sfd, const DataTransfer::MessageModel& message)
 {
+  
+     return 0;
+}
+
+int Server::Handler::on_connect_command_recieved (int sfd, char* message)
+{
+        current_state = CONNECT_STATE::conn_verify;
+
     Debug().warning ("here");
     /*check message content*/ /*FIX ME*/
+    RSA_Unit rsaU;
+    rsaU.init_private_key ((unsigned char*)keypair->second.c_key);
+    unsigned char* decrypted = new unsigned char[1024];
 
-
-    send_connect_verify (sfd, message);
-     return 0;
+    //128
+    rsaU.private_decrypt ((unsigned char*)(message), 128, decrypted);
+    Debug().warning ("SIZE OF DEC :  ", decrypted);
+    return 0;
+    // send_connect_verify (sfd, message);
 }
 
 

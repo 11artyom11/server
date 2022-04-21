@@ -20,7 +20,7 @@
 #include <sstream>
 #include <iomanip>
 #include <cstdint>
-
+#include <cassert>
 #include <mutex>
 /*
 Enum which describes way of generating key pair
@@ -55,30 +55,31 @@ public:
 
 class RSA_Unit : public BaseCipherUnit
 {
+    /****
+    visit 
+    http://hayageek.com/rsa-encryption-decryption-openssl-c/
+    for more info about this methods 
+    *****/
     public:
-            /*
-        About EVP_PKEY structure 
-        https://www.openssl.org/docs/man3.0/man3/EVP_PKEY.html
-        */
-        static EVP_PKEY* ReadPubKey_FromFile  (char* filename);
-        static EVP_PKEY* ReadPrivKey_FromFile (char* filename, char* passphrase = nullptr);
+        RSA_Unit() = default;
+        int init_public_key  (unsigned char* key) __THROW;
+        int init_private_key (unsigned char* key) __THROW;
+        int init_keys        (unsigned char* pr_key,
+                                unsigned char* pub_key) __THROW;
 
-        EVP_PKEY* Generate_KeyPair_Ex(char* pass);
-        int Generate_KeyPair_Im(char* pass, 
-                                    char* pub_key_name,
-                                        char* priv_key_name);
-        /*Encrypt Decrypt function overloaded versions with std::string*/
-         unsigned char* rsa_encrypt (const unsigned char* raw_str,
-                                char* key);
-         unsigned char* rsa_encrypt (const unsigned char* raw_str,
-                                RSA* key);
-        char* rsa_decrypt (char* enc_str, 
-                                char* key);
-        char* rsa_decrypt (char* enc_str, 
-                                RSA* key);
-                                        
+        int public_encrypt(unsigned char * data,int data_len, unsigned char *encrypted);
+        int private_decrypt(unsigned char * enc_data,int data_len, unsigned char *decrypted);
+        ~RSA_Unit ();
     private:
-         EVP_PKEY* Generate_KeyPair(char* pass);
+
+        RSA* create_RSA(unsigned char * key,int is_public);
+        RSA* create_RSA_with_filename(char * filename,int is_public);
+
+        RSA* public_key;
+        RSA* private_key ;
+        int padding = RSA_PKCS1_PADDING;
+
+      
 };
 
 

@@ -58,6 +58,14 @@ class strless {
       }
 };
 
+enum class CONNECT_STATE
+{
+    conn_request,
+    conn_accept,
+    conn_commnd,
+    conn_verify
+};
+
 namespace Server
 {
     class Handler;
@@ -105,6 +113,9 @@ class Handler
             int send_login_accept                   (int sfd, const DataTransfer::MessageModel&);        
 
             int on_connect_command_recieved         (int sfd, const DataTransfer::MessageModel&);
+            /******/
+            int on_connect_command_recieved         (int sfd, char*);
+            /******/          
             int on_login_command_recieved           (int sfd, const DataTransfer::MessageModel&);
             int on_sign_up_command_recieved         (int sfd, const DataTransfer::MessageModel&);
             
@@ -123,6 +134,10 @@ class Handler
 
             decltype(&Server::Handler::provide_write_thread) get_command  ( std::string command);
             int find_in_customer_cache(const std::string& unique_token);
+            
+            CONNECT_STATE current_state = CONNECT_STATE::conn_request;
+
+        
         private:
             sem_t writer_sem;
             sem_t reader_sem;
@@ -150,6 +165,7 @@ class Handler
 
             RSA_Unit_unq_ptr rsa_unq_ptr;
             AES_Unit_unq_ptr aes_unq_ptr;
+
 
     };
 };

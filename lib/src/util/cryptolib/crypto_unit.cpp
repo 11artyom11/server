@@ -94,6 +94,11 @@ char *BaseCipherUnit::get_file_content(char *filename)
 {
 
     FILE *f = fopen(filename, "rb");
+    if (!f)
+    {
+        Debug().fatal ("File does not exist");
+        return nullptr;
+    }
     fseek(f, 0, SEEK_END);
     long fsize = ftell(f);
     fseek(f, 0, SEEK_SET); /* same as rewind(f); */
@@ -113,271 +118,149 @@ char *BaseCipherUnit::get_file_content(char *filename)
 */
 
 /**
- * @brief Returns public key in EVP_PKEY struct
- *
- * @param filename name of file
- */
-EVP_PKEY *RSA_Unit::ReadPubKey_FromFile(char *filename)
-{
-    FILE *fp = fopen(filename, "r");
-    if (!fp)
-        return nullptr;
-
-    EVP_PKEY *key = EVP_PKEY_new();
-    if (key)
-    {
-        EVP_PKEY_assign_RSA(key, PEM_read_RSA_PUBKEY(fp, NULL, NULL, NULL));
-    }
-    
-
-    fclose(fp);
-    return key;
-}
-
-/**
- * @brief returns a private key in EVP_PKEY struct
- *
- * @param filename name of file
- * @param passphrase password required to access pure private key
- */
-EVP_PKEY *RSA_Unit::ReadPrivKey_FromFile(char *filename, char *passphrase)
-{
-    FILE *fp = fopen(filename, "r");
-    if (!fp)
-        return nullptr;
-
-    EVP_PKEY *key = EVP_PKEY_new();
-
-    if (key)
-    {
-        EVP_PKEY_assign_RSA(key, PEM_read_RSAPrivateKey(fp, NULL, NULL, passphrase));
-    }
-
-    fclose(fp);
-    return key;
-}
-
-/**
- * @brief Generate and save
- * in filesystem key pair for RSA key agreement
- *
- * @param pass
- * @return RSA*
- */
-EVP_PKEY *RSA_Unit::Generate_KeyPair(char *pass)
-{
-
-    char rand_buff[16];
-    EVP_PKEY *pkey = NULL;
-    RSA *r;
-
-    int bits = 1024;            //      512, 1024, 2048, 4096
-    unsigned long exp = RSA_F4; //      RSA_3
-    OpenSSL_add_all_algorithms();
-
-    RAND_load_file("/dev/urandom", 1024); // RAND_seed(rand_buff, 16); On linux: RAND_load_file("/dev/urandom", 1024);
-    r = RSA_generate_key(bits, exp, NULL, NULL);
-
-    if (RSA_check_key(r) != 1)
-    ;
-    ;
-    ; 
-    // Check key - error out
-
-    // Create EVP to save to file.
-    pkey = EVP_PKEY_new();
-
-    EVP_PKEY_set1_RSA(pkey, r);
-
-    RSA_free(r);
-    return pkey;
-}
-
-EVP_PKEY *RSA_Unit::Generate_KeyPair_Ex(char *pass)
-
-{
-    EVP_PKEY *pkey = this->Generate_KeyPair(pass);
-    if (!pkey)
-    {
-        return nullptr;
-    }
-    return pkey;
-}
-
-/**
- * @brief Create RSA keypair and write them into 
- * files
+ * @brief Init public key and store it in the object scope
  * 
- * @param pass password for private key
- * @param pub_key_name  filename for public key
- * @param priv_key_name  filename for privaye key
- * @return int 
+ * @return 1 on failure 0 on success
  */
-int RSA_Unit::Generate_KeyPair_Im(char *pass,
-                                  char *pub_key_name,
-                                  char *priv_key_name)
+int RSA_Unit::init_public_key (unsigned char* key) __THROW
 {
-    Debug().info("In function RSA_Unit::Generate_KeyPair_Im");
-    EVP_PKEY *pkey = this->Generate_KeyPair(pass);
-
-    if (!pkey)
-    {
-        Debug().fatal("Failed to create key pair...");
-        return 1;
-    }
-    Debug().info(pub_key_name, " | ", priv_key_name);
-    // //Save private key
-    FILE *fp = fopen(priv_key_name, "w");
-
-    if (fp == nullptr)
-    {
-        Debug().fatal("Failed to open  file for private key");
-        return 1;
-    }
-    int res = PEM_write_PrivateKey(fp, pkey, nullptr, NULL, 0, NULL, nullptr);
-    if (res == 0)
-    {
-        Debug().fatal("Failed to write private key to file");
-    }
-    fclose(fp);
-
-    // Save public key
-    fp = fopen(pub_key_name, "w");
-    if (!fp)
-    {
-        Debug().fatal("Failed to create public key  file");
-        return 1;
-    }
-
-    res = PEM_write_PUBKEY(fp, pkey);
-    if (res == 0)
-    {
-        Debug().fatal("Failed to write public key to file");
-    }
-
-    if (fclose(fp))
-    {
-        Debug().fatal ("Something gone wrong while closing file...");
-        exit(-1);
-    }
-    EVP_PKEY_free(pkey);
-
-    Debug().info("Out of function RSA_Unit::Generate_KeyPair_Im");
-    return 0;
+    /*ref : RSA_Unit::createRSA(...)*/
+    this->public_key = create_RSA(key,1);
+    Debug().info ("INIT RESULT : ", (public_key != nullptr ? 0 : 1) );
+    return (public_key != nullptr ? 0 : 1);
 }
 
 /**
- * @brief Encrypt given raw unencrtpted string and
- * encrypt with public key;
- *
- * @param raw_str unencrtpted string
- * @param pub_key public key
- * @return encrypted string
+ * @brief Init private key and store it in the object scope
+ * @return 1 on failure 0 on success
  */
- unsigned char *RSA_Unit::rsa_encrypt(const unsigned char *raw_str,
-                                        char *key)
+int RSA_Unit::init_private_key (unsigned char* key) __THROW
 {
-
-    BIO *bio = BIO_new_mem_buf((void *)key, strlen(key));
-    RSA *rsa = PEM_read_bio_RSA_PUBKEY(bio, NULL, NULL, NULL);
-    BIO_free(bio);
-
-    int len = strlen((const char*)raw_str);
-    // Debug().info("Hello\n", strlen(key));
-    // Debug().info("RSA SIZE ",RSA_size(rsa));
-
-    unsigned char *encrypted_str = new unsigned char [RSA_size(rsa)];
-    // memset(encrypted_str,'\0', RSA_size(rsa));
-    // Debug().warning("len : ", len);
-    // Debug().warning("raw_str : ", raw_str);
-    // Debug().warning("encrypted_str : ", encrypted_str);
-    // Debug().warning("rsa : ", rsa);
-    int result = RSA_public_encrypt(len,
-                                    raw_str,
-                                    encrypted_str,
-                                    rsa,
-                                    RSA_PKCS1_OAEP_PADDING);
-    // Debug().info ((result == -1 ? "ERRPR" : "OK ECIPHRT"));
-    
-    RSA_free(rsa);
-
-    return encrypted_str;
+    /*ref : RSA_Unit::createRSA(...)*/
+    this->private_key = create_RSA (key,0);
+    return (private_key != nullptr ? 0 : 1);
 }
 
 /**
- * @brief 
+ * @brief Init both public and private keys 
  * 
- *
- * 
- * @param raw_str C string to be encrypted
- * @param key Rsa key
- * @return char* 
+ * @return 1 on failure 0 on success
  */
- unsigned char *RSA_Unit::rsa_encrypt(const unsigned char *raw_str,
-                            RSA *key)
+int RSA_Unit::init_keys (unsigned char* pr_key,
+                                unsigned char* pub_key) __THROW
 {
-    uint64_t len = strlen((const char*)raw_str);
-
-    unsigned char *encrypted_str = (unsigned char *)malloc(RSA_size(key));
-
-    int result = RSA_public_encrypt(len,
-                                    raw_str,
-                                    encrypted_str,
-                                    key,
-                                    RSA_PKCS1_OAEP_PADDING);
-    return encrypted_str;
+    return init_private_key(pr_key) | init_public_key(pub_key);
 }
 
-/**
- * @brief Encrypt given encrtpted string and
- * decrypt with private key;
- *
- * REQUIRES INPUTTING PASSPHRASE FOR PRIVATE KEYS
- * use alternative function with RSA* instead
- *
- * @param raw_str encrtpted string
- * @param pub_key private key
- * @return decrypted string
- */
-char *RSA_Unit::rsa_decrypt(char *enc_str,
-                            char *key)
-{
-    BIO *bio = BIO_new_mem_buf((void *)key, strlen(key));
-    RSA *rsa = PEM_read_bio_RSAPrivateKey(bio, NULL, NULL, NULL);
-    BIO_free(bio);
-    int slen = RSA_size(rsa);
-    unsigned char *decrypted_str = (unsigned char *)malloc(RSA_size(rsa));
-    int retval = RSA_private_decrypt(slen,
-                                     (const unsigned char *)enc_str,
-                                     decrypted_str,
-                                     rsa,
-                                     RSA_PKCS1_OAEP_PADDING);
-
-    RSA_free(rsa);
-
-    return (char *)decrypted_str;
-}
 
 /**
- * @brief Decrypt encrypted string passed as c string by
- * RSA* struct pointer
+ * @brief Usage for public key: createRSA(“PUBLIC_KEY_BUFFER”,1);
+        Usage for private key: createRSA(“PRIVATE_KEY_BUFFER”,0);
  * 
- * @param enc_str 
  * @param key 
- * @return char* 
+ * @param public 
  */
-char *RSA_Unit::rsa_decrypt(char *enc_str,
-                            RSA *key)
+RSA* RSA_Unit::create_RSA(unsigned char * key,int is_public)
 {
-    int slen = RSA_size(key);
-    unsigned char *decrypted_str = (unsigned char *)malloc(RSA_size(key));
-    int retval = RSA_private_decrypt(slen,
-                                     (const unsigned char *)enc_str,
-                                     decrypted_str,
-                                     key,
-                                     RSA_PKCS1_OAEP_PADDING);
+    RSA *rsa= NULL;
+    BIO *keybio ;
+    keybio = BIO_new_mem_buf(key, -1);
+    if (keybio==NULL)
+    {
+        printf( "Failed to create key BIO");
+        return 0;
+    }
+    if(is_public)
+    {
+        rsa = PEM_read_bio_RSA_PUBKEY(keybio, &rsa,NULL, NULL);
+    }
+    else
+    {
+        rsa = PEM_read_bio_RSAPrivateKey(keybio, &rsa,NULL, NULL);
+    }
+    Debug().info ("RSA INSTANCE : ", rsa);
+    return rsa;
+}
 
-    return (char *)decrypted_str;
+
+/**
+ * @brief  use this function to create RSA with key file name
+ * 
+ * @param filename 
+ * @param public 
+ */
+RSA* RSA_Unit::create_RSA_with_filename(char * filename,int is_public)
+
+{
+    FILE * fp = fopen(filename,"rb");
+ 
+    if(fp == NULL)
+    {
+        printf("Unable to open file %s \n",filename);
+        return NULL;    
+    }
+    RSA *rsa= RSA_new() ;
+ 
+    if(is_public)
+    {
+        rsa = PEM_read_RSA_PUBKEY(fp, &rsa,NULL, NULL);
+    }
+    else
+    {
+        rsa = PEM_read_RSAPrivateKey(fp, &rsa,NULL, NULL);
+    }
+ 
+    return rsa;
+}
+
+/**
+ * @brief Encrypt passed data with public key 
+ * 
+ * @note public key MUST BE initialized before 
+ * using this function
+ * @note assert is standing at the top of function
+ * to prevent uninitialized trial of public encrypt
+ * 
+ * @param data Data to be encrypted
+ * @param data_len Length of data
+ * @param key RSA* struct pointer (initted)
+ * @param encrypted Array where result will be stored
+ * @return -1 on error
+ */
+int RSA_Unit::public_encrypt(unsigned char * data,
+                                int data_len,
+                                         unsigned char *encrypted)
+{
+    assert (public_key != nullptr);
+    int result = RSA_public_encrypt(data_len,data,encrypted,public_key,padding);
+    return result;
+}
+
+/**
+ * @brief Decrypt passed data with private key 
+ * 
+ * @note public key MUST BE initialized before 
+ * using this function
+ * @note assert is standing at the top of function
+ * to prevent uninitialized trial of public encrypt
+ * 
+ * @param enc_data Data to be decrypted 
+ * @param data_len Length of encrypted data
+ * @param key Private key (initted)
+ * @param decrypted Array where decrypted data will be stored
+ * @return -1 on failure
+ */
+int RSA_Unit::private_decrypt(unsigned char * enc_data,int data_len, unsigned char *decrypted)
+{
+    assert (private_key != nullptr);
+    int  result = RSA_private_decrypt(data_len,enc_data,decrypted,private_key,padding);
+    return result;
+}
+
+RSA_Unit::~RSA_Unit ()
+{
+    // RSA_free (public_key);
+    // RSA_free (private_key);
 }
 
 /*

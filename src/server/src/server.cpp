@@ -183,45 +183,53 @@ int Server::ServerModel::distribute_incoming_connections(int socket,
 {
 
     std::string response_s (response);
-    RSA_Unit rsaU;
-
-    Debug().info ("Encoded String Recieved");
-    Debug().info (response); 
-    // string mes{base64decode(response, strlen(response))};
-    string mes{response};
-    
-    Debug().info ("Decoded String Recieved");
-
-    // char* decr_mes = rsaU.rsa_decrypt((char*)mes.c_str(), keypair->second.c_key);
-
-    // Debug().info (decr_mes);
-    //here must be executed JSON resolver in order to divide message 
-    //into essential command list
-    
-    /*
-    Additional layer of message-cheking in case of 
-    client message check
-    lack
-
-    returns handler return error (1) in case of "bad" message
-    */ 
-    MessageModel message (mes);//(nlohmann::json::parse(R"({"command" : 1})"));
-    if (!DataTransfer::is_message_valid (message))
+    if (m_handler->current_state == CONNECT_STATE::conn_commnd)
     {
-        Debug().fatal("Bad Message");
-        return 1;
-    }
-
-    response_s = message.get<decltype(response_s)>("command");
-
-    auto mem_function = (*m_handler.get()).get_command(response_s);
-    Debug().warning((mem_function ? "IS VALID FUNCTION" : "FUNCTION IS INVALID"));
-    if (!mem_function)
+        Debug().fatal("ONCE");
+        return m_handler->on_connect_command_recieved(socket , response);
+    } 
+    else 
     {
-        return UNKNOWN_COMMAND_ERROR;
+
+        RSA_Unit rsaU;
+
+        Debug().info ("Encoded String Recieved");
+        // string mes{base64decode(response, strlen(response))};
+        string mes{response};
+        
+        Debug().info ("Decoded String Recieved");
+
+        // char* decr_mes = rsaU.rsa_decrypt((char*)mes.c_str(), keypair->second.c_key);
+
+        // Debug().info (decr_mes);
+        //here must be executed JSON resolver in order to divide message 
+        //into essential command list
+        
+        /*
+        Additional layer of message-cheking in case of 
+        client message check
+        lack
+
+        returns handler return error (1) in case of "bad" message
+        */ 
+        MessageModel message (mes);//(nlohmann::json::parse(R"({"command" : 1})"));
+        if (!DataTransfer::is_message_valid (message))
+        {
+            Debug().fatal("Bad Message");
+            return 1;
+        }
+
+        response_s = message.get<decltype(response_s)>("command");
+
+        auto mem_function = (*m_handler.get()).get_command(response_s);
+        Debug().warning((mem_function ? "IS VALID FUNCTION" : "FUNCTION IS INVALID"));
+        if (!mem_function)
+        {
+            return UNKNOWN_COMMAND_ERROR;
+        }
+        int res = ((*m_handler.get()).*mem_function)(socket, message);
+        return res;
     }
-    int res = ((*m_handler.get()).*mem_function)(socket, message);
-    return res;
 }
 
 /**
@@ -308,20 +316,18 @@ int Server::ServerModel::init_server_keypair (char* passphrase)
     sprintf(pub_file_path, "%s%s", keystore_dir, pub_file_name);
     sprintf(priv_file_path, "%s%s", keystore_dir, priv_file_name);
 
-    rsaU.Generate_KeyPair_Im(passphrase, pub_file_path, priv_file_path);
-    
-    EVP_PKEY *pubkey = rsaU.ReadPubKey_FromFile(pub_file_path);
-    char     *c_pubkey = rsaU.get_file_content(pub_file_path);
+    unsigned char *c_pubkey = (unsigned char *)rsaU.get_file_content(pub_file_path);
 
-    EVP_PKEY *privkey = rsaU.ReadPrivKey_FromFile(priv_file_path, passphrase);
-    char     *c_privkey = rsaU.get_file_content(priv_file_path);
+    unsigned char *c_privkey = (unsigned char *)rsaU.get_file_content(priv_file_path);
     
+    rsaU.init_keys (c_privkey, c_pubkey);    
+
     Debug().info("Retrieved pubkey \n", c_pubkey);
     Debug().info("Retrieved privkey \n", c_privkey);
 
-    Security::RSA_Keypair kp =  {
-                                Security::RSA_UNAR_KEY{pubkey, c_pubkey},
-                                Security::RSA_UNAR_KEY{privkey, c_privkey}
+    Security::RSA_Keypair kp =  {                       /*instead of nullptr must be pointer to rsa key*/
+                                Security::RSA_UNAR_KEY{nullptr, ( char *)c_pubkey},
+                                Security::RSA_UNAR_KEY{nullptr, ( char *)c_privkey}
                                 };
 
     this->keypair = std::make_shared<Security::RSA_Keypair> (kp);

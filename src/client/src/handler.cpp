@@ -69,19 +69,29 @@ int Handler::send_connect_command(int sfd,
 {
     
     Debug().info ("In send_connect_command");
+    Debug().info("Message recieved  : ", message.to_str());
+    
+    RSA_Unit rsaU;
+
     auto key = "ABCDEF1234567890"; //aes_shrd_ptr->generate_key(16);
     auto utoken = message.get<string>("unique_token");
-    
+    string rsa_key =message.get<string>("pkey");
+    Debug().warning ("KEY FETCHED : \n", rsa_key );
+    rsaU.init_public_key ((unsigned char*)(rsa_key.c_str()));
+
     cP.AES_token = key;
     cP.unique_token = utoken;
 
     DataTransfer::ConnectCommand cC{"localhost",std::string{key},utoken};
 
-    // char* response = (char*)(cC.to_str().c_str());
-    auto str = cC.to_str();
-    const auto str_length = str.length();
-    Debug().info ((char*)str.c_str());
-    send (sfd, (char*)str.c_str(), str_length, NULL);
+    string raw_str = "{\"command\":\"com_connect\", \"ip\":\"127.0.0.1\", \"aes_token\":\"1234556789\"}";
+    int datalen = raw_str.length();
+    unsigned char* encrypted = new unsigned char[1024];
+    int enclen = rsaU.public_encrypt ((unsigned char*)(raw_str.c_str()), datalen, encrypted);
+
+    Debug().info (enclen);
+    
+    send (sfd, (char*)encrypted, enclen, NULL);
     this->current_state = CONNECT_STATE::conn_commnd;
     
     return 0;
