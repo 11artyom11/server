@@ -1,5 +1,5 @@
-#include "./../../../lib/include/helpers/debug_helper/debug_helper.h"
-#include "../include/handler.h"
+#include "debug_helper.h"
+#include "handler.h"
 
 using namespace std;
 

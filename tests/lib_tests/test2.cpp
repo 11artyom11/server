@@ -4,8 +4,9 @@
 #include <random>
 #include <string>
 #include <algorithm>
-#include "../../lib/include/util/data_transfer/message_model/message_model.h"
-#include "../../lib/include/helpers/debug_helper/debug_helper.h"
+
+#include <message_model.h>
+#include <debug_helper.h>
 
 int randint ()
 {

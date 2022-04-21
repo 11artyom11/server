@@ -15,6 +15,7 @@
  * @copyright Copyright (c) 2022
  * 
  */
+
 #ifndef __IO_UNIT_H__
 #define __IO_UNIT_H__
 
@@ -86,7 +87,7 @@ void iounit::IOModel::write_q(mesType... istreams)
     write_mutex.unlock();
 }
 
-/*This function works in atomic way*/
+/*This function workss atomic */
 template <typename mesType>
 void iounit::IOModel::read_q(int sfd, mesType message)
 {

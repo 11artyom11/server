@@ -10,9 +10,10 @@
  * Is Used at both sides.
  * Is defined in Net namespace
  * 
- * @section Last Changes 2022-03-21 Artyom Grigorian
- * Changed iomodel instance from naked ptr
- * to smart ptr
+ * @section Last Changes 21-04-2022 Artyom Grigorian
+ *
+ * Improved include directories
+ *  
  * 
  * @copyright Copyright (c) 2022
  * 
@@ -20,8 +21,8 @@
 #ifndef __COMM_UNIT_H__
 #define __COMM_UNIT_H__
 #include "connection_handler.h"
-#include "../../../lib/include/util/data_transfer/message_model/message_model.h"
-#include "../../../lib/include/util/data_transfer/message_resolver/message_resolver.h"
+#include "message_model.h"
+#include "message_resolver.h"
 #include "io_unit.h"
 
 #include <future>

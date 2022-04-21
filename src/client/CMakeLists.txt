@@ -6,8 +6,15 @@ set (CMAKE_BINARY_DIR "./../../bin/client/")
 set (CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
 set (CMAKE_CXX_FLAGS "-g -w -O2 -pthread")
 
-include_directories(../include)
-include_directories(../../lib/include)
+include_directories(
+                    "include/",
+                    "../../lib/include",                    
+                    "../../lib/include/helpers/",
+                    "../../lib/include/util/cyptolib/",
+                    "../../lib/include/helpers/debug_helper/",
+                    "../../lib/include/util/data_transfer/message_model/",
+                    "../../lib/include/util/data_transfer/message_resolver/",
+                    )
 
 add_executable(client src/main.cpp
                         src/client.cpp

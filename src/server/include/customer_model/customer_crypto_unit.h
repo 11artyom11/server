@@ -7,10 +7,10 @@
  * @section DESCRIPTION
  * This class is made to add absraction level to customer signing 
  * process is defined in Security namespace
- * @section Last Changes 24-03-2022 Artyom Grigorian
+ * @section Last Changes 21-04-2022 Artyom Grigorian
  *
- *  Added getters and setters for key retrieving
- * 
+ * Improved include directories
+ *  
  * @copyright Copyright (c) 2022
  * 
  */
@@ -29,7 +29,7 @@
 
 
 
-#include "../../../../lib/include/util/cyptolib/crypto_unit.h"
+#include "crypto_unit.h"
 #include <map>
 #include <algorithm>
 #include <cmath>

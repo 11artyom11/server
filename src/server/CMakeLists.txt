@@ -2,6 +2,15 @@ cmake_minimum_required(VERSION 2.8.9)
 project (server)
 
 
+include_directories( 
+                     "include/",
+                     "include/customer_model/",
+                     "../../lib/include/util/cyptolib/",
+                     "../../lib/include/helpers/debug_helper/",
+                     "../../lib/include/util/data_transfer/message_model/",
+                     "../../lib/include/util/data_transfer/message_resolver/",
+                    )
+
 set (CMAKE_BINARY_DIR "./../../bin/server/")
 set (CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
 set (CMAKE_CXX_FLAGS "-g -w -O2 -pthread")

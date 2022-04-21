@@ -8,8 +8,10 @@
  * between server and remote node (client)
  * @copyright Copyright (c) 2022
  * 
- * @section Last Changes 2022-03-21 Artyom Grigorian
- * Make naked pointers to smart pointers
+ * @section Last Changes 21-04-2022 Artyom Grigorian
+ *
+ * Improved include directories
+ *  
  */
 #ifndef __CONNECTION_HANDLER_H__
 #define __CONNECTION_HANDLER_H__

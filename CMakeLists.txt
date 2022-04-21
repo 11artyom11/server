@@ -8,6 +8,7 @@ set(CMAKE_CXX_STANDARD 17)
 #adding subproject server 
 add_subdirectory( src/server/ ./bin/server)
 
+
 #adding subproject client
 add_subdirectory( src/client/ ./bin/client)
 

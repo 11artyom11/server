@@ -1,7 +1,8 @@
-#include "../../lib/include/util/data_transfer/message_model/message_model.h"
-#include "../../lib/include/util/data_transfer/message_resolver/message_resolver.h"
-#include "../../lib/include/helpers/debug_helper/debug_helper.h"
-#include "../../lib/include/helpers/constants.h"
+#include "message_model.h"
+#include "message_resolver.h"
+
+#include <debug_helper.h>
+#include <constants.h>
 
 #include <gtest/gtest.h>
 #include <random>

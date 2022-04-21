@@ -1,6 +1,6 @@
-#include "../include/connection_handler.h"
-#include "../../../lib/include/helpers/constants.h"
-#include "../../../lib/include/helpers/debug_helper/debug_helper.h"
+#include "connection_handler.h"
+#include "constants.h"
+#include "debug_helper.h"
 
 using namespace Net;
 

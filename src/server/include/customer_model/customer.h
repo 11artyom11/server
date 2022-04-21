@@ -8,9 +8,10 @@
  * This class is made to add abstract level to customer 
  * model on server side
  * 
- * @section Last Changes 23-03-2022 Artyom Grigorian
- * Changed naked pointers into smart ones
- * 
+ * @section Last Changes 21-04-2022 Artyom Grigorian
+ *
+ * Improved include directories
+ *  
  * @copyright Copyright (c) 2022
  * 
  */

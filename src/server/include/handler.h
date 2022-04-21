@@ -34,9 +34,10 @@
 #include <sys/socket.h>
 #include <netdb.h>
 #include <netinet/in.h>
-#include "../include/customer_model/customer.h"
-#include "../../../lib/include/util/data_transfer/message_model/message_templates.h"
-#include "../../../lib/include/util/data_transfer/message_resolver/message_resolver.h"
+
+#include "customer.h"
+#include "message_templates.h"
+#include "message_resolver.h"
 
 // Helper functor to ease cleanup of container
 struct delete_ptr { 

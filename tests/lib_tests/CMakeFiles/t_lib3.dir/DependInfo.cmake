@@ -10,6 +10,12 @@ set(CMAKE_CXX_COMPILER_ID "GNU")
 
 # The include file search paths:
 set(CMAKE_CXX_TARGET_INCLUDE_PATH
+  "tests/lib_tests/../../lib/include/helpers"
+  "tests/lib_tests/,"
+  "tests/lib_tests/../../lib/include/util/cyptolib"
+  "tests/lib_tests/../../lib/include/helpers/debug_helper"
+  "tests/lib_tests/../../lib/include/util/data_transfer/message_model"
+  "tests/lib_tests/../../lib/include/util/data_transfer/message_resolver"
   "tests/googletest/googletest/include"
   "tests/googletest/googletest"
   )

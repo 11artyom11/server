@@ -11,10 +11,10 @@
  * Is defined in Client namespace
  * @copyright Copyright (c) 2022
  * 
- * @section Last Changes 2022-03-21
- * @section Summary
- * Changed all pure pointers into smart pointers in order to avoid
- * unintended memleaks around this file
+ * @section Last Changes 21-04-2022 Artyom Grigorian
+ *
+ * Improved include directories
+ *  
  */
 
 #ifndef __CLIENT_H__
@@ -22,8 +22,8 @@
 
 #include "connection_handler.h"
 #include "communication_unit.h"
-#include "../../../lib/include/helpers/constants.h"
-#include "../../../lib/include/helpers/debug_helper/debug_helper.h"
+#include "constants.h"
+#include "debug_helper.h"
 
 #include <memory>
 #include <utility>

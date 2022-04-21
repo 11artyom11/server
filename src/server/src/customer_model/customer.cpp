@@ -1,4 +1,4 @@
-#include "../../include/customer_model/customer.h"
+#include <customer.h>
 
 using namespace Customer;
 

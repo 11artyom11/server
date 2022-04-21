@@ -11,16 +11,21 @@
  * though still it's not possible to write this class once
  * @copyright Copyright (c) 2022
  * 
+ * @section Last Changes 21-04-2022 Artyom Grigorian
+ *
+ * Improved include directories
+ *  
  */
 #ifndef __HANDLER_H__
 #define __HANDLER_H__
 
-#include "../../../lib/include/util/data_transfer/message_model/message_model.h"
-#include "../../../lib/include/util/data_transfer/message_model/message_templates.h"
-#include "../../../lib/include/util/data_transfer/message_resolver/message_resolver.h"
-#include "../../../lib/include/util/cyptolib/crypto_unit.h"
-#include "../../../lib/include/helpers/constants.h"
-#include "../../../lib/include/helpers/debug_helper/debug_helper.h"
+#include "message_model.h"
+#include "message_templates.h"
+#include "message_resolver.h"
+#include "crypto_unit.h"
+#include "constants.h"
+#include "debug_helper.h"
+
 #include <map>
 #include <string>
 #include <memory>
@@ -30,8 +35,8 @@
 #include <netinet/in.h>
 
 
-    typedef std::shared_ptr <RSA_Unit> RSA_Unit_shrd_ptr;
-    typedef std::shared_ptr <AES_Unit> AES_Unit_shrd_ptr;
+typedef std::shared_ptr <RSA_Unit> RSA_Unit_shrd_ptr;
+typedef std::shared_ptr <AES_Unit> AES_Unit_shrd_ptr;
 
 
 // Helper functor to ease cleanup of container
