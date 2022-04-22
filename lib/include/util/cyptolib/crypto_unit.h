@@ -22,6 +22,7 @@
 #include <cstdint>
 #include <cassert>
 #include <mutex>
+#include <memory>
 /*
 Enum which describes way of generating key pair
 */
@@ -39,6 +40,13 @@ std::string string_to_hex(const std::string& in);
 std::string hex_to_string(const std::string& in);
 char *base64encode (const void *b64_encode_this, int encode_this_many_bytes);
 char *base64decode (const void *b64_decode_this, int decode_this_many_bytes);
+
+template <typename T>
+using shared_ptr = std::shared_ptr<T>;
+
+/*Used for RSA pairs */
+typedef shared_ptr<RSA> \
+                        RSA_shrd_ptr;
 
 /*Base class for cipher node of project*/
 class BaseCipherUnit
@@ -75,8 +83,8 @@ class RSA_Unit : public BaseCipherUnit
         RSA* create_RSA(unsigned char * key,int is_public);
         RSA* create_RSA_with_filename(char * filename,int is_public);
 
-        RSA* public_key;
-        RSA* private_key ;
+        RSA_shrd_ptr public_key;
+        RSA_shrd_ptr private_key ;
         int padding = RSA_PKCS1_PADDING;
 
       

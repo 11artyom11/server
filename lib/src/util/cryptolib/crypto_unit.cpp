@@ -125,7 +125,7 @@ char *BaseCipherUnit::get_file_content(char *filename)
 int RSA_Unit::init_public_key (unsigned char* key) __THROW
 {
     /*ref : RSA_Unit::createRSA(...)*/
-    this->public_key = create_RSA(key,1);
+    this->public_key.reset(create_RSA(key,1), RSA_free);
     Debug().info ("INIT RESULT : ", (public_key != nullptr ? 0 : 1) );
     return (public_key != nullptr ? 0 : 1);
 }
@@ -137,7 +137,7 @@ int RSA_Unit::init_public_key (unsigned char* key) __THROW
 int RSA_Unit::init_private_key (unsigned char* key) __THROW
 {
     /*ref : RSA_Unit::createRSA(...)*/
-    this->private_key = create_RSA (key,0);
+    this->private_key.reset(create_RSA (key,0), RSA_free);
     return (private_key != nullptr ? 0 : 1);
 }
 
@@ -232,7 +232,7 @@ int RSA_Unit::public_encrypt(unsigned char * data,
                                          unsigned char *encrypted)
 {
     assert (public_key != nullptr);
-    int result = RSA_public_encrypt(data_len,data,encrypted,public_key,padding);
+    int result = RSA_public_encrypt(data_len,data,encrypted,public_key.get(),padding);
     return result;
 }
 
@@ -253,7 +253,7 @@ int RSA_Unit::public_encrypt(unsigned char * data,
 int RSA_Unit::private_decrypt(unsigned char * enc_data,int data_len, unsigned char *decrypted)
 {
     assert (private_key != nullptr);
-    int  result = RSA_private_decrypt(data_len,enc_data,decrypted,private_key,padding);
+    int  result = RSA_private_decrypt(data_len,enc_data,decrypted,private_key.get(),padding);
     return result;
 }
 
