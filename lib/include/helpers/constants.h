@@ -25,9 +25,9 @@ constexpr auto RSA_DEFAULT_PASSPHRASE = "123";
 constexpr auto SERVER_NAME = "=> [SERVER] ";
 constexpr auto CLIENT_NAME = "=> [CLIENT] ";
 
-constexpr auto ERROR_S      = "[ERROR] : "; 
-constexpr auto INFO_S       = "[INFO] : ";
-constexpr auto WARNING_S    = "[WARNING] : ";
+constexpr auto ERROR_S      = "[ ERROR ]"; 
+constexpr auto INFO_S       = "[ INFO ]";
+constexpr auto WARNING_S    = "[ WARNING ]";
 
 constexpr auto DEFAULT_PORT = 9880;
 constexpr auto BUFFER_SIZE  = 1024; 

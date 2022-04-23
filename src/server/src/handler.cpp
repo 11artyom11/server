@@ -173,7 +173,7 @@ int Server::Handler::on_connect_request_recieved(int sfd, const DataTransfer::Me
 int Server::Handler::send_connect_accept(int sfd, const DataTransfer::MessageModel&)
 {
     Debug().info ("IN send_connect_accept()");
-    std::string new_unique_token = Server::random_str();
+    std::string new_unique_token = Server::random_str(10);
 
     Debug().warning (new_unique_token);
     this->recent_customers[new_unique_token] = std::make_shared <Customer::CustomerModel> (Customer::CustomerModel(sfd, new_unique_token, keypair));
@@ -227,8 +227,8 @@ int Server::Handler::on_connect_command_recieved (int sfd, char* message)
     //128
     rsaU.private_decrypt ((unsigned char*)(message), 128, decrypted);
     Debug().warning ("SIZE OF DEC :  ", decrypted);
-    return 0;
-    // send_connect_verify (sfd, message);
+    DataTransfer::MessageModel messageModel{(char*)decrypted};
+    return send_connect_verify (sfd, messageModel);
 }
 
 
@@ -277,11 +277,7 @@ int Server::Handler::send_connect_verify(int sfd, const DataTransfer::MessageMod
 
    
     std::string to_send = cV.to_str();
-   
-
     // aes_unq_ptr->decrypt (enc_mes,strlen ((char*)enc_mes), (unsigned char*)aes_token.c_str(), dec_mes);
-
-
     send (sfd,  (char*)to_send.c_str(), to_send.length(), NULL);
    return 0;
 }

@@ -132,7 +132,7 @@ class Handler
             int cleanup_reader_thread_for_socket    (int sfd);
             int cleanup_writer_thread_for_socket    (int sfd);
 
-            decltype(&Server::Handler::provide_write_thread) get_command  ( std::string command);
+            decltype(&Server::Handler::provide_write_thread) get_command  (std::string command);
             int find_in_customer_cache(const std::string& unique_token);
             
             CONNECT_STATE current_state = CONNECT_STATE::conn_request;

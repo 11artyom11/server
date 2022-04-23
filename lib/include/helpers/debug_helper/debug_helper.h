@@ -66,7 +66,7 @@ template <typename ...mesTL>
  void Debug::info (mesTL... messages)
 {       
     if (!Debug::debug_state) return;
-     *outp_stream << KGRN /*Blue code*/ <<  get_current_time() << " [ INFO ] ";
+     *outp_stream << KGRN /*Green code*/ <<  get_current_time() << INFO_S;
     ((*outp_stream  << messages << ' '), ...);
     *outp_stream << KWHT /*White code*/<<  std::endl;
 }
@@ -75,7 +75,7 @@ template <typename ...mesTL>
  void Debug::warning (mesTL... messages)
 {
     if (!Debug::debug_state) return;
-    *outp_stream << KYEL <<  get_current_time() << " [ WARINING ] ";
+    *outp_stream << KYEL <<  get_current_time() << WARNING_S;
     ((*outp_stream << messages << ' '), ...);
     *outp_stream << KWHT <<std::endl;
 
@@ -85,9 +85,9 @@ template <typename ...mesTL>
  void Debug::fatal (mesTL... messages)
 {
     if (!Debug::debug_state) return;
-    *outp_stream  << KRED << get_current_time() <<  " [ FATAL ] ";
+    *outp_stream  << KRED << get_current_time() <<  ERROR_S;
     ((*outp_stream << messages << ' '), ...);
-*outp_stream << KWHT << std::endl;
+    *outp_stream << KWHT << std::endl;
 
 }
 

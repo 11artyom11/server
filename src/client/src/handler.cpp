@@ -84,7 +84,8 @@ int Handler::send_connect_command(int sfd,
 
     DataTransfer::ConnectCommand cC{"localhost",std::string{key},utoken};
 
-    string raw_str = "{\"command\":\"com_connect\", \"ip\":\"127.0.0.1\", \"aes_token\":\"1234556789\"}";
+    string raw_str = "{\"command\":\"com_connect\", \"ip\":\"127.0.0.1\", \"aes_token\":\"1234556789\", \"unique_token\":\""+cP.unique_token+"\"}";
+    Debug().info ("RAW_STR : ", raw_str);
     int datalen = raw_str.length();
     unsigned char* encrypted = new unsigned char[1024];
     int enclen = rsaU.public_encrypt ((unsigned char*)(raw_str.c_str()), datalen, encrypted);
@@ -93,7 +94,7 @@ int Handler::send_connect_command(int sfd,
     
     send (sfd, (char*)encrypted, enclen, NULL);
     this->current_state = CONNECT_STATE::conn_commnd;
-    
+    Debug().info ("Ended send_connect_command");
     return 0;
 }
 
@@ -111,8 +112,8 @@ int Handler::send_sign_up_command(int sfd,
 
 int Handler::on_connect_verify_recieved(int sfd,
                                             const DataTransfer::MessageModel& message)
-{
-    
+{   
+    Debug().info ("in on_connect_verify_recieved ");
     string utoken = message.get<string>("unique_token");
 
     if (utoken == cP.unique_token)

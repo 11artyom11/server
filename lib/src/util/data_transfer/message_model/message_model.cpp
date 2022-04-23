@@ -7,7 +7,7 @@ using namespace DataTransfer;
 MessageModel::MessageModel() :
     MessageModel ("{}")
 {
-
+    Debug().info ("Called default c-tor of MessageModel\n Empty object created");
 }
 
 /**
@@ -52,5 +52,5 @@ json* const MessageModel::get_json_instance (void)  noexcept
  */
 string MessageModel::to_str(void) const noexcept
 {
-            return this->m_message.dump();
+    return this->m_message.dump();
 }
