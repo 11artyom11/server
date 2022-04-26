@@ -275,9 +275,15 @@ int Server::Handler::send_connect_verify(int sfd, const DataTransfer::MessageMod
     string unique_token = message.get<string>("unique_token");\
     string aes_token = message.get<string>("aes_token");
 
-   ;
 
-    DataTransfer::ConnectVerify cV(unique_token);
+    unsigned char* ok_message = (unsigned char*)(unique_token.c_str());
+    unsigned char* key_c = (unsigned char*)(aes_token.c_str());
+    unsigned char cipher[1024];
+    int len = aes_unq_ptr->encrypt(ok_message, unique_token.length(), key_c, cipher);
+    unique_token  = string_to_hex((char*)(cipher));
+    Debug().info ("LEN : ", len);
+    Debug().warning ("ENCRYPTED : ", unique_token);
+    DataTransfer::ConnectVerify cV(unique_token, len);
 
    
     std::string to_send = cV.to_str();

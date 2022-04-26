@@ -73,7 +73,7 @@ int Handler::send_connect_command(int sfd,
     
     RSA_Unit rsaU;
 
-    auto key = "ABCDEF1234567890"; //aes_shrd_ptr->generate_key(16);
+    auto key = "0123456789ABCDEF"; //aes_shrd_ptr->generate_key(16);
     auto utoken = message.get<string>("unique_token");
     string rsa_key =message.get<string>("pkey");
     Debug().warning ("KEY FETCHED : \n", rsa_key );
@@ -84,7 +84,7 @@ int Handler::send_connect_command(int sfd,
 
     DataTransfer::ConnectCommand cC{"localhost",std::string{key},utoken};
 
-    string raw_str = "{\"command\":\"com_connect\", \"ip\":\"127.0.0.1\", \"aes_token\":\"1234556789\", \"unique_token\":\""+cP.unique_token+"\"}";
+    string raw_str = cC.to_str();//"{\"command\":\"com_connect\", \"ip\":\"127.0.0.1\", \"aes_token\":\"1234556789\", \"unique_token\":\""+cP.unique_token+"\"}";
     Debug().info ("RAW_STR : ", raw_str);
     int datalen = raw_str.length();
     unsigned char* encrypted = new unsigned char[1024];
@@ -114,9 +114,19 @@ int Handler::on_connect_verify_recieved(int sfd,
                                             const DataTransfer::MessageModel& message)
 {   
     Debug().info ("in on_connect_verify_recieved ");
-    string utoken = message.get<string>("unique_token");
-
-    if (utoken == cP.unique_token)
+    Debug().info ("Message :",message.get<string>("unique_token"));
+    string utoken = hex_to_string(message.get<string>("unique_token"));
+    unsigned char* token_c = (unsigned char*)(utoken.c_str());
+    unsigned char* key_ch = (unsigned char*)(cP.AES_token.c_str());
+    Debug().info ("KEY : ", key_ch);
+    unsigned char token_d[2048];
+    int len = message.get<int> ("token_len");
+    Debug().info ("LEN : ", len);
+    aes_shrd_ptr->decrypt(token_c, len, key_ch, token_d);
+    token_d[cP.unique_token.length()] = '\0';
+    Debug().info ("INitial len : ", cP.unique_token.length());
+    Debug().info ("Final message got: ", token_d);
+    if (!cP.unique_token.compare((char*)token_d))
     {
         Debug().info ("CONNECTION VERIFIED");
         this->current_state = CONNECT_STATE::conn_verify;

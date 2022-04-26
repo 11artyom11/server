@@ -74,7 +74,9 @@ TEST (AES_TEST, AES_TEST)
     unsigned char dec[31];
     for (auto i = 0; i < TEST_COMPLICATION; ++i)
     {
-        int len = aes.encrypt (text, strlen ((char*)text), key, enc);
+         int len = aes.encrypt (text, strlen ((char*)text), key, enc);
+        int testlen = strlen ((char*)enc);
+        Debug().info (len , " : " , testlen);
         int ret_len = aes.decrypt (enc, len, key, dec);
         dec[ret_len] = '\0';
         EXPECT_EQ (0 , strcmp ((char*)text, (char*)dec));
@@ -83,8 +85,22 @@ TEST (AES_TEST, AES_TEST)
 
 int main(int argc, char *argv[])
 {
-    ::testing::InitGoogleTest(&argc, argv);
-    return RUN_ALL_TESTS();
+    AES_Unit aes;
+    unsigned char* key = (unsigned char*)("0123456789ABCDEF");
+    unsigned char* text = (unsigned char*)("Red fox jumps over lazy brown dog\0");
+    unsigned char enc[1024];
+    unsigned char dec[60];
+    for (auto i = 0; i < TEST_COMPLICATION; ++i)
+    {
+         int len = aes.encrypt (text, strlen ((char*)text), key, enc);
+        int testlen = strlen ((char*)enc);
+        Debug().info (len , " : " , testlen);
+        int ret_len = aes.decrypt (enc, len, key, dec);
+        dec[ret_len] = '\0';
+        EXPECT_EQ(0 , strcmp ((char*)text, (char*)dec));
+    }
+    // ::testing::InitGoogleTest(&argc, argv);
+    // return RUN_ALL_TESTS();
 }
 
 

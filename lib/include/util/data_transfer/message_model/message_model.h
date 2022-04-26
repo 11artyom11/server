@@ -53,7 +53,8 @@ namespace DataTransfer
             string to_str (void) const noexcept;
 
         protected:        
-            json m_message;            
+            json m_message;    
+                    
     };
 
 

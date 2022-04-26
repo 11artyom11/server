@@ -29,11 +29,12 @@ ConnectCommand::ConnectCommand(const string& ip ,
     this->set("unique_token", unique_token);
 }
 
-ConnectVerify::ConnectVerify(const string& unique_token)
+ConnectVerify::ConnectVerify(const string& unique_token, int token_len)
 {
     Debug().info ("Constructed ConnectVerify Message");
     this->set ("command", command);
     this->set ("unique_token", unique_token);
+    this->set ("token_len", token_len);
 }
 
 LoginRequest::LoginRequest(const string& ip)

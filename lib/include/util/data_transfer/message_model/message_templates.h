@@ -51,9 +51,10 @@ class ConnectCommand : public MessageModel
 class ConnectVerify : public MessageModel
 {
     public:
-        ConnectVerify(const string& unique_token);
+        ConnectVerify(const string& enc_unique_token, int token_len);
     private:
         static constexpr auto command = CONNECT_VERIFY;
+        int enc_token_len;
 };
 
 class LoginRequest : public MessageModel

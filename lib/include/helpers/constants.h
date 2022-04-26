@@ -31,6 +31,7 @@ constexpr auto WARNING_S    = "[ WARNING ]";
 
 constexpr auto DEFAULT_PORT = 9880;
 constexpr auto BUFFER_SIZE  = 1024; 
+constexpr auto AES_KEY_LEN  = 16; /* BYTES <<AES128 is used by default>>*/
 constexpr auto SERVER_IP    = "127.0.0.1";
 constexpr auto EXIT_SYM     = '#';
 
