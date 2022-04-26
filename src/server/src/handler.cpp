@@ -229,8 +229,6 @@ int Server::Handler::on_connect_command_recieved (int sfd, char* message)
     Debug().warning ("SIZE OF DEC :  ", decrypted);
     DataTransfer::MessageModel messageModel{(char*)decrypted};
     return send_connect_verify(sfd, messageModel);
-    // send_connect_verify (sfd, message);
-    // return 0;s
 }
 
 
@@ -274,7 +272,11 @@ int Server::Handler::on_sign_up_command_recieved(int sfd, const DataTransfer::Me
 int Server::Handler::send_connect_verify(int sfd, const DataTransfer::MessageModel& message)
 {
 /* tmp uid*/
-    string unique_token = message.get<string>("unique_token");
+    string unique_token = message.get<string>("unique_token");\
+    string aes_token = message.get<string>("aes_token");
+
+   ;
+
     DataTransfer::ConnectVerify cV(unique_token);
 
    
