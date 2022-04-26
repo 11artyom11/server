@@ -228,7 +228,9 @@ int Server::Handler::on_connect_command_recieved (int sfd, char* message)
     rsaU.private_decrypt ((unsigned char*)(message), 128, decrypted);
     Debug().warning ("SIZE OF DEC :  ", decrypted);
     DataTransfer::MessageModel messageModel{(char*)decrypted};
-    return send_connect_verify (sfd, messageModel);
+    return send_connect_verify(sfd, messageModel);
+    // send_connect_verify (sfd, message);
+    // return 0;s
 }
 
 
