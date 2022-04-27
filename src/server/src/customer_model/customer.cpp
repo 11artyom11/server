@@ -18,11 +18,17 @@ int CustomerModel::get_sfd(void) const noexcept
     return this->sfd;
 }
 
-CustomerModel::~CustomerModel()
+std::string CustomerModel::get_unique_token (void) const noexcept
 {
-
+    return this->unique_token;
 }
 
+
+/**
+ * @brief Set aes token for Customer model
+ * 
+ * @param token 
+ */
 void CustomerModel::set_aes_token (const std::string& token)
 {
     this->aes_token = token;
@@ -37,4 +43,9 @@ void CustomerModel::set_aes_token (const std::string& token)
 Security::CustomerCryptoUnit* CustomerModel::get_crypto_unit(void)
 {
     return this->crypto_unit.get();
+}
+
+CustomerModel::~CustomerModel()
+{
+
 }

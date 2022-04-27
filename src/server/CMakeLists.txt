@@ -9,6 +9,7 @@ include_directories(
                      "../../lib/include/helpers/debug_helper/",
                      "../../lib/include/util/data_transfer/message_model/",
                      "../../lib/include/util/data_transfer/message_resolver/",
+                     "include/chat_model"
                     )
 
 set (CMAKE_BINARY_DIR "./../../bin/server/")
@@ -19,7 +20,9 @@ add_executable(server src/main.cpp
                  src/server.cpp 
                     src/handler.cpp
                         src/customer_model/customer.cpp
-                           src/customer_model/customer_crypto_unit.cpp )
+                           src/customer_model/customer_crypto_unit.cpp
+                              src/chat_model/chatroom_model.cpp
+)                     
 
 target_link_libraries( server message_model)
 target_link_libraries( server message_resolver)

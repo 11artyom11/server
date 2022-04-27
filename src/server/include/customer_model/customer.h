@@ -37,6 +37,7 @@ namespace Customer
             CustomerModel (int sfd, const std::string& unique_token, const Security::RSA_Keypair_shrd_ptr&);
             ~CustomerModel ();
             int get_sfd (void) const noexcept;
+            std::string get_unique_token (void) const noexcept;
             void set_aes_token (const std::string& token);
             Security::CustomerCryptoUnit* get_crypto_unit(void);
         private:
