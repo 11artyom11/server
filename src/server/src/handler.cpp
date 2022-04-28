@@ -157,7 +157,10 @@ int Server::Handler::on_connect_request_recieved(int sfd, const DataTransfer::Me
         Check if server's ready to accept connection (new)
     */
     Debug().info("Called Server::Handler::on_connect_request_recieved( ", sfd, ")");
-    current_state = CONNECT_STATE::conn_accept;
+    std::string new_unique_token = Server::random_str(10);
+
+    this->recent_customers_sfd[sfd] = std::make_shared <Customer::CustomerModel> (Customer::CustomerModel(sfd, new_unique_token));
+    recent_customers_sfd[sfd]->current_state = CONNECT_STATE::conn_accept;
     send_connect_accept(sfd, message);
     return 0;
 }
@@ -173,15 +176,33 @@ int Server::Handler::on_connect_request_recieved(int sfd, const DataTransfer::Me
 int Server::Handler::send_connect_accept(int sfd, const DataTransfer::MessageModel&)
 {
     Debug().info ("IN send_connect_accept()");
-    std::string new_unique_token = Server::random_str(10);
+    string new_unique_token = recent_customers_sfd[sfd]->get_unique_token();
 
     Debug().warning (new_unique_token);
-    this->recent_customers[new_unique_token] = std::make_shared <Customer::CustomerModel> (Customer::CustomerModel(sfd, new_unique_token));
+    /* Create new customer model and save in association with unqiue token and sfd */
+    /*
+
+     utoken - 
+             \   +---------+
+              == |Customer*|
+             /   +---------+
+            /
+     sfd --
+
+     */
+    recent_customers[new_unique_token] = recent_customers_sfd[sfd];
+    
+
+
+    /* Set current customer state as connect_accept in order to not to require */
+    recent_customers[new_unique_token]->current_state = CONNECT_STATE::conn_accept;
+  
 
     DataTransfer::ConnectAccept cA(new_unique_token ,keypair->first.c_key);
     
     /*Set current state as recieving connect_command*/
-    current_state = CONNECT_STATE::conn_commnd;
+   
+    recent_customers[new_unique_token]->current_state = CONNECT_STATE::conn_commnd;
     
     /*Send public key to remote node (key is generated on server side)*/
     send (sfd, cA.to_str().c_str(), cA.to_str().length(), NULL);
@@ -221,7 +242,7 @@ int Server::Handler::on_connect_command_recieved (int sfd, char* message)
      must be created 
      */
     CustomerModel_shrd_ptr new_customer = std::make_shared<Customer::CustomerModel>(sfd, "");
-    current_state = CONNECT_STATE::conn_verify;
+    recent_customers_sfd[sfd]->current_state = CONNECT_STATE::conn_verify;
 
     Debug().warning ("here");
     /*check message content*/ /*FIX ME*/
@@ -477,10 +498,57 @@ Server::Handler::get_command (std::string command)
  */
 int Server::Handler::find_in_customer_cache(const std::string& unique_token)
 {
-    auto customer = recent_customers[unique_token];
-    if (customer == nullptr) return -1;
-    else return customer->get_sfd();
+    return recent_customers.count(unique_token);
 }
+
+/**
+ * @brief Request DB or local tmp cache in order to find according 
+ * user by particular credentials
+ * 
+ * @param unique_token  Particular unique credential
+ * @return int 
+ */
+int Server::Handler::find_in_customer_cache(int sfd)
+{
+    return recent_customers_sfd.count(sfd);
+}
+
+Server::CustomerModel_shrd_ptr 
+Server::Handler::get_customer_by_unique_token (const string& utoken)
+{
+    return this->recent_customers[utoken];
+}
+
+Server::CustomerModel_shrd_ptr 
+Server::Handler::get_customer_by_sfd (int sfd) 
+{
+    try
+    {
+        return recent_customers_sfd[sfd];
+    }
+    catch(const std::exception& e)
+    {
+        std::cerr << e.what() << '\n';
+        
+    }
+    
+}   
+        
+
+void Server::Handler::add_new_recent_customer (int sfd, const string& utoken)
+{
+    this->recent_customers_sfd[sfd] = std::make_shared <Customer::CustomerModel> (Customer::CustomerModel(sfd, utoken));
+    this->recent_customers[utoken] =   this->recent_customers_sfd[sfd];
+    return;   
+}
+
+
+Server::CustomerCacheMapSfdType 
+Server::Handler::get_sfd_map_customers (void)
+{
+    return this->recent_customers_sfd;
+}
+
 
 /**
  * @brief Destroy the Server:: Handler:: Handler object

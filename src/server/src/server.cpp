@@ -183,7 +183,9 @@ int Server::ServerModel::distribute_incoming_connections(int socket,
 {
 
     std::string response_s (response);
-    if (m_handler->current_state == CONNECT_STATE::conn_commnd)
+    Debug().info ("Here");
+    
+    if (m_handler->find_in_customer_cache(socket) > 0)
     {
         Debug().fatal("ONCE");
         return m_handler->on_connect_command_recieved(socket , response);

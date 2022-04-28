@@ -23,6 +23,15 @@
 #include <algorithm>
 #include <memory>
 
+
+enum class CONNECT_STATE
+{
+    conn_request,
+    conn_accept,
+    conn_commnd,
+    conn_verify
+};
+
 namespace Customer
 {
     template <typename T>
@@ -40,6 +49,8 @@ namespace Customer
             std::string get_unique_token (void) const noexcept;
             void set_aes_token (const std::string& token);
             Security::CustomerCryptoUnit* get_crypto_unit(void);
+            
+            CONNECT_STATE current_state = CONNECT_STATE::conn_request;
         private:
             CustomerCryptoUnit_shrd_ptr crypto_unit;
             std::string unique_token;

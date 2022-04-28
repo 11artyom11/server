@@ -58,13 +58,6 @@ class strless {
       }
 };
 
-enum class CONNECT_STATE
-{
-    conn_request,
-    conn_accept,
-    conn_commnd,
-    conn_verify
-};
 
 namespace Server
 {
@@ -87,7 +80,7 @@ namespace Server
                                             CustomerCacheMapType;
 
     typedef std::map <int, CustomerModel_shrd_ptr> \
-                            CustomerCacheMapHelpType;
+                            CustomerCacheMapSfdType;
 
 
     /*Name binding to cipher units and unique pointer accessors*/
@@ -139,10 +132,15 @@ class Handler
 
             decltype(&Server::Handler::provide_write_thread) get_command  (std::string command);
             int find_in_customer_cache(const std::string& unique_token);
-            
-            CONNECT_STATE current_state = CONNECT_STATE::conn_request;
+            int find_in_customer_cache(int sfd);
+                                    
+            CustomerModel_shrd_ptr get_customer_by_unique_token (const string&);
+            CustomerModel_shrd_ptr get_customer_by_sfd (int);
+            CustomerCacheMapSfdType get_sfd_map_customers (void);
 
+            void add_new_recent_customer (int, const string&);
         
+
         private:
             sem_t writer_sem;
             sem_t reader_sem;
@@ -165,7 +163,7 @@ class Handler
             /*Cache  holds recent customers unique_token -> Customer* */
             CustomerCacheMapType recent_customers;
             /* Cache holds  recent customer sfd -> Customer* */
-            CustomerCacheMapHelpType recent_customer_sfd;
+            CustomerCacheMapSfdType recent_customers_sfd;
 
             Security::RSA_Keypair_shrd_ptr keypair;
 
