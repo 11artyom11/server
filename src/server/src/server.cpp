@@ -184,10 +184,18 @@ int Server::ServerModel::distribute_incoming_connections(int socket,
 
     std::string response_s (response);
     Debug().info ("Here");
+    /* 
+        Event sequence illustration
+
+        connect_request -> creates new customer
+        connect_command -> works the condition below this comment
+        other handler functions .... everything works fine
     
-    if (m_handler->find_in_customer_cache(socket) > 0)
+    
+     */
+    if (m_handler->find_in_customer_cache(socket) > 0 && 
+        m_handler->get_customer_by_sfd(socket)->current_state != CONNECT_STATE::conn_verify)
     {
-        Debug().fatal("ONCE");
         return m_handler->on_connect_command_recieved(socket , response);
     } 
     else 

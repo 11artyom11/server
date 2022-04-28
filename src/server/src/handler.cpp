@@ -242,7 +242,6 @@ int Server::Handler::on_connect_command_recieved (int sfd, char* message)
      must be created 
      */
     CustomerModel_shrd_ptr new_customer = std::make_shared<Customer::CustomerModel>(sfd, "");
-    recent_customers_sfd[sfd]->current_state = CONNECT_STATE::conn_verify;
 
     Debug().warning ("here");
     /*check message content*/ /*FIX ME*/
@@ -253,6 +252,8 @@ int Server::Handler::on_connect_command_recieved (int sfd, char* message)
     rsa_shrd_ptr->private_decrypt ((unsigned char*)(message), 128, decrypted);
     Debug().warning ("SIZE OF DEC :  ", decrypted);
     DataTransfer::MessageModel messageModel{(char*)decrypted};
+    recent_customers_sfd[sfd]->current_state = CONNECT_STATE::conn_verify;
+
     return send_connect_verify(sfd, messageModel);
 }
 
