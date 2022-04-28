@@ -200,28 +200,8 @@ int Server::ServerModel::distribute_incoming_connections(int socket,
     } 
     else 
     {
-
-        RSA_Unit rsaU;
-
-        Debug().info ("Encoded String Recieved");
-        // string mes{base64decode(response, strlen(response))};
         string mes{response};
-        
-        Debug().info ("Decoded String Recieved");
 
-        // char* decr_mes = rsaU.rsa_decrypt((char*)mes.c_str(), keypair->second.c_key);
-
-        // Debug().info (decr_mes);
-        //here must be executed JSON resolver in order to divide message 
-        //into essential command list
-        
-        /*
-        Additional layer of message-cheking in case of 
-        client message check
-        lack
-
-        returns handler return error (1) in case of "bad" message
-        */ 
         MessageModel message (mes);//(nlohmann::json::parse(R"({"command" : 1})"));
         if (!DataTransfer::is_message_valid (message))
         {

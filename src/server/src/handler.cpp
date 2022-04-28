@@ -142,6 +142,7 @@ std::string Server::random_str(int len)
  */
 int Server::Handler::on_login_request_recieved(int sfd, const DataTransfer::MessageModel&)
 {
+    return 0;
 
 }
 
@@ -219,6 +220,7 @@ int Server::Handler::send_connect_accept(int sfd, const DataTransfer::MessageMod
  */
 int Server::Handler::send_login_accept(int sfd, const DataTransfer::MessageModel&)
 {
+    return 0;
 
 }
 
@@ -321,7 +323,7 @@ int Server::Handler::send_connect_verify(int sfd, const DataTransfer::MessageMod
  */
 int Server::Handler::send_sign_up_verify(int sfd, const DataTransfer::MessageModel&)
 {
-
+    return 0;
 }
 
 
@@ -514,12 +516,34 @@ int Server::Handler::find_in_customer_cache(int sfd)
     return recent_customers_sfd.count(sfd);
 }
 
+/**
+ * @brief Get Customer shared (smart) pointer binded
+ * with unique token
+ * 
+ * @param utoken unique token passed to method
+ * @return Server::CustomerModel_shrd_ptr 
+ */
 Server::CustomerModel_shrd_ptr 
 Server::Handler::get_customer_by_unique_token (const string& utoken)
 {
-    return this->recent_customers[utoken];
+    try
+    {
+        return this->recent_customers[utoken];
+    }
+    catch(const std::exception& e)
+    {
+        std::cerr << e.what() << '\n';
+    }
+    
 }
 
+/**
+ * @brief Get Customer shared (smart) pointer binded
+ * with socket file descriptor
+ * 
+ * @param sfd socket file descriptor passed to method
+ * @return Server::CustomerModel_shrd_ptr 
+ */
 Server::CustomerModel_shrd_ptr 
 Server::Handler::get_customer_by_sfd (int sfd) 
 {
@@ -529,13 +553,18 @@ Server::Handler::get_customer_by_sfd (int sfd)
     }
     catch(const std::exception& e)
     {
-        std::cerr << e.what() << '\n';
-        
+        std::cerr << e.what() << '\n';  
     }
     
 }   
         
-
+/**
+ * @brief API to add new cached customer into system (RAM NoSQL)
+ * 
+ * 
+ * @param sfd socket for customer (is unique)
+ * @param utoken unique token generated higher somewhere (is unique)
+ */
 void Server::Handler::add_new_recent_customer (int sfd, const string& utoken)
 {
     this->recent_customers_sfd[sfd] = std::make_shared <Customer::CustomerModel> (Customer::CustomerModel(sfd, utoken));
@@ -543,7 +572,12 @@ void Server::Handler::add_new_recent_customer (int sfd, const string& utoken)
     return;   
 }
 
-
+/**
+ * @brief returns whole customer chache map binded via 
+ * socket descriptors
+ * 
+ * @return Server::CustomerCacheMapSfdType 
+ */
 Server::CustomerCacheMapSfdType 
 Server::Handler::get_sfd_map_customers (void)
 {
