@@ -3,14 +3,12 @@
 using namespace Customer;
 
 CustomerModel::CustomerModel(int sfd, 
-                                const std::string& unique_token, 
-                                    const Security::RSA_Keypair_shrd_ptr& kp) :
+                                const std::string& unique_token) :
     sfd{sfd},
     unique_token{unique_token}
 {
     Debug().info("Retrieved data SFD : ", sfd, " UNIQUE TOKEN : ", unique_token);
-    crypto_unit = std::make_unique<Security::CustomerCryptoUnit>(Security::CustomerCryptoUnit( keypair, sfd));
-    keypair = kp;
+    crypto_unit = std::make_unique<Security::CustomerCryptoUnit>(Security::CustomerCryptoUnit( sfd));
 }
 
 int CustomerModel::get_sfd(void) const noexcept

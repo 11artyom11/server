@@ -26,8 +26,7 @@ bool Security::is_dir_exist (char const *dirpath)
         }
 }
 
-CustomerCryptoUnit::CustomerCryptoUnit(const RSA_Keypair_shrd_ptr& kp, 
-                                        int sfd)
+CustomerCryptoUnit::CustomerCryptoUnit(int sfd)
 {
 
     Debug().info("Constructed CustomerCryptoUnit object : ", sfd);   
@@ -37,7 +36,6 @@ CustomerCryptoUnit::CustomerCryptoUnit(const RSA_Keypair_shrd_ptr& kp,
     Debug().info("customer.cpp 12");
     sprintf (c_sfd, "%d", sfd);
     Debug().info("STR : ", c_sfd);
-    keypair = kp;
 }
 
 CustomerCryptoUnit::~CustomerCryptoUnit()

@@ -12,8 +12,8 @@ using namespace std;
 Server::Handler::Handler(const Security::RSA_Keypair_shrd_ptr& kp, int RWBacklog) 
     
 {
-    aes_unq_ptr = std::make_unique<AES_Unit>();
-    rsa_unq_ptr = std::make_unique<RSA_Unit>();
+    aes_shrd_ptr = std::make_shared<AES_Unit>();
+    rsa_shrd_ptr = std::make_shared<RSA_Unit>();
     Debug().info("Called handel ctor");
     sem_init (&writer_sem, 0, RWBacklog);
     sem_init (&reader_sem, 0, RWBacklog);
@@ -176,7 +176,7 @@ int Server::Handler::send_connect_accept(int sfd, const DataTransfer::MessageMod
     std::string new_unique_token = Server::random_str(10);
 
     Debug().warning (new_unique_token);
-    this->recent_customers[new_unique_token] = std::make_shared <Customer::CustomerModel> (Customer::CustomerModel(sfd, new_unique_token, keypair));
+    this->recent_customers[new_unique_token] = std::make_shared <Customer::CustomerModel> (Customer::CustomerModel(sfd, new_unique_token));
 
     DataTransfer::ConnectAccept cA(new_unique_token ,keypair->first.c_key);
     
@@ -216,16 +216,20 @@ int Server::Handler::on_connect_command_recieved(int sfd, const DataTransfer::Me
 
 int Server::Handler::on_connect_command_recieved (int sfd, char* message)
 {
-        current_state = CONNECT_STATE::conn_verify;
+    /*
+     If this message was recieved it means new customer model 
+     must be created 
+     */
+    CustomerModel_shrd_ptr new_customer = std::make_shared<Customer::CustomerModel>(sfd, "");
+    current_state = CONNECT_STATE::conn_verify;
 
     Debug().warning ("here");
     /*check message content*/ /*FIX ME*/
-    RSA_Unit rsaU;
-    rsaU.init_private_key ((unsigned char*)keypair->second.c_key);
+    rsa_shrd_ptr->init_private_key ((unsigned char*)keypair->second.c_key);
     unsigned char* decrypted = new unsigned char[1024];
 
     //128
-    rsaU.private_decrypt ((unsigned char*)(message), 128, decrypted);
+    rsa_shrd_ptr->private_decrypt ((unsigned char*)(message), 128, decrypted);
     Debug().warning ("SIZE OF DEC :  ", decrypted);
     DataTransfer::MessageModel messageModel{(char*)decrypted};
     return send_connect_verify(sfd, messageModel);
@@ -273,22 +277,17 @@ int Server::Handler::send_connect_verify(int sfd, const DataTransfer::MessageMod
 {
 /* tmp uid*/
     string unique_token = message.get<string>("unique_token");\
-    string aes_token = message.get<string>("aes_token");
-
+    string aes_token    = message.get<string>("aes_token");
 
     unsigned char* ok_message = (unsigned char*)(unique_token.c_str());
     unsigned char* key_c = (unsigned char*)(aes_token.c_str());
     unsigned char cipher[1024];
-    int len = aes_unq_ptr->encrypt(ok_message, unique_token.length(), key_c, cipher);
+    int len = aes_shrd_ptr->encrypt(ok_message, unique_token.length(), key_c, cipher);
     unique_token  = string_to_hex((char*)(cipher));
-    Debug().info ("LEN : ", len);
-    Debug().warning ("ENCRYPTED : ", unique_token);
     DataTransfer::ConnectVerify cV(unique_token, len);
-
-   
     std::string to_send = cV.to_str();
-    // aes_unq_ptr->decrypt (enc_mes,strlen ((char*)enc_mes), (unsigned char*)aes_token.c_str(), dec_mes);
     send (sfd,  (char*)to_send.c_str(), to_send.length(), NULL);
+
    return 0;
 }
 

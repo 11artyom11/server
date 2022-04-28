@@ -80,14 +80,19 @@ namespace Server
     typedef std::map <std::string, int (Handler::*) (int, const DataTransfer::MessageModel&), ::strless> CommMapType;
     
     /*Shared ptr type for Customer Model*/
-    typedef shared_ptr<Customer::CustomerModel> CustomerModel_shrd_ptr;
+    typedef shared_ptr<Customer::CustomerModel> CustomerModel_shrd_ptr;    
 
     /*Recent Customer cache type stores in trivial way*/
-    typedef std::map <std::string, CustomerModel_shrd_ptr, ::strless> CustomerCacheMapType;
+    typedef std::map <std::string, CustomerModel_shrd_ptr, ::strless> \
+                                            CustomerCacheMapType;
+
+    typedef std::map <int, CustomerModel_shrd_ptr> \
+                            CustomerCacheMapHelpType;
+
 
     /*Name binding to cipher units and unique pointer accessors*/
-    typedef std::unique_ptr <RSA_Unit> RSA_Unit_unq_ptr;
-    typedef std::unique_ptr <AES_Unit> AES_Unit_unq_ptr;
+    typedef std::shared_ptr <RSA_Unit> RSA_Unit_shrd_ptr;
+    typedef std::shared_ptr <AES_Unit> AES_Unit_shrd_ptr;
 
 
 /*Function for random string generating*/
@@ -145,7 +150,6 @@ class Handler
             inline static int reader_ = 0;
             inline static int writer_ = 0;
 
-
             thCT writer_threads;
             thCT reader_threads;
             
@@ -158,13 +162,15 @@ class Handler
 
             CommMapType commap;
 
-            /*Cache which holds recent customers*/
+            /*Cache  holds recent customers unique_token -> Customer* */
             CustomerCacheMapType recent_customers;
+            /* Cache holds  recent customer sfd -> Customer* */
+            CustomerCacheMapHelpType recent_customer_sfd;
 
             Security::RSA_Keypair_shrd_ptr keypair;
 
-            RSA_Unit_unq_ptr rsa_unq_ptr;
-            AES_Unit_unq_ptr aes_unq_ptr;
+            RSA_Unit_shrd_ptr rsa_shrd_ptr;
+            AES_Unit_shrd_ptr aes_shrd_ptr;
 
 
     };

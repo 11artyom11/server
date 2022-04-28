@@ -71,7 +71,7 @@ namespace Security
         public:
             /*Model of this class allows only to generate or/and assign server side keypair*/
             /*And only assign client public key*/
-            CustomerCryptoUnit (const RSA_Keypair_shrd_ptr&,  int sfd = 0);
+            CustomerCryptoUnit ( int sfd = 0);
 
             ~CustomerCryptoUnit ();
             
@@ -83,8 +83,6 @@ namespace Security
             RSA_UNAR_KEY& get_client_key (void);
             
         private:
-        /*Key-pair which has been generated on server side*/
-            RSA_Keypair_shrd_ptr keypair;
 
         /*
         Key which has been retrieved from client side

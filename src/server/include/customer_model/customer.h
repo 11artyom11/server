@@ -34,7 +34,7 @@ namespace Customer
     class CustomerModel
     {
         public:
-            CustomerModel (int sfd, const std::string& unique_token, const Security::RSA_Keypair_shrd_ptr&);
+            CustomerModel (int sfd, const std::string& unique_token);
             ~CustomerModel ();
             int get_sfd (void) const noexcept;
             std::string get_unique_token (void) const noexcept;
@@ -42,7 +42,6 @@ namespace Customer
             Security::CustomerCryptoUnit* get_crypto_unit(void);
         private:
             CustomerCryptoUnit_shrd_ptr crypto_unit;
-            Security::RSA_Keypair_shrd_ptr keypair;
             std::string unique_token;
             std::string aes_token;
             int sfd;
