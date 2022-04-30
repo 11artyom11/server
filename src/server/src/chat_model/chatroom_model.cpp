@@ -37,6 +37,7 @@ int ChatRoom::add_new_secondary_customer(const CustomerModel& secondary_customer
     try
     {
         secondary_customers.push_back(std::make_shared<CustomerModel>(secondary_customer));
+        Debug().info ("Slave count after Call => ", secondary_customers.size());
         return 0;
     }
     catch (std::exception& e)

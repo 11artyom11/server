@@ -57,6 +57,8 @@ namespace Server
             vector <ChatRoom_shrd_ptr>& push_new_room (Customer::CustomerModel*, RoomSpace::ChatRoom*);
             vector <ChatRoom_shrd_ptr>& remove_room_from (Customer::CustomerModel*,const std::string& chat_id);
 
+            ChatRoom_shrd_ptr get_room_by_id ( std::string master_token, 
+                                                     std::string room_id);
         private:
             ChatRoom_Map_Type chatroom_lst;
     };

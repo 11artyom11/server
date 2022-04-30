@@ -50,7 +50,7 @@ Server::ChatRoomManager::push_new_room (Customer::CustomerModel* master,
     Debug().info ("Customer token => ", master->get_unique_token());
     Debug().info ("Added room id => ", new_room->get_room_id());
     Debug().info ("Updated rooms count : ",this->operator[] (master).size());
-    
+
     return chatroom_lst[master->get_unique_token()];
 }
 
@@ -78,4 +78,19 @@ Server::ChatRoomManager::remove_room_from (Customer::CustomerModel* master,
 
     return master_room_arr;
 
+}
+
+Server::ChatRoom_shrd_ptr 
+Server::ChatRoomManager::get_room_by_id ( std::string master_token,
+                                             std::string room_id) 
+{
+    auto rooms = this->operator[](master_token);
+    auto room_it = find_if (rooms.begin(), 
+                            rooms.end(), 
+                            [&room_id](const ChatRoom_shrd_ptr& room_ptr)
+                            {
+                                return !(room_ptr->get_room_id().compare(room_id));                            
+                            });
+    if (room_it != rooms.end()) return *room_it;
+    else throw -1;
 }

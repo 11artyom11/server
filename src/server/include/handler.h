@@ -11,7 +11,10 @@
  * Is Defined in Server namespace
  * 
  * @section Last Changes 30-04-2022 Artyom Grigorian
- * Added New handler functions to handle chatroom management
+ * 
+ * - Added New handler functions to handle chatroom management
+ * - Integrated chatroom manager 'layer' into handler 
+ * - reviewed some old functions
  * 
  * @copyright Copyright (c) 2022
  * 
@@ -125,7 +128,8 @@ class Handler
             int on_login_command_recieved           (int sfd, const DataTransfer::MessageModel&);
             int on_sign_up_command_recieved         (int sfd, const DataTransfer::MessageModel&);
             int on_create_chatroom_command_recieved (int sfd, const DataTransfer::MessageModel&);
-
+            int on_join_chatroom_command_recieved   (int sfd, const DataTransfer::MessageModel&);
+            
             int send_connect_verify                 (int sfd, const DataTransfer::MessageModel&);
             int send_sign_up_verify                 (int sfd, const DataTransfer::MessageModel&);
             int send_login_verify                   (int sfd, const DataTransfer::MessageModel&);

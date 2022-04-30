@@ -51,6 +51,7 @@ void Server::Handler::commap_init (void)
     commap[LOG_IN_VERIFY]           = &Server::Handler::send_login_verify;
     commap[SIGN_UP_VERIFY]          = &Server::Handler::send_sign_up_verify;
     commap[CREATE_CHATROOM_COMMAND] = &Server::Handler::on_create_chatroom_command_recieved;
+    commap[JOIN_CHATROOM_COMMAND]   = &Server::Handler::on_join_chatroom_command_recieved;
 
 }
 
@@ -293,12 +294,45 @@ int Server::Handler::on_sign_up_command_recieved(int sfd, const DataTransfer::Me
     return 0;
 }
 
+/**
+ * @brief 
+ * 
+ * @param sfd 
+ * @param message 
+ * @return int 
+ */
 int Server::Handler::on_create_chatroom_command_recieved (int sfd, const DataTransfer::MessageModel& message)
 {
     Debug().info ("Got command create chatroom");
     /*Create new chatroom*/
     RoomSpace::ChatRoom *new_room = new RoomSpace::ChatRoom(*recent_customers_sfd[sfd].get());
     chatroom_mngr_shrd_ptr->push_new_room(recent_customers_sfd[sfd].get() ,new_room);
+    return 0;
+}
+
+int Server::Handler::on_join_chatroom_command_recieved (int sfd, const DataTransfer::MessageModel& message)
+{
+    Debug().info("Called on_join_chatroom_command_recieved");
+    std::string room_id = message.get<std::string>("room_id");
+    std::string master_token = message.get<std::string> ("master_token");
+    std::string secondary_token = message.get<std::string> ("utoken");
+
+    auto chatroom = chatroom_mngr_shrd_ptr->get_room_by_id (master_token, room_id);
+    Customer::CustomerModel secondary_customer (sfd, secondary_token);
+
+    chatroom->add_new_secondary_customer (secondary_customer);
+    Debug().info ("ChatRoom ID => ",chatroom->get_room_id());
+    
+    /* 
+    {
+        "command":"com_join_chatroom",
+        "master_token":"CJh3Ex21mk",
+        "room_id":"A3y7W2Twae",
+        "utoken":"",
+    }    
+     */
+    
+
     return 0;
 }
 
