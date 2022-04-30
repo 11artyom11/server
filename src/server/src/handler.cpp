@@ -14,6 +14,8 @@ Server::Handler::Handler(const Security::RSA_Keypair_shrd_ptr& kp, int RWBacklog
 {
     aes_shrd_ptr = std::make_shared<AES_Unit>();
     rsa_shrd_ptr = std::make_shared<RSA_Unit>();
+    chatroom_mngr_shrd_ptr = std::make_shared <Server::ChatRoomManager> ();
+    
     Debug().info("Called handel ctor");
     sem_init (&writer_sem, 0, RWBacklog);
     sem_init (&reader_sem, 0, RWBacklog);
@@ -294,6 +296,7 @@ int Server::Handler::on_sign_up_command_recieved(int sfd, const DataTransfer::Me
 int Server::Handler::on_create_chatroom_command_recieved (int sfd, const DataTransfer::MessageModel& message)
 {
     Debug().info ("Got command create chatroom");
+    /*Create new chatroom*/
     RoomSpace::ChatRoom new_room(*recent_customers_sfd[sfd].get());
 
     return 0;

@@ -2,14 +2,28 @@
 
 using namespace RoomSpace;
 
+std::string random_string(int len = 10)
+{
+    std::string str("0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz");
+
+    std::random_device rd;
+    std::mt19937 generator(rd());
+
+    std::shuffle(str.begin(), str.end(), generator);
+
+    return str.substr(0, len); // assumes 32 < number of characters in str
+}
+
 /**
  * @brief Construct a new Chat Room:: Chat Room object
  * 
  * @param master The master customer who is the owner of chatroom
  */
-ChatRoom::ChatRoom(const CustomerModel& master)
+ChatRoom::ChatRoom(const CustomerModel& master) :
+        chat_id{random_string(10)}
 {
-    Debug().info ("Created Chatroom : Master => ", master.get_unique_token());
+    Debug().info ("Created Chatroom :\n Master => ", master.get_unique_token());
+    Debug().info ("Chatroom id : ", chat_id);
     this->master_customer = std::make_shared<CustomerModel> (master);
 }
 
@@ -91,7 +105,13 @@ CustomerModel * const ChatRoom::get_master (void) const noexcept
     return master_customer.get();
 }
 
+std::string ChatRoom::get_chat_id (void) const noexcept
+{
+    return this->chat_id;
+}
+
 /**
+ * 
  * @brief Destroy the Chat Room:: Chat Room object
  * 
  */

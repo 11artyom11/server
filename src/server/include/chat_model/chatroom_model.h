@@ -23,15 +23,18 @@ namespace RoomSpace
             CustomerModel * const get_customer_by_utoken (const string& unique_token) const noexcept;
             CustomerModel * const get_master (void) const noexcept;
 
+            std::string get_chat_id (void) const noexcept;
             ~ChatRoom();
 
         private:
             /* master customer who owns chatroom */
             CustomerModel_shrd_ptr master_customer;
+
             /* slave customers who are obeyed by owner of chatroom */
             list <CustomerModel_shrd_ptr> secondary_customers;
+
             /* Chat id matches sfd of owner (must be tought over) */
-            uint64_t chat_id;
+            std::string chat_id;
 
     };
 }

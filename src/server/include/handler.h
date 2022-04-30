@@ -39,6 +39,7 @@
 #include "message_templates.h"
 #include "message_resolver.h"
 #include "chatroom_model.h"
+#include "chatroom_manager.h"
 
 
 // Helper functor to ease cleanup of container
@@ -68,15 +69,16 @@ namespace Server
     template <typename T>
     using shared_ptr = std::shared_ptr<T>;
 
+
+    /*Shared ptr type for Customer Model*/
+    typedef shared_ptr<Customer::CustomerModel> CustomerModel_shrd_ptr;    
+
     /*socket file descriptor and thhread vector container (MAP)*/
     typedef std::unordered_map <int, std::vector<std::thread*>> thCT ;   
     
     /*Binding which help to add new handler functions genreically*/
     typedef std::map <std::string, int (Handler::*) (int, const DataTransfer::MessageModel&), ::strless> CommMapType;
     
-    /*Shared ptr type for Customer Model*/
-    typedef shared_ptr<Customer::CustomerModel> CustomerModel_shrd_ptr;    
-
     /*Recent Customer cache type stores in trivial way*/
     typedef std::map <std::string, CustomerModel_shrd_ptr, ::strless> \
                                             CustomerCacheMapType;
@@ -84,6 +86,10 @@ namespace Server
     typedef std::map <int, CustomerModel_shrd_ptr> \
                             CustomerCacheMapSfdType;
 
+
+    /* typedef for chatroom manager */
+    typedef std::shared_ptr <Server::ChatRoomManager> \
+                                ChatRoomManager_shrd_ptr;
 
     /*Name binding to cipher units and unique pointer accessors*/
     typedef std::shared_ptr <RSA_Unit> RSA_Unit_shrd_ptr;
@@ -174,6 +180,8 @@ class Handler
 
             RSA_Unit_shrd_ptr rsa_shrd_ptr;
             AES_Unit_shrd_ptr aes_shrd_ptr;
+
+            ChatRoomManager_shrd_ptr chatroom_mngr_shrd_ptr;
 
 
     };
