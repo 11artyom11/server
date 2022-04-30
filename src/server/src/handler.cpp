@@ -299,10 +299,6 @@ int Server::Handler::on_create_chatroom_command_recieved (int sfd, const DataTra
     /*Create new chatroom*/
     RoomSpace::ChatRoom *new_room = new RoomSpace::ChatRoom(*recent_customers_sfd[sfd].get());
     chatroom_mngr_shrd_ptr->push_new_room(recent_customers_sfd[sfd].get() ,new_room);
-    Debug().info ("Added new Room");
-    Debug().info ("room arr size : ");
-    auto arr = (chatroom_mngr_shrd_ptr->operator[] (recent_customers_sfd[sfd].get())).size();
-    Debug().info (arr);
     return 0;
 }
 

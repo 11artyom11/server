@@ -47,6 +47,10 @@ Server::ChatRoomManager::push_new_room (Customer::CustomerModel* master,
                                             RoomSpace::ChatRoom* new_room)
 {
     this->operator[] (master).emplace_back (std::make_shared<RoomSpace::ChatRoom>(*new_room));
+    Debug().info ("Customer token => ", master->get_unique_token());
+    Debug().info ("Added room id => ", new_room->get_room_id());
+    Debug().info ("Updated rooms count : ",this->operator[] (master).size());
+    
     return chatroom_lst[master->get_unique_token()];
 }
 
@@ -59,7 +63,7 @@ Server::ChatRoomManager::push_new_room (Customer::CustomerModel* master,
  */
 vector <Server::ChatRoom_shrd_ptr>&
 Server::ChatRoomManager::remove_room_from (Customer::CustomerModel* master,
-                                                const std::string& chat_id)
+                                                const std::string& room_id)
 {
     //erase(std::remove(vec.begin(), vec.end(), 8), vec.end());
     auto master_room_arr = this->operator[] (master);
@@ -67,9 +71,9 @@ Server::ChatRoomManager::remove_room_from (Customer::CustomerModel* master,
     /*Deletes from according chatroom array chatroom pointer which matches by chat_id to passed one*/
     master_room_arr.erase(std::remove_if (master_room_arr.begin(), 
                                             master_room_arr.end(), 
-                                            [&chat_id](const ChatRoom_shrd_ptr& chatroom_ptr)
+                                            [&room_id](const ChatRoom_shrd_ptr& chatroom_ptr)
                                             {
-                                                return !(chatroom_ptr->get_chat_id().compare(chat_id));
+                                                return !(chatroom_ptr->get_room_id().compare(room_id));
                                             }), master_room_arr.end());
 
     return master_room_arr;

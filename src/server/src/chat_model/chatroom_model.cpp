@@ -20,10 +20,9 @@ std::string random_string(int len = 10)
  * @param master The master customer who is the owner of chatroom
  */
 ChatRoom::ChatRoom(const CustomerModel& master) :
-        chat_id{random_string(10)}
+        room_id{random_string(10)}
 {
-    Debug().info ("Created Chatroom :\n Master => ", master.get_unique_token());
-    Debug().info ("Chatroom id : ", chat_id);
+    
     this->master_customer = std::make_shared<CustomerModel> (master);
 }
 
@@ -105,9 +104,9 @@ CustomerModel * const ChatRoom::get_master (void) const noexcept
     return master_customer.get();
 }
 
-std::string ChatRoom::get_chat_id (void) const noexcept
+std::string ChatRoom::get_room_id (void) const noexcept
 {
-    return this->chat_id;
+    return this->room_id;
 }
 
 /**
