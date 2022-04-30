@@ -9,8 +9,8 @@ using namespace RoomSpace;
  */
 ChatRoom::ChatRoom(const CustomerModel& master)
 {
+    Debug().info ("Created Chatroom : Master => ", master.get_unique_token());
     this->master_customer = std::make_shared<CustomerModel> (master);
-
 }
 
 /**

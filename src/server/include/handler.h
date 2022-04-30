@@ -38,6 +38,8 @@
 #include "customer.h"
 #include "message_templates.h"
 #include "message_resolver.h"
+#include "chatroom_model.h"
+
 
 // Helper functor to ease cleanup of container
 struct delete_ptr { 

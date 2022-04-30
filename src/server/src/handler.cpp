@@ -294,6 +294,8 @@ int Server::Handler::on_sign_up_command_recieved(int sfd, const DataTransfer::Me
 int Server::Handler::on_create_chatroom_command_recieved (int sfd, const DataTransfer::MessageModel& message)
 {
     Debug().info ("Got command create chatroom");
+    RoomSpace::ChatRoom new_room(*recent_customers_sfd[sfd].get());
+
     return 0;
 }
 

@@ -22,6 +22,7 @@ add_executable(server src/main.cpp
                         src/customer_model/customer.cpp
                            src/customer_model/customer_crypto_unit.cpp
                               src/chat_model/chatroom_model.cpp
+                              src/chat_model/chatroom_manager.cpp
 )                     
 
 target_link_libraries( server message_model)

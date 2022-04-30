@@ -405,12 +405,12 @@ bin/server/CMakeFiles/server.dir/all: lib/src/util/data_transfer/message_resolve
 bin/server/CMakeFiles/server.dir/all: lib/src/util/data_transfer/message_model/CMakeFiles/message_model.dir/all
 	$(MAKE) -f bin/server/CMakeFiles/server.dir/build.make bin/server/CMakeFiles/server.dir/depend
 	$(MAKE) -f bin/server/CMakeFiles/server.dir/build.make bin/server/CMakeFiles/server.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/aram/workspace/clientserver/CMakeFiles --progress-num=25,26,27,28,29,30,31 "Built target server"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/aram/workspace/clientserver/CMakeFiles --progress-num=25,26,27,28,29,30,31,32 "Built target server"
 .PHONY : bin/server/CMakeFiles/server.dir/all
 
 # Build rule for subdir invocation for target.
 bin/server/CMakeFiles/server.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/aram/workspace/clientserver/CMakeFiles 16
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/aram/workspace/clientserver/CMakeFiles 17
 	$(MAKE) -f CMakeFiles/Makefile2 bin/server/CMakeFiles/server.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/aram/workspace/clientserver/CMakeFiles 0
 .PHONY : bin/server/CMakeFiles/server.dir/rule
@@ -680,7 +680,7 @@ tests/client_tests/CMakeFiles/t_client.dir/all: tests/googletest/googletest/CMak
 tests/client_tests/CMakeFiles/t_client.dir/all: tests/googletest/googletest/CMakeFiles/gtest.dir/all
 	$(MAKE) -f tests/client_tests/CMakeFiles/t_client.dir/build.make tests/client_tests/CMakeFiles/t_client.dir/depend
 	$(MAKE) -f tests/client_tests/CMakeFiles/t_client.dir/build.make tests/client_tests/CMakeFiles/t_client.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/aram/workspace/clientserver/CMakeFiles --progress-num=32,33 "Built target t_client"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/aram/workspace/clientserver/CMakeFiles --progress-num=33,34 "Built target t_client"
 .PHONY : tests/client_tests/CMakeFiles/t_client.dir/all
 
 # Build rule for subdir invocation for target.
@@ -711,7 +711,7 @@ tests/lib_tests/CMakeFiles/t_lib3.dir/all: tests/googletest/googletest/CMakeFile
 tests/lib_tests/CMakeFiles/t_lib3.dir/all: tests/googletest/googletest/CMakeFiles/gtest.dir/all
 	$(MAKE) -f tests/lib_tests/CMakeFiles/t_lib3.dir/build.make tests/lib_tests/CMakeFiles/t_lib3.dir/depend
 	$(MAKE) -f tests/lib_tests/CMakeFiles/t_lib3.dir/build.make tests/lib_tests/CMakeFiles/t_lib3.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/aram/workspace/clientserver/CMakeFiles --progress-num=38,39 "Built target t_lib3"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/aram/workspace/clientserver/CMakeFiles --progress-num=39,40 "Built target t_lib3"
 .PHONY : tests/lib_tests/CMakeFiles/t_lib3.dir/all
 
 # Build rule for subdir invocation for target.
@@ -741,7 +741,7 @@ tests/lib_tests/CMakeFiles/t_lib2.dir/all: tests/googletest/googletest/CMakeFile
 tests/lib_tests/CMakeFiles/t_lib2.dir/all: tests/googletest/googletest/CMakeFiles/gtest.dir/all
 	$(MAKE) -f tests/lib_tests/CMakeFiles/t_lib2.dir/build.make tests/lib_tests/CMakeFiles/t_lib2.dir/depend
 	$(MAKE) -f tests/lib_tests/CMakeFiles/t_lib2.dir/build.make tests/lib_tests/CMakeFiles/t_lib2.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/aram/workspace/clientserver/CMakeFiles --progress-num=36,37 "Built target t_lib2"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/aram/workspace/clientserver/CMakeFiles --progress-num=37,38 "Built target t_lib2"
 .PHONY : tests/lib_tests/CMakeFiles/t_lib2.dir/all
 
 # Build rule for subdir invocation for target.
@@ -771,7 +771,7 @@ tests/lib_tests/CMakeFiles/t_lib.dir/all: tests/googletest/googletest/CMakeFiles
 tests/lib_tests/CMakeFiles/t_lib.dir/all: tests/googletest/googletest/CMakeFiles/gtest.dir/all
 	$(MAKE) -f tests/lib_tests/CMakeFiles/t_lib.dir/build.make tests/lib_tests/CMakeFiles/t_lib.dir/depend
 	$(MAKE) -f tests/lib_tests/CMakeFiles/t_lib.dir/build.make tests/lib_tests/CMakeFiles/t_lib.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/aram/workspace/clientserver/CMakeFiles --progress-num=34,35 "Built target t_lib"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/aram/workspace/clientserver/CMakeFiles --progress-num=35,36 "Built target t_lib"
 .PHONY : tests/lib_tests/CMakeFiles/t_lib.dir/all
 
 # Build rule for subdir invocation for target.
@@ -799,7 +799,7 @@ tests/server_tests/CMakeFiles/t_server.dir/all: tests/googletest/googletest/CMak
 tests/server_tests/CMakeFiles/t_server.dir/all: tests/googletest/googletest/CMakeFiles/gtest.dir/all
 	$(MAKE) -f tests/server_tests/CMakeFiles/t_server.dir/build.make tests/server_tests/CMakeFiles/t_server.dir/depend
 	$(MAKE) -f tests/server_tests/CMakeFiles/t_server.dir/build.make tests/server_tests/CMakeFiles/t_server.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/aram/workspace/clientserver/CMakeFiles --progress-num=40,41 "Built target t_server"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/aram/workspace/clientserver/CMakeFiles --progress-num=41,42 "Built target t_server"
 .PHONY : tests/server_tests/CMakeFiles/t_server.dir/all
 
 # Build rule for subdir invocation for target.
