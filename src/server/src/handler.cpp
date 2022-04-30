@@ -35,20 +35,20 @@ void Server::Handler::commap_init (void)
 
 
 
-    commap[CONNECT_REQUEST]   = &Server::Handler::on_connect_request_recieved;
-    commap[LOG_IN_REQUEST]    = &Server::Handler::on_login_request_recieved;
-    commap[CONNECT_ACCEPT]    = &Server::Handler::send_connect_accept;
-    commap[LOG_IN_ACCEPT]     = &Server::Handler::send_login_accept;
-    commap[CONNECT_COMMAND]   = &Server::Handler::on_connect_command_recieved;
-    commap[LOG_IN_COMMAND]    = &Server::Handler::on_login_command_recieved;
-    commap[SIGN_UP_COMMAND]   = &Server::Handler::on_sign_up_command_recieved;
-    commap[WRITE_COMMAND]     = &Server::Handler::provide_write_thread;
-    commap[READ_COMMAND]      = &Server::Handler::provide_read_thread;
-    commap[EXIT_COMMAND]      = &Server::Handler::terminate_socket;
-    commap[CONNECT_VERIFY]    = &Server::Handler::send_connect_verify;
-    commap[LOG_IN_VERIFY]     = &Server::Handler::send_login_verify;
-    commap[SIGN_UP_VERIFY]    = &Server::Handler::send_sign_up_verify;
-
+    commap[CONNECT_REQUEST]         = &Server::Handler::on_connect_request_recieved;
+    commap[LOG_IN_REQUEST]          = &Server::Handler::on_login_request_recieved;
+    commap[CONNECT_ACCEPT]          = &Server::Handler::send_connect_accept;
+    commap[LOG_IN_ACCEPT]           = &Server::Handler::send_login_accept;
+    commap[CONNECT_COMMAND]         = &Server::Handler::on_connect_command_recieved;
+    commap[LOG_IN_COMMAND]          = &Server::Handler::on_login_command_recieved;
+    commap[SIGN_UP_COMMAND]         = &Server::Handler::on_sign_up_command_recieved;
+    commap[WRITE_COMMAND]           = &Server::Handler::provide_write_thread;
+    commap[READ_COMMAND]            = &Server::Handler::provide_read_thread;
+    commap[EXIT_COMMAND]            = &Server::Handler::terminate_socket;
+    commap[CONNECT_VERIFY]          = &Server::Handler::send_connect_verify;
+    commap[LOG_IN_VERIFY]           = &Server::Handler::send_login_verify;
+    commap[SIGN_UP_VERIFY]          = &Server::Handler::send_sign_up_verify;
+    commap[CREATE_CHATROOM_COMMAND] = &Server::Handler::on_create_chatroom_command_recieved;
 
 }
 
@@ -288,6 +288,12 @@ int Server::Handler::on_login_command_recieved(int sfd, const DataTransfer::Mess
 int Server::Handler::on_sign_up_command_recieved(int sfd, const DataTransfer::MessageModel&)
 {
    
+    return 0;
+}
+
+int Server::Handler::on_create_chatroom_command_recieved (int sfd, const DataTransfer::MessageModel& message)
+{
+    Debug().info ("Got command create chatroom");
     return 0;
 }
 
