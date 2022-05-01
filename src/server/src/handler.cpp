@@ -318,18 +318,13 @@ int Server::Handler::on_join_chatroom_command_recieved (int sfd, const DataTrans
     std::string secondary_token = message.get<std::string> ("utoken");
 
     auto chatroom = chatroom_mngr_shrd_ptr->get_room_by_id (master_token, room_id);
-    Customer::CustomerModel secondary_customer (sfd, secondary_token);
+    // Customer::CustomerModel secondary_customer (sfd, secondary_token);
 
-    chatroom->add_new_secondary_customer (secondary_customer);
+    chatroom->add_new_secondary_customer (*recent_customers_sfd[sfd].get());
     Debug().info ("ChatRoom ID => ",chatroom->get_room_id());
     
     /* 
-    {
-        "command":"com_join_chatroom",
-        "master_token":"CJh3Ex21mk",
-        "room_id":"A3y7W2Twae",
-        "utoken":"",
-    }    
+    {"command":"com_join_chatroom","master_token":"sQCeNg9HfY","room_id":"IPE78iqF54","utoken":"WInm1X8Ghd"}    
      */
     
 
@@ -455,6 +450,10 @@ int Server::Handler::terminate_socket( int sfd, const DataTransfer::MessageModel
     termination
     */
     // cleanup_socket_garbage(sfd);
+
+    chatroom_mngr_shrd_ptr->remove_all_rooms(recent_customers_sfd[sfd].get());
+    
+
     if (close (sfd) == 0)
     {
         return TERMINATE_CODE_SUCCESS;
@@ -485,6 +484,9 @@ int Server::Handler::cleanup_socket_garbage (int sfd)
         /*as long as cleanup was succeeded*/
         reader_threads.erase (sfd);
     }
+
+    // recent_customers_sfd.erase(sfd);
+    
 
 }
 

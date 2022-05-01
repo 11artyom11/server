@@ -80,6 +80,28 @@ Server::ChatRoomManager::remove_room_from (Customer::CustomerModel* master,
 
 }
 
+/**
+ * @brief Deletes all the rooms owned by customer 
+ * passed as argument
+ * 
+ * @return vector <Server::ChatRoom_shrd_ptr>& 
+ */
+Server::ChatRoom_Map_Type&
+Server::ChatRoomManager::remove_all_rooms (Customer::CustomerModel* master)
+{
+    this->chatroom_lst.erase(master->get_unique_token());
+    Debug().info ("deleted all rooms related to customer => ", master->get_unique_token());
+    return chatroom_lst;
+}
+
+
+/**
+ * @brief Returns shared pointer of certain room
+ * 
+ * @param master_token 
+ * @param room_id 
+ * @return Server::ChatRoom_shrd_ptr 
+ */
 Server::ChatRoom_shrd_ptr 
 Server::ChatRoomManager::get_room_by_id ( std::string master_token,
                                              std::string room_id) 
@@ -94,3 +116,4 @@ Server::ChatRoomManager::get_room_by_id ( std::string master_token,
     if (room_it != rooms.end()) return *room_it;
     else throw -1;
 }
+
