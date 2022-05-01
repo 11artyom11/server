@@ -11,7 +11,7 @@ using std::string;
 namespace RoomSpace
 {
     typedef std::shared_ptr <CustomerModel> \
-                CustomerModel_shrd_ptr;
+                CustomerModel_ptr;
 
     class ChatRoom
     {
@@ -28,10 +28,10 @@ namespace RoomSpace
 
         private:
             /* master customer who owns chatroom */
-            CustomerModel_shrd_ptr master_customer;
+            CustomerModel_ptr master_customer;
 
             /* slave customers who are obeyed by owner of chatroom */
-            list <CustomerModel_shrd_ptr> secondary_customers;
+            list <CustomerModel_ptr> secondary_customers;
 
             /* Chat id matches sfd of owner (must be tought over) */
             std::string room_id;

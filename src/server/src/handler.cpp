@@ -246,7 +246,7 @@ int Server::Handler::on_connect_command_recieved (int sfd, char* message)
      If this message was recieved it means new customer model 
      must be created 
      */
-    CustomerModel_shrd_ptr new_customer = std::make_shared<Customer::CustomerModel>(sfd, "");
+    CustomerModel_ptr new_customer = std::make_shared<Customer::CustomerModel>(sfd, "");
 
     Debug().warning ("here");
     /*check message content*/ /*FIX ME*/
@@ -442,17 +442,13 @@ int Server::Handler::provide_read_thread(int new_read_socket, const DataTransfer
  * @param sfd socket to close
  * @return close success code 
  */
-int Server::Handler::terminate_socket( int sfd, const DataTransfer::MessageModel&)
+int Server::Handler::terminate_socket( int sfd, const DataTransfer::MessageModel& message)
 {
     Debug().info("Connection terminated");
-    /*
-    clean all garbage which will be left after socket 
-    termination
-    */
-    // cleanup_socket_garbage(sfd);
-
+  
+    string utoken = message.get<string>("utoken");
     chatroom_mngr_shrd_ptr->remove_all_rooms(recent_customers_sfd[sfd].get());
-    
+    delete_recent_customer (sfd, utoken);
 
     if (close (sfd) == 0)
     {
@@ -568,9 +564,9 @@ int Server::Handler::find_in_customer_cache(int sfd)
  * with unique token
  * 
  * @param utoken unique token passed to method
- * @return Server::CustomerModel_shrd_ptr 
+ * @return Server::CustomerModel_ptr 
  */
-Server::CustomerModel_shrd_ptr 
+Server::CustomerModel_ptr 
 Server::Handler::get_customer_by_unique_token (const string& utoken)
 {
     try
@@ -589,9 +585,9 @@ Server::Handler::get_customer_by_unique_token (const string& utoken)
  * with socket file descriptor
  * 
  * @param sfd socket file descriptor passed to method
- * @return Server::CustomerModel_shrd_ptr 
+ * @return Server::CustomerModel_ptr 
  */
-Server::CustomerModel_shrd_ptr 
+Server::CustomerModel_ptr 
 Server::Handler::get_customer_by_sfd (int sfd) 
 {
     try
@@ -618,6 +614,25 @@ void Server::Handler::add_new_recent_customer (int sfd, const string& utoken)
     this->recent_customers[utoken] =   this->recent_customers_sfd[sfd];
     return;   
 }
+
+/**
+ * @brief Remove user from recent customers by unique descriptors
+ * 
+ * @param sfd 
+ * @param utoken 
+ */
+void Server::Handler::delete_recent_customer  (int sfd, const string& utoken)
+{
+    /* 
+    Need to delete from th all 2 containers bc 
+    is stored in shared_ptrs
+     */
+    recent_customers.erase (utoken);
+    recent_customers_sfd.erase (sfd);
+    Debug().info ("Succcessfully deleted recently customer");
+    return;
+}
+
 
 /**
  * @brief returns whole customer chache map binded via 

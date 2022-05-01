@@ -74,7 +74,7 @@ namespace Server
 
 
     /*Shared ptr type for Customer Model*/
-    typedef shared_ptr<Customer::CustomerModel> CustomerModel_shrd_ptr;    
+    typedef shared_ptr<Customer::CustomerModel> CustomerModel_ptr;    
 
     /*socket file descriptor and thhread vector container (MAP)*/
     typedef std::unordered_map <int, std::vector<std::thread*>> thCT ;   
@@ -83,10 +83,10 @@ namespace Server
     typedef std::map <std::string, int (Handler::*) (int, const DataTransfer::MessageModel&), ::strless> CommMapType;
     
     /*Recent Customer cache type stores in trivial way*/
-    typedef std::map <std::string, CustomerModel_shrd_ptr, ::strless> \
+    typedef std::map <std::string, CustomerModel_ptr, ::strless> \
                                             CustomerCacheMapType;
 
-    typedef std::map <int, CustomerModel_shrd_ptr> \
+    typedef std::map <int, CustomerModel_ptr> \
                             CustomerCacheMapSfdType;
 
 
@@ -129,7 +129,7 @@ class Handler
             int on_sign_up_command_recieved         (int sfd, const DataTransfer::MessageModel&);
             int on_create_chatroom_command_recieved (int sfd, const DataTransfer::MessageModel&);
             int on_join_chatroom_command_recieved   (int sfd, const DataTransfer::MessageModel&);
-            
+
             int send_connect_verify                 (int sfd, const DataTransfer::MessageModel&);
             int send_sign_up_verify                 (int sfd, const DataTransfer::MessageModel&);
             int send_login_verify                   (int sfd, const DataTransfer::MessageModel&);
@@ -149,12 +149,12 @@ class Handler
             int find_in_customer_cache(const std::string& unique_token);
             int find_in_customer_cache(int sfd);
                                     
-            CustomerModel_shrd_ptr get_customer_by_unique_token (const string&);
-            CustomerModel_shrd_ptr get_customer_by_sfd (int);
+            CustomerModel_ptr get_customer_by_unique_token (const string&);
+            CustomerModel_ptr get_customer_by_sfd (int);
             CustomerCacheMapSfdType get_sfd_map_customers (void);
 
-            void add_new_recent_customer (int, const string&);
-        
+            void add_new_recent_customer (int sfd, const string& utoken);
+            void delete_recent_customer  (int sfd, const string& utoken);
 
         private:
             sem_t writer_sem;

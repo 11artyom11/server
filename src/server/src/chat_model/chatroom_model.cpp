@@ -55,7 +55,7 @@ int ChatRoom::add_new_secondary_customer(const CustomerModel& secondary_customer
  */
 int ChatRoom::remove_secondary_customer (const string& unique_token)
 {
-    auto token_matcher = [&unique_token] (const CustomerModel_shrd_ptr& customer) -> bool {
+    auto token_matcher = [&unique_token] (const CustomerModel_ptr& customer) -> bool {
         if (customer.get()->get_unique_token().compare(unique_token) == 0)
         {
             return true;
@@ -84,7 +84,7 @@ int ChatRoom::remove_secondary_customer (const string& unique_token)
  */
 CustomerModel * const ChatRoom::get_customer_by_utoken (const string& unique_token) const noexcept
 {
-    auto token_matcher = [&unique_token] (const CustomerModel_shrd_ptr& customer) {
+    auto token_matcher = [&unique_token] (const CustomerModel_ptr& customer) {
          if (customer.get()->get_unique_token().compare(unique_token) == 0)
         {
             return true;

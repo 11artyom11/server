@@ -34,9 +34,10 @@ namespace Server
     template <typename T>
     using shared_ptr = std::shared_ptr<T>;
 
+   
     /*Shared ptr type for Customer Model*/
     typedef shared_ptr<Customer::CustomerModel> \
-                            CustomerModel_shrd_ptr;    
+                            CustomerModel_ptr;    
 
     /* Shared ptr type for ChatRoom instances */
     typedef shared_ptr<RoomSpace::ChatRoom>\
