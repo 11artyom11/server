@@ -43,9 +43,13 @@ namespace Server
     typedef shared_ptr<RoomSpace::ChatRoom>\
                              ChatRoom_shrd_ptr;
     
+    /* This struct holds chatrooms sorted and binded by their owner unique_token */
     typedef unordered_map <std::string, vector<ChatRoom_shrd_ptr>>\
                                 ChatRoom_Map_Type;
 
+    /* This struct holds chatrooms binded to their own chat ids in one map */
+    typedef unordered_map <std::string, ChatRoom_shrd_ptr> \
+                                ChatRoom_Map_Glob_Type;
     class ChatRoomManager
     {
         public:
@@ -62,6 +66,7 @@ namespace Server
                                                      std::string room_id);
         private:
             ChatRoom_Map_Type chatroom_lst;
+            ChatRoom_Map_Glob_Type chatroom_glob_lst;
     };
 }
 

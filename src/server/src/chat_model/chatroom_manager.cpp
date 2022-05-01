@@ -46,11 +46,14 @@ vector <Server::ChatRoom_shrd_ptr>&
 Server::ChatRoomManager::push_new_room (Customer::CustomerModel* master, 
                                             RoomSpace::ChatRoom* new_room)
 {
-    this->operator[] (master).emplace_back (std::make_shared<RoomSpace::ChatRoom>(*new_room));
+    auto new_room_smrt_ptr = std::make_shared<RoomSpace::ChatRoom>(*new_room);
+    this->operator[] (master).push_back(new_room_smrt_ptr);
+    chatroom_glob_lst[new_room->get_room_id()] = new_room_smrt_ptr;
+
     Debug().info ("Customer token => ", master->get_unique_token());
     Debug().info ("Added room id => ", new_room->get_room_id());
     Debug().info ("Updated rooms count : ",this->operator[] (master).size());
-
+    Debug().info ("Updated global rooms count : ", chatroom_glob_lst.size());
     return chatroom_lst[master->get_unique_token()];
 }
 
@@ -89,8 +92,15 @@ Server::ChatRoomManager::remove_room_from (Customer::CustomerModel* master,
 Server::ChatRoom_Map_Type&
 Server::ChatRoomManager::remove_all_rooms (Customer::CustomerModel* master)
 {
+    const vector<ChatRoom_shrd_ptr>& room_lst = this->operator[](master->get_unique_token());
+    for (const auto room_it : room_lst)
+    {
+        chatroom_glob_lst.erase(room_it->get_room_id());
+    }
+
     this->chatroom_lst.erase(master->get_unique_token());
     Debug().info ("deleted all rooms related to customer => ", master->get_unique_token());
+    Debug().info ("Global room count after delete => ", chatroom_glob_lst.size());
     return chatroom_lst;
 }
 
