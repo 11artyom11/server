@@ -318,16 +318,12 @@ int Server::Handler::on_join_chatroom_command_recieved (int sfd, const DataTrans
     std::string secondary_token = message.get<std::string> ("utoken");
 
     auto chatroom = chatroom_mngr_shrd_ptr->get_room_by_id (master_token, room_id);
-    // Customer::CustomerModel secondary_customer (sfd, secondary_token);
 
     chatroom->add_new_secondary_customer (*recent_customers_sfd[sfd].get());
     Debug().info ("ChatRoom ID => ",chatroom->get_room_id());
-    
     /* 
     {"command":"com_join_chatroom","master_token":"sQCeNg9HfY","room_id":"IPE78iqF54","utoken":"WInm1X8Ghd"}    
-     */
-    
-
+    */
     return 0;
 }
 
@@ -340,18 +336,18 @@ int Server::Handler::on_join_chatroom_command_recieved (int sfd, const DataTrans
 int Server::Handler::send_connect_verify(int sfd, const DataTransfer::MessageModel& message)
 {
 /* tmp uid*/
-    string unique_token = message.get<string>("unique_token");\
+ string unique_token = message.get<string>("unique_token");
     string aes_token    = message.get<string>("aes_token");
 
-    unsigned char* ok_message = (unsigned char*)(unique_token.c_str());
     unsigned char* key_c = (unsigned char*)(aes_token.c_str());
     unsigned char cipher[1024];
-    int len = aes_shrd_ptr->encrypt(ok_message, unique_token.length(), key_c, cipher);
-    unique_token  = string_to_hex((char*)(cipher));
-    DataTransfer::ConnectVerify cV(unique_token, len);
-    std::string to_send = cV.to_str();
-    send (sfd,  (char*)to_send.c_str(), to_send.length(), NULL);
+    DataTransfer::ConnectVerify cV(unique_token);
+    unsigned char* message_uc = (unsigned char*)(cV.to_str().c_str());
 
+    int len = aes_shrd_ptr->encrypt(message_uc, cV.to_str().length(), key_c, cipher);
+    Debug().warning ("In send_connect_verify ====> cipher len : ", len);
+    send (sfd,  (char*)cipher, strlen((char*)(cipher)), NULL);
+    
    return 0;
 }
 

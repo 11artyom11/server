@@ -40,10 +40,6 @@ message_model.h
 string
 -
 
-/home/aram/workspace/clientserver/lib/src/util/data_transfer/message_model/message_model.cpp
-../../../../include/util/data_transfer/message_model/message_model.h
-/home/aram/workspace/clientserver/lib/include/util/data_transfer/message_model/message_model.h
-
 /home/aram/workspace/clientserver/lib/src/util/data_transfer/message_model/message_templates.cpp
 ../../../../include/util/data_transfer/message_model/message_templates.h
 /home/aram/workspace/clientserver/lib/include/util/data_transfer/message_model/message_templates.h

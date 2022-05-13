@@ -113,20 +113,8 @@ int Handler::send_sign_up_command(int sfd,
 int Handler::on_connect_verify_recieved(int sfd,
                                             const DataTransfer::MessageModel& message)
 {   
-    Debug().info ("in on_connect_verify_recieved ");
-    Debug().info ("Message :",message.get<string>("unique_token"));
-    string utoken = hex_to_string(message.get<string>("unique_token"));
-    unsigned char* token_c = (unsigned char*)(utoken.c_str());
-    unsigned char* key_ch = (unsigned char*)(cP.AES_token.c_str());
-    Debug().info ("KEY : ", key_ch);
-    unsigned char token_d[2048];
-    int len = message.get<int> ("token_len");
-    Debug().info ("LEN : ", len);
-    aes_shrd_ptr->decrypt(token_c, len, key_ch, token_d);
-    token_d[cP.unique_token.length()] = '\0';
-    Debug().info ("INitial len : ", cP.unique_token.length());
-    Debug().info ("Final message got: ", token_d);
-    if (!cP.unique_token.compare((char*)token_d))
+    std::string token_fetched = message.get<std::string> ("unique_token");
+    if (!cP.unique_token.compare(token_fetched))
     {
         Debug().info ("CONNECTION VERIFIED");
         this->current_state = CONNECT_STATE::conn_verify;

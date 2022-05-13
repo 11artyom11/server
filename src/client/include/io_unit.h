@@ -96,27 +96,51 @@ void iounit::IOModel::read_q(int sfd, mesType message)
     /*Lock mutex to do atomic read to queue and check in 
         empty subject read queue*/
     read_mutex.lock();
-
-
-
-
-    DataTransfer::MessageModel mesModel(message);
-    /*Must be check of retrieved message (..later) FIXXX*/
-    /*is_message_valid (message) knd of this*/
-    std::string response_s = mesModel.get<decltype (response_s)>("command");
+    std::string message_str {message}; 
     
-    Debug().info (response_s , " Retrieved response");
-    auto mem_function = (*m_handler.get()).get_command(response_s);
-    if (mem_function)
+    if (m_handler->get_net_state() != CONNECT_STATE::conn_request)
     {
-        int res = ((*m_handler.get()).*mem_function)(sfd, mesModel);
+    /* 
+        Which means the network state is !!NOT!! at it's only unsafe
+        phase e.g. no AES_Decrpytion needed
+        connect_accept command recieved from server at this point
+     */
+        Debug().warning("GOT SAFE CASE");
+        auto aes_shrd_ptr = m_handler->get_aes_ptr();
+        int cipher_len = (int)(strlen(message)/16)*16;
+        
+        unsigned char* key_ch = (unsigned char*)(m_handler->get_client_prototype_ptr_c()->AES_token.c_str());
+
+        unsigned char dec[1024];
+        int dec_len = aes_shrd_ptr->decrypt((unsigned char*)message, cipher_len, key_ch, dec);
+        dec[dec_len] = '\0';
+        message_str = (char*)dec;
+        Debug().info ("Final Message : ", message_str);
     }
     else
     {
-        Debug().fatal("Handler function does not exist!!!");
+        Debug().warning("GOT UNSAFE CASE");
+        /* ... */
     }
+        DataTransfer::MessageModel mesModel(message_str);
+        /*Must be check of retrieved message (..later) FIXXX*/
+        /*is_message_valid (message) knd of this*/
+        std::string response_s = mesModel.get<decltype (response_s)>("command");
+        
+        Debug().info (response_s , " Retrieved response");
+        auto mem_function = (*m_handler.get()).get_command(response_s);
+        if (mem_function)
+        {
+            int res = ((*m_handler.get()).*mem_function)(sfd, mesModel);
+        }
+        else
+        {
+            Debug().fatal("Handler function does not exist!!!");
+        }
 
-    read_mutex.unlock();
+        read_mutex.unlock();
+
+    
 }
 
 #endif
