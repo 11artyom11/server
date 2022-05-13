@@ -49,6 +49,7 @@ namespace Customer
             int get_sfd (void) const noexcept;
             std::string get_unique_token (void) const noexcept;
             void set_aes_token (const std::string& token);
+            std::string get_aes_token (void) const noexcept;
             Security::CustomerCryptoUnit* get_crypto_unit(void);
             
             CONNECT_STATE current_state = CONNECT_STATE::conn_request;

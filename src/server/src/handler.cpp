@@ -236,30 +236,20 @@ int Server::Handler::send_login_accept(int sfd, const DataTransfer::MessageModel
  */
 int Server::Handler::on_connect_command_recieved(int sfd, const DataTransfer::MessageModel& message)
 {
-  
-     return 0;
-}
-
-int Server::Handler::on_connect_command_recieved (int sfd, char* message)
-{
-    /*
+  /*
      If this message was recieved it means new customer model 
      must be created 
      */
     CustomerModel_ptr new_customer = std::make_shared<Customer::CustomerModel>(sfd, "");
 
-    Debug().warning ("here");
-    /*check message content*/ /*FIX ME*/
-    rsa_shrd_ptr->init_private_key ((unsigned char*)keypair->second.c_key);
-    unsigned char* decrypted = new unsigned char[1024];
-
-    //128
-    rsa_shrd_ptr->private_decrypt ((unsigned char*)(message), 128, decrypted);
-    Debug().warning ("SIZE OF DEC :  ", decrypted);
-    DataTransfer::MessageModel messageModel{(char*)decrypted};
     recent_customers_sfd[sfd]->current_state = CONNECT_STATE::conn_verify;
 
-    return send_connect_verify(sfd, messageModel);
+    return send_connect_verify(sfd, message);
+}
+
+int Server::Handler::on_connect_command_recieved (int sfd, char* message)
+{
+    
 }
 
 
@@ -597,6 +587,29 @@ Server::Handler::get_customer_by_sfd (int sfd)
     
 }   
         
+/**
+ * @brief Return shared pointer to rsa instance of server
+ * 
+ * @return Server::RSA_Unit_shrd_ptr 
+ */
+Server::RSA_Unit_shrd_ptr
+Server::Handler::get_rsa_ptr (void) const
+{
+    return this->rsa_shrd_ptr;
+}
+
+/**
+ * @brief Return shared pointer to aes instance of server
+ * 
+ * @return Server::AES_Unit_shrd_ptr 
+ */
+Server::AES_Unit_shrd_ptr
+Server::Handler::get_aes_ptr (void) const
+{
+    return this->aes_shrd_ptr;
+}
+
+
 /**
  * @brief API to add new cached customer into system (RAM NoSQL)
  * 

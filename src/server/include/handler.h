@@ -153,8 +153,13 @@ class Handler
             CustomerModel_ptr get_customer_by_sfd (int);
             CustomerCacheMapSfdType get_sfd_map_customers (void);
 
+            RSA_Unit_shrd_ptr get_rsa_ptr (void) const;
+            AES_Unit_shrd_ptr get_aes_ptr (void) const;
+
             void add_new_recent_customer (int sfd, const string& utoken);
             void delete_recent_customer  (int sfd, const string& utoken);
+
+
 
         private:
             sem_t writer_sem;

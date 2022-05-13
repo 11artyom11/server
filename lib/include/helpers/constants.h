@@ -37,6 +37,7 @@ constexpr auto EXIT_SYM     = '#';
 
 constexpr auto MAX_WRITE_THREAD_COUNT   = 10;
 constexpr auto MAX_READ_THREAD_COUNT    = 10;
+constexpr auto MAX_JSON_MESSAGE_SIZE    = 1024;
 
 /*Connect Commands*/
 /*

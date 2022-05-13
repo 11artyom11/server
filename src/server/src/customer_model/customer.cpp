@@ -34,6 +34,17 @@ void CustomerModel::set_aes_token (const std::string& token)
 }
 
 /**
+ * @brief Returns aes token as std::string !!! may be unsafe 
+ * Need to be reviewed though is on server side
+ * 
+ * @return std::string 
+ */
+std::string CustomerModel::get_aes_token (void) const noexcept
+{
+    return this->aes_token;
+}
+
+/**
  * @brief Return crpytounit
  * 
  * @return Security::CustomerCryptoUnit* 

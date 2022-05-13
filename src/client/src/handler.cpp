@@ -71,13 +71,12 @@ int Handler::send_connect_command(int sfd,
     Debug().info ("In send_connect_command");
     Debug().info("Message recieved  : ", message.to_str());
     
-    RSA_Unit rsaU;
 
     auto key = "0123456789ABCDEF"; //aes_shrd_ptr->generate_key(16);
     auto utoken = message.get<string>("unique_token");
     string rsa_key =message.get<string>("pkey");
     Debug().warning ("KEY FETCHED : \n", rsa_key );
-    rsaU.init_public_key ((unsigned char*)(rsa_key.c_str()));
+    rsa_shrd_ptr->init_public_key ((unsigned char*)(rsa_key.c_str()));
 
     cP.AES_token = key;
     cP.unique_token = utoken;
@@ -87,14 +86,15 @@ int Handler::send_connect_command(int sfd,
     string raw_str = cC.to_str();//"{\"command\":\"com_connect\", \"ip\":\"127.0.0.1\", \"aes_token\":\"1234556789\", \"unique_token\":\""+cP.unique_token+"\"}";
     Debug().info ("RAW_STR : ", raw_str);
     int datalen = raw_str.length();
-    unsigned char* encrypted = new unsigned char[1024];
-    int enclen = rsaU.public_encrypt ((unsigned char*)(raw_str.c_str()), datalen, encrypted);
+    unsigned char* encrypted = new unsigned char[MAX_JSON_MESSAGE_SIZE];
+    int enclen = rsa_shrd_ptr->public_encrypt ((unsigned char*)(raw_str.c_str()), datalen, encrypted);
 
     Debug().info (enclen);
     
     send (sfd, (char*)encrypted, enclen, NULL);
     this->current_state = CONNECT_STATE::conn_commnd;
     Debug().info ("Ended send_connect_command");
+    delete[] encrypted;
     return 0;
 }
 

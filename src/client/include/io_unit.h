@@ -111,7 +111,7 @@ void iounit::IOModel::read_q(int sfd, mesType message)
         
         unsigned char* key_ch = (unsigned char*)(m_handler->get_client_prototype_ptr_c()->AES_token.c_str());
 
-        unsigned char dec[1024];
+        unsigned char dec[MAX_JSON_MESSAGE_SIZE];
         int dec_len = aes_shrd_ptr->decrypt((unsigned char*)message, cipher_len, key_ch, dec);
         dec[dec_len] = '\0';
         message_str = (char*)dec;

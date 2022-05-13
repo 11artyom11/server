@@ -190,36 +190,78 @@ int Server::ServerModel::distribute_incoming_connections(int socket,
         connect_request -> creates new customer
         connect_command -> works the condition below this comment
         other handler functions .... everything works fine
-    
-    
      */
-    if (m_handler->find_in_customer_cache(socket) > 0 && 
-        m_handler->get_customer_by_sfd(socket)->current_state != CONNECT_STATE::conn_verify)
+
+    
+    Debug().info ("There");
+    /* Case where RSA Decryption needed */
+    if (m_handler->find_in_customer_cache(socket) > 0 )
     {
-        return m_handler->on_connect_command_recieved(socket , response);
-    } 
+        auto current_customer = m_handler->get_customer_by_sfd(socket);
+
+        Debug().warning (current_customer->get_unique_token());
+        if (current_customer->current_state != CONNECT_STATE::conn_verify)
+        {
+            Debug().warning("RSA CASE");
+            auto rsa_shrd_ptr = m_handler->get_rsa_ptr();
+            /*check message content*/ /*FIX ME*/
+            rsa_shrd_ptr->init_private_key ((unsigned char*)keypair->second.c_key);
+            unsigned char* decrypted = new unsigned char[MAX_JSON_MESSAGE_SIZE];
+
+            //128
+            rsa_shrd_ptr->private_decrypt ((unsigned char*)(response), 128, decrypted);
+
+            response_s = (char*)decrypted;
+        }
+            
+            /* SAFE CASE e.g. with encryption */
+    /* Case where AES Decryption needed */
+    /* This case works only if connection is verified e.g. AES keys has both server and client side */
+        else if (current_customer->current_state == CONNECT_STATE::conn_verify)
+        {
+
+            Debug().warning("AES CASE");
+
+            auto aes_shrd_ptr = m_handler->get_aes_ptr();
+            int cipher_len = ((int)(strlen(response)/16))*16;
+            Debug().fatal ("CIPHER LEN : ", cipher_len);
+            std::string aes_key = current_customer->get_aes_token();
+            unsigned char dec[MAX_JSON_MESSAGE_SIZE];
+            int dec_len = aes_shrd_ptr->decrypt((unsigned char*)response, cipher_len, (unsigned char*) aes_key.c_str(), dec);
+            
+            /* dec len must be max MAX_JSON_MESSAGE_SIZE (see constants.h) */
+            dec[dec_len] = '\0';
+
+            response_s = (char*)dec;
+        }
+    }
+    /* Case where No Decryption is needed */
     else 
     {
-        string mes{response};
+        Debug().warning("UNSAFE CASE");
 
-        MessageModel message (mes);//(nlohmann::json::parse(R"({"command" : 1})"));
-        if (!DataTransfer::is_message_valid (message))
-        {
-            Debug().fatal("Bad Message");
-            return 1;
-        }
-
-        response_s = message.get<decltype(response_s)>("command");
-
-        auto mem_function = (*m_handler.get()).get_command(response_s);
-        Debug().warning((mem_function ? "IS VALID FUNCTION" : "FUNCTION IS INVALID"));
-        if (!mem_function)
-        {
-            return UNKNOWN_COMMAND_ERROR;
-        }
-        int res = ((*m_handler.get()).*mem_function)(socket, message);
-        return res;
+        response_s = response;
     }
+    /* UNSAFE CASE e.g. without encryption */
+    string mes{response_s};
+
+    MessageModel message (mes);//(nlohmann::json::parse(R"({"command" : 1})"));
+    if (!DataTransfer::is_message_valid (message))
+    {
+        Debug().fatal("Bad Message");
+        return 1;
+    }
+
+    response_s = message.get<decltype(response_s)>("command");
+
+    auto mem_function = (*m_handler.get()).get_command(response_s);
+    Debug().warning((mem_function ? "IS VALID FUNCTION" : "FUNCTION IS INVALID"));
+    if (!mem_function)
+    {
+        return UNKNOWN_COMMAND_ERROR;
+    }
+    int res = ((*m_handler.get()).*mem_function)(socket, message);
+    return res;
 }
 
 /**
@@ -239,7 +281,7 @@ void Server::ServerModel::handle_connection(int connection)
     } 
 
     // Read from the connection
-    char buffer[1024];
+    char buffer[MAX_JSON_MESSAGE_SIZE];
     int bytes, buflen; // for bytes written and size of buffer
 
     do 
