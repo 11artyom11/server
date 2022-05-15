@@ -112,6 +112,11 @@ class Handler
             void* writer (int sfd , uint32_t tid);
             void* reader (int sfd , uint32_t tid);
             
+            /* Handlers for encrypted incoming messages */
+            /* Before distributing among handler functions */
+            std::string rsa_case (char* response);
+            std::string aes_case (char* response, const AES_Unit_shrd_ptr&);
+
 
             /*HANDLER FUNCTIONS*/
             /* these functions are required to process all retrieved sanctioned data */

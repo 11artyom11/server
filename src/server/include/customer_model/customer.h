@@ -23,6 +23,7 @@
 #include <string>
 #include <algorithm>
 #include <memory>
+#include <sys/socket.h>
 
 
 
@@ -66,8 +67,7 @@ namespace Customer
             Security::CustomerCryptoUnit* get_crypto_unit(void);
             
 
-            void send_message (const DataTransfer::MessageModel&, 
-                                 int sfd);
+            void send_message (const DataTransfer::MessageModel&);
 
         public:
             CONNECT_STATE current_state = CONNECT_STATE::conn_request;

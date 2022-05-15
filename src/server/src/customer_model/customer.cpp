@@ -58,11 +58,22 @@ Security::CustomerCryptoUnit* CustomerModel::get_crypto_unit(void)
 }
 
 
-void CustomerModel::send_message (const DataTransfer::MessageModel&,
-                                    int sfd)
+void CustomerModel::send_message (const DataTransfer::MessageModel& message)
 {
-    Debug().info ("Called void CustomerModel::send_message (const DataTransfer::MessageModel&,");
-    Debug().info ("MESSAGE WILL BE SENT TO : ", unique_token);
+    std::string aes_key = get_aes_token();
+    unsigned char key_c[aes_key.length()];  // = (unsigned char*)(get_aes_token().c_str());
+    unsigned char cipher[MAX_JSON_MESSAGE_SIZE];
+    unsigned char* message_uc  = (unsigned char*)(message.to_str().c_str());
+    std::copy (aes_key.begin(), aes_key.end(), key_c);
+    key_c[aes_key.length()] = 0;
+    Debug().info ("Key : ", key_c);
+    Debug().info ("Normal Key : ", get_aes_token());
+    Debug().info ("Message : ", message_uc);
+
+    int len = crypto_unit->get_aes_ptr()->encrypt(message_uc, message.to_str().length(), key_c, cipher);
+    Debug().warning ("In send_connect_verify ====> cipher len : ", len);
+    send (sfd,  (char*)cipher, strlen((char*)(cipher)), NULL);
+    return;
 }
 
 CustomerModel::~CustomerModel()

@@ -113,6 +113,44 @@ void* Server::Handler::reader(int sfd , uint32_t tid)
     pthread_exit(NULL);
 }
 
+
+std::string Server::Handler::rsa_case (char* response)
+{
+            Debug().warning("RSA CASE");
+            auto rsa_shrd_ptr = get_rsa_ptr();
+            rsa_shrd_ptr->init_private_key ((unsigned char*)keypair->second.c_key);
+            unsigned char* decrypted = new unsigned char[MAX_JSON_MESSAGE_SIZE];
+
+            rsa_shrd_ptr->private_decrypt ((unsigned char*)(response), 128, decrypted);
+
+            return std::string{(char*)decrypted};
+}
+
+std::string Server::Handler::aes_case (char* response, const AES_Unit_shrd_ptr& aes)
+{
+    try
+    {
+        Debug().warning("AES CASE");
+
+        int cipher_len = ((int)(strlen(response)/16))*16;
+        Debug().fatal ("CIPHER LEN : ", cipher_len);
+        std::string aes_key = aes->get_key();
+        unsigned char dec[MAX_JSON_MESSAGE_SIZE];
+        int dec_len = aes->decrypt((unsigned char*)response, cipher_len, (unsigned char*) aes_key.c_str(), dec);
+        
+        /* dec len must be max MAX_JSON_MESSAGE_SIZE (see constants.h) */
+        dec[dec_len] = '\0';
+
+        return std::string{(char*)dec};
+    }
+    catch(const std::exception& e)
+    {
+        std::cerr << e.what() << '\n';
+        return "";
+    }
+            
+}
+
 /**
  * @brief String randomizer
  * 
@@ -327,15 +365,13 @@ int Server::Handler::send_connect_verify(int sfd, const DataTransfer::MessageMod
 /* tmp uid*/
     auto customer = recent_customers_sfd[sfd];
     
+   
     string unique_token = message.get<string>("unique_token");
     string aes_token    = message.get<string>("aes_token");
 
-
-    unsigned char* key_c = (unsigned char*)(aes_token.c_str());
-    unsigned char cipher[1024];
     DataTransfer::ConnectVerify cV(unique_token);
-    customer->send_message (cV, sfd);
-    
+    customer->set_aes_token (aes_token);
+    customer->send_message (cV); 
    return 0;
 }
 

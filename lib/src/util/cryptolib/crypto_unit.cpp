@@ -328,19 +328,19 @@ int AES_Unit::encrypt (unsigned char* text, int text_len, const  unsigned char* 
     if (!ctx)
     {
         Debug().fatal("EVP_CIPHER_CTX_new(); failed");
-        exit(-1);
+        throw;
     }
 
     if (!EVP_EncryptInit_ex(ctx, EVP_aes_128_ecb    (), NULL, key, NULL))
     {
         Debug().fatal("EVP_EncryptInit_ex() failed");
-        exit(-1);
+        throw;
     }
 
     if (!EVP_EncryptUpdate(ctx, cipher, &len, text, text_len))
     {
         Debug().fatal("EVP_EncryptUpdate() failed");
-        exit(-1);
+        throw;
     }
 
     cipher_len += len;
@@ -348,7 +348,7 @@ int AES_Unit::encrypt (unsigned char* text, int text_len, const  unsigned char* 
     if (!EVP_EncryptFinal_ex(ctx, cipher + len, &len))
     {
         Debug().fatal("Final_ex failed");       
-        exit(-1);
+        throw;
     }
    
    cipher_len += len;
@@ -378,19 +378,19 @@ int AES_Unit::decrypt(unsigned char* cipher, int cipher_len,  unsigned char* key
     if (!ctx)
     {
         Debug().fatal("ctx errror");
-        exit(-1);
+        throw;
     }
 
     if (!EVP_DecryptInit_ex(ctx, EVP_aes_128_ecb(), NULL, key, NULL))
     {
         Debug().fatal("init error");
-        exit(-1);
+        throw;
     }
 
     if (!EVP_DecryptUpdate(ctx, text, &len, cipher, cipher_len))
     {
         Debug().fatal("update error");
-        exit(-1);
+        throw;
     }
 
     text_len += len;
@@ -398,7 +398,7 @@ int AES_Unit::decrypt(unsigned char* cipher, int cipher_len,  unsigned char* key
     if (!EVP_DecryptFinal_ex(ctx, text + len, &len))
     {
         Debug().fatal("final error");
-        exit(-1);
+        throw;
     }
 
     text_len += len;

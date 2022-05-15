@@ -194,23 +194,16 @@ int Server::ServerModel::distribute_incoming_connections(int socket,
 
     
     Debug().info ("There");
-    /* Case where RSA Decryption needed */
     if (m_handler->find_in_customer_cache(socket) > 0 )
     {
         auto current_customer = m_handler->get_customer_by_sfd(socket);
 
         Debug().warning (current_customer->get_unique_token());
+
+        /* Case where RSA Decryption needed */
         if (current_customer->current_state != CONNECT_STATE::conn_verify)
         {
-            Debug().warning("RSA CASE");
-            auto rsa_shrd_ptr = m_handler->get_rsa_ptr();
-            /*check message content*/ /*FIX ME*/
-            rsa_shrd_ptr->init_private_key ((unsigned char*)keypair->second.c_key);
-            unsigned char* decrypted = new unsigned char[MAX_JSON_MESSAGE_SIZE];
-
-            rsa_shrd_ptr->private_decrypt ((unsigned char*)(response), 128, decrypted);
-
-            response_s = (char*)decrypted;
+            response_s = m_handler->rsa_case (response);
         }
             
             /* SAFE CASE e.g. with encryption */
@@ -218,20 +211,9 @@ int Server::ServerModel::distribute_incoming_connections(int socket,
     /* This case works only if connection is verified e.g. AES keys has both server and client side */
         else if (current_customer->current_state == CONNECT_STATE::conn_verify)
         {
-
-            Debug().warning("AES CASE");
-
-            auto aes_shrd_ptr = current_customer->get_crypto_unit()->get_aes_ptr();
-            int cipher_len = ((int)(strlen(response)/16))*16;
-            Debug().fatal ("CIPHER LEN : ", cipher_len);
-            std::string aes_key = current_customer->get_aes_token();
-            unsigned char dec[MAX_JSON_MESSAGE_SIZE];
-            int dec_len = aes_shrd_ptr->decrypt((unsigned char*)response, cipher_len, (unsigned char*) aes_key.c_str(), dec);
+            auto aes_instnc = current_customer->get_crypto_unit()->get_aes_ptr();
             
-            /* dec len must be max MAX_JSON_MESSAGE_SIZE (see constants.h) */
-            dec[dec_len] = '\0';
-
-            response_s = (char*)dec;
+            response_s = m_handler->aes_case (response, aes_instnc);
         }
     }
     /* Case where No Decryption is needed */
