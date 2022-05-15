@@ -26,7 +26,11 @@ bool Security::is_dir_exist (char const *dirpath)
         }
 }
 
-CustomerCryptoUnit::CustomerCryptoUnit(int sfd)
+CustomerCryptoUnit::CustomerCryptoUnit(aes_shrd_ptr aes, 
+                                            rsa_shrd_ptr rsa,
+                                                int sfd):
+                        aes{aes},
+                        rsa{rsa}
 {
 
     Debug().info("Constructed CustomerCryptoUnit object : ", sfd);   
@@ -64,6 +68,34 @@ int CustomerCryptoUnit::set_client_key (const RSA_UNAR_KEY& __other)
     }
     
 }
+
+std::string CustomerCryptoUnit::get_aes_token (void) const noexcept
+{
+    return this->aes->get_key();
+}
+
+void CustomerCryptoUnit::set_aes_token (const std::string& key) noexcept
+{
+    aes->set_key (key);
+}
+
+/**
+ * @brief 
+ * 
+ * @return aes_shrd_ptr& 
+ */
+aes_shrd_ptr 
+CustomerCryptoUnit::get_aes_ptr (void) const noexcept
+{
+    return aes;
+}
+
+rsa_shrd_ptr
+CustomerCryptoUnit::get_rsa_ptr (void) const noexcept
+{
+    return rsa;
+}
+
 
 
 /**

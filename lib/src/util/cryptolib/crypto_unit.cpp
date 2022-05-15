@@ -35,6 +35,26 @@ char *base64decode (const void *b64_decode_this, int decode_this_many_bytes){
 }
 
 /**
+ * @brief Returns the nearest multiple of the
+ * given integer
+ * 
+ * @param n given integer
+ * @param multiple 
+ * @return int nearest multiple of $multiple
+ */
+int round(int n, int multiple)
+{
+    // Smaller multiple
+    int a = (n / multiple) * multiple;
+     
+    // Larger multiple
+    int b = a + multiple;
+ 
+    // Return of closest of two
+    return (n - a > b - n)? b : a;
+}
+
+/**
  * @brief Helper function to convert raw string to hex string
  * 
  * @param in 
@@ -385,4 +405,16 @@ int AES_Unit::decrypt(unsigned char* cipher, int cipher_len,  unsigned char* key
 
     EVP_CIPHER_CTX_free(ctx);
     return text_len;
+}
+
+
+void AES_Unit::set_key (const std::string& key)
+{
+    this->key = key;
+    return;
+}
+
+std::string AES_Unit::get_key(void) const noexcept
+{
+    return this->key;
 }

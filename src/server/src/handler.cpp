@@ -12,7 +12,6 @@ using namespace std;
 Server::Handler::Handler(const Security::RSA_Keypair_shrd_ptr& kp, int RWBacklog) 
     
 {
-    aes_shrd_ptr = std::make_shared<AES_Unit>();
     rsa_shrd_ptr = std::make_shared<RSA_Unit>();
     chatroom_mngr_shrd_ptr = std::make_shared <Server::ChatRoomManager> ();
 
@@ -162,8 +161,9 @@ int Server::Handler::on_connect_request_recieved(int sfd, const DataTransfer::Me
     */
     Debug().info("Called Server::Handler::on_connect_request_recieved( ", sfd, ")");
     std::string new_unique_token = Server::random_str(10);
-
-    this->recent_customers_sfd[sfd] = std::make_shared <Customer::CustomerModel> (Customer::CustomerModel(sfd, new_unique_token));
+    auto aes_shrd_ptr = std::make_shared <AES_Unit>();
+    
+    this->recent_customers_sfd[sfd] = std::make_shared <Customer::CustomerModel> (Customer::CustomerModel(sfd, new_unique_token, aes_shrd_ptr, rsa_shrd_ptr));
     recent_customers_sfd[sfd]->current_state = CONNECT_STATE::conn_accept;
     send_connect_accept(sfd, message);
     return 0;
@@ -240,7 +240,6 @@ int Server::Handler::on_connect_command_recieved(int sfd, const DataTransfer::Me
      If this message was recieved it means new customer model 
      must be created 
      */
-    CustomerModel_ptr new_customer = std::make_shared<Customer::CustomerModel>(sfd, "");
 
     recent_customers_sfd[sfd]->current_state = CONNECT_STATE::conn_verify;
 
@@ -326,17 +325,16 @@ int Server::Handler::on_join_chatroom_command_recieved (int sfd, const DataTrans
 int Server::Handler::send_connect_verify(int sfd, const DataTransfer::MessageModel& message)
 {
 /* tmp uid*/
- string unique_token = message.get<string>("unique_token");
+    auto customer = recent_customers_sfd[sfd];
+    
+    string unique_token = message.get<string>("unique_token");
     string aes_token    = message.get<string>("aes_token");
+
 
     unsigned char* key_c = (unsigned char*)(aes_token.c_str());
     unsigned char cipher[1024];
     DataTransfer::ConnectVerify cV(unique_token);
-    unsigned char* message_uc = (unsigned char*)(cV.to_str().c_str());
-
-    int len = aes_shrd_ptr->encrypt(message_uc, cV.to_str().length(), key_c, cipher);
-    Debug().warning ("In send_connect_verify ====> cipher len : ", len);
-    send (sfd,  (char*)cipher, strlen((char*)(cipher)), NULL);
+    customer->send_message (cV, sfd);
     
    return 0;
 }
@@ -598,16 +596,6 @@ Server::Handler::get_rsa_ptr (void) const
     return this->rsa_shrd_ptr;
 }
 
-/**
- * @brief Return shared pointer to aes instance of server
- * 
- * @return Server::AES_Unit_shrd_ptr 
- */
-Server::AES_Unit_shrd_ptr
-Server::Handler::get_aes_ptr (void) const
-{
-    return this->aes_shrd_ptr;
-}
 
 
 /**
@@ -619,7 +607,9 @@ Server::Handler::get_aes_ptr (void) const
  */
 void Server::Handler::add_new_recent_customer (int sfd, const string& utoken)
 {
-    this->recent_customers_sfd[sfd] = std::make_shared <Customer::CustomerModel> (Customer::CustomerModel(sfd, utoken));
+    auto aes = std::make_shared<AES_Unit> ();
+
+    this->recent_customers_sfd[sfd] = std::make_shared <Customer::CustomerModel> (Customer::CustomerModel(sfd, utoken, aes, rsa_shrd_ptr));
     this->recent_customers[utoken] =   this->recent_customers_sfd[sfd];
     return;   
 }

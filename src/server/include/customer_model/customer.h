@@ -18,6 +18,7 @@
 #ifndef __CUSTOMER_H__
 #define __CUSTOMER_H__
 #include "customer_crypto_unit.h"
+#include "message_model.h"
 #include <random>
 #include <string>
 #include <algorithm>
@@ -41,22 +42,41 @@ namespace Customer
     typedef shared_ptr<Security::CustomerCryptoUnit> \
                  CustomerCryptoUnit_shrd_ptr;
 
+    typedef shared_ptr <AES_Unit> \
+                    aes_shrd_ptr;
+
+    typedef shared_ptr <RSA_Unit> \
+                    rsa_shrd_ptr;
+
+
     class CustomerModel
     {
         public:
-            CustomerModel (int sfd, const std::string& unique_token);
+            CustomerModel (int sfd, 
+                            const std::string& unique_token,
+                                const aes_shrd_ptr& aes,
+                                    const rsa_shrd_ptr& rsa);
             ~CustomerModel ();
             int get_sfd (void) const noexcept;
             std::string get_unique_token (void) const noexcept;
+            
             void set_aes_token (const std::string& token);
             std::string get_aes_token (void) const noexcept;
+            
             Security::CustomerCryptoUnit* get_crypto_unit(void);
             
+
+            void send_message (const DataTransfer::MessageModel&, 
+                                 int sfd);
+
+        public:
             CONNECT_STATE current_state = CONNECT_STATE::conn_request;
+
+
         private:
+        /* To access cipher unit of customer */
             CustomerCryptoUnit_shrd_ptr crypto_unit;
             std::string unique_token;
-            std::string aes_token;
             int sfd;
 
     };

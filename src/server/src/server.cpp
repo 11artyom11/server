@@ -208,7 +208,6 @@ int Server::ServerModel::distribute_incoming_connections(int socket,
             rsa_shrd_ptr->init_private_key ((unsigned char*)keypair->second.c_key);
             unsigned char* decrypted = new unsigned char[MAX_JSON_MESSAGE_SIZE];
 
-            //128
             rsa_shrd_ptr->private_decrypt ((unsigned char*)(response), 128, decrypted);
 
             response_s = (char*)decrypted;
@@ -222,7 +221,7 @@ int Server::ServerModel::distribute_incoming_connections(int socket,
 
             Debug().warning("AES CASE");
 
-            auto aes_shrd_ptr = m_handler->get_aes_ptr();
+            auto aes_shrd_ptr = current_customer->get_crypto_unit()->get_aes_ptr();
             int cipher_len = ((int)(strlen(response)/16))*16;
             Debug().fatal ("CIPHER LEN : ", cipher_len);
             std::string aes_key = current_customer->get_aes_token();

@@ -48,6 +48,13 @@ namespace Security
     template <typename T>
         using shared_ptr = std::shared_ptr<T>;
 
+    typedef shared_ptr <AES_Unit> \
+                    aes_shrd_ptr;
+
+    typedef shared_ptr <RSA_Unit> \
+                    rsa_shrd_ptr;
+
+
     typedef shared_ptr<Security::RSA_Keypair> \
         RSA_Keypair_shrd_ptr; 
     
@@ -71,14 +78,22 @@ namespace Security
         public:
             /*Model of this class allows only to generate or/and assign server side keypair*/
             /*And only assign client public key*/
-            CustomerCryptoUnit ( int sfd = 0);
+            CustomerCryptoUnit (aes_shrd_ptr aes, 
+                                    rsa_shrd_ptr rsa, 
+                                        int sfd = 0);
 
             ~CustomerCryptoUnit ();
             
             /*Set retrieved cliend-created public RSA key*/
             int set_client_key (const RSA_UNAR_KEY& __other);
 
+            std::string get_aes_token (void) const noexcept;
             
+            void        set_aes_token (const std::string&)  noexcept;
+
+            aes_shrd_ptr get_aes_ptr (void) const noexcept;
+            rsa_shrd_ptr get_rsa_ptr (void) const noexcept;
+
             /*Return RSA_UNAR_KEY of $this model*/
             RSA_UNAR_KEY& get_client_key (void);
             
@@ -93,6 +108,11 @@ namespace Security
         /*Unique token (int) yet is sfd of connection as 
             one connection can be hold by only and only one customer*/
             char* c_sfd;
+
+            aes_shrd_ptr aes;
+            rsa_shrd_ptr rsa;
+
+        
     };
     
 }

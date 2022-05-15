@@ -154,7 +154,6 @@ class Handler
             CustomerCacheMapSfdType get_sfd_map_customers (void);
 
             RSA_Unit_shrd_ptr get_rsa_ptr (void) const;
-            AES_Unit_shrd_ptr get_aes_ptr (void) const;
 
             void add_new_recent_customer (int sfd, const string& utoken);
             void delete_recent_customer  (int sfd, const string& utoken);
@@ -188,7 +187,7 @@ class Handler
             Security::RSA_Keypair_shrd_ptr keypair;
 
             RSA_Unit_shrd_ptr rsa_shrd_ptr;
-            AES_Unit_shrd_ptr aes_shrd_ptr;
+        
 
             ChatRoomManager_shrd_ptr chatroom_mngr_shrd_ptr;
 

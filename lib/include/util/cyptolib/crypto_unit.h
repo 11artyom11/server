@@ -23,6 +23,7 @@
 #include <cassert>
 #include <mutex>
 #include <memory>
+
 /*
 Enum which describes way of generating key pair
 */
@@ -43,6 +44,10 @@ char *base64decode (const void *b64_decode_this, int decode_this_many_bytes);
 
 template <typename T>
 using shared_ptr = std::shared_ptr<T>;
+
+// function to round the number
+int round(int n, int multiple);
+
 
 /*Used for RSA pairs */
 typedef shared_ptr<RSA> \
@@ -98,5 +103,11 @@ class AES_Unit : public BaseCipherUnit
         int encrypt (unsigned char* text, int text_len, const  unsigned char* key, unsigned char* cipher);
         int decrypt (unsigned char* cipher, int cipher_len,   unsigned char* key, unsigned char* text);
     
+        void set_key (const std::string& key);
+        std::string get_key (void) const noexcept;
+
+    private:
+        std::string key;
+
 };
 #endif // __CRYPTO_UNIT_H__
