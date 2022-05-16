@@ -192,8 +192,7 @@ int Server::ServerModel::distribute_incoming_connections(int socket,
         other handler functions .... everything works fine
      */
 
-    
-    Debug().info ("There");
+    /* If connection request has already been recieved from this very customer */    
     if (m_handler->find_in_customer_cache(socket) > 0 )
     {
         auto current_customer = m_handler->get_customer_by_sfd(socket);
@@ -205,25 +204,27 @@ int Server::ServerModel::distribute_incoming_connections(int socket,
         {
             response_s = m_handler->rsa_case (response);
         }
-            
-            /* SAFE CASE e.g. with encryption */
-    /* Case where AES Decryption needed */
-    /* This case works only if connection is verified e.g. AES keys has both server and client side */
         else if (current_customer->current_state == CONNECT_STATE::conn_verify)
-        {
+        {               
+            /* SAFE CASE e.g. with encryption */
+            /* Case where AES Decryption needed */
+            /* This case works only if connection is verified e.g. AES keys has both server and client side */
             auto aes_instnc = current_customer->get_crypto_unit()->get_aes_ptr();
-            
             response_s = m_handler->aes_case (response, aes_instnc);
+            Debug().info ("AFTER AES DECRYPTION");
+            Debug().info (response_s);
         }
     }
     /* Case where No Decryption is needed */
+    /* If no connection request from this very customer has been recieved */
     else 
     {
         Debug().warning("UNSAFE CASE");
-
         response_s = response;
     }
     /* UNSAFE CASE e.g. without encryption */
+    
+    /* Decrypted string MUST BE JSON Readable */
     string mes{response_s};
 
     MessageModel message (mes);//(nlohmann::json::parse(R"({"command" : 1})"));

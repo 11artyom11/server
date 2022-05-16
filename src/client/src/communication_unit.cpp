@@ -120,7 +120,8 @@ do
             Debug().fatal ("Bad Message");
             continue;
         }
-        write(sockfd, buf_s.c_str(), strlen(buf_s.c_str()));
+        m_io_model->send_message (model, sockfd);
+        // write(sockfd, buf_s.c_str(), strlen(buf_s.c_str()));
         // buf_s.clear();
     }     while (buf_s.length());
        

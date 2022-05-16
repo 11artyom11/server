@@ -71,8 +71,10 @@ int Handler::send_connect_command(int sfd,
     Debug().info ("In send_connect_command");
     Debug().info("Message recieved  : ", message.to_str());
     
-
+    /* In future must be generator function */
     auto key = "0123456789ABCDEF"; //aes_shrd_ptr->generate_key(16);
+    aes_shrd_ptr->set_key (key);
+    
     auto utoken = message.get<string>("unique_token");
     string rsa_key =message.get<string>("pkey");
     Debug().warning ("KEY FETCHED : \n", rsa_key );

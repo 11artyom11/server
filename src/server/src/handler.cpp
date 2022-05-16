@@ -113,7 +113,14 @@ void* Server::Handler::reader(int sfd , uint32_t tid)
     pthread_exit(NULL);
 }
 
-
+/**
+ * @brief Handler for the encrypted incoming message 
+ * This case works once at the very beginning of handshake
+ * 
+ * 
+ * @param response encrypted via rsa public key string 
+ * @return std::string decrypted string which will be distributed among handler functions
+ */
 std::string Server::Handler::rsa_case (char* response)
 {
             Debug().warning("RSA CASE");
@@ -126,6 +133,14 @@ std::string Server::Handler::rsa_case (char* response)
             return std::string{(char*)decrypted};
 }
 
+/**
+ * @brief Handler for AES - ecrypted incoming messages works 
+ * at the most of cases , so need to be very optimized
+ * 
+ * @param response Ecrypted via AES token string
+ * @param aes AES Unit (unique for each customer)
+ * @return std::string Decrypted message which will be distributed among handler functions
+ */
 std::string Server::Handler::aes_case (char* response, const AES_Unit_shrd_ptr& aes)
 {
     try

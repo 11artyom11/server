@@ -26,6 +26,7 @@
 #include <istream>
 #include <memory>
 #include <utility>
+#include <algorithm>
 
 #include "handler.h"
 #include "../../../lib/include/helpers/constants.h"
@@ -52,6 +53,7 @@ namespace iounit
             void read_q (int sfd, mesType messages);
 
             Handler_shrd_ptr get_handler(void) const;
+            void send_message (const DataTransfer::MessageModel&, int sfd);
 
         private:
         /*Queues in which we store output and input streams which 
