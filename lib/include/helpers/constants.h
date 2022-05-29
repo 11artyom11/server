@@ -57,6 +57,8 @@ constexpr auto SIGN_UP_COMMAND  = "com_sign_up";
 constexpr auto LOG_IN_COMMAND   = "com_log_in";
 constexpr auto CREATE_CHATROOM_COMMAND = "com_crt_chatroom";
 constexpr auto JOIN_CHATROOM_COMMAND = "com_join_chatroom";
+constexpr auto BRDCST_MESSAGE_COMMAND = "com_brdcst_message";
+
 /* Server Responses */
 constexpr auto SIGN_UP_VERIFY   = "sign_up_verify";
 constexpr auto LOG_IN_ACCEPT    = "log_in_accept";
@@ -105,6 +107,7 @@ const std::vector <std::string> COMMAND_LIST {
                                                 LOG_IN_COMMAND,
                                                 CREATE_CHATROOM_COMMAND, 
                                                 JOIN_CHATROOM_COMMAND,
+                                                BRDCST_MESSAGE_COMMAND,
                                                 WRITE_COMMAND,
                                                 READ_COMMAND,
                                                 EXIT_COMMAND, 

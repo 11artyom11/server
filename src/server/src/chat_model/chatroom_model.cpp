@@ -37,7 +37,7 @@ int ChatRoom::add_new_secondary_customer(const CustomerModel& secondary_customer
     try
     {
         secondary_customers.push_back(std::make_shared<CustomerModel>(secondary_customer));
-        Debug().info ("Slave count after Call => ", secondary_customers.size());
+        dump_state();
         return 0;
     }
     catch (std::exception& e)
@@ -105,9 +105,66 @@ CustomerModel * const ChatRoom::get_master (void) const noexcept
     return master_customer.get();
 }
 
+/**
+ * @brief Return room_id of *this
+ * 
+ * @return std::string 
+ */
 std::string ChatRoom::get_room_id (void) const noexcept
 {
     return this->room_id;
+}
+
+/**
+ * @brief Send recieved from participant of chatroom message to other customers 
+ * joined this chatroom 
+ * 
+ * @param utoken trigger customer utoken
+ * @param message json recieved from trigger customer
+ * @return count of customers to whom this message has been sent
+ */
+int ChatRoom::broadcast_to_all_users (const std::string& utoken, const DataTransfer::MessageModel& message) const
+{
+    Debug().info ("in broadcast_to_all_users");
+    int idx = 0;
+    auto all_customers = secondary_customers;
+    all_customers.push_front (master_customer);
+
+    std::string only_message = message.get<std::string>("message");
+
+    DataTransfer::BroadcastMessage brdcstMessage{only_message, utoken, room_id};
+
+    
+    for (const auto& customer : all_customers)
+    {
+        if (customer->get_unique_token() != utoken)
+        {
+            customer->send_message(brdcstMessage);
+        }
+    }
+    Debug().info ("out broadcast_to_all_users");
+    return idx;
+}
+
+/**
+ * @brief Print current state of chatroom e.g RoomID MasterUtoken etc
+ * 
+ */
+void ChatRoom::dump_state (void) const noexcept
+{
+    Debug().raw ("+=========+===================+");
+    Debug().raw ("|   Room ID    | ", room_id, " |");
+    Debug().raw ("+==============+==============+");
+    Debug().raw ("|   Master     | ", master_customer->get_unique_token(), " |");
+    Debug().raw ("+==============+==============+");
+    int idx = 0;
+    for (const auto& sec_customer : secondary_customers)
+    {
+        Debug().raw ("| Customer ", idx++, " | ", sec_customer->get_unique_token(), " |");
+        Debug().raw ("+--------------+--------------+");
+    }
+    Debug().raw ("| Whole Customer Count : ", idx+1, " |");
+    Debug().raw ("+--------------+--------------+");
 }
 
 /**

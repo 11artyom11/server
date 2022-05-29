@@ -120,21 +120,21 @@ class Handler
 
             /*HANDLER FUNCTIONS*/
             /* these functions are required to process all retrieved sanctioned data */
-            int on_login_request_recieved           (int sfd, const DataTransfer::MessageModel&);
-            int on_connect_request_recieved         (int sfd, const DataTransfer::MessageModel&);
-            
-            int send_connect_accept                 (int sfd, const DataTransfer::MessageModel&);
-            int send_login_accept                   (int sfd, const DataTransfer::MessageModel&);        
-
-            int on_connect_command_recieved         (int sfd, const DataTransfer::MessageModel&);
-            /******/
-            int on_connect_command_recieved         (int sfd, char*);
-            /******/          
-            int on_login_command_recieved           (int sfd, const DataTransfer::MessageModel&);
-            int on_sign_up_command_recieved         (int sfd, const DataTransfer::MessageModel&);
-            int on_create_chatroom_command_recieved (int sfd, const DataTransfer::MessageModel&);
-            int on_join_chatroom_command_recieved   (int sfd, const DataTransfer::MessageModel&);
-
+            int on_login_request_recieved               (int sfd, const DataTransfer::MessageModel&);
+            int on_connect_request_recieved             (int sfd, const DataTransfer::MessageModel&);
+                
+            int send_connect_accept                     (int sfd, const DataTransfer::MessageModel&);
+            int send_login_accept                       (int sfd, const DataTransfer::MessageModel&);        
+    
+            int on_connect_command_recieved             (int sfd, const DataTransfer::MessageModel&);
+            /******/    
+            int on_connect_command_recieved             (int sfd, char*);
+            /******/              
+            int on_login_command_recieved               (int sfd, const DataTransfer::MessageModel&);
+            int on_sign_up_command_recieved             (int sfd, const DataTransfer::MessageModel&);
+            int on_create_chatroom_command_recieved     (int sfd, const DataTransfer::MessageModel&);
+            int on_join_chatroom_command_recieved       (int sfd, const DataTransfer::MessageModel&);
+            int on_broadcast_message_command_recieved   (int sfd, const DataTransfer::MessageModel&);
             int send_connect_verify                 (int sfd, const DataTransfer::MessageModel&);
             int send_sign_up_verify                 (int sfd, const DataTransfer::MessageModel&);
             int send_login_verify                   (int sfd, const DataTransfer::MessageModel&);

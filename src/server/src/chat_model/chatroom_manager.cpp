@@ -50,9 +50,7 @@ Server::ChatRoomManager::push_new_room (Customer::CustomerModel* master,
     this->operator[] (master).push_back(new_room_smrt_ptr);
     chatroom_glob_lst[new_room->get_room_id()] = new_room_smrt_ptr;
 
-    Debug().info ("Customer token => ", master->get_unique_token());
-    Debug().info ("Added room id => ", new_room->get_room_id());
-    Debug().info ("Updated rooms count : ",this->operator[] (master).size());
+    dump_customer_chatroom_state (master->get_unique_token());
     Debug().info ("Updated global rooms count : ", chatroom_glob_lst.size());
     return chatroom_lst[master->get_unique_token()];
 }
@@ -80,7 +78,6 @@ Server::ChatRoomManager::remove_room_from (Customer::CustomerModel* master,
                                             }), master_room_arr.end());
 
     return master_room_arr;
-
 }
 
 /**
@@ -124,6 +121,38 @@ Server::ChatRoomManager::get_room_by_id ( std::string master_token,
                                 return !(room_ptr->get_room_id().compare(room_id));                            
                             });
     if (room_it != rooms.end()) return *room_it;
-    else throw -1;
+
+    /* Means that passed utoken is not master's token, so do global search in main room list */
+    /* Search in global list for unbinded rooms */
+    else get_room_global (room_id);
 }
 
+Server::ChatRoom_shrd_ptr 
+Server::ChatRoomManager::get_room_global (const std::string& room_id)/*  */
+{
+    
+    try
+    {
+        return chatroom_glob_lst[room_id];
+    }
+    catch(const std::exception& e)
+    {
+        Debug().fatal("No room with id " , room_id , "was found");
+    }
+    
+}
+
+void Server::ChatRoomManager::dump_customer_chatroom_state(const std::string& utoken) noexcept
+{
+    auto chatrooms = this->operator[](utoken);
+    uint32_t room_idx = 0;
+    Debug().raw ("+==========+==============+");
+    Debug().raw ("| Customer | ", utoken, " |");
+    Debug().raw ("+==========+==============+");
+    for (const auto& room : chatrooms)
+    {
+        Debug().raw ("| Room ", room_idx++, " | ", room->get_room_id(), " |");
+        Debug().raw ("+-------------------------+");
+    }
+
+}

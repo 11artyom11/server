@@ -50,6 +50,9 @@ class Debug
         template <typename ...mesTL>
          void fatal (mesTL... messages);
 
+         template <typename ...mesTL>
+          void raw (mesTL... messages);
+
         std::string get_current_time (void) const noexcept;
 
         int set_output_stream ( std::ostream* oS_ptr);
@@ -89,6 +92,14 @@ template <typename ...mesTL>
     ((*outp_stream << messages << ' '), ...);
     *outp_stream << KWHT << std::endl;
 
+}
+
+template <typename ...mesTL>
+    void Debug::raw (mesTL... messages)
+{
+    if (!Debug::debug_state) return;
+    ((*outp_stream << messages << ' '), ...);
+    *outp_stream << '\n';
 }
 
 #endif

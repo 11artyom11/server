@@ -51,6 +51,7 @@ void Server::Handler::commap_init (void)
     commap[SIGN_UP_VERIFY]          = &Server::Handler::send_sign_up_verify;
     commap[CREATE_CHATROOM_COMMAND] = &Server::Handler::on_create_chatroom_command_recieved;
     commap[JOIN_CHATROOM_COMMAND]   = &Server::Handler::on_join_chatroom_command_recieved;
+    commap[BRDCST_MESSAGE_COMMAND]  = &Server::Handler::on_broadcast_message_command_recieved;
 
 }
 
@@ -143,27 +144,28 @@ std::string Server::Handler::rsa_case (char* response)
  */
 std::string Server::Handler::aes_case (char* response, const AES_Unit_shrd_ptr& aes)
 {
-    try
-    {
-        Debug().warning("AES CASE");
+    // try
+    // {
+    //     Debug().warning("AES CASE");
 
-        int cipher_len = ((int)(strlen(response)/16))*16;
-        Debug().fatal ("CIPHER LEN : ", cipher_len);
-        std::string aes_key = aes->get_key();
-        unsigned char dec[MAX_JSON_MESSAGE_SIZE];
-        int dec_len = aes->decrypt((unsigned char*)response, cipher_len, (unsigned char*) aes_key.c_str(), dec);
+    //     int cipher_len = ((int)(strlen(response)/16))*16;
+    //     Debug().fatal ("CIPHER LEN : ", cipher_len);
+    //     std::string aes_key = aes->get_key();
+    //     unsigned char dec[MAX_JSON_MESSAGE_SIZE];
+    //     int dec_len = aes->decrypt((unsigned char*)response, cipher_len, (unsigned char*) aes_key.c_str(), dec);
         
-        /* dec len must be max MAX_JSON_MESSAGE_SIZE (see constants.h) */
-        dec[dec_len] = '\0';
+    //     /* dec len must be max MAX_JSON_MESSAGE_SIZE (see constants.h) */
+    //     dec[dec_len] = '\0';
 
-        return std::string{(char*)dec};
-    }
-    catch(const std::exception& e)
-    {
-        std::cerr << e.what() << '\n';
-        return "";
-    }
-            
+    //     return std::string{(char*)dec};
+    // }
+    // catch(const std::exception& e)
+    // {
+    //     std::cerr << e.what() << '\n';
+    //     return "";
+    // }
+
+        return std::string{response};
 }
 
 /**
@@ -364,16 +366,36 @@ int Server::Handler::on_join_chatroom_command_recieved (int sfd, const DataTrans
     chatroom->add_new_secondary_customer (*recent_customers_sfd[sfd].get());
     Debug().info ("ChatRoom ID => ",chatroom->get_room_id());
     /* 
-    {"command":"com_join_chatroom","master_token":"sQCeNg9HfY","room_id":"IPE78iqF54","utoken":"WInm1X8Ghd"}    
+    {"command":"com_join_chatroom","master_token":"2bXALuMTls","room_id":"dfn0QO6NyE","utoken":"o68eK3Ea9Q"}    
     */
     return 0;
 }
 
 /**
+ * @brief 
+ * 
+ * @param sfd 
+ * @param message 
+ * @return int 
+ */
+int Server::Handler::on_broadcast_message_command_recieved(int sfd, const DataTransfer::MessageModel& message)
+{
+    Debug().info ("Server::on_broadcast_message_command_recieved function Called");
+    std::string room_id = message.get<std::string>("room_id");
+    std::string utoken = message.get<std::string>("utoken");
+    Debug().info ("12345678");
+    Server::ChatRoom_shrd_ptr chatroom = chatroom_mngr_shrd_ptr->get_room_global (room_id);
+    Debug().info ("9101123456");
+    chatroom->broadcast_to_all_users(utoken , message);
+    /* {"command":"com_brdcst_message","utoken":"o68eK3Ea9Q","room_id":"dfn0QO6NyE","message":"FirstUserSaysHello"} */
+    return 0;
+}
+
+
+/**
  * @brief If handshake succeeds send verify message to client
  * 
  * @param sfd 
- * @return int 
  */
 int Server::Handler::send_connect_verify(int sfd, const DataTransfer::MessageModel& message)
 {

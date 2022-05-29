@@ -11,18 +11,18 @@ Handler::Handler ()
 
 void Handler::commap_init (void)
 {
-    commap[CONNECT_REQUEST]   = &Handler::send_connect_request;
-    commap[LOG_IN_REQUEST]    = &Handler::send_login_request;
-    commap[CONNECT_ACCEPT]    = &Handler::on_connect_accept_recieved;
-    commap[LOG_IN_ACCEPT]     = &Handler::on_login_accept_recieved;
-    commap[CONNECT_COMMAND]   = &Handler::send_connect_command;
-    commap[LOG_IN_COMMAND]    = &Handler::send_login_command;
-    commap[SIGN_UP_COMMAND]   = &Handler::send_sign_up_command;
-    commap[EXIT_COMMAND]      = &Handler::send_terminate_connection;
-    commap[CONNECT_VERIFY]    = &Handler::on_connect_verify_recieved;
-    commap[LOG_IN_VERIFY]     = &Handler::on_login_verify_recieved;
-    commap[SIGN_UP_VERIFY]    = &Handler::on_sign_up_verify_recieved;
-
+    commap[CONNECT_REQUEST]         = &Handler::send_connect_request;
+    commap[LOG_IN_REQUEST]          = &Handler::send_login_request;
+    commap[CONNECT_ACCEPT]          = &Handler::on_connect_accept_recieved;
+    commap[LOG_IN_ACCEPT]           = &Handler::on_login_accept_recieved;
+    commap[CONNECT_COMMAND]         = &Handler::send_connect_command;
+    commap[LOG_IN_COMMAND]          = &Handler::send_login_command;
+    commap[SIGN_UP_COMMAND]         = &Handler::send_sign_up_command;
+    commap[EXIT_COMMAND]            = &Handler::send_terminate_connection;
+    commap[CONNECT_VERIFY]          = &Handler::on_connect_verify_recieved;
+    commap[LOG_IN_VERIFY]           = &Handler::on_login_verify_recieved;
+    commap[SIGN_UP_VERIFY]          = &Handler::on_sign_up_verify_recieved;
+    commap[BRDCST_MESSAGE_COMMAND]  = &Handler::on_broadcast_message_recieved;
 }
 
 int Handler::send_login_request(int sfd,
@@ -146,6 +146,15 @@ int Handler::send_terminate_connection(int sfd,
                                         const DataTransfer::MessageModel&)
 {
 
+}
+
+int Handler::on_broadcast_message_recieved (int sfd, const DataTransfer::MessageModel& message)
+{
+    auto only_message = message.get<std::string>("message");
+    auto trig_token = message.get<std::string> ("trg_token");
+    auto room_id = message.get<std::string>("room_id");
+    Debug().raw (trig_token, " : ", only_message);
+    return 0;
 }
 
 RSA_Unit_shrd_ptr

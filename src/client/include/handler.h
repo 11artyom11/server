@@ -85,17 +85,18 @@ class Handler
         Handler ();
         void commap_init (void);
 
-        int send_login_request         (int sfd, const DataTransfer::MessageModel&);
-        int send_connect_request       (int sfd, const DataTransfer::MessageModel&);
-        int on_connect_accept_recieved (int sfd, const DataTransfer::MessageModel&);
-        int on_login_accept_recieved   (int sfd, const DataTransfer::MessageModel&);    
-        int send_connect_command       (int sfd, const DataTransfer::MessageModel&);
-        int send_login_command         (int sfd, const DataTransfer::MessageModel&);
-        int send_sign_up_command       (int sfd, const DataTransfer::MessageModel&);    
-        int on_connect_verify_recieved (int sfd, const DataTransfer::MessageModel&);
-        int on_sign_up_verify_recieved (int sfd, const DataTransfer::MessageModel&);
-        int on_login_verify_recieved   (int sfd, const DataTransfer::MessageModel&);
-        int send_terminate_connection  (int sfd, const DataTransfer::MessageModel&);
+        int send_login_request            (int sfd, const DataTransfer::MessageModel&);
+        int send_connect_request          (int sfd, const DataTransfer::MessageModel&);
+        int on_connect_accept_recieved    (int sfd, const DataTransfer::MessageModel&);
+        int on_login_accept_recieved      (int sfd, const DataTransfer::MessageModel&);    
+        int send_connect_command          (int sfd, const DataTransfer::MessageModel&);
+        int send_login_command            (int sfd, const DataTransfer::MessageModel&);
+        int send_sign_up_command          (int sfd, const DataTransfer::MessageModel&);    
+        int on_connect_verify_recieved    (int sfd, const DataTransfer::MessageModel&);
+        int on_sign_up_verify_recieved    (int sfd, const DataTransfer::MessageModel&);
+        int on_login_verify_recieved      (int sfd, const DataTransfer::MessageModel&);
+        int send_terminate_connection     (int sfd, const DataTransfer::MessageModel&);
+        int on_broadcast_message_recieved (int sfd, const DataTransfer::MessageModel&);
 
         RSA_Unit_shrd_ptr get_rsa_ptr (void) const;
         AES_Unit_shrd_ptr get_aes_ptr (void) const;

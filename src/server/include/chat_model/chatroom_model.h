@@ -24,6 +24,10 @@ namespace RoomSpace
             CustomerModel * const get_master (void) const noexcept;
 
             std::string get_room_id (void) const noexcept;
+
+            int broadcast_to_all_users (const std::string& utoken, const DataTransfer::MessageModel& message) const;
+
+            void dump_state (void) const noexcept;
             ~ChatRoom();
 
         private:

@@ -19,6 +19,7 @@
 #define __CUSTOMER_H__
 #include "customer_crypto_unit.h"
 #include "message_model.h"
+#include "message_templates.h"
 #include <random>
 #include <string>
 #include <algorithm>

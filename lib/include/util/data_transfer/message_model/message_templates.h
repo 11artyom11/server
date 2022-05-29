@@ -109,7 +109,17 @@ class SignUpVerify : public MessageModel
     private:
         static constexpr auto command = SIGN_UP_VERIFY;
 };
+
+class BroadcastMessage : public MessageModel
+{
+    public:
+        BroadcastMessage(const string& message, const string& trigger_token, const string& room_id);
+    private:
+        static constexpr auto command = BRDCST_MESSAGE_COMMAND;
+};
+
 }
+
 
 
 #endif /*__MES_TEMPLATES*/

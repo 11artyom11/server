@@ -35,7 +35,7 @@ void IOModel::send_message (const DataTransfer::MessageModel& message, int sfd)
 
     int len = aes->encrypt(message_uc, message.to_str().length(), key_c, cipher);
     Debug().warning (" ====> cipher len : ", len);
-    send (sfd,  (char*)cipher, strlen((char*)(cipher)), NULL);
+    send (sfd,  (char*)message.to_str().c_str(), message.to_str().length() , NULL);
 }
 
 
