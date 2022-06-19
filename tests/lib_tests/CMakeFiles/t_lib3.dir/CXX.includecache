@@ -6,11 +6,11 @@
 
 #IncludeRegexTransform: 
 
-/home/aram/workspace/clientserver/tests/lib_tests/test3.cpp
+/home/tyom/workspace/clientserver/tests/lib_tests/test3.cpp
 message_model.h
-/home/aram/workspace/clientserver/tests/lib_tests/message_model.h
+/home/tyom/workspace/clientserver/tests/lib_tests/message_model.h
 message_resolver.h
-/home/aram/workspace/clientserver/tests/lib_tests/message_resolver.h
+/home/tyom/workspace/clientserver/tests/lib_tests/message_resolver.h
 debug_helper.h
 -
 constants.h

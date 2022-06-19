@@ -6,5 +6,5 @@ CXX_FLAGS = -fPIC   -std=gnu++17
 
 CXX_DEFINES = -Dmessage_model_EXPORTS
 
-CXX_INCLUDES = -I/home/aram/workspace/clientserver/lib/src/util/data_transfer/message_model/. -I/home/aram/workspace/clientserver/lib/src/util/data_transfer/message_model/../../../../../outter_modules/json/single_include/nlohmann 
+CXX_INCLUDES = -I/home/tyom/workspace/clientserver/lib/src/util/data_transfer/message_model/. -I/home/tyom/workspace/clientserver/lib/src/util/data_transfer/message_model/../../../../../outter_modules/json/single_include/nlohmann 
 

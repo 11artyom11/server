@@ -6,5 +6,5 @@ CXX_FLAGS = -fPIC   -std=gnu++17
 
 CXX_DEFINES = -Dcrypto_unit_EXPORTS
 
-CXX_INCLUDES = -I/home/aram/workspace/clientserver/lib/src/util/cryptolib/. 
+CXX_INCLUDES = -I/home/tyom/workspace/clientserver/lib/src/util/cryptolib/. 
 

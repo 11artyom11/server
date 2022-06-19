@@ -48,25 +48,13 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/aram/workspace/clientserver
+CMAKE_SOURCE_DIR = /home/tyom/workspace/clientserver
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/aram/workspace/clientserver
+CMAKE_BINARY_DIR = /home/tyom/workspace/clientserver
 
 #=============================================================================
 # Targets provided globally by CMake.
-
-# Special rule for the target install/strip
-install/strip: preinstall
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing the project stripped..."
-	/usr/bin/cmake -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
-.PHONY : install/strip
-
-# Special rule for the target install/strip
-install/strip/fast: preinstall/fast
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing the project stripped..."
-	/usr/bin/cmake -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
-.PHONY : install/strip/fast
 
 # Special rule for the target install/local
 install/local: preinstall
@@ -126,9 +114,9 @@ edit_cache/fast: edit_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/aram/workspace/clientserver/CMakeFiles /home/aram/workspace/clientserver/CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/tyom/workspace/clientserver/CMakeFiles /home/tyom/workspace/clientserver/CMakeFiles/progress.marks
 	$(MAKE) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/aram/workspace/clientserver/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/tyom/workspace/clientserver/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -208,6 +196,11 @@ crypto_unit/fast:
 	$(MAKE) -f lib/src/util/cryptolib/CMakeFiles/crypto_unit.dir/build.make lib/src/util/cryptolib/CMakeFiles/crypto_unit.dir/build
 .PHONY : crypto_unit/fast
 
+# Manual pre-install relink rule for target.
+crypto_unit/preinstall:
+	$(MAKE) -f lib/src/util/cryptolib/CMakeFiles/crypto_unit.dir/build.make lib/src/util/cryptolib/CMakeFiles/crypto_unit.dir/preinstall
+.PHONY : crypto_unit/preinstall
+
 #=============================================================================
 # Target rules for targets named message_resolver
 
@@ -221,6 +214,11 @@ message_resolver/fast:
 	$(MAKE) -f lib/src/util/data_transfer/message_resolver/CMakeFiles/message_resolver.dir/build.make lib/src/util/data_transfer/message_resolver/CMakeFiles/message_resolver.dir/build
 .PHONY : message_resolver/fast
 
+# Manual pre-install relink rule for target.
+message_resolver/preinstall:
+	$(MAKE) -f lib/src/util/data_transfer/message_resolver/CMakeFiles/message_resolver.dir/build.make lib/src/util/data_transfer/message_resolver/CMakeFiles/message_resolver.dir/preinstall
+.PHONY : message_resolver/preinstall
+
 #=============================================================================
 # Target rules for targets named message_model
 
@@ -233,6 +231,11 @@ message_model: cmake_check_build_system
 message_model/fast:
 	$(MAKE) -f lib/src/util/data_transfer/message_model/CMakeFiles/message_model.dir/build.make lib/src/util/data_transfer/message_model/CMakeFiles/message_model.dir/build
 .PHONY : message_model/fast
+
+# Manual pre-install relink rule for target.
+message_model/preinstall:
+	$(MAKE) -f lib/src/util/data_transfer/message_model/CMakeFiles/message_model.dir/build.make lib/src/util/data_transfer/message_model/CMakeFiles/message_model.dir/preinstall
+.PHONY : message_model/preinstall
 
 #=============================================================================
 # Target rules for targets named gmock_main
@@ -357,7 +360,6 @@ help:
 	@echo "... all (the default if no target is provided)"
 	@echo "... clean"
 	@echo "... depend"
-	@echo "... install/strip"
 	@echo "... install/local"
 	@echo "... install"
 	@echo "... list_install_components"

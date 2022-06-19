@@ -1,4 +1,4 @@
-# Install script for directory: /home/aram/workspace/clientserver
+# Install script for directory: /home/tyom/workspace/clientserver
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -39,12 +39,12 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
-  include("/home/aram/workspace/clientserver/bin/server/cmake_install.cmake")
-  include("/home/aram/workspace/clientserver/bin/client/cmake_install.cmake")
-  include("/home/aram/workspace/clientserver/outter_modules/json/cmake_install.cmake")
-  include("/home/aram/workspace/clientserver/lib/src/helpers/cmake_install.cmake")
-  include("/home/aram/workspace/clientserver/lib/src/util/cmake_install.cmake")
-  include("/home/aram/workspace/clientserver/tests/cmake_install.cmake")
+  include("/home/tyom/workspace/clientserver/bin/server/cmake_install.cmake")
+  include("/home/tyom/workspace/clientserver/bin/client/cmake_install.cmake")
+  include("/home/tyom/workspace/clientserver/outter_modules/json/cmake_install.cmake")
+  include("/home/tyom/workspace/clientserver/lib/src/helpers/cmake_install.cmake")
+  include("/home/tyom/workspace/clientserver/lib/src/util/cmake_install.cmake")
+  include("/home/tyom/workspace/clientserver/tests/cmake_install.cmake")
 
 endif()
 
@@ -56,5 +56,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/home/aram/workspace/clientserver/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/home/tyom/workspace/clientserver/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

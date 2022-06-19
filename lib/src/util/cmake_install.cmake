@@ -1,4 +1,4 @@
-# Install script for directory: /home/aram/workspace/clientserver/lib/src/util
+# Install script for directory: /home/tyom/workspace/clientserver/lib/src/util
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -39,8 +39,8 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
-  include("/home/aram/workspace/clientserver/lib/src/util/cryptolib/cmake_install.cmake")
-  include("/home/aram/workspace/clientserver/lib/src/util/data_transfer/cmake_install.cmake")
+  include("/home/tyom/workspace/clientserver/lib/src/util/cryptolib/cmake_install.cmake")
+  include("/home/tyom/workspace/clientserver/lib/src/util/data_transfer/cmake_install.cmake")
 
 endif()
 

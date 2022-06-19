@@ -1,4 +1,4 @@
-# Install script for directory: /home/aram/workspace/clientserver/tests
+# Install script for directory: /home/tyom/workspace/clientserver/tests
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -39,10 +39,10 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
-  include("/home/aram/workspace/clientserver/tests/googletest/cmake_install.cmake")
-  include("/home/aram/workspace/clientserver/tests/client_tests/cmake_install.cmake")
-  include("/home/aram/workspace/clientserver/tests/lib_tests/cmake_install.cmake")
-  include("/home/aram/workspace/clientserver/tests/server_tests/cmake_install.cmake")
+  include("/home/tyom/workspace/clientserver/tests/googletest/cmake_install.cmake")
+  include("/home/tyom/workspace/clientserver/tests/client_tests/cmake_install.cmake")
+  include("/home/tyom/workspace/clientserver/tests/lib_tests/cmake_install.cmake")
+  include("/home/tyom/workspace/clientserver/tests/server_tests/cmake_install.cmake")
 
 endif()
 

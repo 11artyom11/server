@@ -1,4 +1,4 @@
-# Install script for directory: /home/aram/workspace/clientserver/tests/lib_tests
+# Install script for directory: /home/tyom/workspace/clientserver/tests/lib_tests
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)

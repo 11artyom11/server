@@ -6,7 +6,7 @@
 
 #IncludeRegexTransform: 
 
-/home/aram/workspace/clientserver/lib/include/helpers/constants.h
+/home/tyom/workspace/clientserver/lib/include/helpers/constants.h
 vector
 -
 string
@@ -14,7 +14,7 @@ string
 map
 -
 
-/home/aram/workspace/clientserver/lib/include/helpers/debug_helper/debug_helper.h
+/home/tyom/workspace/clientserver/lib/include/helpers/debug_helper/debug_helper.h
 iostream
 -
 stdio.h
@@ -22,9 +22,9 @@ stdio.h
 time.h
 -
 ../constants.h
-/home/aram/workspace/clientserver/lib/include/helpers/constants.h
+/home/tyom/workspace/clientserver/lib/include/helpers/constants.h
 
-/home/aram/workspace/clientserver/lib/src/helpers/debug/debug_helper.cpp
+/home/tyom/workspace/clientserver/lib/src/helpers/debug/debug_helper.cpp
 ../../../include/helpers/debug_helper/debug_helper.h
-/home/aram/workspace/clientserver/lib/include/helpers/debug_helper/debug_helper.h
+/home/tyom/workspace/clientserver/lib/include/helpers/debug_helper/debug_helper.h
 

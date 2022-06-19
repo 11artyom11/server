@@ -48,25 +48,13 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/aram/workspace/clientserver
+CMAKE_SOURCE_DIR = /home/tyom/workspace/clientserver
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/aram/workspace/clientserver
+CMAKE_BINARY_DIR = /home/tyom/workspace/clientserver
 
 #=============================================================================
 # Targets provided globally by CMake.
-
-# Special rule for the target install/strip
-install/strip: preinstall
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing the project stripped..."
-	/usr/bin/cmake -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
-.PHONY : install/strip
-
-# Special rule for the target install/strip
-install/strip/fast: preinstall/fast
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing the project stripped..."
-	/usr/bin/cmake -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
-.PHONY : install/strip/fast
 
 # Special rule for the target install
 install: preinstall
@@ -126,14 +114,14 @@ install/local/fast: preinstall/fast
 
 # The main all target
 all: cmake_check_build_system
-	cd /home/aram/workspace/clientserver && $(CMAKE_COMMAND) -E cmake_progress_start /home/aram/workspace/clientserver/CMakeFiles /home/aram/workspace/clientserver/lib/src/util/data_transfer/message_resolver/CMakeFiles/progress.marks
-	cd /home/aram/workspace/clientserver && $(MAKE) -f CMakeFiles/Makefile2 lib/src/util/data_transfer/message_resolver/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/aram/workspace/clientserver/CMakeFiles 0
+	cd /home/tyom/workspace/clientserver && $(CMAKE_COMMAND) -E cmake_progress_start /home/tyom/workspace/clientserver/CMakeFiles /home/tyom/workspace/clientserver/lib/src/util/data_transfer/message_resolver/CMakeFiles/progress.marks
+	cd /home/tyom/workspace/clientserver && $(MAKE) -f CMakeFiles/Makefile2 lib/src/util/data_transfer/message_resolver/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/tyom/workspace/clientserver/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
 clean:
-	cd /home/aram/workspace/clientserver && $(MAKE) -f CMakeFiles/Makefile2 lib/src/util/data_transfer/message_resolver/clean
+	cd /home/tyom/workspace/clientserver && $(MAKE) -f CMakeFiles/Makefile2 lib/src/util/data_transfer/message_resolver/clean
 .PHONY : clean
 
 # The main clean target
@@ -143,22 +131,22 @@ clean/fast: clean
 
 # Prepare targets for installation.
 preinstall: all
-	cd /home/aram/workspace/clientserver && $(MAKE) -f CMakeFiles/Makefile2 lib/src/util/data_transfer/message_resolver/preinstall
+	cd /home/tyom/workspace/clientserver && $(MAKE) -f CMakeFiles/Makefile2 lib/src/util/data_transfer/message_resolver/preinstall
 .PHONY : preinstall
 
 # Prepare targets for installation.
 preinstall/fast:
-	cd /home/aram/workspace/clientserver && $(MAKE) -f CMakeFiles/Makefile2 lib/src/util/data_transfer/message_resolver/preinstall
+	cd /home/tyom/workspace/clientserver && $(MAKE) -f CMakeFiles/Makefile2 lib/src/util/data_transfer/message_resolver/preinstall
 .PHONY : preinstall/fast
 
 # clear depends
 depend:
-	cd /home/aram/workspace/clientserver && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
+	cd /home/tyom/workspace/clientserver && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
 .PHONY : depend
 
 # Convenience name for target.
 lib/src/util/data_transfer/message_resolver/CMakeFiles/message_resolver.dir/rule:
-	cd /home/aram/workspace/clientserver && $(MAKE) -f CMakeFiles/Makefile2 lib/src/util/data_transfer/message_resolver/CMakeFiles/message_resolver.dir/rule
+	cd /home/tyom/workspace/clientserver && $(MAKE) -f CMakeFiles/Makefile2 lib/src/util/data_transfer/message_resolver/CMakeFiles/message_resolver.dir/rule
 .PHONY : lib/src/util/data_transfer/message_resolver/CMakeFiles/message_resolver.dir/rule
 
 # Convenience name for target.
@@ -168,8 +156,13 @@ message_resolver: lib/src/util/data_transfer/message_resolver/CMakeFiles/message
 
 # fast build rule for target.
 message_resolver/fast:
-	cd /home/aram/workspace/clientserver && $(MAKE) -f lib/src/util/data_transfer/message_resolver/CMakeFiles/message_resolver.dir/build.make lib/src/util/data_transfer/message_resolver/CMakeFiles/message_resolver.dir/build
+	cd /home/tyom/workspace/clientserver && $(MAKE) -f lib/src/util/data_transfer/message_resolver/CMakeFiles/message_resolver.dir/build.make lib/src/util/data_transfer/message_resolver/CMakeFiles/message_resolver.dir/build
 .PHONY : message_resolver/fast
+
+# Manual pre-install relink rule for target.
+message_resolver/preinstall:
+	cd /home/tyom/workspace/clientserver && $(MAKE) -f CMakeFiles/Makefile2 lib/src/util/data_transfer/message_resolver/CMakeFiles/message_resolver.dir/preinstall
+.PHONY : message_resolver/preinstall
 
 message_resolver.o: message_resolver.cpp.o
 
@@ -177,7 +170,7 @@ message_resolver.o: message_resolver.cpp.o
 
 # target to build an object file
 message_resolver.cpp.o:
-	cd /home/aram/workspace/clientserver && $(MAKE) -f lib/src/util/data_transfer/message_resolver/CMakeFiles/message_resolver.dir/build.make lib/src/util/data_transfer/message_resolver/CMakeFiles/message_resolver.dir/message_resolver.cpp.o
+	cd /home/tyom/workspace/clientserver && $(MAKE) -f lib/src/util/data_transfer/message_resolver/CMakeFiles/message_resolver.dir/build.make lib/src/util/data_transfer/message_resolver/CMakeFiles/message_resolver.dir/message_resolver.cpp.o
 .PHONY : message_resolver.cpp.o
 
 message_resolver.i: message_resolver.cpp.i
@@ -186,7 +179,7 @@ message_resolver.i: message_resolver.cpp.i
 
 # target to preprocess a source file
 message_resolver.cpp.i:
-	cd /home/aram/workspace/clientserver && $(MAKE) -f lib/src/util/data_transfer/message_resolver/CMakeFiles/message_resolver.dir/build.make lib/src/util/data_transfer/message_resolver/CMakeFiles/message_resolver.dir/message_resolver.cpp.i
+	cd /home/tyom/workspace/clientserver && $(MAKE) -f lib/src/util/data_transfer/message_resolver/CMakeFiles/message_resolver.dir/build.make lib/src/util/data_transfer/message_resolver/CMakeFiles/message_resolver.dir/message_resolver.cpp.i
 .PHONY : message_resolver.cpp.i
 
 message_resolver.s: message_resolver.cpp.s
@@ -195,7 +188,7 @@ message_resolver.s: message_resolver.cpp.s
 
 # target to generate assembly for a file
 message_resolver.cpp.s:
-	cd /home/aram/workspace/clientserver && $(MAKE) -f lib/src/util/data_transfer/message_resolver/CMakeFiles/message_resolver.dir/build.make lib/src/util/data_transfer/message_resolver/CMakeFiles/message_resolver.dir/message_resolver.cpp.s
+	cd /home/tyom/workspace/clientserver && $(MAKE) -f lib/src/util/data_transfer/message_resolver/CMakeFiles/message_resolver.dir/build.make lib/src/util/data_transfer/message_resolver/CMakeFiles/message_resolver.dir/message_resolver.cpp.s
 .PHONY : message_resolver.cpp.s
 
 # Help Target
@@ -204,7 +197,6 @@ help:
 	@echo "... all (the default if no target is provided)"
 	@echo "... clean"
 	@echo "... depend"
-	@echo "... install/strip"
 	@echo "... install"
 	@echo "... list_install_components"
 	@echo "... rebuild_cache"
@@ -225,6 +217,6 @@ help:
 # No rule that depends on this can have commands that come from listfiles
 # because they might be regenerated.
 cmake_check_build_system:
-	cd /home/aram/workspace/clientserver && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
+	cd /home/tyom/workspace/clientserver && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
 .PHONY : cmake_check_build_system
 

@@ -6,5 +6,5 @@ CXX_FLAGS = -fPIC   -std=gnu++17
 
 CXX_DEFINES = -Dmessage_resolver_EXPORTS
 
-CXX_INCLUDES = -I/home/aram/workspace/clientserver/lib/src/util/data_transfer/message_resolver/. 
+CXX_INCLUDES = -I/home/tyom/workspace/clientserver/lib/src/util/data_transfer/message_resolver/. 
 

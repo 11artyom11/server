@@ -6,7 +6,7 @@
 
 #IncludeRegexTransform: 
 
-/home/aram/workspace/clientserver/lib/include/helpers/constants.h
+/home/tyom/workspace/clientserver/lib/include/helpers/constants.h
 vector
 -
 string
@@ -14,7 +14,7 @@ string
 map
 -
 
-/home/aram/workspace/clientserver/lib/include/helpers/debug_helper/debug_helper.h
+/home/tyom/workspace/clientserver/lib/include/helpers/debug_helper/debug_helper.h
 iostream
 -
 stdio.h
@@ -22,11 +22,11 @@ stdio.h
 time.h
 -
 ../constants.h
-/home/aram/workspace/clientserver/lib/include/helpers/constants.h
+/home/tyom/workspace/clientserver/lib/include/helpers/constants.h
 
-/home/aram/workspace/clientserver/lib/include/util/cyptolib/crypto_unit.h
+/home/tyom/workspace/clientserver/lib/include/util/cyptolib/crypto_unit.h
 ../../helpers/debug_helper/debug_helper.h
-/home/aram/workspace/clientserver/lib/include/helpers/debug_helper/debug_helper.h
+/home/tyom/workspace/clientserver/lib/include/helpers/debug_helper/debug_helper.h
 string.h
 -
 stdio.h
@@ -68,7 +68,7 @@ mutex
 memory
 -
 
-/home/aram/workspace/clientserver/lib/src/util/cryptolib/crypto_unit.cpp
+/home/tyom/workspace/clientserver/lib/src/util/cryptolib/crypto_unit.cpp
 ../../../include/util/cyptolib/crypto_unit.h
-/home/aram/workspace/clientserver/lib/include/util/cyptolib/crypto_unit.h
+/home/tyom/workspace/clientserver/lib/include/util/cyptolib/crypto_unit.h
 

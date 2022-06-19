@@ -6,7 +6,7 @@
 
 #IncludeRegexTransform: 
 
-/home/aram/workspace/clientserver/lib/include/helpers/constants.h
+/home/tyom/workspace/clientserver/lib/include/helpers/constants.h
 vector
 -
 string
@@ -14,7 +14,7 @@ string
 map
 -
 
-/home/aram/workspace/clientserver/lib/include/helpers/debug_helper/debug_helper.h
+/home/tyom/workspace/clientserver/lib/include/helpers/debug_helper/debug_helper.h
 iostream
 -
 stdio.h
@@ -22,33 +22,33 @@ stdio.h
 time.h
 -
 ../constants.h
-/home/aram/workspace/clientserver/lib/include/helpers/constants.h
+/home/tyom/workspace/clientserver/lib/include/helpers/constants.h
 
-/home/aram/workspace/clientserver/lib/include/util/data_transfer/message_model/message_model.h
+/home/tyom/workspace/clientserver/lib/include/util/data_transfer/message_model/message_model.h
 ../../../../../outter_modules/json/single_include/nlohmann/json.hpp
-/home/aram/workspace/clientserver/outter_modules/json/single_include/nlohmann/json.hpp
+/home/tyom/workspace/clientserver/outter_modules/json/single_include/nlohmann/json.hpp
 ../../../helpers/debug_helper/debug_helper.h
-/home/aram/workspace/clientserver/lib/include/helpers/debug_helper/debug_helper.h
+/home/tyom/workspace/clientserver/lib/include/helpers/debug_helper/debug_helper.h
 string
 -
 
-/home/aram/workspace/clientserver/lib/include/util/data_transfer/message_model/message_templates.h
+/home/tyom/workspace/clientserver/lib/include/util/data_transfer/message_model/message_templates.h
 message_model.h
-/home/aram/workspace/clientserver/lib/include/util/data_transfer/message_model/message_model.h
+/home/tyom/workspace/clientserver/lib/include/util/data_transfer/message_model/message_model.h
 ../../../helpers/constants.h
-/home/aram/workspace/clientserver/lib/include/helpers/constants.h
+/home/tyom/workspace/clientserver/lib/include/helpers/constants.h
 string
 -
 
-/home/aram/workspace/clientserver/lib/src/util/data_transfer/message_model/message_model.cpp
+/home/tyom/workspace/clientserver/lib/src/util/data_transfer/message_model/message_model.cpp
 ../../../../include/util/data_transfer/message_model/message_model.h
-/home/aram/workspace/clientserver/lib/include/util/data_transfer/message_model/message_model.h
+/home/tyom/workspace/clientserver/lib/include/util/data_transfer/message_model/message_model.h
 
-/home/aram/workspace/clientserver/lib/src/util/data_transfer/message_model/message_templates.cpp
+/home/tyom/workspace/clientserver/lib/src/util/data_transfer/message_model/message_templates.cpp
 ../../../../include/util/data_transfer/message_model/message_templates.h
-/home/aram/workspace/clientserver/lib/include/util/data_transfer/message_model/message_templates.h
+/home/tyom/workspace/clientserver/lib/include/util/data_transfer/message_model/message_templates.h
 
-/home/aram/workspace/clientserver/outter_modules/json/single_include/nlohmann/json.hpp
+/home/tyom/workspace/clientserver/outter_modules/json/single_include/nlohmann/json.hpp
 algorithm
 -
 cstddef

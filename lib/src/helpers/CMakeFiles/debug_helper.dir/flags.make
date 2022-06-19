@@ -6,5 +6,5 @@ CXX_FLAGS = -fPIC   -std=gnu++17
 
 CXX_DEFINES = -Ddebug_helper_EXPORTS
 
-CXX_INCLUDES = -I/home/aram/workspace/clientserver/lib/src/helpers/. 
+CXX_INCLUDES = -I/home/tyom/workspace/clientserver/lib/src/helpers/. 
 

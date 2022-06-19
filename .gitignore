@@ -9,3 +9,4 @@ build/*
 *.key
 ./'Client Docs'/*
 ./'Server Docs'/*
+./html/*

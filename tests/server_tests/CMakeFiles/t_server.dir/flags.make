@@ -6,5 +6,5 @@ CXX_FLAGS = -g -w -O2 -pthread   -std=gnu++17
 
 CXX_DEFINES = 
 
-CXX_INCLUDES = -isystem /home/aram/workspace/clientserver/tests/googletest/googletest/include -isystem /home/aram/workspace/clientserver/tests/googletest/googletest 
+CXX_INCLUDES = -isystem /home/tyom/workspace/clientserver/tests/googletest/googletest/include -isystem /home/tyom/workspace/clientserver/tests/googletest/googletest 
 

@@ -1,4 +1,7 @@
 file(REMOVE_RECURSE
+  "CMakeFiles/CMakeRelink.dir/libcrypto_unit.so"
+  "CMakeFiles/CMakeRelink.dir/libcrypto_unit.so.1"
+  "CMakeFiles/CMakeRelink.dir/libcrypto_unit.so.1.0.1"
   "CMakeFiles/crypto_unit.dir/crypto_unit.cpp.o"
   "libcrypto_unit.pdb"
   "libcrypto_unit.so"

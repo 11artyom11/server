@@ -48,25 +48,13 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/aram/workspace/clientserver
+CMAKE_SOURCE_DIR = /home/tyom/workspace/clientserver
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/aram/workspace/clientserver
+CMAKE_BINARY_DIR = /home/tyom/workspace/clientserver
 
 #=============================================================================
 # Targets provided globally by CMake.
-
-# Special rule for the target install/strip
-install/strip: preinstall
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing the project stripped..."
-	/usr/bin/cmake -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
-.PHONY : install/strip
-
-# Special rule for the target install/strip
-install/strip/fast: preinstall/fast
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing the project stripped..."
-	/usr/bin/cmake -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
-.PHONY : install/strip/fast
 
 # Special rule for the target install/local
 install/local: preinstall
@@ -126,14 +114,14 @@ edit_cache/fast: edit_cache
 
 # The main all target
 all: cmake_check_build_system
-	cd /home/aram/workspace/clientserver && $(CMAKE_COMMAND) -E cmake_progress_start /home/aram/workspace/clientserver/CMakeFiles /home/aram/workspace/clientserver/tests/server_tests/CMakeFiles/progress.marks
-	cd /home/aram/workspace/clientserver && $(MAKE) -f CMakeFiles/Makefile2 tests/server_tests/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/aram/workspace/clientserver/CMakeFiles 0
+	cd /home/tyom/workspace/clientserver && $(CMAKE_COMMAND) -E cmake_progress_start /home/tyom/workspace/clientserver/CMakeFiles /home/tyom/workspace/clientserver/tests/server_tests/CMakeFiles/progress.marks
+	cd /home/tyom/workspace/clientserver && $(MAKE) -f CMakeFiles/Makefile2 tests/server_tests/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/tyom/workspace/clientserver/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
 clean:
-	cd /home/aram/workspace/clientserver && $(MAKE) -f CMakeFiles/Makefile2 tests/server_tests/clean
+	cd /home/tyom/workspace/clientserver && $(MAKE) -f CMakeFiles/Makefile2 tests/server_tests/clean
 .PHONY : clean
 
 # The main clean target
@@ -143,22 +131,22 @@ clean/fast: clean
 
 # Prepare targets for installation.
 preinstall: all
-	cd /home/aram/workspace/clientserver && $(MAKE) -f CMakeFiles/Makefile2 tests/server_tests/preinstall
+	cd /home/tyom/workspace/clientserver && $(MAKE) -f CMakeFiles/Makefile2 tests/server_tests/preinstall
 .PHONY : preinstall
 
 # Prepare targets for installation.
 preinstall/fast:
-	cd /home/aram/workspace/clientserver && $(MAKE) -f CMakeFiles/Makefile2 tests/server_tests/preinstall
+	cd /home/tyom/workspace/clientserver && $(MAKE) -f CMakeFiles/Makefile2 tests/server_tests/preinstall
 .PHONY : preinstall/fast
 
 # clear depends
 depend:
-	cd /home/aram/workspace/clientserver && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
+	cd /home/tyom/workspace/clientserver && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
 .PHONY : depend
 
 # Convenience name for target.
 tests/server_tests/CMakeFiles/t_server.dir/rule:
-	cd /home/aram/workspace/clientserver && $(MAKE) -f CMakeFiles/Makefile2 tests/server_tests/CMakeFiles/t_server.dir/rule
+	cd /home/tyom/workspace/clientserver && $(MAKE) -f CMakeFiles/Makefile2 tests/server_tests/CMakeFiles/t_server.dir/rule
 .PHONY : tests/server_tests/CMakeFiles/t_server.dir/rule
 
 # Convenience name for target.
@@ -168,7 +156,7 @@ t_server: tests/server_tests/CMakeFiles/t_server.dir/rule
 
 # fast build rule for target.
 t_server/fast:
-	cd /home/aram/workspace/clientserver && $(MAKE) -f tests/server_tests/CMakeFiles/t_server.dir/build.make tests/server_tests/CMakeFiles/t_server.dir/build
+	cd /home/tyom/workspace/clientserver && $(MAKE) -f tests/server_tests/CMakeFiles/t_server.dir/build.make tests/server_tests/CMakeFiles/t_server.dir/build
 .PHONY : t_server/fast
 
 test_1.o: test_1.cpp.o
@@ -177,7 +165,7 @@ test_1.o: test_1.cpp.o
 
 # target to build an object file
 test_1.cpp.o:
-	cd /home/aram/workspace/clientserver && $(MAKE) -f tests/server_tests/CMakeFiles/t_server.dir/build.make tests/server_tests/CMakeFiles/t_server.dir/test_1.cpp.o
+	cd /home/tyom/workspace/clientserver && $(MAKE) -f tests/server_tests/CMakeFiles/t_server.dir/build.make tests/server_tests/CMakeFiles/t_server.dir/test_1.cpp.o
 .PHONY : test_1.cpp.o
 
 test_1.i: test_1.cpp.i
@@ -186,7 +174,7 @@ test_1.i: test_1.cpp.i
 
 # target to preprocess a source file
 test_1.cpp.i:
-	cd /home/aram/workspace/clientserver && $(MAKE) -f tests/server_tests/CMakeFiles/t_server.dir/build.make tests/server_tests/CMakeFiles/t_server.dir/test_1.cpp.i
+	cd /home/tyom/workspace/clientserver && $(MAKE) -f tests/server_tests/CMakeFiles/t_server.dir/build.make tests/server_tests/CMakeFiles/t_server.dir/test_1.cpp.i
 .PHONY : test_1.cpp.i
 
 test_1.s: test_1.cpp.s
@@ -195,7 +183,7 @@ test_1.s: test_1.cpp.s
 
 # target to generate assembly for a file
 test_1.cpp.s:
-	cd /home/aram/workspace/clientserver && $(MAKE) -f tests/server_tests/CMakeFiles/t_server.dir/build.make tests/server_tests/CMakeFiles/t_server.dir/test_1.cpp.s
+	cd /home/tyom/workspace/clientserver && $(MAKE) -f tests/server_tests/CMakeFiles/t_server.dir/build.make tests/server_tests/CMakeFiles/t_server.dir/test_1.cpp.s
 .PHONY : test_1.cpp.s
 
 # Help Target
@@ -204,7 +192,6 @@ help:
 	@echo "... all (the default if no target is provided)"
 	@echo "... clean"
 	@echo "... depend"
-	@echo "... install/strip"
 	@echo "... install/local"
 	@echo "... install"
 	@echo "... list_install_components"
@@ -225,6 +212,6 @@ help:
 # No rule that depends on this can have commands that come from listfiles
 # because they might be regenerated.
 cmake_check_build_system:
-	cd /home/aram/workspace/clientserver && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
+	cd /home/tyom/workspace/clientserver && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
 .PHONY : cmake_check_build_system
 

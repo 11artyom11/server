@@ -6,7 +6,7 @@
 
 #IncludeRegexTransform: 
 
-/home/aram/workspace/clientserver/tests/lib_tests/test_1.cpp
+/home/tyom/workspace/clientserver/tests/lib_tests/test_1.cpp
 gtest/gtest.h
 -
 random
