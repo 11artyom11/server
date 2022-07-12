@@ -66,8 +66,10 @@ namespace DataTransfer
             MessageModel init_log_in_message 
              (const std::map<string, JsonValType>&) const __THROW;
 
-             MessageModel init_sign_up_message
+            MessageModel init_sign_up_message
              (const std::map<string, JsonValType>&) const __THROW;
+
+            
 
             ~MessageResolver();
     };

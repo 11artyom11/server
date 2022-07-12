@@ -1,4 +1,4 @@
-#include "../../../../include/util/data_transfer/message_resolver/message_resolver.h"
+#include "message_resolver.h"
 
 using MessageResolver  = DataTransfer::MessageResolver ;
 using MessageModel     = DataTransfer::MessageModel;

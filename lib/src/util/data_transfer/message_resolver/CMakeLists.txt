@@ -4,6 +4,8 @@ include(GNUInstallDirs)
 
 add_library(message_resolver SHARED message_resolver.cpp)
 
+include_directories(../../../../include/util/data_transfer/message_resolver)
+
 set_target_properties(message_resolver PROPERTIES
     VERSION ${PROJECT_VERSION}
     SOVERSION 1

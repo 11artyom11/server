@@ -87,11 +87,12 @@ SignUpVerify::SignUpVerify(const string& unique_token)
     this->set ("perm_uid", unique_token);
 }
 
-BroadcastMessage::BroadcastMessage (const string& message, const string& trigger_token, const string& room_id)
+BroadcastMessage::BroadcastMessage (const string& message, const string& trigger_token, const string& room_id, const string& name)
 {
     Debug().info ("Constructed BroadcastMessage Message");
     this->set("command", command);
     this->set("message", message);
     this->set("trg_token", trigger_token);
     this->set("room_id", room_id);    
+    this->set("name", name);
 }

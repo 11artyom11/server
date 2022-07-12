@@ -153,7 +153,8 @@ int Handler::on_broadcast_message_recieved (int sfd, const DataTransfer::Message
     auto only_message = message.get<std::string>("message");
     auto trig_token = message.get<std::string> ("trg_token");
     auto room_id = message.get<std::string>("room_id");
-    Debug().raw (trig_token, " : ", only_message);
+    auto trig_nickname = message.get<std::string>("name");
+    Debug().raw (trig_nickname, " : ", only_message);
     return 0;
 }
 

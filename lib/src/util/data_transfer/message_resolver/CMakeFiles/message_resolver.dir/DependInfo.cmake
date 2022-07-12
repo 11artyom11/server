@@ -15,6 +15,7 @@ set(CMAKE_TARGET_DEFINITIONS_CXX
 
 # The include file search paths:
 set(CMAKE_CXX_TARGET_INCLUDE_PATH
+  "lib/src/util/data_transfer/message_resolver/../../../../include/util/data_transfer/message_resolver"
   "lib/src/util/data_transfer/message_resolver/."
   )
 

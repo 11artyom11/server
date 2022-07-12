@@ -113,7 +113,7 @@ class SignUpVerify : public MessageModel
 class BroadcastMessage : public MessageModel
 {
     public:
-        BroadcastMessage(const string& message, const string& trigger_token, const string& room_id);
+        BroadcastMessage(const string& message, const string& trigger_token, const string& room_id, const string& name);
     private:
         static constexpr auto command = BRDCST_MESSAGE_COMMAND;
 };

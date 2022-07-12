@@ -131,8 +131,8 @@ int ChatRoom::broadcast_to_all_users (const std::string& utoken, const DataTrans
     all_customers.push_front (master_customer);
 
     std::string only_message = message.get<std::string>("message");
-
-    DataTransfer::BroadcastMessage brdcstMessage{only_message, utoken, room_id};
+    std::string nickname = message.get<std::string>("name");
+    DataTransfer::BroadcastMessage brdcstMessage{only_message, utoken, room_id, nickname};
 
     
     for (const auto& customer : all_customers)
