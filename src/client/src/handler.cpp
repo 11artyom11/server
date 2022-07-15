@@ -1,12 +1,13 @@
 #include "handler.h"
 
+
+
 using Handler = Client::Handler;
 
 Handler::Handler ()
 {
     aes_shrd_ptr = std::make_unique<AES_Unit>();
     rsa_shrd_ptr = std::make_unique<RSA_Unit>();
-
 }
 
 void Handler::commap_init (void)
@@ -37,8 +38,23 @@ int Handler::send_connect_request(int sfd,
     this->current_state = CONNECT_STATE::conn_request;
     DataTransfer::ConnectRequest cR{"127.0.0.1"};
     string to_send = cR.to_str();
-    int res = send(sfd, (char*)to_send.c_str(), to_send.length(), NULL);
-    return res;
+    Debug().info ("Here is it");
+    try {
+        int error_code;
+        socklen_t error_code_size = sizeof(error_code);
+        int retval = getsockopt(sfd, SOL_SOCKET, SO_ERROR, &error_code, &error_code_size);
+        if (error_code != 0) {
+            /* socket has a non zero error status */
+            fprintf(stderr, "socket error: %s\n", strerror(error_code));
+        }
+        int res = send(sfd, (char*)to_send.c_str(), to_send.length(), NULL);
+        Debug().info ("result :" , res);
+        return res;
+
+    } catch (...) {
+        // emit custom_event->server_connection_not_responding();
+    }
+    return -1;
 }
 
 int Handler::on_connect_accept_recieved(int sfd,
@@ -120,10 +136,12 @@ int Handler::on_connect_verify_recieved(int sfd,
     {
         Debug().info ("CONNECTION VERIFIED");
         this->current_state = CONNECT_STATE::conn_verify;
+        // emit custom_event->connection_state_changed();
+        Debug().raw ("SIGNAL EMMITED");
     }
     else 
     {
-        Debug().fatal ("Tokens donot match");
+        Debug().fatal ("Tokens do not match");
     }
 
 
@@ -143,7 +161,7 @@ int Handler::on_login_verify_recieved(int sfd,
 }
 
 int Handler::send_terminate_connection(int sfd,
-                                        const DataTransfer::MessageModel&)
+                                        const DataTransfer::MessageModel& msg)
 {
 
 }
@@ -196,4 +214,5 @@ Handler::get_command  ( std::string command)
         return nullptr;
     }
 }
+
 

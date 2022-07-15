@@ -21,6 +21,7 @@
 #ifndef __COMM_UNIT_H__
 #define __COMM_UNIT_H__
 #include "connection_handler.h"
+
 #include "message_model.h"
 #include "message_resolver.h"
 #include "io_unit.h"

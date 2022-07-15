@@ -29,13 +29,16 @@ void IOModel::send_message (const DataTransfer::MessageModel& message, int sfd)
     std::copy (aes_key.begin(), aes_key.end(), key_c);
     key_c[aes_key.length()] = 0;
     message_uc[message.to_str().length()] = 0;
-    // Debug().info ("Key : ", key_c);
-    // Debug().info ("Normal Key : ", aes->get_key());
-    // Debug().info ("Message : ", message_uc);
 
     int len = aes->encrypt(message_uc, message.to_str().length(), key_c, cipher);
     Debug().warning (" ====> cipher len : ", len);
-    send (sfd,  (char*)message.to_str().c_str(), message.to_str().length() , NULL);
+
+    /* Construct SafeMessageModel */
+    std::string safe_message_model_str = DataTransfer::SafeMessageModel::makeSafeMessage(base64encode((char*)cipher, strlen((char*)cipher)), len);
+
+
+    int res = send (sfd,  safe_message_model_str.c_str(), safe_message_model_str.length() , NULL);
+    Debug().warning("Sent ", res, " bytes of data");
 }
 
 

@@ -60,6 +60,7 @@ Security::CustomerCryptoUnit* CustomerModel::get_crypto_unit(void)
 
 void CustomerModel::send_message (const DataTransfer::MessageModel& message)
 {
+
     std::string aes_key = get_aes_token();
     unsigned char key_c[aes_key.length()];  // = (unsigned char*)(get_aes_token().c_str());
     unsigned char cipher[MAX_JSON_MESSAGE_SIZE];
@@ -71,8 +72,14 @@ void CustomerModel::send_message (const DataTransfer::MessageModel& message)
     Debug().info ("Message : ", message_uc);
 
     int len = crypto_unit->get_aes_ptr()->encrypt(message_uc, message.to_str().length(), key_c, cipher);
-    Debug().warning ("In send_connect_verify ====> cipher len : ", len);
-    send (sfd,  (char*)cipher, strlen((char*)(cipher)), NULL);
+    Debug().info ("CIPHER LEN", len);
+    /* Create Safe Message Model */
+    // std::string safe_message_hex(string_to_hex((char*)cipher));
+    std::string safe_message_hex(base64encode((char*)cipher, strlen((char*)cipher)));
+
+    auto safe_message_model_str = DataTransfer::SafeMessageModel::makeSafeMessage(safe_message_hex, len);    
+    Debug().info ("Safe Message\n", safe_message_model_str);
+    send (sfd, safe_message_model_str.c_str(), safe_message_model_str.length(), NULL);
     return;
 }
 

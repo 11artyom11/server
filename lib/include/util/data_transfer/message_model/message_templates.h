@@ -118,6 +118,18 @@ class BroadcastMessage : public MessageModel
         static constexpr auto command = BRDCST_MESSAGE_COMMAND;
 };
 
+
+class SafeMessageModel : public MessageModel
+{
+public:
+
+    /* This c-tor is deleted because in this class safe field MUST contain cipher of Basic MessageModel */
+        SafeMessageModel(const std::string& crpt_hex, int crpt_len);
+        SafeMessageModel(const DataTransfer::MessageModel&) = delete;
+        static std::string makeSafeMessage(const std::string& crpt_hex, int crpt_len);
+};
+
+
 }
 
 

@@ -33,6 +33,7 @@
 #include <sys/socket.h>
 #include <netdb.h>
 #include <netinet/in.h>
+#include <cassert>
 
 
 typedef std::shared_ptr <RSA_Unit> RSA_Unit_shrd_ptr;
@@ -75,10 +76,12 @@ struct ClientPrototype
 namespace Client
 {
     class Handler;
-
     /*Binding which help to add new handler functions genreically*/
-    typedef std::map <std::string, int (Handler::*) (int, const DataTransfer::MessageModel&), ::strless> CommMapType;
+    typedef std::map <std::string, int (Handler::*) (int, const DataTransfer::MessageModel&), ::strless>\
+                                                                                                        CommMapType;
     
+
+
 class Handler
 {
     public:
@@ -105,13 +108,14 @@ class Handler
         
         decltype(&Client::Handler::send_connect_request) get_command  ( std::string command);
 
+
     private:
         CommMapType commap;
         /*Conciously hadn't added getter for aes token*/
         ClientPrototype cP;
         RSA_Unit_shrd_ptr rsa_shrd_ptr;
         AES_Unit_shrd_ptr aes_shrd_ptr;
-        CONNECT_STATE current_state;
+        CONNECT_STATE current_state = CONNECT_STATE::conn_request;
 
 };
 

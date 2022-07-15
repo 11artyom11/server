@@ -24,7 +24,6 @@
 #include "communication_unit.h"
 #include "constants.h"
 #include "debug_helper.h"
-
 #include <memory>
 #include <utility>
 
@@ -45,13 +44,25 @@ namespace Client{
     class ClientModel
     {
         public:
-            ClientModel(int __port = DEFAULT_PORT);
+            ClientModel(void);
+            ClientModel(int __port);
+            void init_new_client (int __port);
             int connect_to_default_host (void);
+            int get_connection_state (void) const noexcept;
+            BasicConnectionHandlerSharedPtr get_con_handler (void) const noexcept;
+            BasicCommunicationModelSharedPtr get_comm_unit (void) const noexcept;
+            int send_to_host (const DataTransfer::MessageModel&);
+            int send_join_to_room_request (const std::string& master_token, const std::string& room_id);
+            int close_connection (void) ;
             ~ClientModel();
+
         private:    
             BasicConnectionHandlerSharedPtr con_handler;
             BasicCommunicationModelSharedPtr comm_unit;
-
+            /* enum telling connection between client and server */
+            /* don't mess with net_state in handler unit  */
+            int connection_state = -1;
+            int main_socket;
     };
 };
 

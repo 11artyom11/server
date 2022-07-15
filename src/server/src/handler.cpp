@@ -144,26 +144,60 @@ std::string Server::Handler::rsa_case (char* response)
  */
 std::string Server::Handler::aes_case (char* response, const AES_Unit_shrd_ptr& aes)
 {
-    // try
-    // {
-    //     Debug().warning("AES CASE");
-
-    //     int cipher_len = ((int)(strlen(response)/16))*16;
-    //     Debug().fatal ("CIPHER LEN : ", cipher_len);
-    //     std::string aes_key = aes->get_key();
-    //     unsigned char dec[MAX_JSON_MESSAGE_SIZE];
-    //     int dec_len = aes->decrypt((unsigned char*)response, cipher_len, (unsigned char*) aes_key.c_str(), dec);
+    try
+    {
+        Debug().info ("SafeMODEL\n", response);
+        /* 
+        Which means the network state is !!NOT!! at it's only unsafe
+        phase e.g. no AES_Decrpytion needed
+        connect_accept command recieved from server at this point
+     */
+        // DataTransfer::MessageModel safe_message_model{response};
+        // std::string safe_message_str{base64decode(safe_message_model.get<std::string>("safe").c_str(), safe_message_model.get<std::string>("safe").length())};
         
-    //     /* dec len must be max MAX_JSON_MESSAGE_SIZE (see constants.h) */
-    //     dec[dec_len] = '\0';
+        // auto safe_message_len = safe_message_model.get<int>("safe_len");
+        
+        // Debug().warning("GOT SAFE CASE");
+        // Debug().info (" ====> cipher len : ", safe_message_len);
+        // Debug().info (" =====> pure len : ", safe_message_len);
+        // unsigned char* key_ch = (unsigned char*)(aes->get_key().c_str());
 
-    //     return std::string{(char*)dec};
-    // }
-    // catch(const std::exception& e)
-    // {
-    //     std::cerr << e.what() << '\n';
-    //     return "";
-    // }
+        // unsigned char dec[MAX_JSON_MESSAGE_SIZE];
+        // int dec_len = aes->decrypt((unsigned char*) safe_message_str.c_str(), safe_message_len, key_ch, dec);
+        // dec[dec_len] = '\0';
+        // std::string message_str = (char*)dec;
+        // Debug().info ("Final Message : ", message_str);
+
+        DataTransfer::MessageModel safe_message_model{response};
+        Debug().info (safe_message_model.get<std::string>("safe"));
+
+        auto safe_message = (unsigned char*)base64decode(safe_message_model.get<std::string>("safe").c_str(), safe_message_model.get<std::string>("safe").length());
+        int safe_message_len = safe_message_model.get<int>("safe_len");
+
+        Debug().warning("GOT SAFE CASE");
+        Debug().info (" ====> cipher len : ", safe_message_len);
+        Debug().info (" =====> pure len : ", safe_message_len);
+         
+
+        std::string aes_key_str = aes->get_key();
+
+        unsigned char* key_ch = new unsigned char[aes_key_str.length()];// (unsigned char*)(aes->get_key().c_str());]
+        std::copy (aes_key_str.begin(), aes_key_str.end(), key_ch);
+        
+        Debug().info ("AES_KEY : ", key_ch);
+        unsigned char dec[MAX_JSON_MESSAGE_SIZE];
+        int dec_len = aes->decrypt(safe_message, safe_message_len, key_ch, dec);
+        dec[dec_len] = '\0';
+        std::string message_str = (char*)dec;
+        Debug().info ("Final Message : ", dec);
+
+        return std::string{(char*)dec};
+    }
+    catch(const std::exception& e)
+    {
+        std::cerr << e.what() << '\n';
+        return "";
+    }
 
         return std::string{response};
 }

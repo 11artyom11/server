@@ -96,3 +96,20 @@ BroadcastMessage::BroadcastMessage (const string& message, const string& trigger
     this->set("room_id", room_id);    
     this->set("name", name);
 }
+
+
+SafeMessageModel::SafeMessageModel(const std::string &crpt_hex, int crpt_len)
+{
+    Debug().info ("constructed SafeMessageModel");
+
+    this->set("safe", crpt_hex);
+    this->set("safe_len",crpt_len);
+
+}
+
+
+
+std::string SafeMessageModel::makeSafeMessage(const std::string &crpt_hex, int crpt_len)
+{
+    return SafeMessageModel(crpt_hex, crpt_len).to_str();
+}

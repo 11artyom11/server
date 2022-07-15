@@ -50,41 +50,37 @@ void BasicCommunicationModel::start_read_async(int sockfd)
 {
     /*Here must be set message resolver to resolve inputted data*/
         
-        /******/
-
     Debug().info("Called BasicCommunicationModel::start_read_async(..)");
-    /*Lambda which is called to forkk another thread in order to 
+    /*function which is called to forkk another thread in order to
         support async read model and not to mess with write model*/
-    auto wait_to_read_and_start_read_q = [this, &sockfd]()
+
+    for (;;)
     {
-        for (;;) 
+    /*While conenction has not been
+    terminated keep reading from sockfd*/
+
+        /*This infinite loop can hold maximum $max_read_thread_count
+        connections*/
+
+//        sem_wait(&read_lock);
+
+        char buff[1024];
+        bzero(buff, 1024);
+
+        int read_result = read(sockfd, buff, sizeof(buff));
+        if (read_result == 0)
         {
-        /*While conenction has not been 
-        terminated keep reading from sockfd*/
-
-            /*This infinite loop can hold maximum $max_read_thread_count
-            connections*/
-            sem_wait(&read_lock);
-            
-            char buff[1024];
-            int n;
-            bzero(buff, 1024);
-            
-            int read_result = read(sockfd, buff, sizeof(buff));
-            if (read_result == 0)
-            {
-                Debug().fatal("Host is no longer available. Terminating...");
-                exit(0);
-            }
-            /*Start new thread to print retrieved buffer*/
-            m_io_model->read_q(sockfd, buff);
-
-            sem_post(&read_lock);
+            Debug().fatal("Host is no longer available. Terminating...");
+            exit(0);
         }
-    };
+        /*Start new thread to print retrieved buffer*/
+        m_io_model->read_q(sockfd, buff);
+
+//        sem_post(&read_lock);
+    }
+
     
-        /*Async-ly start read lambda (see :43) */
-    std::async(std::launch::async, wait_to_read_and_start_read_q);          
+    /*Async-ly start read lambda (see :43) */
     Debug().info("Ended BasicCommunicationModel::start_read_async(..)");
 }
 
