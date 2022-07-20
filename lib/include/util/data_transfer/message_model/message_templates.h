@@ -118,6 +118,15 @@ class BroadcastMessage : public MessageModel
         static constexpr auto command = BRDCST_MESSAGE_COMMAND;
 };
 
+class CreateChatroomVerify : public MessageModel
+{
+    public:
+        CreateChatroomVerify (const std::string& new_room_id);
+
+    private:
+        static constexpr auto command = CHATROOM_CREATE_VERIFY;
+};
+
 
 class SafeMessageModel : public MessageModel
 {
@@ -128,6 +137,8 @@ public:
         SafeMessageModel(const DataTransfer::MessageModel&) = delete;
         static std::string makeSafeMessage(const std::string& crpt_hex, int crpt_len);
 };
+
+
 
 
 }

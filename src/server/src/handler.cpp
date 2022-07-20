@@ -183,7 +183,7 @@ std::string Server::Handler::aes_case (char* response, const AES_Unit_shrd_ptr& 
 
         unsigned char* key_ch = new unsigned char[aes_key_str.length()];// (unsigned char*)(aes->get_key().c_str());]
         std::copy (aes_key_str.begin(), aes_key_str.end(), key_ch);
-        
+
         Debug().info ("AES_KEY : ", key_ch);
         unsigned char dec[MAX_JSON_MESSAGE_SIZE];
         int dec_len = aes->decrypt(safe_message, safe_message_len, key_ch, dec);
@@ -385,6 +385,12 @@ int Server::Handler::on_create_chatroom_command_recieved (int sfd, const DataTra
     /*Create new chatroom*/
     RoomSpace::ChatRoom *new_room = new RoomSpace::ChatRoom(*recent_customers_sfd[sfd].get());
     chatroom_mngr_shrd_ptr->push_new_room(recent_customers_sfd[sfd].get() ,new_room);
+     /* Create chatroom_create_verify message to send to desired client */
+    DataTransfer::CreateChatroomVerify createVerify(new_room->get_room_id());
+    Debug().info ("ROOM DATA\n", createVerify.to_str());
+
+    chatroom_create_verify (sfd, createVerify);
+
     return 0;
 }
 
@@ -399,6 +405,9 @@ int Server::Handler::on_join_chatroom_command_recieved (int sfd, const DataTrans
 
     chatroom->add_new_secondary_customer (*recent_customers_sfd[sfd].get());
     Debug().info ("ChatRoom ID => ",chatroom->get_room_id());
+
+   
+
     /* 
     {"command":"com_join_chatroom","master_token":"oVERKQ67LC","room_id":"jVXTPmixcL","utoken":"fI8qVa0uOm"}    
     */
@@ -469,8 +478,17 @@ int Server::Handler::send_login_verify(int sfd, const DataTransfer::MessageModel
 
 }
 
-
-
+int Server::Handler::chatroom_create_verify (int sfd, const DataTransfer::MessageModel& message)
+{
+    auto customer = recent_customers_sfd[sfd];
+    if (customer == CustomerModel_ptr(nullptr))
+    {
+        Debug().fatal("customer not found");
+        return -1;
+    }
+    customer->send_message(message);
+    return 0;
+}
 
 /**
  * @brief provide new socket a write thread - support with separate thread

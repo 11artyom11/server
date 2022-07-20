@@ -97,6 +97,15 @@ BroadcastMessage::BroadcastMessage (const string& message, const string& trigger
     this->set("name", name);
 }
 
+CreateChatroomVerify::CreateChatroomVerify (const std::string& new_room_id)
+{
+    Debug().info ("constructed CreateChatroomVerify");
+
+    this->set("command", command);
+    this->set("new_room_id", new_room_id);
+}
+
+
 
 SafeMessageModel::SafeMessageModel(const std::string &crpt_hex, int crpt_len)
 {

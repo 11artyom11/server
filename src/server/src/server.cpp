@@ -223,7 +223,10 @@ int Server::ServerModel::distribute_incoming_connections(int socket,
         response_s = response;
     }
     /* UNSAFE CASE e.g. without encryption */
-    
+    if (response_s.empty())
+    {
+        return -1;
+    }
     /* Decrypted string MUST BE JSON Readable */
     string mes{response_s};
 

@@ -138,6 +138,7 @@ class Handler
             int send_connect_verify                 (int sfd, const DataTransfer::MessageModel&);
             int send_sign_up_verify                 (int sfd, const DataTransfer::MessageModel&);
             int send_login_verify                   (int sfd, const DataTransfer::MessageModel&);
+            int chatroom_create_verify              (int sfd, const DataTransfer::MessageModel&);
 
             int provide_write_thread                (int sfd, const DataTransfer::MessageModel&);
             int provide_read_thread                 (int sfd, const DataTransfer::MessageModel&);
