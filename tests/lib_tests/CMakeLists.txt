@@ -33,3 +33,9 @@ target_link_libraries(t_lib3 message_model)
 target_link_libraries(t_lib3 message_resolver)
 target_link_libraries(t_lib3 debug_helper)
 
+#Message (JSON) resolver tests
+add_executable(t_lib4 test3.cpp)
+target_link_libraries(t_lib4 gtest_main)
+target_link_libraries(t_lib4 message_model)
+target_link_libraries(t_lib4 message_resolver)
+target_link_libraries(t_lib4 debug_helper)

@@ -116,8 +116,6 @@ SafeMessageModel::SafeMessageModel(const std::string &crpt_hex, int crpt_len)
 
 }
 
-
-
 std::string SafeMessageModel::makeSafeMessage(const std::string &crpt_hex, int crpt_len)
 {
     return SafeMessageModel(crpt_hex, crpt_len).to_str();

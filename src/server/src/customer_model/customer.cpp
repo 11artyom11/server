@@ -80,6 +80,8 @@ void CustomerModel::send_message (const DataTransfer::MessageModel& message)
     auto safe_message_model_str = DataTransfer::SafeMessageModel::makeSafeMessage(safe_message_hex, len);    
     Debug().info ("Safe Message\n", safe_message_model_str);
     send (sfd, safe_message_model_str.c_str(), safe_message_model_str.length(), NULL);
+
+    delete[] message_uc;
     return;
 }
 

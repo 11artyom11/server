@@ -118,6 +118,7 @@ set(CMAKE_DEPEND_INFO_FILES
   "tests/googletest/googletest/CMakeFiles/gtest.dir/DependInfo.cmake"
   "tests/client_tests/CMakeFiles/t_client.dir/DependInfo.cmake"
   "tests/lib_tests/CMakeFiles/t_lib3.dir/DependInfo.cmake"
+  "tests/lib_tests/CMakeFiles/t_lib4.dir/DependInfo.cmake"
   "tests/lib_tests/CMakeFiles/t_lib2.dir/DependInfo.cmake"
   "tests/lib_tests/CMakeFiles/t_lib.dir/DependInfo.cmake"
   "tests/server_tests/CMakeFiles/t_server.dir/DependInfo.cmake"

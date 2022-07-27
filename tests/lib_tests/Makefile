@@ -160,6 +160,21 @@ t_lib3/fast:
 .PHONY : t_lib3/fast
 
 # Convenience name for target.
+tests/lib_tests/CMakeFiles/t_lib4.dir/rule:
+	cd /home/tyom/workspace/clientserver && $(MAKE) -f CMakeFiles/Makefile2 tests/lib_tests/CMakeFiles/t_lib4.dir/rule
+.PHONY : tests/lib_tests/CMakeFiles/t_lib4.dir/rule
+
+# Convenience name for target.
+t_lib4: tests/lib_tests/CMakeFiles/t_lib4.dir/rule
+
+.PHONY : t_lib4
+
+# fast build rule for target.
+t_lib4/fast:
+	cd /home/tyom/workspace/clientserver && $(MAKE) -f tests/lib_tests/CMakeFiles/t_lib4.dir/build.make tests/lib_tests/CMakeFiles/t_lib4.dir/build
+.PHONY : t_lib4/fast
+
+# Convenience name for target.
 tests/lib_tests/CMakeFiles/t_lib2.dir/rule:
 	cd /home/tyom/workspace/clientserver && $(MAKE) -f CMakeFiles/Makefile2 tests/lib_tests/CMakeFiles/t_lib2.dir/rule
 .PHONY : tests/lib_tests/CMakeFiles/t_lib2.dir/rule
@@ -223,6 +238,7 @@ test3.o: test3.cpp.o
 # target to build an object file
 test3.cpp.o:
 	cd /home/tyom/workspace/clientserver && $(MAKE) -f tests/lib_tests/CMakeFiles/t_lib3.dir/build.make tests/lib_tests/CMakeFiles/t_lib3.dir/test3.cpp.o
+	cd /home/tyom/workspace/clientserver && $(MAKE) -f tests/lib_tests/CMakeFiles/t_lib4.dir/build.make tests/lib_tests/CMakeFiles/t_lib4.dir/test3.cpp.o
 .PHONY : test3.cpp.o
 
 test3.i: test3.cpp.i
@@ -232,6 +248,7 @@ test3.i: test3.cpp.i
 # target to preprocess a source file
 test3.cpp.i:
 	cd /home/tyom/workspace/clientserver && $(MAKE) -f tests/lib_tests/CMakeFiles/t_lib3.dir/build.make tests/lib_tests/CMakeFiles/t_lib3.dir/test3.cpp.i
+	cd /home/tyom/workspace/clientserver && $(MAKE) -f tests/lib_tests/CMakeFiles/t_lib4.dir/build.make tests/lib_tests/CMakeFiles/t_lib4.dir/test3.cpp.i
 .PHONY : test3.cpp.i
 
 test3.s: test3.cpp.s
@@ -241,6 +258,7 @@ test3.s: test3.cpp.s
 # target to generate assembly for a file
 test3.cpp.s:
 	cd /home/tyom/workspace/clientserver && $(MAKE) -f tests/lib_tests/CMakeFiles/t_lib3.dir/build.make tests/lib_tests/CMakeFiles/t_lib3.dir/test3.cpp.s
+	cd /home/tyom/workspace/clientserver && $(MAKE) -f tests/lib_tests/CMakeFiles/t_lib4.dir/build.make tests/lib_tests/CMakeFiles/t_lib4.dir/test3.cpp.s
 .PHONY : test3.cpp.s
 
 test_1.o: test_1.cpp.o
@@ -282,6 +300,7 @@ help:
 	@echo "... edit_cache"
 	@echo "... install/local"
 	@echo "... t_lib3"
+	@echo "... t_lib4"
 	@echo "... t_lib2"
 	@echo "... t_lib"
 	@echo "... test2.o"

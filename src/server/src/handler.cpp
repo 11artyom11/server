@@ -152,26 +152,27 @@ std::string Server::Handler::aes_case (char* response, const AES_Unit_shrd_ptr& 
         phase e.g. no AES_Decrpytion needed
         connect_accept command recieved from server at this point
      */
-        // DataTransfer::MessageModel safe_message_model{response};
-        // std::string safe_message_str{base64decode(safe_message_model.get<std::string>("safe").c_str(), safe_message_model.get<std::string>("safe").length())};
+    
+        /* DataTransfer::MessageModel safe_message_model{response};
+        std::string safe_message_str{base64decode(safe_message_model.get<std::string>("safe").c_str(), safe_message_model.get<std::string>("safe").length())};
         
-        // auto safe_message_len = safe_message_model.get<int>("safe_len");
+        auto safe_message_len = safe_message_model.get<int>("safe_len");
         
-        // Debug().warning("GOT SAFE CASE");
-        // Debug().info (" ====> cipher len : ", safe_message_len);
-        // Debug().info (" =====> pure len : ", safe_message_len);
-        // unsigned char* key_ch = (unsigned char*)(aes->get_key().c_str());
+        Debug().warning("GOT SAFE CASE");
+        Debug().info (" ====> cipher len : ", safe_message_len);
+        Debug().info (" =====> pure len : ", safe_message_len);
+        unsigned char* key_ch = (unsigned char*)(aes->get_key().c_str());
 
-        // unsigned char dec[MAX_JSON_MESSAGE_SIZE];
-        // int dec_len = aes->decrypt((unsigned char*) safe_message_str.c_str(), safe_message_len, key_ch, dec);
-        // dec[dec_len] = '\0';
-        // std::string message_str = (char*)dec;
-        // Debug().info ("Final Message : ", message_str);
+        unsigned char dec[MAX_JSON_MESSAGE_SIZE];
+        int dec_len = aes->decrypt((unsigned char*) safe_message_str.c_str(), safe_message_len, key_ch, dec);
+        dec[dec_len] = '\0';
+        std::string message_str = (char*)dec;
+        Debug().info ("Final Message : ", message_str); */
 
         DataTransfer::MessageModel safe_message_model{response};
         Debug().info (safe_message_model.get<std::string>("safe"));
 
-        auto safe_message = (unsigned char*)base64decode(safe_message_model.get<std::string>("safe").c_str(), safe_message_model.get<std::string>("safe").length());
+        unsigned char* safe_message = (unsigned char*)base64decode(safe_message_model.get<std::string>("safe").c_str(), safe_message_model.get<std::string>("safe").length());
         int safe_message_len = safe_message_model.get<int>("safe_len");
 
         Debug().warning("GOT SAFE CASE");
@@ -190,6 +191,10 @@ std::string Server::Handler::aes_case (char* response, const AES_Unit_shrd_ptr& 
         dec[dec_len] = '\0';
         std::string message_str = (char*)dec;
         Debug().info ("Final Message : ", dec);
+
+
+        delete[] safe_message;
+        delete[] key_ch;
 
         return std::string{(char*)dec};
     }
