@@ -9,5 +9,6 @@ build/*
 *.key
 ./'Client Docs'/*
 ./'Server Docs'/*
-./html/*\
+./html/*
 ./latex/*
+html
