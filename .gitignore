@@ -7,7 +7,5 @@ bin/*
 lib/*.a
 build/*
 *.key
-ClientDocs/
-ServerDocs/
 html/
 latex/
