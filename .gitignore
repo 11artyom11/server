@@ -7,8 +7,7 @@ bin/*
 lib/*.a
 build/*
 *.key
-./'Client Docs'/*
-./'Server Docs'/*
-./html/*
-./latex/*
-html
+ClientDocs/
+ServerDocs/
+html/
+latex/
