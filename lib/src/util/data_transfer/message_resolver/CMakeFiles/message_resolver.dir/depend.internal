@@ -3,3 +3,8 @@
 
 lib/src/util/data_transfer/message_resolver/CMakeFiles/message_resolver.dir/message_resolver.cpp.o
  /home/tyom/workspace/clientserver/lib/src/util/data_transfer/message_resolver/message_resolver.cpp
+ lib/include/helpers/constants.h
+ lib/include/helpers/debug_helper/debug_helper.h
+ lib/include/util/data_transfer/message_model/message_model.h
+ lib/include/util/data_transfer/message_resolver/message_resolver.h
+ outter_modules/json/single_include/nlohmann/json.hpp

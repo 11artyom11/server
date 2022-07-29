@@ -7,38 +7,42 @@
 #IncludeRegexTransform: 
 
 /home/tyom/workspace/clientserver/lib/include/helpers/constants.h
-vector
+map
 -
 string
 -
-map
+vector
 -
 
 /home/tyom/workspace/clientserver/lib/include/helpers/debug_helper/debug_helper.h
-iostream
--
 stdio.h
 -
 time.h
+-
+iostream
 -
 ../constants.h
 /home/tyom/workspace/clientserver/lib/include/helpers/constants.h
 
 /home/tyom/workspace/clientserver/lib/include/util/data_transfer/message_model/message_model.h
+string
+-
 ../../../../../outter_modules/json/single_include/nlohmann/json.hpp
 /home/tyom/workspace/clientserver/outter_modules/json/single_include/nlohmann/json.hpp
 ../../../helpers/debug_helper/debug_helper.h
 /home/tyom/workspace/clientserver/lib/include/helpers/debug_helper/debug_helper.h
-string
--
 
 /home/tyom/workspace/clientserver/lib/include/util/data_transfer/message_model/message_templates.h
-message_model.h
-/home/tyom/workspace/clientserver/lib/include/util/data_transfer/message_model/message_model.h
-../../../helpers/constants.h
-/home/tyom/workspace/clientserver/lib/include/helpers/constants.h
 string
 -
+../../../helpers/constants.h
+/home/tyom/workspace/clientserver/lib/include/helpers/constants.h
+message_model.h
+/home/tyom/workspace/clientserver/lib/include/util/data_transfer/message_model/message_model.h
+
+/home/tyom/workspace/clientserver/lib/src/util/data_transfer/message_model/message_model.cpp
+../../../../include/util/data_transfer/message_model/message_model.h
+/home/tyom/workspace/clientserver/lib/include/util/data_transfer/message_model/message_model.h
 
 /home/tyom/workspace/clientserver/lib/src/util/data_transfer/message_model/message_templates.cpp
 ../../../../include/util/data_transfer/message_model/message_templates.h

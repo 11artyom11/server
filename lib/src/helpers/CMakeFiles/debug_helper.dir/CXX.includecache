@@ -7,19 +7,19 @@
 #IncludeRegexTransform: 
 
 /home/tyom/workspace/clientserver/lib/include/helpers/constants.h
-vector
+map
 -
 string
 -
-map
+vector
 -
 
 /home/tyom/workspace/clientserver/lib/include/helpers/debug_helper/debug_helper.h
-iostream
--
 stdio.h
 -
 time.h
+-
+iostream
 -
 ../constants.h
 /home/tyom/workspace/clientserver/lib/include/helpers/constants.h

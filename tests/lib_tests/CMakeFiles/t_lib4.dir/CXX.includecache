@@ -29,44 +29,44 @@ vector
 -
 
 lib/include/helpers/constants.h
-vector
+map
 -
 string
 -
-map
+vector
 -
 
 lib/include/helpers/debug_helper/debug_helper.h
-iostream
--
 stdio.h
 -
 time.h
+-
+iostream
 -
 ../constants.h
 lib/include/helpers/constants.h
 
 lib/include/util/data_transfer/message_model/message_model.h
+string
+-
 ../../../../../outter_modules/json/single_include/nlohmann/json.hpp
 outter_modules/json/single_include/nlohmann/json.hpp
 ../../../helpers/debug_helper/debug_helper.h
 lib/include/helpers/debug_helper/debug_helper.h
-string
--
 
 lib/include/util/data_transfer/message_resolver/message_resolver.h
-string
--
-map
--
 algorithm
 -
 any
 -
-../message_model/message_model.h
-lib/include/util/data_transfer/message_model/message_model.h
+map
+-
+string
+-
 ../../../../../lib/include/helpers/constants.h
 lib/include/helpers/constants.h
+../message_model/message_model.h
+lib/include/util/data_transfer/message_model/message_model.h
 
 outter_modules/json/single_include/nlohmann/json.hpp
 algorithm

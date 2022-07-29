@@ -2,84 +2,67 @@
 
 /**
  * @brief Construct a new Debug:: Debug object
- * 
+ *
  */
-Debug::Debug()
-{
-    this->outp_stream = &std::cout;
-}
+Debug::Debug() { this->outp_stream = &std::cout; }
 
 /**
  * @brief Destroy the Debug:: Debug object
- * 
+ *
  */
-Debug::~Debug()
-{
-
-}
+Debug::~Debug() {}
 
 /**
  * @brief gets current time ov working machine in unix style
  * used asctime_r instead of asctime in order to support multi-
  * thread debugging
- * 
- * @return unix styled time converted into std::string 
+ *
+ * @return unix styled time converted into std::string
  */
-std::string Debug::get_current_time(void) const noexcept
-{
-    time_t rawtime;
-  struct tm * timeinfo;
+std::string Debug::get_current_time(void) const noexcept {
+  time_t rawtime;
+  struct tm* timeinfo;
 
-  time ( &rawtime );
-  timeinfo = localtime ( &rawtime );
+  time(&rawtime);
+  timeinfo = localtime(&rawtime);
   char charbuf[30];
-  asctime_r(timeinfo, charbuf) ;
+  asctime_r(timeinfo, charbuf);
   std::string timestr(charbuf);
   timestr.pop_back();
-  return  "[ " + timestr + " ]";
-  
+  return "[ " + timestr + " ]";
 }
 
 /**
  * @brief Set pointer to default output stream for debug messages
- * can be done for each instance. For temporary instances this action is not available
- * 
+ * can be done for each instance. For temporary instances this action is not
+ * available
+ *
  * @param oS_ptr pointer to standard output stream
- * @return 0 on success , otherwise -1 
+ * @return 0 on success , otherwise -1
  */
-int Debug::set_output_stream( std::ostream* oS_ptr)
-{
-    try
-    {
-        this->outp_stream = oS_ptr;
-        return 0;
-    }
-    catch(const std::exception& e)
-    {
-        return -1;
-    }
+int Debug::set_output_stream(std::ostream* oS_ptr) {
+  try {
+    this->outp_stream = oS_ptr;
+    return 0;
+  } catch (const std::exception& e) {
+    return -1;
+  }
 }
 
 /**
  * @brief If this function has been called
- * further Debug messages will be disabled 
+ * further Debug messages will be disabled
  * untill Debug::enable_debug function will
  *  be called
- * 
+ *
  */
-void Debug::disable_debug(void)
-{
-    Debug::debug_state = false;
-}
+void Debug::disable_debug(void) { Debug::debug_state = false; }
 
 /**
  * @brief If this function has been called
- * further Debug messages will be enabled 
+ * further Debug messages will be enabled
  * untill Debug::disable_debug function will
  *  be called
- * 
+ *
  */
-void Debug::enable_debug(void)
-{
-    Debug::debug_state = true;
-}
+void Debug::enable_debug(void) { Debug::debug_state = true; }

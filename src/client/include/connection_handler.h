@@ -4,76 +4,65 @@
  * @version 0.1
  * @date 2022-03-20
  * @section DESCRIPTION
- * This class is made to establish stable connection 
+ * This class is made to establish stable connection
  * between server and remote node (client)
  * @copyright Copyright (c) 2022
- * 
+ *
  * @section Last Changes 21-04-2022 Artyom Grigorian
  *
  * Improved include directories
- *  
+ *
  */
 #ifndef __CONNECTION_HANDLER_H__
 #define __CONNECTION_HANDLER_H__
 #define SA struct sockaddr
 
-#include <iostream>
-#include <string>
-#include <cstring>
-#include <memory>
-#include <vector>
-#include <stdlib.h>
-#include <stdio.h>
-#include <unistd.h>
-
-#include <mutex>
 #include <arpa/inet.h>
-#include <sys/socket.h>
 #include <netdb.h>
 #include <netinet/in.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <sys/socket.h>
+#include <unistd.h>
 
-namespace Net
-{
-    template <typename T>
-    using shared_ptr = std::shared_ptr<T>;
+#include <cstring>
+#include <iostream>
+#include <memory>
+#include <mutex>
+#include <string>
+#include <vector>
 
-    template <typename T>
-    using unique_ptr = std::unique_ptr<T>;
+namespace Net {
+template <typename T>
+using shared_ptr = std::shared_ptr<T>;
 
-    typedef unique_ptr <struct sockaddr_in> \
-                sockaddr_in_unq_ptr;
-    
+template <typename T>
+using unique_ptr = std::unique_ptr<T>;
 
-    class BasicConnectionHandler
-    {
-        public:
-            BasicConnectionHandler();
-            // BasicConnectionHandler(const BasicConnectionHandler&) = delete;
-            ~BasicConnectionHandler();
+typedef unique_ptr<struct sockaddr_in> sockaddr_in_unq_ptr;
 
-            int get_sockfd      (void) const noexcept;
-            struct sockaddr_in* get_sockaddr    (void) const noexcept;
+class BasicConnectionHandler {
+ public:
+  BasicConnectionHandler();
+  // BasicConnectionHandler(const BasicConnectionHandler&) = delete;
+  ~BasicConnectionHandler();
 
-            bool setup_socket   (int __domain, 
-                                    int __type, 
-                                        int __protocol);
-            bool setup_server_addr (int __family,
-                                        std::string __host,
-                                            uint32_t __port);
+  int get_sockfd(void) const noexcept;
+  struct sockaddr_in* get_sockaddr(void) const noexcept;
 
-            bool set_server_addr (struct sockaddr_in* new_serv_addr);
-                        
+  bool setup_socket(int __domain, int __type, int __protocol);
+  bool setup_server_addr(int __family, std::string __host, uint32_t __port);
 
-        private:
-        /*Main connection socket file descriptior*/
-            int  m_connection;
-            sockaddr_in_unq_ptr  server_addr;
-            
+  bool set_server_addr(struct sockaddr_in* new_serv_addr);
 
-    };
-
-    bool connect_to_host (const BasicConnectionHandler& basic_CH);
-        
+ private:
+  /*Main connection socket file descriptior*/
+  int m_connection;
+  sockaddr_in_unq_ptr server_addr;
 };
+
+bool connect_to_host(const BasicConnectionHandler& basic_CH);
+
+};  // namespace Net
 
 #endif

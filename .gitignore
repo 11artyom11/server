@@ -17,4 +17,6 @@ latex/
 **/*.cbp
 **/CMakeScripts
 **/compile_commands.json
+**/*.make 
+**/Makefile
 .vscode/*

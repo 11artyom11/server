@@ -1,102 +1,85 @@
 /**
  * @file message_model.h
  * @author Artyom Grigorian (grigorianartyom1@gmail.com)
- * @brief 
+ * @brief
  * @version 0.1
  * @date 2022-03-20
  * @section DESCRIPTION
- * This class is made to provide high level visualization of 
+ * This class is made to provide high level visualization of
  * Data Transfer.
  * Mainly defines API's essential to format message into different
  * data standards such as JSON.
  * Is defined in DataTransfer namespace
  * @copyright Copyright (c) 2022
- * 
+ *
  */
 #ifndef __MESSAGE_MODEL_H__
 #define __MESSAGE_MODEL_H__
 
-#include "../../../../../outter_modules/json/single_include/nlohmann/json.hpp"
-#include "../../../helpers/debug_helper/debug_helper.h"
 #include <string>
 
+#include "../../../../../outter_modules/json/single_include/nlohmann/json.hpp"
+#include "../../../helpers/debug_helper/debug_helper.h"
 
 using json = nlohmann::json;
 using string = std::string;
 
-namespace DataTransfer
-{
-    class MessageModel
-    {
-        public:
+namespace DataTransfer {
+class MessageModel {
+ public:
+  MessageModel();
+  explicit MessageModel(const string& json_s) __THROW;
 
-             MessageModel();
-             explicit MessageModel(const string& json_s) __THROW;
-            
-             MessageModel (MessageModel&& other_) = delete;
+  MessageModel(MessageModel&& other_) = delete;
 
-            
-            ~MessageModel() = default;
+  ~MessageModel() = default;
 
-            template <typename ValType>
-            void get_into (const string& key, 
-                                ValType& into) const;
+  template <typename ValType>
+  void get_into(const string& key, ValType& into) const;
 
-            template <typename ValType>
-            ValType get (const string& key) const;
+  template <typename ValType>
+  ValType get(const string& key) const;
 
-            template <typename ValType>
-            void   set (const string& key, 
-                            const ValType& value);
+  template <typename ValType>
+  void set(const string& key, const ValType& value);
 
-            json* const get_json_instance (void)  noexcept;
-            string to_str (void) const noexcept;
+  json* const get_json_instance(void) noexcept;
+  string to_str(void) const noexcept;
 
-        protected:        
-            json m_message;    
-                    
-    };
-
-
-
-
+ protected:
+  json m_message;
+};
 
 template <typename ValType>
-ValType MessageModel::get (const string& key) const 
-{
-    return this->m_message.at(key).get<ValType>();
+ValType MessageModel::get(const string& key) const {
+  return this->m_message.at(key).get<ValType>();
 }
-            
 
 /**
  * @brief get value from json object of message
- * 
- * @tparam ValType 
- * @param key 
- * @return ValType 
+ *
+ * @tparam ValType
+ * @param key
+ * @return ValType
  */
 template <typename ValType>
-void MessageModel::get_into (const string& key,
-                            ValType& into) const
-{
-    into = m_message[key].get<ValType>();
+void MessageModel::get_into(const string& key, ValType& into) const {
+  into = m_message[key].get<ValType>();
 }
 
 /**
  * @brief set value for the certain key for json object of message
- * 
- * @tparam ValType 
- * @param key 
- * @param value 
+ *
+ * @tparam ValType
+ * @param key
+ * @param value
  */
 template <typename ValType>
-void MessageModel::set (const string& key,
-                            const ValType& value)
-{
-    // Debug().info("In void MessageModel::set ");
-    this->m_message[key] = value;   
-    // Debug().info("Out void MessageModel::set ");
+void MessageModel::set(const string& key, const ValType& value) {
+  // Debug().info("In void MessageModel::set ");
+  this->m_message[key] = value;
+  // Debug().info("Out void MessageModel::set ");
 }
 
-};
-#endif //__MESSAGE_MODEL_H__
+};      // namespace DataTransfer
+#endif  //__MESSAGE_MODEL_H__
