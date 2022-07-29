@@ -1,0 +1,28 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/aram/workspace/clientserver/src/server/src/server.cpp
+iostream
+-
+string
+-
+cstring
+-
+stdlib.h
+-
+unistd.h
+-
+arpa/inet.h
+-
+sys/socket.h
+-
+netdb.h
+-
+netinet/in.h
+-
+

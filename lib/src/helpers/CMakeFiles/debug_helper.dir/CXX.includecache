@@ -1,0 +1,30 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/tyom/workspace/clientserver/lib/include/helpers/constants.h
+vector
+-
+string
+-
+map
+-
+
+/home/tyom/workspace/clientserver/lib/include/helpers/debug_helper/debug_helper.h
+iostream
+-
+stdio.h
+-
+time.h
+-
+../constants.h
+/home/tyom/workspace/clientserver/lib/include/helpers/constants.h
+
+/home/tyom/workspace/clientserver/lib/src/helpers/debug/debug_helper.cpp
+../../../include/helpers/debug_helper/debug_helper.h
+/home/tyom/workspace/clientserver/lib/include/helpers/debug_helper/debug_helper.h
+
