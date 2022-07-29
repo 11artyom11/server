@@ -1,7 +1,0 @@
-/home/aram/workspace/clientserver/lib/src/helpers/CMakeFiles/install/strip.dir
-/home/aram/workspace/clientserver/lib/src/helpers/CMakeFiles/install/local.dir
-/home/aram/workspace/clientserver/lib/src/helpers/CMakeFiles/install.dir
-/home/aram/workspace/clientserver/lib/src/helpers/CMakeFiles/list_install_components.dir
-/home/aram/workspace/clientserver/lib/src/helpers/CMakeFiles/rebuild_cache.dir
-/home/aram/workspace/clientserver/lib/src/helpers/CMakeFiles/edit_cache.dir
-/home/aram/workspace/clientserver/lib/src/helpers/CMakeFiles/libdebug_helper.dir

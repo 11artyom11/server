@@ -1,1 +1,0 @@
-/usr/bin/c++ -fPIC -O3 -DNDEBUG  -shared -Wl,-soname,libbin/libdebug_helper.so -o libbin/libdebug_helper.so CMakeFiles/bin/libdebug_helper.dir/debug_helper/debug_helper.cpp.o 
