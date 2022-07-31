@@ -14,6 +14,8 @@ include_directories(
                     "../../lib/include/helpers/debug_helper/",
                     "../../lib/include/util/data_transfer/message_model/",
                     "../../lib/include/util/data_transfer/message_resolver/",
+                    "../../../lib/include/helpers/",
+                    "../../../lib/include/helpers/debug_helper/"
                     )
 
 add_executable(client src/main.cpp

@@ -19,8 +19,8 @@ set(OPENSSL_USE_STATIC_LIBS TRUE)
 find_package(OpenSSL REQUIRED)
 
 target_link_libraries(${PROJECT_NAME} OpenSSL::Crypto)
-include_directories(../../../../../outter_modules/json/single_include/nlohmann)
-target_link_libraries(${PROJECT_NAME} -L../../../../../outter_modules/json)
+include_directories(../../../../../3rdparty/json/single_include/nlohmann)
+target_link_libraries(${PROJECT_NAME} -L../../../../../3rdparty/json)
 
 
 install(FILES ${CMAKE_BINARY_DIR}/message_model.pc

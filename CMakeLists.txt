@@ -14,6 +14,8 @@ set(CMAKE_USE_PTHREADS_INIT 1)
 set(THREADS_PREFER_PTHREAD_FLAG ON)
 
 
+include(CTest)
+
 #adding subproject server 
 add_subdirectory( src/server/ ./bin/server)
 
@@ -21,7 +23,7 @@ add_subdirectory( src/server/ ./bin/server)
 #adding subproject client
 add_subdirectory( src/client/ ./bin/client)
 
-add_subdirectory(outter_modules/json)
+add_subdirectory(3rdparty/json)
 
 #adding shared lib helpers
 add_subdirectory(lib/src/helpers)
@@ -31,3 +33,6 @@ add_subdirectory(lib/src/util)
 
 #adding unit tests
 add_subdirectory(tests)
+
+#add tests to Cmake config
+add_test(NAME MessageModelEncryptiontest COMMAND bin/tests/lib_tests/t_lib4)

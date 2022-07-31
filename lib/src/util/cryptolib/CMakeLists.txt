@@ -2,6 +2,7 @@ cmake_minimum_required(VERSION 3.9)
 project(crypto_unit VERSION 1.0.1 DESCRIPTION "crypto_unit description")
 include(GNUInstallDirs)
 
+include_directories("../../../include/util/cyptolib/")
 add_library(crypto_unit SHARED crypto_unit.cpp)
 
 set_target_properties(crypto_unit PROPERTIES

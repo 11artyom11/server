@@ -6,7 +6,11 @@
 
 #IncludeRegexTransform: 
 
-/home/tyom/workspace/clientserver/lib/include/helpers/constants.h
+/home/tyom/workspace/clientserver/lib/src/util/cryptolib/crypto_unit.cpp
+crypto_unit.h
+/home/tyom/workspace/clientserver/lib/src/util/cryptolib/crypto_unit.h
+
+lib/include/helpers/constants.h
 map
 -
 string
@@ -14,7 +18,7 @@ string
 vector
 -
 
-/home/tyom/workspace/clientserver/lib/include/helpers/debug_helper/debug_helper.h
+lib/include/helpers/debug_helper/debug_helper.h
 stdio.h
 -
 time.h
@@ -22,9 +26,9 @@ time.h
 iostream
 -
 ../constants.h
-/home/tyom/workspace/clientserver/lib/include/helpers/constants.h
+lib/include/helpers/constants.h
 
-/home/tyom/workspace/clientserver/lib/include/util/cyptolib/crypto_unit.h
+lib/include/util/cyptolib/crypto_unit.h
 openssl/aes.h
 -
 openssl/engine.h
@@ -66,9 +70,5 @@ sstream
 stdexcept
 -
 ../../helpers/debug_helper/debug_helper.h
-/home/tyom/workspace/clientserver/lib/include/helpers/debug_helper/debug_helper.h
-
-/home/tyom/workspace/clientserver/lib/src/util/cryptolib/crypto_unit.cpp
-../../../include/util/cyptolib/crypto_unit.h
-/home/tyom/workspace/clientserver/lib/include/util/cyptolib/crypto_unit.h
+lib/include/helpers/debug_helper/debug_helper.h
 
