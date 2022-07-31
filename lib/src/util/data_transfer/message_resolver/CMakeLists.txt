@@ -21,7 +21,7 @@ set(OPENSSL_USE_STATIC_LIBS TRUE)
 find_package(OpenSSL REQUIRED)
 
 target_link_libraries(${PROJECT_NAME} OpenSSL::Crypto)
-target_link_libraries(${PROJECT_NAME} -L../../../../../outter_modules/json)
+target_link_libraries(${PROJECT_NAME} -L../../../../../3rdparty/json)
 
 
 install(FILES ${CMAKE_BINARY_DIR}/message_resolver.pc
