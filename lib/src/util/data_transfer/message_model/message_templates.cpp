@@ -1,4 +1,6 @@
-#include "../../../../include/util/data_transfer/message_model/message_templates.h"
+#include "message_model/message_templates.h"
+
+#include "debug_helper/debug_helper.h"
 
 using namespace DataTransfer;
 

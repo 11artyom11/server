@@ -1,4 +1,6 @@
-#include "message_resolver.h"
+#include "message_resolver/message_resolver.h"
+
+#include "debug_helper/debug_helper.h"
 
 using MessageResolver = DataTransfer::MessageResolver;
 using MessageModel = DataTransfer::MessageModel;

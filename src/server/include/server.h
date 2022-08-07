@@ -33,10 +33,10 @@
 #include <string>
 #include <vector>
 
-#include "debug_helper.h"
+#include "../../../lib/include/helpers/debug_helper/debug_helper.h"
+#include "../../../lib/include/util/data_transfer/message_model/message_model.h"
+#include "../../../lib/include/util/data_transfer/message_resolver/message_resolver.h"
 #include "handler.h"
-#include "message_model.h"
-#include "message_resolver.h"
 
 /*Namespace purposed to store server-related functions and classes*/
 namespace Server {
