@@ -26,7 +26,7 @@ bool Server::is_client_connection_close(const char* msg) {
  *
  */
 Server::ServerModel::ServerModel(uint32_t port)
-    : listen_port{port},
+    : listen_port{static_cast<uint16_t>(port)}, /// @todo Fix uint16_t
       protocol_family{AF_INET},
       listen_ip{INADDR_ANY}
 

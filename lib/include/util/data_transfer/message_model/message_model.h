@@ -18,8 +18,7 @@
 
 #include <string>
 
-#include "../../../../../outter_modules/json/single_include/nlohmann/json.hpp"
-#include "../../../helpers/debug_helper/debug_helper.h"
+#include "nlohmann/json.hpp"
 
 using json = nlohmann::json;
 using string = std::string;

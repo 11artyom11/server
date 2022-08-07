@@ -19,7 +19,6 @@
 #include <map>
 #include <string>
 
-#include "../../../../../lib/include/helpers/constants.h"
 #include "../message_model/message_model.h"
 
 using string = std::string;
