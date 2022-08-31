@@ -89,56 +89,12 @@ void iounit::IOModel::read_q(int sfd, mesType message) {
   /*Lock mutex to do atomic read to queue and check in
       empty subject read queue*/
   read_mutex.lock();
+  Debug().info("RAW STR : ", message);
   std::string message_str{message};
 
   /* AES CASE */
   if (m_handler->get_net_state() != CONNECT_STATE::conn_request) {
-    /*
-        Which means the network state is !!NOT!! at it's only unsafe
-        phase e.g. no AES_Decrpytion needed
-        connect_accept command recieved from server at this point
-     */
-    // DataTransfer::MessageModel safe_message_model{message};
-    // Debug().info (safe_message_model.get<std::string>("safe"));
-
-    // auto safe_message = (unsigned
-    // char*)base64decode(safe_message_model.get<std::string>("safe").c_str(),
-    // safe_message_model.get<std::string>("safe").length()); int
-    // safe_message_len = safe_message_model.get<int>("safe_len");
-
-    // Debug().warning("GOT SAFE CASE");
-    // auto aes_shrd_ptr = m_handler->get_aes_ptr();
-    // Debug().info (" ====> cipher len : ", safe_message_len);
-    // Debug().info (" =====> pure len : ", safe_message_len);
-    // unsigned char* key_ch = (unsigned
-    // char*)(m_handler->get_client_prototype_ptr_c()->AES_token.c_str());
-
-    // unsigned char dec[MAX_JSON_MESSAGE_SIZE];
-    // int dec_len = aes_shrd_ptr->decrypt(safe_message, safe_message_len,
-    // key_ch, dec); dec[dec_len] = '\0'; message_str = (char*)dec; Debug().info
-    // ("Final Message : ", message_str);
-    DataTransfer::MessageModel safe_message_model{message};
-    Debug().info(safe_message_model.get<std::string>("safe"));
-
-    auto safe_message = (unsigned char*)base64decode(
-        safe_message_model.get<std::string>("safe").c_str(),
-        safe_message_model.get<std::string>("safe").length());
-    int safe_message_len = safe_message_model.get<int>("safe_len");
-
-    Debug().warning("GOT SAFE CASE");
-    auto aes_shrd_ptr = m_handler->get_aes_ptr();
-    Debug().info(" ====> cipher len : ", safe_message_len);
-    Debug().info(" =====> pure len : ", safe_message_len);
-    unsigned char* key_ch =
-        (unsigned char*)(m_handler->get_client_prototype_ptr_c()
-                             ->AES_token.c_str());
-
-    unsigned char dec[MAX_JSON_MESSAGE_SIZE];
-    int dec_len =
-        aes_shrd_ptr->decrypt(safe_message, safe_message_len, key_ch, dec);
-    dec[dec_len] = '\0';
-    std::string message_str = (char*)dec;
-    Debug().info("Final Message : ", dec);
+    std::string message_str = message;
 
   } else {
     Debug().warning("GOT UNSAFE CASE");

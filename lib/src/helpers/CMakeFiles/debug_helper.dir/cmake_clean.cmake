@@ -1,5 +1,6 @@
 file(REMOVE_RECURSE
   "CMakeFiles/debug_helper.dir/debug/debug_helper.cpp.o"
+  "CMakeFiles/debug_helper.dir/debug/debug_helper.cpp.o.d"
   "libdebug_helper.pdb"
   "libdebug_helper.so"
   "libdebug_helper.so.1"

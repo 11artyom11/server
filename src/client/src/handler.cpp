@@ -2,10 +2,7 @@
 
 using Handler = Client::Handler;
 
-Handler::Handler() {
-  aes_shrd_ptr = std::make_unique<AES_Unit>();
-  rsa_shrd_ptr = std::make_unique<RSA_Unit>();
-}
+Handler::Handler() {}
 
 void Handler::commap_init(void) {
   commap[CONNECT_REQUEST] = &Handler::send_connect_request;
@@ -70,36 +67,16 @@ int Handler::send_connect_command(int sfd,
   Debug().info("In send_connect_command");
   Debug().info("Message recieved  : ", message.to_str());
 
-  /* In future must be generator function */
-  auto key = "0123456789ABCDEF";  // aes_shrd_ptr->generate_key(16);
-  aes_shrd_ptr->set_key(key);
-
   auto utoken = message.get<string>("unique_token");
-  string rsa_key = message.get<string>("pkey");
-  Debug().warning("KEY FETCHED : \n", rsa_key);
-  rsa_shrd_ptr->init_public_key((unsigned char*)(rsa_key.c_str()));
-
-  cP.AES_token = key;
   cP.unique_token = utoken;
 
-  DataTransfer::ConnectCommand cC{"localhost", std::string{key}, utoken};
+  DataTransfer::ConnectCommand cC{"localhost", utoken};
 
   string raw_str =
       cC.to_str();  //"{\"command\":\"com_connect\", \"ip\":\"127.0.0.1\",
                     //\"aes_token\":\"1234556789\",
                     //\"unique_token\":\""+cP.unique_token+"\"}";
-  Debug().info("RAW_STR : ", raw_str);
-  int datalen = raw_str.length();
-  unsigned char* encrypted = new unsigned char[MAX_JSON_MESSAGE_SIZE];
-  int enclen = rsa_shrd_ptr->public_encrypt((unsigned char*)(raw_str.c_str()),
-                                            datalen, encrypted);
-
-  Debug().info(enclen);
-
-  send(sfd, (char*)encrypted, enclen, NULL);
-  this->current_state = CONNECT_STATE::conn_commnd;
-  Debug().info("Ended send_connect_command");
-  delete[] encrypted;
+  send(sfd, (char*)raw_str.c_str(), strlen((char*)raw_str.c_str()), NULL);
   return 0;
 }
 
@@ -113,8 +90,6 @@ int Handler::on_connect_verify_recieved(
   if (!cP.unique_token.compare(token_fetched)) {
     Debug().info("CONNECTION VERIFIED");
     this->current_state = CONNECT_STATE::conn_verify;
-    // emit custom_event->connection_state_changed();
-    Debug().raw("SIGNAL EMMITED");
   } else {
     Debug().fatal("Tokens do not match");
   }
@@ -139,14 +114,6 @@ int Handler::on_broadcast_message_recieved(
   auto trig_nickname = message.get<std::string>("name");
   Debug().raw(trig_nickname, " : ", only_message);
   return 0;
-}
-
-RSA_Unit_shrd_ptr Handler::get_rsa_ptr(void) const {
-  return this->rsa_shrd_ptr;
-}
-
-AES_Unit_shrd_ptr Handler::get_aes_ptr(void) const {
-  return this->aes_shrd_ptr;
 }
 
 CONNECT_STATE Handler::get_net_state(void) const { return this->current_state; }

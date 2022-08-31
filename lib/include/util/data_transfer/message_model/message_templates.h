@@ -30,7 +30,7 @@ class ConnectRequest : public MessageModel {
 
 class ConnectAccept : public MessageModel {
  public:
-  ConnectAccept(const string& unique_token, const string& pkey);
+  ConnectAccept(const string& unique_token);
 
  private:
   static constexpr auto command = CONNECT_ACCEPT;
@@ -38,8 +38,7 @@ class ConnectAccept : public MessageModel {
 
 class ConnectCommand : public MessageModel {
  public:
-  ConnectCommand(const string& ip, const string& AES_token,
-                 const string& unique_token);
+  ConnectCommand(const string& ip, const string& unique_token);
 
  private:
   static constexpr auto command = CONNECT_COMMAND;

@@ -33,8 +33,6 @@ target_link_libraries( server message_resolver)
 
 target_link_libraries( server debug_helper)
 
-target_link_libraries( server crypto_unit)
-
 target_link_libraries( server message_model)
 
 target_link_libraries( server message_resolver)

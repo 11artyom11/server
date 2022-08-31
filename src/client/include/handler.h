@@ -30,14 +30,10 @@
 #include <string>
 
 #include "constants.h"
-#include "crypto_unit.h"
 #include "debug_helper.h"
 #include "message_model.h"
 #include "message_resolver.h"
 #include "message_templates.h"
-
-typedef std::shared_ptr<RSA_Unit> RSA_Unit_shrd_ptr;
-typedef std::shared_ptr<AES_Unit> AES_Unit_shrd_ptr;
 
 // Helper functor to ease cleanup of container
 struct delete_ptr {
@@ -66,7 +62,6 @@ enum class CONNECT_STATE {
 };
 
 struct ClientPrototype {
-  std::string AES_token;
   std::string unique_token;
 };
 
@@ -96,8 +91,6 @@ class Handler {
   int send_terminate_connection(int sfd, const DataTransfer::MessageModel&);
   int on_broadcast_message_recieved(int sfd, const DataTransfer::MessageModel&);
 
-  RSA_Unit_shrd_ptr get_rsa_ptr(void) const;
-  AES_Unit_shrd_ptr get_aes_ptr(void) const;
   CONNECT_STATE get_net_state(void) const;
   ClientPrototype const* get_client_prototype_ptr_c(void) const;
 
@@ -108,8 +101,6 @@ class Handler {
   CommMapType commap;
   /*Conciously hadn't added getter for aes token*/
   ClientPrototype cP;
-  RSA_Unit_shrd_ptr rsa_shrd_ptr;
-  AES_Unit_shrd_ptr aes_shrd_ptr;
   CONNECT_STATE current_state = CONNECT_STATE::conn_request;
 };
 

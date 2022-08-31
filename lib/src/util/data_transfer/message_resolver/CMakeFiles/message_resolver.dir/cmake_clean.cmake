@@ -1,8 +1,6 @@
 file(REMOVE_RECURSE
-  "CMakeFiles/CMakeRelink.dir/libmessage_resolver.so"
-  "CMakeFiles/CMakeRelink.dir/libmessage_resolver.so.1"
-  "CMakeFiles/CMakeRelink.dir/libmessage_resolver.so.1.0.1"
   "CMakeFiles/message_resolver.dir/message_resolver.cpp.o"
+  "CMakeFiles/message_resolver.dir/message_resolver.cpp.o.d"
   "libmessage_resolver.pdb"
   "libmessage_resolver.so"
   "libmessage_resolver.so.1"

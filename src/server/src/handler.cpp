@@ -10,18 +10,14 @@ using namespace std;
  * @param RWBeacklog represents number of allowed thread count
  * to use reader & writer function at the same time
  */
-Server::Handler::Handler(const Security::RSA_Keypair_shrd_ptr& kp,
-                         int RWBacklog)
+Server::Handler::Handler(int RWBacklog)
 
 {
-  rsa_shrd_ptr = std::make_shared<RSA_Unit>();
   chatroom_mngr_shrd_ptr = std::make_shared<Server::ChatRoomManager>();
-
   Debug().info("Called handel ctor");
   sem_init(&writer_sem, 0, RWBacklog);
   sem_init(&reader_sem, 0, RWBacklog);
   commap_init();
-  keypair = kp;
 }
 
 /**
@@ -111,99 +107,6 @@ void* Server::Handler::reader(int sfd, uint32_t tid) {
 }
 
 /**
- * @brief Handler for the encrypted incoming message
- * This case works once at the very beginning of handshake
- *
- *
- * @param response encrypted via rsa public key string
- * @return std::string decrypted string which will be distributed among handler
- * functions
- */
-std::string Server::Handler::rsa_case(char* response) {
-  Debug().warning("RSA CASE");
-  auto rsa_shrd_ptr = get_rsa_ptr();
-  rsa_shrd_ptr->init_private_key((unsigned char*)keypair->second.c_key);
-  unsigned char* decrypted = new unsigned char[MAX_JSON_MESSAGE_SIZE];
-
-  rsa_shrd_ptr->private_decrypt((unsigned char*)(response), 128, decrypted);
-
-  return std::string{(char*)decrypted};
-}
-
-/**
- * @brief Handler for AES - ecrypted incoming messages works
- * at the most of cases , so need to be very optimized
- *
- * @param response Ecrypted via AES token string
- * @param aes AES Unit (unique for each customer)
- * @return std::string Decrypted message which will be distributed among handler
- * functions
- */
-std::string Server::Handler::aes_case(char* response,
-                                      const AES_Unit_shrd_ptr& aes) {
-  try {
-    Debug().info("SafeMODEL\n", response);
-    /*
-    Which means the network state is !!NOT!! at it's only unsafe
-    phase e.g. no AES_Decrpytion needed
-    connect_accept command recieved from server at this point
- */
-
-    /* DataTransfer::MessageModel safe_message_model{response};
-    std::string
-    safe_message_str{base64decode(safe_message_model.get<std::string>("safe").c_str(),
-    safe_message_model.get<std::string>("safe").length())};
-
-    auto safe_message_len = safe_message_model.get<int>("safe_len");
-
-    Debug().warning("GOT SAFE CASE");
-    Debug().info (" ====> cipher len : ", safe_message_len);
-    Debug().info (" =====> pure len : ", safe_message_len);
-    unsigned char* key_ch = (unsigned char*)(aes->get_key().c_str());
-
-    unsigned char dec[MAX_JSON_MESSAGE_SIZE];
-    int dec_len = aes->decrypt((unsigned char*) safe_message_str.c_str(),
-    safe_message_len, key_ch, dec); dec[dec_len] = '\0'; std::string message_str
-    = (char*)dec; Debug().info ("Final Message : ", message_str); */
-
-    DataTransfer::MessageModel safe_message_model{response};
-    Debug().info(safe_message_model.get<std::string>("safe"));
-
-    unsigned char* safe_message = (unsigned char*)base64decode(
-        safe_message_model.get<std::string>("safe").c_str(),
-        safe_message_model.get<std::string>("safe").length());
-    int safe_message_len = safe_message_model.get<int>("safe_len");
-
-    Debug().warning("GOT SAFE CASE");
-    Debug().info(" ====> cipher len : ", safe_message_len);
-    Debug().info(" =====> pure len : ", safe_message_len);
-
-    std::string aes_key_str = aes->get_key();
-
-    unsigned char* key_ch = new unsigned char
-        [aes_key_str.length()];  // (unsigned char*)(aes->get_key().c_str());]
-    std::copy(aes_key_str.begin(), aes_key_str.end(), key_ch);
-
-    Debug().info("AES_KEY : ", key_ch);
-    unsigned char dec[MAX_JSON_MESSAGE_SIZE];
-    int dec_len = aes->decrypt(safe_message, safe_message_len, key_ch, dec);
-    dec[dec_len] = '\0';
-    std::string message_str = (char*)dec;
-    Debug().info("Final Message : ", dec);
-
-    delete[] safe_message;
-    delete[] key_ch;
-
-    return std::string{(char*)dec};
-  } catch (const std::exception& e) {
-    std::cerr << e.what() << '\n';
-    return "";
-  }
-
-  return std::string{response};
-}
-
-/**
  * @brief String randomizer
  *
  * @param len string length to be returned
@@ -248,11 +151,9 @@ int Server::Handler::on_connect_request_recieved(
   Debug().info("Called Server::Handler::on_connect_request_recieved( ", sfd,
                ")");
   std::string new_unique_token = Server::random_str(10);
-  auto aes_shrd_ptr = std::make_shared<AES_Unit>();
 
-  this->recent_customers_sfd[sfd] =
-      std::make_shared<Customer::CustomerModel>(Customer::CustomerModel(
-          sfd, new_unique_token, aes_shrd_ptr, rsa_shrd_ptr));
+  this->recent_customers_sfd[sfd] = std::make_shared<Customer::CustomerModel>(
+      Customer::CustomerModel(sfd, new_unique_token));
   recent_customers_sfd[sfd]->current_state = CONNECT_STATE::conn_accept;
   send_connect_accept(sfd, message);
   return 0;
@@ -271,7 +172,8 @@ int Server::Handler::send_connect_accept(int sfd,
   string new_unique_token = recent_customers_sfd[sfd]->get_unique_token();
 
   Debug().warning(new_unique_token);
-  /* Create new customer model and save in association with unqiue token and sfd
+  /* Create new customer model and save in association with unqiue token and
+   * sfd
    */
   /*
 
@@ -285,11 +187,12 @@ int Server::Handler::send_connect_accept(int sfd,
    */
   recent_customers[new_unique_token] = recent_customers_sfd[sfd];
 
-  /* Set current customer state as connect_accept in order to not to require */
+  /* Set current customer state as connect_accept in order to not to require
+   */
   recent_customers[new_unique_token]->current_state =
       CONNECT_STATE::conn_accept;
 
-  DataTransfer::ConnectAccept cA(new_unique_token, keypair->first.c_key);
+  DataTransfer::ConnectAccept cA(new_unique_token);
 
   /*Set current state as recieving connect_command*/
 
@@ -351,8 +254,8 @@ int Server::Handler::on_login_command_recieved(
 }
 
 /**
- * @brief Send $SIGN_UP_COMMAND command with corresponding credentials to server
- * in order to sign up as new customer
+ * @brief Send $SIGN_UP_COMMAND command with corresponding credentials to
+ * server in order to sign up as new customer
  *
  * @param sfd connection descriptor
  * @return 0 on success 1 otherwise
@@ -437,11 +340,9 @@ int Server::Handler::send_connect_verify(
   auto customer = recent_customers_sfd[sfd];
 
   string unique_token = message.get<string>("unique_token");
-  string aes_token = message.get<string>("aes_token");
-
   DataTransfer::ConnectVerify cV(unique_token);
-  customer->set_aes_token(aes_token);
   customer->send_message(cV);
+  Debug().info("in cv gunction");
   return 0;
 }
 
@@ -673,15 +574,6 @@ Server::CustomerModel_ptr Server::Handler::get_customer_by_sfd(int sfd) {
 }
 
 /**
- * @brief Return shared pointer to rsa instance of server
- *
- * @return Server::RSA_Unit_shrd_ptr
- */
-Server::RSA_Unit_shrd_ptr Server::Handler::get_rsa_ptr(void) const {
-  return this->rsa_shrd_ptr;
-}
-
-/**
  * @brief API to add new cached customer into system (RAM NoSQL)
  *
  *
@@ -689,10 +581,8 @@ Server::RSA_Unit_shrd_ptr Server::Handler::get_rsa_ptr(void) const {
  * @param utoken unique token generated higher somewhere (is unique)
  */
 void Server::Handler::add_new_recent_customer(int sfd, const string& utoken) {
-  auto aes = std::make_shared<AES_Unit>();
-
   this->recent_customers_sfd[sfd] = std::make_shared<Customer::CustomerModel>(
-      Customer::CustomerModel(sfd, utoken, aes, rsa_shrd_ptr));
+      Customer::CustomerModel(sfd, utoken));
   this->recent_customers[utoken] = this->recent_customers_sfd[sfd];
   return;
 }

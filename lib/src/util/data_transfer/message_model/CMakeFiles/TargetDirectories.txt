@@ -1,0 +1,7 @@
+/home/tyom-pc/workspace/clientserver/lib/src/util/data_transfer/message_model/CMakeFiles/message_model.dir
+/home/tyom-pc/workspace/clientserver/lib/src/util/data_transfer/message_model/CMakeFiles/edit_cache.dir
+/home/tyom-pc/workspace/clientserver/lib/src/util/data_transfer/message_model/CMakeFiles/rebuild_cache.dir
+/home/tyom-pc/workspace/clientserver/lib/src/util/data_transfer/message_model/CMakeFiles/list_install_components.dir
+/home/tyom-pc/workspace/clientserver/lib/src/util/data_transfer/message_model/CMakeFiles/install.dir
+/home/tyom-pc/workspace/clientserver/lib/src/util/data_transfer/message_model/CMakeFiles/install/local.dir
+/home/tyom-pc/workspace/clientserver/lib/src/util/data_transfer/message_model/CMakeFiles/install/strip.dir

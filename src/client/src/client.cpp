@@ -54,7 +54,7 @@ void ClientModel::init_new_client(int __port) {
 int ClientModel::connect_to_default_host(void) {
   Debug().info("Here we are");
   return comm_unit->get_io_model()->get_handler()->send_connect_request(
-      con_handler->get_sockfd(), DataTransfer::MessageModel{""});
+      con_handler->get_sockfd(), DataTransfer::MessageModel{"{}"});
 }
 
 int ClientModel::get_connection_state() const noexcept {

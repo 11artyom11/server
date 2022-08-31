@@ -28,4 +28,3 @@ add_executable(client src/main.cpp
 target_link_libraries( client debug_helper)
 target_link_libraries( client message_model)
 target_link_libraries( client message_resolver)
-target_link_libraries( client crypto_unit)

@@ -1,4 +1,4 @@
-# Install script for directory: /home/tyom/workspace/clientserver/tests
+# Install script for directory: /home/tyom-pc/workspace/clientserver/tests
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -37,12 +37,17 @@ if(NOT DEFINED CMAKE_CROSSCOMPILING)
   set(CMAKE_CROSSCOMPILING "FALSE")
 endif()
 
+# Set default install directory permissions.
+if(NOT DEFINED CMAKE_OBJDUMP)
+  set(CMAKE_OBJDUMP "/usr/bin/objdump")
+endif()
+
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
-  include("/home/tyom/workspace/clientserver/tests/googletest/cmake_install.cmake")
-  include("/home/tyom/workspace/clientserver/tests/client_tests/cmake_install.cmake")
-  include("/home/tyom/workspace/clientserver/tests/lib_tests/cmake_install.cmake")
-  include("/home/tyom/workspace/clientserver/tests/server_tests/cmake_install.cmake")
+  include("/home/tyom-pc/workspace/clientserver/tests/googletest/cmake_install.cmake")
+  include("/home/tyom-pc/workspace/clientserver/tests/client_tests/cmake_install.cmake")
+  include("/home/tyom-pc/workspace/clientserver/tests/lib_tests/cmake_install.cmake")
+  include("/home/tyom-pc/workspace/clientserver/tests/server_tests/cmake_install.cmake")
 
 endif()
 

@@ -91,26 +91,17 @@ typedef std::map<int, CustomerModel_ptr> CustomerCacheMapSfdType;
 /* typedef for chatroom manager */
 typedef std::shared_ptr<Server::ChatRoomManager> ChatRoomManager_shrd_ptr;
 
-/*Name binding to cipher units and unique pointer accessors*/
-typedef std::shared_ptr<RSA_Unit> RSA_Unit_shrd_ptr;
-typedef std::shared_ptr<AES_Unit> AES_Unit_shrd_ptr;
-
 /*Function for random string generating*/
 std::string random_str(int len = 40);
 
 class Handler {
  public:
-  Handler(const Security::RSA_Keypair_shrd_ptr&, int RWBacklog = 1);
+  Handler(int RWBacklog = 1);
   ~Handler();
   void commap_init(void);
 
   void* writer(int sfd, uint32_t tid);
   void* reader(int sfd, uint32_t tid);
-
-  /* Handlers for encrypted incoming messages */
-  /* Before distributing among handler functions */
-  std::string rsa_case(char* response);
-  std::string aes_case(char* response, const AES_Unit_shrd_ptr&);
 
   /*HANDLER FUNCTIONS*/
   /* these functions are required to process all retrieved sanctioned data */
@@ -155,8 +146,6 @@ class Handler {
   CustomerModel_ptr get_customer_by_sfd(int);
   CustomerCacheMapSfdType get_sfd_map_customers(void);
 
-  RSA_Unit_shrd_ptr get_rsa_ptr(void) const;
-
   void add_new_recent_customer(int sfd, const string& utoken);
   void delete_recent_customer(int sfd, const string& utoken);
 
@@ -183,10 +172,6 @@ class Handler {
   CustomerCacheMapType recent_customers;
   /* Cache holds  recent customer sfd -> Customer* */
   CustomerCacheMapSfdType recent_customers_sfd;
-
-  Security::RSA_Keypair_shrd_ptr keypair;
-
-  RSA_Unit_shrd_ptr rsa_shrd_ptr;
 
   ChatRoomManager_shrd_ptr chatroom_mngr_shrd_ptr;
 };

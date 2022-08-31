@@ -1,4 +1,4 @@
-# Install script for directory: /home/tyom/workspace/clientserver
+# Install script for directory: /home/tyom-pc/workspace/clientserver
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -37,14 +37,19 @@ if(NOT DEFINED CMAKE_CROSSCOMPILING)
   set(CMAKE_CROSSCOMPILING "FALSE")
 endif()
 
+# Set default install directory permissions.
+if(NOT DEFINED CMAKE_OBJDUMP)
+  set(CMAKE_OBJDUMP "/usr/bin/objdump")
+endif()
+
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
-  include("/home/tyom/workspace/clientserver/bin/server/cmake_install.cmake")
-  include("/home/tyom/workspace/clientserver/bin/client/cmake_install.cmake")
-  include("/home/tyom/workspace/clientserver/3rdparty/json/cmake_install.cmake")
-  include("/home/tyom/workspace/clientserver/lib/src/helpers/cmake_install.cmake")
-  include("/home/tyom/workspace/clientserver/lib/src/util/cmake_install.cmake")
-  include("/home/tyom/workspace/clientserver/tests/cmake_install.cmake")
+  include("/home/tyom-pc/workspace/clientserver/bin/server/cmake_install.cmake")
+  include("/home/tyom-pc/workspace/clientserver/bin/client/cmake_install.cmake")
+  include("/home/tyom-pc/workspace/clientserver/3rdparty/json/cmake_install.cmake")
+  include("/home/tyom-pc/workspace/clientserver/lib/src/helpers/cmake_install.cmake")
+  include("/home/tyom-pc/workspace/clientserver/lib/src/util/cmake_install.cmake")
+  include("/home/tyom-pc/workspace/clientserver/tests/cmake_install.cmake")
 
 endif()
 
@@ -56,5 +61,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/home/tyom/workspace/clientserver/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/home/tyom-pc/workspace/clientserver/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

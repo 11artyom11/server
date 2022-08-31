@@ -8,19 +8,16 @@ ConnectRequest::ConnectRequest(const string& ip) {
   this->set("ip", ip);
 }
 
-ConnectAccept::ConnectAccept(const string& unique_token, const string& pkey) {
+ConnectAccept::ConnectAccept(const string& unique_token) {
   Debug().info("Constructed ConnectAccept Message");
   this->set("command", this->command);
-  this->set("pkey", pkey);
   this->set("unique_token", unique_token);
 }
 
-ConnectCommand::ConnectCommand(const string& ip, const string& AES_token,
-                               const string& unique_token) {
+ConnectCommand::ConnectCommand(const string& ip, const string& unique_token) {
   Debug().info("Constructed ConnectCommand Message");
   this->set("command", command);
   this->set("ip", ip);
-  this->set("aes_token", AES_token);
   this->set("unique_token", unique_token);
 }
 

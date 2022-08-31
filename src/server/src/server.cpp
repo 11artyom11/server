@@ -36,9 +36,7 @@ Server::ServerModel::ServerModel(uint32_t port)
   server_addr->sin_port = htons(listen_port);
   server_addr->sin_family = protocol_family;
   server_addr->sin_addr.s_addr = listen_ip;
-  int res = init_server_keypair();
-  Debug().info("INIT RSULT : ", res);
-  m_handler = std::make_unique<Handler>(keypair, 3);
+  m_handler = std::make_unique<Handler>(3);
 }
 
 /**
@@ -166,63 +164,16 @@ struct sockaddr_in* Server::ServerModel::get_server_addr() const {
  */
 int Server::ServerModel::distribute_incoming_connections(int socket,
                                                          char* response) {
-  std::string response_s(response);
-  Debug().info("Here");
-  /*
-      Event sequence illustration
-
-      connect_request -> creates new customer
-      connect_command -> works the condition below this comment
-      other handler functions .... everything works fine
-   */
-
-  /* If connection request has already been recieved from this very customer */
-  if (m_handler->find_in_customer_cache(socket) > 0) {
-    auto current_customer = m_handler->get_customer_by_sfd(socket);
-
-    Debug().warning(current_customer->get_unique_token());
-
-    /* Case where RSA Decryption needed */
-    if (current_customer->current_state != CONNECT_STATE::conn_verify) {
-      response_s = m_handler->rsa_case(response);
-    } else if (current_customer->current_state == CONNECT_STATE::conn_verify) {
-      /* SAFE CASE e.g. with encryption */
-      /* Case where AES Decryption needed */
-      /* This case works only if connection is verified e.g. AES keys has both
-       * server and client side */
-      auto aes_instnc = current_customer->get_crypto_unit()->get_aes_ptr();
-      response_s = m_handler->aes_case(response, aes_instnc);
-      Debug().info("AFTER AES DECRYPTION");
-      Debug().info(response_s);
-    }
-  }
-  /* Case where No Decryption is needed */
-  /* If no connection request from this very customer has been recieved */
-  else {
-    Debug().warning("UNSAFE CASE");
-    response_s = response;
-  }
-  /* UNSAFE CASE e.g. without encryption */
-  if (response_s.empty()) {
-    return -1;
-  }
-  /* Decrypted string MUST BE JSON Readable */
-  string mes{response_s};
-
-  MessageModel message(mes);  //(nlohmann::json::parse(R"({"command" : 1})"));
-  if (!DataTransfer::is_message_valid(message)) {
-    Debug().fatal("Bad Message");
-    return 1;
-  }
-
-  response_s = message.get<decltype(response_s)>("command");
-
+  MessageModel message(std::string{response});
+  std::string response_s = message.get<decltype(response_s)>("command");
+  Debug().info("COMMAND : ", response_s);
   auto mem_function = (*m_handler.get()).get_command(response_s);
   Debug().warning((mem_function ? "IS VALID FUNCTION" : "FUNCTION IS INVALID"));
   if (!mem_function) {
     return UNKNOWN_COMMAND_ERROR;
   }
   int res = ((*m_handler.get()).*mem_function)(socket, message);
+  Debug().info("GGGGG");
   return res;
 }
 
@@ -252,6 +203,7 @@ void Server::ServerModel::handle_connection(int connection) {
     Debug().info("Recieved message : ", buffer);
     int distribute_result =
         this->distribute_incoming_connections(connection, buffer);
+    Debug().info("FFFFF");
     if (distribute_result == TERMINATE_CODE_SUCCESS ||
         distribute_result == TERMINATE_CODE_FAILURE) {
       return;
@@ -262,91 +214,6 @@ void Server::ServerModel::handle_connection(int connection) {
 
   close(connection);
   // Close the connections
-}
-
-/**
- * @brief generate rsa keypair (considered as server side) and save in in
- * pair in objet member field
- *
- * @param passphrase passwor for private key
- * @return 0 on success other value on failure
- */
-int Server::ServerModel::init_server_keypair(char* passphrase) {
-  Debug().info("ServerModel::init_server_keypair (char* passphrase)");
-  RSA_Unit rsaU;
-  /*grab character under ascii firecode of sfd which is also unique*/
-  /*if sfd is not given do generating in common buffer Public.key*/
-  char keystore_dir[MAX_FILE_PATH_LENGTH] = "./keystore/";
-  char pub_file_name[MAX_FILE_NAME_LENGTH] = "Public.key";
-  char priv_file_name[MAX_FILE_NAME_LENGTH] = "Private.key";
-  char pub_file_path[MAX_FILE_PATH_LENGTH + MAX_FILE_NAME_LENGTH];
-  char priv_file_path[MAX_FILE_PATH_LENGTH + MAX_FILE_NAME_LENGTH];
-
-  /*TOBEDONE*/
-  if (Security::is_dir_exist("")) {
-  }
-
-  /*
-      Example =>
-              $priv_file_path
-      sprintf( "     ",
-             "%s%s",
-             Relative path for keys
-             "./keystore",
-             File name (same is done for private key)
-             "Public.key.");
-      Result =>
-          ./keystore/Public.key.* is stored in $pub_file_name
-
-  */
-  sprintf(pub_file_path, "%s%s", keystore_dir, pub_file_name);
-  sprintf(priv_file_path, "%s%s", keystore_dir, priv_file_name);
-
-  unsigned char* c_pubkey =
-      (unsigned char*)rsaU.get_file_content(pub_file_path);
-
-  unsigned char* c_privkey =
-      (unsigned char*)rsaU.get_file_content(priv_file_path);
-
-  rsaU.init_keys(c_privkey, c_pubkey);
-
-  Debug().info("Retrieved pubkey \n", c_pubkey);
-  Debug().info("Retrieved privkey \n", c_privkey);
-
-  Security::RSA_Keypair kp = {
-      /*instead of nullptr must be pointer to rsa key*/
-      Security::RSA_UNAR_KEY{nullptr, (char*)c_pubkey},
-      Security::RSA_UNAR_KEY{nullptr, (char*)c_privkey}};
-
-  this->keypair = std::make_shared<Security::RSA_Keypair>(kp);
-
-  Debug().info("Out of function init_server_keypair");
-  return (int)!(sizeof(c_pubkey) & sizeof(c_privkey));
-}
-
-/**
- * @brief Set already existing RSA_Keypair (typedef) to model
- *
- * @param __other init keypair from other pair instance
- * @return int
- */
-int Server::ServerModel::set_server_keypair(
-    const Security::RSA_Keypair& __other) {
-  try {
-    keypair = std::make_shared<Security::RSA_Keypair>(std::move(__other));
-    return 0;
-  } catch (const std::exception& e) {
-    return 1;
-  }
-}
-
-/**
- * @brief Return RSA_Keypair of $this model
- *
- * @return Security::RSA_Keypair&
- */
-Security::RSA_Keypair const* Server::ServerModel::get_server_keypair(void) {
-  return this->keypair.get();
 }
 
 /**
