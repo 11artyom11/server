@@ -331,7 +331,12 @@ int Server::Handler::send_connect_verify(int sfd, const DataTransfer::MessageMod
   string unique_token = message.get<string>("unique_token");
   DataTransfer::ConnectVerify cV(unique_token);
   customer->send_message(cV);
-  Debug().info("in cv gunction");
+  // std::string message_c = cV.to_str();
+  // char buf[256];
+  // strcpy(buf,message_c.c_str());
+  // buf[message_c.length()] = '\0';
+  // int res = send (sfd, buf, message_c.length(), NULL);
+  Debug().info("in cv gunction : ");
   return 0;
 }
 
@@ -589,10 +594,7 @@ void Server::Handler::add_new_recent_customer(int sfd, const string& utoken) {
  */
 void Server::Handler::delete_recent_customer(int sfd, const string& utoken) {
   std::string token = recent_customers_sfd.at(sfd).get()->get_unique_token();
-<<<<<<< HEAD
   dump_all_customers();
-=======
->>>>>>> SIL-4_bugfix
   recent_customers.erase(token);
   recent_customers_sfd.erase(sfd);
   Debug().info("Succcessfully deleted recently customer");

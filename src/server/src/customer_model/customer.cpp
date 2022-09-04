@@ -19,14 +19,13 @@ std::string CustomerModel::get_unique_token(void) const noexcept {
 void CustomerModel::send_message(const DataTransfer::MessageModel& message) {
   size_t len = message.to_str().length();
 
-  char* message_c = new char[len];
+  char message_c[MAX_JSON_MESSAGE_SIZE];
   mempcpy(message_c, message.to_str().c_str(), len);
   message_c[len] = '\0';
   int res = send(sfd, message_c, message.to_str().length(), NULL);
   Debug().info("SEND RESULT : ", res);
   Debug().info("STR : ", message_c);
   Debug().info("After send");
-  delete[] message_c;
   return;
 }
 
