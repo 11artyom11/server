@@ -49,7 +49,6 @@ if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   include("/home/tyom-pc/workspace/clientserver/3rdparty/json/cmake_install.cmake")
   include("/home/tyom-pc/workspace/clientserver/lib/src/helpers/cmake_install.cmake")
   include("/home/tyom-pc/workspace/clientserver/lib/src/util/cmake_install.cmake")
-  include("/home/tyom-pc/workspace/clientserver/tests/cmake_install.cmake")
 
 endif()
 

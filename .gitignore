@@ -9,6 +9,7 @@ build/*
 *.key
 html/
 latex/
+3rdparty/json/
 
 **/cmake-build-debug
 **/CMakeCache.txt
