@@ -52,22 +52,16 @@ class ChatRoomManager {
   vector<ChatRoom_shrd_ptr>& operator[](Customer::CustomerModel*);
   vector<ChatRoom_shrd_ptr>& operator[](const std::string&);
 
-  vector<ChatRoom_shrd_ptr>& push_new_room(Customer::CustomerModel*,
-                                           RoomSpace::ChatRoom*);
-  vector<ChatRoom_shrd_ptr>& remove_room_from(Customer::CustomerModel*,
-                                              const std::string& chat_id);
+  vector<ChatRoom_shrd_ptr>& push_new_room(Customer::CustomerModel*, RoomSpace::ChatRoom*);
+  vector<ChatRoom_shrd_ptr>& remove_room_from(Customer::CustomerModel*, const std::string& chat_id);
   ChatRoom_Map_Type& remove_all_rooms(Customer::CustomerModel*);
-  ChatRoom_shrd_ptr get_room_by_id(std::string master_token,
-                                   std::string room_id);
-
+  ChatRoom_shrd_ptr get_room_by_id(std::string master_token, std::string room_id);
   ChatRoom_shrd_ptr get_room_global(const std::string& room_id);
-
   void dump_customer_chatroom_state(const std::string& utoken) noexcept;
 
  private:
   ChatRoom_Map_Type chatroom_lst;
   ChatRoom_Map_Glob_Type chatroom_glob_lst;
 };
-}  // namespace Server
-
+}
 #endif  //__CHATROOM_MANAGER_H__

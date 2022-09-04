@@ -529,6 +529,15 @@ int Server::Handler::find_in_customer_cache(int sfd) {
   return recent_customers_sfd.count(sfd);
 }
 
+void Server::Handler::dump_all_customers (void) const {
+  int idx = 0;
+  Debug().info ("------------------------------");
+  for (auto customer_it : recent_customers_sfd){
+      Debug().raw (idx, " -> ", customer_it.second->get_unique_token());
+  } 
+  Debug().info ("------------------------------");
+}
+
 /**
  * @brief Get Customer shared (smart) pointer binded
  * with unique token
@@ -582,8 +591,9 @@ void Server::Handler::add_new_recent_customer(int sfd, const string& utoken) {
  */
 void Server::Handler::delete_recent_customer(int sfd, const string& utoken) {
   std::string token = recent_customers_sfd.at(sfd).get()->get_unique_token();
-  // recent_customers.erase(token);
-  // recent_customers_sfd.erase(sfd);
+  dump_all_customers();
+  recent_customers.erase(token);
+  recent_customers_sfd.erase(sfd);
   Debug().info("Succcessfully deleted recently customer");
   return;
 }
