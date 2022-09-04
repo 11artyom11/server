@@ -196,7 +196,6 @@ void Server::ServerModel::handle_connection(int connection) {
 
   do {
     bytes = read(connection, buffer, sizeof(buffer) - 1);
-    Debug().raw (">>>>>>READSTART<<<<<");
     buffer[bytes] = 0x00;
     Debug().info("Recieved message : ", buffer);
     Debug().info ("Received message len : ", bytes);
@@ -208,7 +207,6 @@ void Server::ServerModel::handle_connection(int connection) {
     if (distribute_result == (TERMINATE_CODE_SUCCESS | TERMINATE_CODE_FAILURE)) {
       return;
     }    // Send a message to the connection
-    Debug().raw (">>>>>>READEND<<<<<");
     memset(buffer,0,bytes-1);
   } while (bytes>0);
 
