@@ -195,19 +195,25 @@ void Server::ServerModel::handle_connection(int connection) {
 
   // Read from the connection
   char buffer[MAX_JSON_MESSAGE_SIZE];
-  int bytes, buflen;  // for bytes written and size of buffer
+  int bytes;  // for bytes written and size of buffer
 
   do {
     bytes = read(connection, buffer, sizeof(buffer) - 1);
+    Debug().raw (">>>>>>READSTART<<<<<");
     buffer[bytes] = 0x00;
     Debug().info("Recieved message : ", buffer);
+    Debug().info ("Received message len : ", bytes);
+    if (bytes < 0)
+    {
+      continue;
+    }
     int distribute_result = distribute_incoming_connections(connection, buffer);
-    Debug().info("zdes");
     if (distribute_result == (TERMINATE_CODE_SUCCESS | TERMINATE_CODE_FAILURE)) {
       return;
     }    // Send a message to the connection
-
-  } while (bytes);
+    Debug().raw (">>>>>>READEND<<<<<");
+    memset(buffer,0,bytes-1);
+  } while (bytes>0);
 
   close(connection);
   // Close the connections
