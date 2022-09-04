@@ -90,6 +90,7 @@ class Handler {
   int on_login_verify_recieved(int sfd, const DataTransfer::MessageModel&);
   int send_terminate_connection(int sfd, const DataTransfer::MessageModel&);
   int on_broadcast_message_recieved(int sfd, const DataTransfer::MessageModel&);
+  int on_chatroom_create_verified(int sfd, const DataTransfer::MessageModel&);
 
   CONNECT_STATE get_net_state(void) const;
   ClientPrototype const* get_client_prototype_ptr_c(void) const;

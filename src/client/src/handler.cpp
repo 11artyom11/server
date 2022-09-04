@@ -17,6 +17,7 @@ void Handler::commap_init(void) {
   commap[LOG_IN_VERIFY] = &Handler::on_login_verify_recieved;
   commap[SIGN_UP_VERIFY] = &Handler::on_sign_up_verify_recieved;
   commap[BRDCST_MESSAGE_COMMAND] = &Handler::on_broadcast_message_recieved;
+  commap[CHATROOM_CREATE_VERIFY] = &Handler::on_chatroom_create_verified;
 }
 
 int Handler::send_login_request(int sfd, const DataTransfer::MessageModel&) {}
@@ -115,6 +116,13 @@ int Handler::on_broadcast_message_recieved(
   Debug().raw(trig_nickname, " : ", only_message);
   return 0;
 }
+
+int Handler::on_chatroom_create_verified(int sfd, const DataTransfer::MessageModel& message)
+{
+  Debug().info ("Chatroom created successfully");
+  return 0;
+}
+
 
 CONNECT_STATE Handler::get_net_state(void) const { return this->current_state; }
 
