@@ -14,7 +14,11 @@ IOModel::IOModel() {
 Handler_shrd_ptr IOModel::get_handler(void) const { return m_handler; }
 
 void IOModel::send_message(const DataTransfer::MessageModel& message, int sfd) {
-  const char* message_c = message.to_str().c_str();
+  size_t len = message.to_str().length();
+  char* message_c = (char*)malloc(len);
+  memcpy(message_c, message.to_str().c_str(), len);
+  message_c[len] = '\0';
+  Debug().info("To send: ", message_c);
   int res = send(sfd, message_c, strlen(message_c), NULL);
   Debug().info("RESULT OF SEND : ", res);
   return;

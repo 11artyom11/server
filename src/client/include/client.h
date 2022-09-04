@@ -22,6 +22,7 @@
 
 #include <memory>
 #include <utility>
+#include <fstream>
 
 #include "communication_unit.h"
 #include "connection_handler.h"
@@ -50,8 +51,8 @@ class ClientModel {
   BasicConnectionHandlerSharedPtr get_con_handler(void) const noexcept;
   BasicCommunicationModelSharedPtr get_comm_unit(void) const noexcept;
   int send_to_host(const DataTransfer::MessageModel&);
-  int send_join_to_room_request(const std::string& master_token,
-                                const std::string& room_id);
+  int read_commands_from_stream ( std::istream&, long delay);
+  
   int close_connection(void);
   ~ClientModel();
 

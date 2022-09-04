@@ -41,6 +41,7 @@
 /home/tyom-pc/workspace/clientserver/bin/server/CMakeFiles/install.dir
 /home/tyom-pc/workspace/clientserver/bin/server/CMakeFiles/install/local.dir
 /home/tyom-pc/workspace/clientserver/bin/server/CMakeFiles/install/strip.dir
+/home/tyom-pc/workspace/clientserver/bin/client/CMakeFiles/clientlib.dir
 /home/tyom-pc/workspace/clientserver/bin/client/CMakeFiles/client.dir
 /home/tyom-pc/workspace/clientserver/bin/client/CMakeFiles/test.dir
 /home/tyom-pc/workspace/clientserver/bin/client/CMakeFiles/edit_cache.dir

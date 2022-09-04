@@ -18,6 +18,18 @@ include_directories(
                     "../../../lib/include/helpers/debug_helper/"
                     )
 
+add_library (clientlib src/main.cpp
+                src/client.cpp
+                    src/communication_unit.cpp
+                        src/connection_handler.cpp
+                            src/io_unit.cpp
+                                src/handler.cpp)
+
+
+target_link_libraries( clientlib debug_helper)
+target_link_libraries( clientlib message_model)
+target_link_libraries( clientlib message_resolver)
+
 add_executable(client src/main.cpp
                         src/client.cpp
                            src/communication_unit.cpp

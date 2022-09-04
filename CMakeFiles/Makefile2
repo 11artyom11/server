@@ -136,6 +136,7 @@ clean: tests/clean
 # Directory level rules for directory bin/client
 
 # Recursive "all" directory target.
+bin/client/all: bin/client/CMakeFiles/clientlib.dir/all
 bin/client/all: bin/client/CMakeFiles/client.dir/all
 .PHONY : bin/client/all
 
@@ -144,6 +145,7 @@ bin/client/preinstall:
 .PHONY : bin/client/preinstall
 
 # Recursive "clean" directory target.
+bin/client/clean: bin/client/CMakeFiles/clientlib.dir/clean
 bin/client/clean: bin/client/CMakeFiles/client.dir/clean
 .PHONY : bin/client/clean
 
@@ -1099,7 +1101,7 @@ bin/server/CMakeFiles/server.dir/all: lib/src/util/data_transfer/message_resolve
 bin/server/CMakeFiles/server.dir/all: lib/src/util/data_transfer/message_model/CMakeFiles/message_model.dir/all
 	$(MAKE) $(MAKESILENT) -f bin/server/CMakeFiles/server.dir/build.make bin/server/CMakeFiles/server.dir/depend
 	$(MAKE) $(MAKESILENT) -f bin/server/CMakeFiles/server.dir/build.make bin/server/CMakeFiles/server.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/tyom-pc/workspace/clientserver/CMakeFiles --progress-num=23,24,25,26,27,28,29,30 "Built target server"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/tyom-pc/workspace/clientserver/CMakeFiles --progress-num=30,31,32,33,34,35,36,37 "Built target server"
 .PHONY : bin/server/CMakeFiles/server.dir/all
 
 # Build rule for subdir invocation for target.
@@ -1117,6 +1119,34 @@ server: bin/server/CMakeFiles/server.dir/rule
 bin/server/CMakeFiles/server.dir/clean:
 	$(MAKE) $(MAKESILENT) -f bin/server/CMakeFiles/server.dir/build.make bin/server/CMakeFiles/server.dir/clean
 .PHONY : bin/server/CMakeFiles/server.dir/clean
+
+#=============================================================================
+# Target rules for target bin/client/CMakeFiles/clientlib.dir
+
+# All Build rule for target.
+bin/client/CMakeFiles/clientlib.dir/all: lib/src/helpers/CMakeFiles/debug_helper.dir/all
+bin/client/CMakeFiles/clientlib.dir/all: lib/src/util/data_transfer/message_resolver/CMakeFiles/message_resolver.dir/all
+bin/client/CMakeFiles/clientlib.dir/all: lib/src/util/data_transfer/message_model/CMakeFiles/message_model.dir/all
+	$(MAKE) $(MAKESILENT) -f bin/client/CMakeFiles/clientlib.dir/build.make bin/client/CMakeFiles/clientlib.dir/depend
+	$(MAKE) $(MAKESILENT) -f bin/client/CMakeFiles/clientlib.dir/build.make bin/client/CMakeFiles/clientlib.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/tyom-pc/workspace/clientserver/CMakeFiles --progress-num=8,9,10,11,12,13,14 "Built target clientlib"
+.PHONY : bin/client/CMakeFiles/clientlib.dir/all
+
+# Build rule for subdir invocation for target.
+bin/client/CMakeFiles/clientlib.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/tyom-pc/workspace/clientserver/CMakeFiles 14
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 bin/client/CMakeFiles/clientlib.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/tyom-pc/workspace/clientserver/CMakeFiles 0
+.PHONY : bin/client/CMakeFiles/clientlib.dir/rule
+
+# Convenience name for target.
+clientlib: bin/client/CMakeFiles/clientlib.dir/rule
+.PHONY : clientlib
+
+# clean rule for target.
+bin/client/CMakeFiles/clientlib.dir/clean:
+	$(MAKE) $(MAKESILENT) -f bin/client/CMakeFiles/clientlib.dir/build.make bin/client/CMakeFiles/clientlib.dir/clean
+.PHONY : bin/client/CMakeFiles/clientlib.dir/clean
 
 #=============================================================================
 # Target rules for target bin/client/CMakeFiles/client.dir
@@ -1153,7 +1183,7 @@ bin/client/CMakeFiles/client.dir/clean:
 lib/src/helpers/CMakeFiles/debug_helper.dir/all:
 	$(MAKE) $(MAKESILENT) -f lib/src/helpers/CMakeFiles/debug_helper.dir/build.make lib/src/helpers/CMakeFiles/debug_helper.dir/depend
 	$(MAKE) $(MAKESILENT) -f lib/src/helpers/CMakeFiles/debug_helper.dir/build.make lib/src/helpers/CMakeFiles/debug_helper.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/tyom-pc/workspace/clientserver/CMakeFiles --progress-num=8,9 "Built target debug_helper"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/tyom-pc/workspace/clientserver/CMakeFiles --progress-num=15,16 "Built target debug_helper"
 .PHONY : lib/src/helpers/CMakeFiles/debug_helper.dir/all
 
 # Build rule for subdir invocation for target.
@@ -1179,7 +1209,7 @@ lib/src/helpers/CMakeFiles/debug_helper.dir/clean:
 lib/src/util/data_transfer/message_resolver/CMakeFiles/message_resolver.dir/all:
 	$(MAKE) $(MAKESILENT) -f lib/src/util/data_transfer/message_resolver/CMakeFiles/message_resolver.dir/build.make lib/src/util/data_transfer/message_resolver/CMakeFiles/message_resolver.dir/depend
 	$(MAKE) $(MAKESILENT) -f lib/src/util/data_transfer/message_resolver/CMakeFiles/message_resolver.dir/build.make lib/src/util/data_transfer/message_resolver/CMakeFiles/message_resolver.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/tyom-pc/workspace/clientserver/CMakeFiles --progress-num=21,22 "Built target message_resolver"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/tyom-pc/workspace/clientserver/CMakeFiles --progress-num=28,29 "Built target message_resolver"
 .PHONY : lib/src/util/data_transfer/message_resolver/CMakeFiles/message_resolver.dir/all
 
 # Build rule for subdir invocation for target.
@@ -1205,7 +1235,7 @@ lib/src/util/data_transfer/message_resolver/CMakeFiles/message_resolver.dir/clea
 lib/src/util/data_transfer/message_model/CMakeFiles/message_model.dir/all:
 	$(MAKE) $(MAKESILENT) -f lib/src/util/data_transfer/message_model/CMakeFiles/message_model.dir/build.make lib/src/util/data_transfer/message_model/CMakeFiles/message_model.dir/depend
 	$(MAKE) $(MAKESILENT) -f lib/src/util/data_transfer/message_model/CMakeFiles/message_model.dir/build.make lib/src/util/data_transfer/message_model/CMakeFiles/message_model.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/tyom-pc/workspace/clientserver/CMakeFiles --progress-num=18,19,20 "Built target message_model"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/tyom-pc/workspace/clientserver/CMakeFiles --progress-num=25,26,27 "Built target message_model"
 .PHONY : lib/src/util/data_transfer/message_model/CMakeFiles/message_model.dir/all
 
 # Build rule for subdir invocation for target.
@@ -1231,7 +1261,7 @@ lib/src/util/data_transfer/message_model/CMakeFiles/message_model.dir/clean:
 tests/googletest/googlemock/CMakeFiles/gmock.dir/all: tests/googletest/googletest/CMakeFiles/gtest.dir/all
 	$(MAKE) $(MAKESILENT) -f tests/googletest/googlemock/CMakeFiles/gmock.dir/build.make tests/googletest/googlemock/CMakeFiles/gmock.dir/depend
 	$(MAKE) $(MAKESILENT) -f tests/googletest/googlemock/CMakeFiles/gmock.dir/build.make tests/googletest/googlemock/CMakeFiles/gmock.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/tyom-pc/workspace/clientserver/CMakeFiles --progress-num=10,11 "Built target gmock"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/tyom-pc/workspace/clientserver/CMakeFiles --progress-num=17,18 "Built target gmock"
 .PHONY : tests/googletest/googlemock/CMakeFiles/gmock.dir/all
 
 # Build rule for subdir invocation for target.
@@ -1258,7 +1288,7 @@ tests/googletest/googlemock/CMakeFiles/gmock_main.dir/all: tests/googletest/goog
 tests/googletest/googlemock/CMakeFiles/gmock_main.dir/all: tests/googletest/googletest/CMakeFiles/gtest.dir/all
 	$(MAKE) $(MAKESILENT) -f tests/googletest/googlemock/CMakeFiles/gmock_main.dir/build.make tests/googletest/googlemock/CMakeFiles/gmock_main.dir/depend
 	$(MAKE) $(MAKESILENT) -f tests/googletest/googlemock/CMakeFiles/gmock_main.dir/build.make tests/googletest/googlemock/CMakeFiles/gmock_main.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/tyom-pc/workspace/clientserver/CMakeFiles --progress-num=12,13 "Built target gmock_main"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/tyom-pc/workspace/clientserver/CMakeFiles --progress-num=19,20 "Built target gmock_main"
 .PHONY : tests/googletest/googlemock/CMakeFiles/gmock_main.dir/all
 
 # Build rule for subdir invocation for target.
@@ -1284,7 +1314,7 @@ tests/googletest/googlemock/CMakeFiles/gmock_main.dir/clean:
 tests/googletest/googletest/CMakeFiles/gtest.dir/all:
 	$(MAKE) $(MAKESILENT) -f tests/googletest/googletest/CMakeFiles/gtest.dir/build.make tests/googletest/googletest/CMakeFiles/gtest.dir/depend
 	$(MAKE) $(MAKESILENT) -f tests/googletest/googletest/CMakeFiles/gtest.dir/build.make tests/googletest/googletest/CMakeFiles/gtest.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/tyom-pc/workspace/clientserver/CMakeFiles --progress-num=14,15 "Built target gtest"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/tyom-pc/workspace/clientserver/CMakeFiles --progress-num=21,22 "Built target gtest"
 .PHONY : tests/googletest/googletest/CMakeFiles/gtest.dir/all
 
 # Build rule for subdir invocation for target.
@@ -1310,7 +1340,7 @@ tests/googletest/googletest/CMakeFiles/gtest.dir/clean:
 tests/googletest/googletest/CMakeFiles/gtest_main.dir/all: tests/googletest/googletest/CMakeFiles/gtest.dir/all
 	$(MAKE) $(MAKESILENT) -f tests/googletest/googletest/CMakeFiles/gtest_main.dir/build.make tests/googletest/googletest/CMakeFiles/gtest_main.dir/depend
 	$(MAKE) $(MAKESILENT) -f tests/googletest/googletest/CMakeFiles/gtest_main.dir/build.make tests/googletest/googletest/CMakeFiles/gtest_main.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/tyom-pc/workspace/clientserver/CMakeFiles --progress-num=16,17 "Built target gtest_main"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/tyom-pc/workspace/clientserver/CMakeFiles --progress-num=23,24 "Built target gtest_main"
 .PHONY : tests/googletest/googletest/CMakeFiles/gtest_main.dir/all
 
 # Build rule for subdir invocation for target.
@@ -1333,16 +1363,20 @@ tests/googletest/googletest/CMakeFiles/gtest_main.dir/clean:
 # Target rules for target tests/client_tests/CMakeFiles/t_client.dir
 
 # All Build rule for target.
+tests/client_tests/CMakeFiles/t_client.dir/all: bin/client/CMakeFiles/clientlib.dir/all
+tests/client_tests/CMakeFiles/t_client.dir/all: lib/src/helpers/CMakeFiles/debug_helper.dir/all
+tests/client_tests/CMakeFiles/t_client.dir/all: lib/src/util/data_transfer/message_resolver/CMakeFiles/message_resolver.dir/all
+tests/client_tests/CMakeFiles/t_client.dir/all: lib/src/util/data_transfer/message_model/CMakeFiles/message_model.dir/all
 tests/client_tests/CMakeFiles/t_client.dir/all: tests/googletest/googletest/CMakeFiles/gtest.dir/all
 tests/client_tests/CMakeFiles/t_client.dir/all: tests/googletest/googletest/CMakeFiles/gtest_main.dir/all
 	$(MAKE) $(MAKESILENT) -f tests/client_tests/CMakeFiles/t_client.dir/build.make tests/client_tests/CMakeFiles/t_client.dir/depend
 	$(MAKE) $(MAKESILENT) -f tests/client_tests/CMakeFiles/t_client.dir/build.make tests/client_tests/CMakeFiles/t_client.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/tyom-pc/workspace/clientserver/CMakeFiles --progress-num=31,32 "Built target t_client"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/tyom-pc/workspace/clientserver/CMakeFiles --progress-num=38,39 "Built target t_client"
 .PHONY : tests/client_tests/CMakeFiles/t_client.dir/all
 
 # Build rule for subdir invocation for target.
 tests/client_tests/CMakeFiles/t_client.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/tyom-pc/workspace/clientserver/CMakeFiles 6
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/tyom-pc/workspace/clientserver/CMakeFiles 20
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 tests/client_tests/CMakeFiles/t_client.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/tyom-pc/workspace/clientserver/CMakeFiles 0
 .PHONY : tests/client_tests/CMakeFiles/t_client.dir/rule
@@ -1366,7 +1400,7 @@ tests/lib_tests/CMakeFiles/t_lib2.dir/all: tests/googletest/googletest/CMakeFile
 tests/lib_tests/CMakeFiles/t_lib2.dir/all: tests/googletest/googletest/CMakeFiles/gtest_main.dir/all
 	$(MAKE) $(MAKESILENT) -f tests/lib_tests/CMakeFiles/t_lib2.dir/build.make tests/lib_tests/CMakeFiles/t_lib2.dir/depend
 	$(MAKE) $(MAKESILENT) -f tests/lib_tests/CMakeFiles/t_lib2.dir/build.make tests/lib_tests/CMakeFiles/t_lib2.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/tyom-pc/workspace/clientserver/CMakeFiles --progress-num=33,34 "Built target t_lib2"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/tyom-pc/workspace/clientserver/CMakeFiles --progress-num=40,41 "Built target t_lib2"
 .PHONY : tests/lib_tests/CMakeFiles/t_lib2.dir/all
 
 # Build rule for subdir invocation for target.
@@ -1396,7 +1430,7 @@ tests/lib_tests/CMakeFiles/t_lib3.dir/all: tests/googletest/googletest/CMakeFile
 tests/lib_tests/CMakeFiles/t_lib3.dir/all: tests/googletest/googletest/CMakeFiles/gtest_main.dir/all
 	$(MAKE) $(MAKESILENT) -f tests/lib_tests/CMakeFiles/t_lib3.dir/build.make tests/lib_tests/CMakeFiles/t_lib3.dir/depend
 	$(MAKE) $(MAKESILENT) -f tests/lib_tests/CMakeFiles/t_lib3.dir/build.make tests/lib_tests/CMakeFiles/t_lib3.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/tyom-pc/workspace/clientserver/CMakeFiles --progress-num=35,36 "Built target t_lib3"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/tyom-pc/workspace/clientserver/CMakeFiles --progress-num=42,43 "Built target t_lib3"
 .PHONY : tests/lib_tests/CMakeFiles/t_lib3.dir/all
 
 # Build rule for subdir invocation for target.
@@ -1423,7 +1457,7 @@ tests/server_tests/CMakeFiles/t_server.dir/all: tests/googletest/googletest/CMak
 tests/server_tests/CMakeFiles/t_server.dir/all: tests/googletest/googletest/CMakeFiles/gtest_main.dir/all
 	$(MAKE) $(MAKESILENT) -f tests/server_tests/CMakeFiles/t_server.dir/build.make tests/server_tests/CMakeFiles/t_server.dir/depend
 	$(MAKE) $(MAKESILENT) -f tests/server_tests/CMakeFiles/t_server.dir/build.make tests/server_tests/CMakeFiles/t_server.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/tyom-pc/workspace/clientserver/CMakeFiles --progress-num=37,38 "Built target t_server"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/tyom-pc/workspace/clientserver/CMakeFiles --progress-num=44,45 "Built target t_server"
 .PHONY : tests/server_tests/CMakeFiles/t_server.dir/all
 
 # Build rule for subdir invocation for target.

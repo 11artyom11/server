@@ -42,12 +42,9 @@ void Server::Handler::commap_init(void) {
   commap[CONNECT_VERIFY] = &Server::Handler::send_connect_verify;
   commap[LOG_IN_VERIFY] = &Server::Handler::send_login_verify;
   commap[SIGN_UP_VERIFY] = &Server::Handler::send_sign_up_verify;
-  commap[CREATE_CHATROOM_COMMAND] =
-      &Server::Handler::on_create_chatroom_command_recieved;
-  commap[JOIN_CHATROOM_COMMAND] =
-      &Server::Handler::on_join_chatroom_command_recieved;
-  commap[BRDCST_MESSAGE_COMMAND] =
-      &Server::Handler::on_broadcast_message_command_recieved;
+  commap[CREATE_CHATROOM_COMMAND] = &Server::Handler::on_create_chatroom_command_recieved;
+  commap[JOIN_CHATROOM_COMMAND] = &Server::Handler::on_join_chatroom_command_recieved;
+  commap[BRDCST_MESSAGE_COMMAND] =  &Server::Handler::on_broadcast_message_command_recieved;
 }
 
 /**
@@ -272,25 +269,21 @@ int Server::Handler::on_sign_up_command_recieved(
  * @param message
  * @return int
  */
-int Server::Handler::on_create_chatroom_command_recieved(
-    int sfd, const DataTransfer::MessageModel& message) {
+int Server::Handler::on_create_chatroom_command_recieved(int sfd, const DataTransfer::MessageModel& message) {
   Debug().info("Got command create chatroom");
   /*Create new chatroom*/
-  RoomSpace::ChatRoom* new_room =
-      new RoomSpace::ChatRoom(*recent_customers_sfd[sfd].get());
-  chatroom_mngr_shrd_ptr->push_new_room(recent_customers_sfd[sfd].get(),
-                                        new_room);
+  RoomSpace::ChatRoom* new_room = new RoomSpace::ChatRoom(*recent_customers_sfd[sfd].get());
+
+  chatroom_mngr_shrd_ptr->push_new_room(recent_customers_sfd[sfd].get(), new_room);
   /* Create chatroom_create_verify message to send to desired client */
   DataTransfer::CreateChatroomVerify createVerify(new_room->get_room_id());
   Debug().info("ROOM DATA\n", createVerify.to_str());
 
   chatroom_create_verify(sfd, createVerify);
-
   return 0;
 }
 
-int Server::Handler::on_join_chatroom_command_recieved(
-    int sfd, const DataTransfer::MessageModel& message) {
+int Server::Handler::on_join_chatroom_command_recieved(int sfd, const DataTransfer::MessageModel& message) {
   Debug().info("Called on_join_chatroom_command_recieved");
   std::string room_id = message.get<std::string>("room_id");
   std::string master_token = message.get<std::string>("master_token");
@@ -314,8 +307,7 @@ int Server::Handler::on_join_chatroom_command_recieved(
  * @param message
  * @return int
  */
-int Server::Handler::on_broadcast_message_command_recieved(
-    int sfd, const DataTransfer::MessageModel& message) {
+int Server::Handler::on_broadcast_message_command_recieved(int sfd, const DataTransfer::MessageModel& message) {
   Debug().info("Server::on_broadcast_message_command_recieved function Called");
   std::string room_id = message.get<std::string>("room_id");
   std::string utoken = message.get<std::string>("utoken");
@@ -334,8 +326,7 @@ int Server::Handler::on_broadcast_message_command_recieved(
  *
  * @param sfd
  */
-int Server::Handler::send_connect_verify(
-    int sfd, const DataTransfer::MessageModel& message) {
+int Server::Handler::send_connect_verify(int sfd, const DataTransfer::MessageModel& message) {
   /* tmp uid*/
   auto customer = recent_customers_sfd[sfd];
 
@@ -437,14 +428,10 @@ int Server::Handler::provide_read_thread(int new_read_socket,
  * @param sfd socket to close
  * @return close success code
  */
-int Server::Handler::terminate_socket(
-    int sfd, const DataTransfer::MessageModel& message) {
+int Server::Handler::terminate_socket(int sfd, const DataTransfer::MessageModel& message) {
   Debug().info("Connection terminated");
-
-  string utoken = message.get<string>("utoken");
   chatroom_mngr_shrd_ptr->remove_all_rooms(recent_customers_sfd[sfd].get());
-  delete_recent_customer(sfd, utoken);
-
+  delete_recent_customer(sfd, "NULL");
   if (close(sfd) == 0) {
     return TERMINATE_CODE_SUCCESS;
   }
@@ -594,12 +581,9 @@ void Server::Handler::add_new_recent_customer(int sfd, const string& utoken) {
  * @param utoken
  */
 void Server::Handler::delete_recent_customer(int sfd, const string& utoken) {
-  /*
-  Need to delete from th all 2 containers bc
-  is stored in shared_ptrs
-   */
-  recent_customers.erase(utoken);
-  recent_customers_sfd.erase(sfd);
+  std::string token = recent_customers_sfd.at(sfd).get()->get_unique_token();
+  // recent_customers.erase(token);
+  // recent_customers_sfd.erase(sfd);
   Debug().info("Succcessfully deleted recently customer");
   return;
 }

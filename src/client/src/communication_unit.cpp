@@ -91,11 +91,10 @@ IOModel_shrd_ptr BasicCommunicationModel::get_io_model(void) const {
  * @param sockfd
  * @return void*
  */
-void BasicCommunicationModel::start_write_async(int sockfd, std::istream&) {
+void BasicCommunicationModel::start_write_async(int sockfd, std::istream& is) {
   std::string buf_s;
-
   do {
-    std::cin >> buf_s;
+    is >> buf_s;
     DataTransfer::MessageModel model(buf_s);
     if (!DataTransfer::is_message_valid(model)) {
       Debug().fatal("Bad Message");
@@ -104,5 +103,5 @@ void BasicCommunicationModel::start_write_async(int sockfd, std::istream&) {
     m_io_model->send_message(model, sockfd);
     // write(sockfd, buf_s.c_str(), strlen(buf_s.c_str()));
     // buf_s.clear();
-  } while (buf_s.length());
+  } while (buf_s.length() && !is.eof());
 }

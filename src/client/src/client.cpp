@@ -34,16 +34,17 @@ void ClientModel::init_new_client(int __port) {
   }
 
   connection_state = 0;
+  auto connect_th = std::async(std::launch::async, 
+                                  &Client::ClientModel::connect_to_default_host, this);
 
   auto read_th = std::async(std::launch::async,
                             &Net::BasicCommunicationModel::start_read_async,
                             this->comm_unit, main_socket);
   auto write_th = std::async(std::launch::async,
-                             &Net::BasicCommunicationModel::start_write_async,
-                             this->comm_unit, main_socket, std::ref(std::cin));
+                            &Net::BasicCommunicationModel::start_write_async,
+                            this->comm_unit, main_socket, std::ref(std::cin));
+  
 
-  Debug().info("Out of Client Model C-tor");
-  connect_to_default_host();
 }
 
 /**
@@ -52,9 +53,7 @@ void ClientModel::init_new_client(int __port) {
  * @return int result of connection trial
  */
 int ClientModel::connect_to_default_host(void) {
-  Debug().info("Here we are");
-  return comm_unit->get_io_model()->get_handler()->send_connect_request(
-      con_handler->get_sockfd(), DataTransfer::MessageModel{"{}"});
+  return comm_unit->get_io_model()->get_handler()->send_connect_request(con_handler->get_sockfd(), DataTransfer::MessageModel{"{}"});
 }
 
 int ClientModel::get_connection_state() const noexcept {
@@ -75,21 +74,18 @@ int ClientModel::send_to_host(const DataTransfer::MessageModel& message) {
   return 0;
 }
 
-int ClientModel::send_join_to_room_request(const std::string& master_token,
-                                           const std::string& room_id) {
-  // auto utoken =
-  // get_comm_unit()->get_io_model()->get_handler()->get_client_prototype_ptr_c()->unique_token;
-  // DataTransfer::JoinChatroomCommand joinComm(master_token,room_id,utoken);
-  // get_comm_unit()->get_io_model()->send_message(joinComm, main_socket);
-  // return 0;
-}
-
 int ClientModel::close_connection() {
   // auto utoken =
   // get_comm_unit()->get_io_model()->get_handler()->get_client_prototype_ptr_c()->unique_token;
   // auto termCommand = DataTransfer::TerminateConnectionCommand(utoken);
   // get_comm_unit()->get_io_model()->send_message(termCommand, main_socket);
   // return 0;
+}
+
+int ClientModel::read_commands_from_stream ( std::istream& is, long delay){
+  Debug().info ("we can read from here");
+  comm_unit->start_write_async(con_handler->get_sockfd(), std::ref(is));
+  return 0;
 }
 
 /**

@@ -276,4 +276,91 @@ tests/client_tests/CMakeFiles/t_client.dir/test_1.cpp.o: \
  /home/tyom-pc/workspace/clientserver/tests/googletest/googletest/include/gtest/gtest-test-part.h \
  /home/tyom-pc/workspace/clientserver/tests/googletest/googletest/include/gtest/gtest_prod.h \
  /home/tyom-pc/workspace/clientserver/tests/googletest/googletest/include/gtest/gtest-typed-test.h \
- /home/tyom-pc/workspace/clientserver/tests/googletest/googletest/include/gtest/gtest_pred_impl.h
+ /home/tyom-pc/workspace/clientserver/tests/googletest/googletest/include/gtest/gtest_pred_impl.h \
+ /home/tyom-pc/workspace/clientserver/tests/client_tests/../../src/client/include/client.h \
+ /usr/include/c++/11/fstream \
+ /usr/include/x86_64-linux-gnu/c++/11/bits/basic_file.h \
+ /usr/include/x86_64-linux-gnu/c++/11/bits/c++io.h \
+ /usr/include/c++/11/bits/fstream.tcc \
+ /home/tyom-pc/workspace/clientserver/tests/client_tests/../../src/client/include/communication_unit.h \
+ /usr/include/semaphore.h /usr/include/x86_64-linux-gnu/bits/semaphore.h \
+ /usr/include/c++/11/future /usr/include/c++/11/mutex \
+ /usr/include/c++/11/chrono /usr/include/c++/11/ratio \
+ /usr/include/c++/11/bits/std_mutex.h \
+ /usr/include/c++/11/bits/unique_lock.h \
+ /usr/include/c++/11/condition_variable \
+ /usr/include/c++/11/bits/atomic_futex.h \
+ /usr/include/c++/11/bits/std_thread.h /usr/include/c++/11/thread \
+ /usr/include/c++/11/bits/this_thread_sleep.h \
+ /home/tyom-pc/workspace/clientserver/tests/client_tests/../../src/client/include/connection_handler.h \
+ /usr/include/arpa/inet.h /usr/include/netinet/in.h \
+ /usr/include/x86_64-linux-gnu/sys/socket.h \
+ /usr/include/x86_64-linux-gnu/bits/types/struct_iovec.h \
+ /usr/include/x86_64-linux-gnu/bits/socket.h \
+ /usr/include/x86_64-linux-gnu/bits/socket_type.h \
+ /usr/include/x86_64-linux-gnu/bits/sockaddr.h \
+ /usr/include/x86_64-linux-gnu/asm/socket.h \
+ /usr/include/asm-generic/socket.h \
+ /usr/include/x86_64-linux-gnu/asm/sockios.h \
+ /usr/include/asm-generic/sockios.h \
+ /usr/include/x86_64-linux-gnu/bits/types/struct_osockaddr.h \
+ /usr/include/x86_64-linux-gnu/bits/socket2.h \
+ /usr/include/x86_64-linux-gnu/bits/in.h /usr/include/netdb.h \
+ /usr/include/rpc/netdb.h /usr/include/x86_64-linux-gnu/bits/netdb.h \
+ /usr/include/c++/11/cstring \
+ /home/tyom-pc/workspace/clientserver/tests/client_tests/../../src/client/include/io_unit.h \
+ /usr/include/c++/11/algorithm \
+ /usr/include/c++/11/pstl/glue_algorithm_defs.h /usr/include/c++/11/queue \
+ /usr/include/c++/11/deque /usr/include/c++/11/bits/stl_deque.h \
+ /usr/include/c++/11/bits/deque.tcc /usr/include/c++/11/bits/stl_queue.h \
+ /home/tyom-pc/workspace/clientserver/tests/client_tests/../../lib/include/helpers/constants.h \
+ /home/tyom-pc/workspace/clientserver/tests/client_tests/../../lib/include/helpers/debug_helper/debug_helper.h \
+ /home/tyom-pc/workspace/clientserver/tests/client_tests/../../lib/include/helpers/debug_helper/../constants.h \
+ /home/tyom-pc/workspace/clientserver/tests/client_tests/../../src/client/include/handler.h \
+ /home/tyom-pc/workspace/clientserver/tests/client_tests/../../lib/include/util/data_transfer/message_model/message_model.h \
+ /home/tyom-pc/workspace/clientserver/tests/client_tests/../../lib/include/util/data_transfer/message_model/../../../../../3rdparty/json/single_include/nlohmann/json.hpp \
+ /usr/include/c++/11/numeric /usr/include/c++/11/bits/stl_numeric.h \
+ /usr/include/c++/11/pstl/glue_numeric_defs.h \
+ /usr/include/c++/11/forward_list /usr/include/c++/11/bits/forward_list.h \
+ /usr/include/c++/11/bits/forward_list.tcc /usr/include/c++/11/valarray \
+ /usr/include/c++/11/cmath /usr/include/math.h \
+ /usr/include/x86_64-linux-gnu/bits/math-vector.h \
+ /usr/include/x86_64-linux-gnu/bits/libm-simd-decl-stubs.h \
+ /usr/include/x86_64-linux-gnu/bits/flt-eval-method.h \
+ /usr/include/x86_64-linux-gnu/bits/fp-logb.h \
+ /usr/include/x86_64-linux-gnu/bits/fp-fast.h \
+ /usr/include/x86_64-linux-gnu/bits/mathcalls-helper-functions.h \
+ /usr/include/x86_64-linux-gnu/bits/mathcalls.h \
+ /usr/include/x86_64-linux-gnu/bits/mathcalls-narrow.h \
+ /usr/include/x86_64-linux-gnu/bits/iscanonical.h \
+ /usr/include/c++/11/bits/specfun.h /usr/include/c++/11/tr1/gamma.tcc \
+ /usr/include/c++/11/tr1/special_function_util.h \
+ /usr/include/c++/11/tr1/bessel_function.tcc \
+ /usr/include/c++/11/tr1/beta_function.tcc \
+ /usr/include/c++/11/tr1/ell_integral.tcc \
+ /usr/include/c++/11/tr1/exp_integral.tcc \
+ /usr/include/c++/11/tr1/hypergeometric.tcc \
+ /usr/include/c++/11/tr1/legendre_function.tcc \
+ /usr/include/c++/11/tr1/modified_bessel_func.tcc \
+ /usr/include/c++/11/tr1/poly_hermite.tcc \
+ /usr/include/c++/11/tr1/poly_laguerre.tcc \
+ /usr/include/c++/11/tr1/riemann_zeta.tcc \
+ /usr/include/c++/11/bits/valarray_array.h \
+ /usr/include/c++/11/bits/valarray_array.tcc \
+ /usr/include/c++/11/bits/valarray_before.h \
+ /usr/include/c++/11/bits/slice_array.h \
+ /usr/include/c++/11/bits/valarray_after.h \
+ /usr/include/c++/11/bits/gslice.h \
+ /usr/include/c++/11/bits/gslice_array.h \
+ /usr/include/c++/11/bits/mask_array.h \
+ /usr/include/c++/11/bits/indirect_array.h /usr/include/c++/11/filesystem \
+ /usr/include/c++/11/bits/fs_fwd.h /usr/include/c++/11/bits/fs_path.h \
+ /usr/include/c++/11/codecvt /usr/include/c++/11/bits/fs_dir.h \
+ /usr/include/c++/11/bits/fs_ops.h \
+ /home/tyom-pc/workspace/clientserver/tests/client_tests/../../lib/include/util/data_transfer/message_model/../../../helpers/debug_helper/debug_helper.h \
+ /home/tyom-pc/workspace/clientserver/tests/client_tests/../../lib/include/util/data_transfer/message_resolver/message_resolver.h \
+ /home/tyom-pc/workspace/clientserver/tests/client_tests/../../lib/include/util/data_transfer/message_resolver/../../../../../lib/include/helpers/constants.h \
+ /home/tyom-pc/workspace/clientserver/tests/client_tests/../../lib/include/util/data_transfer/message_resolver/../message_model/message_model.h \
+ /home/tyom-pc/workspace/clientserver/tests/client_tests/../../lib/include/util/data_transfer/message_model/message_templates.h \
+ /home/tyom-pc/workspace/clientserver/tests/client_tests/../../lib/include/util/data_transfer/message_model/../../../helpers/constants.h \
+ /home/tyom-pc/workspace/clientserver/tests/client_tests/../../lib/include/util/data_transfer/message_model/message_model.h

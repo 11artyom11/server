@@ -138,8 +138,7 @@ int Server::ServerModel::accept_connection_from_socket(int sockfd) {
  */
 void Server::ServerModel::dump_server_state(void) const noexcept {
   Debug().info("Server listen address : ", server_addr->sin_addr.s_addr);
-  Debug().info("Server listen port : ", server_addr->sin_port, "(", listen_port,
-               ")");
+  Debug().info("Server listen port : ", server_addr->sin_port, "(", listen_port,")");
   Debug().info("Server protocol family : ", server_addr->sin_family);
   return;
 }
@@ -165,15 +164,16 @@ struct sockaddr_in* Server::ServerModel::get_server_addr() const {
 int Server::ServerModel::distribute_incoming_connections(int socket,
                                                          char* response) {
   MessageModel message(std::string{response});
-  std::string response_s = message.get<decltype(response_s)>("command");
+  std::string response_s = message.get<std::string>("command");
   Debug().info("COMMAND : ", response_s);
   auto mem_function = (*m_handler.get()).get_command(response_s);
   Debug().warning((mem_function ? "IS VALID FUNCTION" : "FUNCTION IS INVALID"));
   if (!mem_function) {
     return UNKNOWN_COMMAND_ERROR;
   }
+  Debug().info ("BEFORE CALL");
   int res = ((*m_handler.get()).*mem_function)(socket, message);
-  Debug().info("GGGGG");
+  Debug().info ("AFTER CALL");
   return res;
 }
 
@@ -201,14 +201,11 @@ void Server::ServerModel::handle_connection(int connection) {
     bytes = read(connection, buffer, sizeof(buffer) - 1);
     buffer[bytes] = 0x00;
     Debug().info("Recieved message : ", buffer);
-    int distribute_result =
-        this->distribute_incoming_connections(connection, buffer);
-    Debug().info("FFFFF");
-    if (distribute_result == TERMINATE_CODE_SUCCESS ||
-        distribute_result == TERMINATE_CODE_FAILURE) {
+    int distribute_result = distribute_incoming_connections(connection, buffer);
+    Debug().info("zdes");
+    if (distribute_result == (TERMINATE_CODE_SUCCESS | TERMINATE_CODE_FAILURE)) {
       return;
-    }
-    // Send a message to the connection
+    }    // Send a message to the connection
 
   } while (bytes);
 
