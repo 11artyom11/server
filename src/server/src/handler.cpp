@@ -232,8 +232,6 @@ int Server::Handler::on_connect_command_recieved(
   return send_connect_verify(sfd, message);
 }
 
-int Server::Handler::on_connect_command_recieved(int sfd, char* message) {}
-
 /**
  * @brief Send $LOG_IN_COMMAND command in with corresponding credentials
  * in order to log in as existing user

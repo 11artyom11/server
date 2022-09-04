@@ -111,7 +111,6 @@ class Handler {
   int send_sign_up_verify(int sfd, const DataTransfer::MessageModel&);
   int send_login_verify(int sfd, const DataTransfer::MessageModel&);
   int on_connect_command_recieved(int sfd, const DataTransfer::MessageModel&);
-  int on_connect_command_recieved(int sfd, char*);
   int on_login_command_recieved(int sfd, const DataTransfer::MessageModel&);
   int on_sign_up_command_recieved(int sfd, const DataTransfer::MessageModel&);
   int on_create_chatroom_command_recieved(int sfd, const DataTransfer::MessageModel&);
