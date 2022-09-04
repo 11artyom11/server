@@ -331,12 +331,6 @@ int Server::Handler::send_connect_verify(int sfd, const DataTransfer::MessageMod
   string unique_token = message.get<string>("unique_token");
   DataTransfer::ConnectVerify cV(unique_token);
   customer->send_message(cV);
-  // std::string message_c = cV.to_str();
-  // char buf[256];
-  // strcpy(buf,message_c.c_str());
-  // buf[message_c.length()] = '\0';
-  // int res = send (sfd, buf, message_c.length(), NULL);
-  Debug().info("in cv gunction : ");
   return 0;
 }
 

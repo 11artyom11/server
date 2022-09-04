@@ -7,7 +7,7 @@ CustomerModel::CustomerModel(int sfd, const std::string& unique_token)
       unique_token{unique_token}
 
 {
-  Debug().info("Retrieved data SFD : ", sfd, " UNIQUE TOKEN : ", unique_token);
+
 }
 
 int CustomerModel::get_sfd(void) const noexcept { return this->sfd; }
@@ -23,9 +23,6 @@ void CustomerModel::send_message(const DataTransfer::MessageModel& message) {
   mempcpy(message_c, message.to_str().c_str(), len);
   message_c[len] = '\0';
   int res = send(sfd, message_c, message.to_str().length(), NULL);
-  Debug().info("SEND RESULT : ", res);
-  Debug().info("STR : ", message_c);
-  Debug().info("After send");
   return;
 }
 

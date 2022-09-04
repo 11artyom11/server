@@ -165,15 +165,12 @@ int Server::ServerModel::distribute_incoming_connections(int socket,
                                                          char* response) {
   MessageModel message(std::string{response});
   std::string response_s = message.get<std::string>("command");
-  Debug().info("COMMAND : ", response_s);
   auto mem_function = (*m_handler.get()).get_command(response_s);
   Debug().warning((mem_function ? "IS VALID FUNCTION" : "FUNCTION IS INVALID"));
   if (!mem_function) {
     return UNKNOWN_COMMAND_ERROR;
   }
-  Debug().info ("BEFORE CALL");
   int res = ((*m_handler.get()).*mem_function)(socket, message);
-  Debug().info ("AFTER CALL");
   return res;
 }
 
