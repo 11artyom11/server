@@ -293,7 +293,7 @@ int Server::Handler::on_join_chatroom_command_recieved(int sfd, const DataTransf
   Debug().info("ChatRoom ID => ", chatroom->get_room_id());
 
   /*
-  {"command":"com_join_chatroom","master_token":"oVERKQ67LC","room_id":"jVXTPmixcL","utoken":"fI8qVa0uOm"}
+  {"command":"com_join_chatroom","master_token":"XSdlBEom9G","room_id":"J8xHVBw3hS","utoken":"5WOm4Z2GCr"}
   */
   return 0;
 }
@@ -309,12 +309,9 @@ int Server::Handler::on_broadcast_message_command_recieved(int sfd, const DataTr
   Debug().info("Server::on_broadcast_message_command_recieved function Called");
   std::string room_id = message.get<std::string>("room_id");
   std::string utoken = message.get<std::string>("utoken");
-  Debug().info("12345678");
-  Server::ChatRoom_shrd_ptr chatroom =
-      chatroom_mngr_shrd_ptr->get_room_global(room_id);
-  Debug().info("9101123456");
+  Server::ChatRoom_shrd_ptr chatroom = chatroom_mngr_shrd_ptr->get_room_global(room_id);
   chatroom->broadcast_to_all_users(utoken, message);
-  /* {"command":"com_brdcst_message","utoken":"dVexJpkPMr","room_id":"jVXTPmixcL","message":"HelloFromFirstUSER","name":"Nicolas"}
+  /* {"command":"com_brdcst_message","utoken":"Q4Ypo2KqSd","room_id":"J8xHVBw3hS","message":"HelloFromFirstUSER","name":"Nicolas"}
    */
   return 0;
 }

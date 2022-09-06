@@ -24,6 +24,7 @@ set(CMAKE_MAKEFILE_DEPENDS
   "lib/src/util/data_transfer/message_resolver/CMakeLists.txt"
   "lib/src/util/data_transfer/message_resolver/message_resolver.pc.in"
   "src/client/CMakeLists.txt"
+  "src/client/src/client_src/CMakeLists.txt"
   "src/server/CMakeLists.txt"
   "/usr/share/cmake-3.22/Modules/CMakeCInformation.cmake"
   "/usr/share/cmake-3.22/Modules/CMakeCXXInformation.cmake"
@@ -67,7 +68,8 @@ set(CMAKE_MAKEFILE_OUTPUTS
 set(CMAKE_MAKEFILE_PRODUCTS
   "CMakeFiles/CMakeDirectoryInformation.cmake"
   "bin/server/CMakeFiles/CMakeDirectoryInformation.cmake"
-  "bin/client/CMakeFiles/CMakeDirectoryInformation.cmake"
+  "src/client/CMakeFiles/CMakeDirectoryInformation.cmake"
+  "src/client/src/client_src/CMakeFiles/CMakeDirectoryInformation.cmake"
   "3rdparty/json/nlohmann_json.pc"
   "3rdparty/json/nlohmann_jsonConfigVersion.cmake"
   "3rdparty/json/nlohmann_jsonConfig.cmake"
@@ -85,8 +87,8 @@ set(CMAKE_MAKEFILE_PRODUCTS
 # Dependency information for all targets:
 set(CMAKE_DEPEND_INFO_FILES
   "bin/server/CMakeFiles/server.dir/DependInfo.cmake"
-  "bin/client/CMakeFiles/clientlib.dir/DependInfo.cmake"
-  "bin/client/CMakeFiles/client.dir/DependInfo.cmake"
+  "src/client/CMakeFiles/client_exe.dir/DependInfo.cmake"
+  "src/client/src/client_src/CMakeFiles/client_lib.dir/DependInfo.cmake"
   "lib/src/helpers/CMakeFiles/debug_helper.dir/DependInfo.cmake"
   "lib/src/util/data_transfer/message_resolver/CMakeFiles/message_resolver.dir/DependInfo.cmake"
   "lib/src/util/data_transfer/message_model/CMakeFiles/message_model.dir/DependInfo.cmake"

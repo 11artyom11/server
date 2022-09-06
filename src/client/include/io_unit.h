@@ -28,8 +28,8 @@
 #include <thread>
 #include <utility>
 
-#include "constants.h"
 #include "debug_helper.h"
+#include "constants.h"
 #include "handler.h"
 
 namespace iounit {

@@ -18,7 +18,7 @@ add_subdirectory( src/server/ ./bin/server)
 
 
 #adding subproject client
-add_subdirectory( src/client/ ./bin/client)
+add_subdirectory( src/client)
 
 add_subdirectory(3rdparty/json)
 
