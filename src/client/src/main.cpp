@@ -9,8 +9,15 @@ int main(int argc, char* argv[]) {
   }
 
   uint32_t port = atoi(argv[1]);
+  ClientModel* cModel;
 
-  ClientModel c_m(port);
+  auto clientAsync = [port, &cModel]()
+   { 
+    cModel = new ClientModel(port);/* This runs infinite loop */
 
+    delete cModel;
+  };
+
+  auto cTh = std::async(std::launch::async, clientAsync);
   return 0;
 }

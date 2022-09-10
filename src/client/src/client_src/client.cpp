@@ -43,7 +43,7 @@ void ClientModel::init_new_client(int __port) {
   auto write_th = std::async(std::launch::async,
                             &Net::BasicCommunicationModel::start_write_async,
                             this->comm_unit, main_socket, std::ref(std::cin));
-  
+  return;
 
 }
 
