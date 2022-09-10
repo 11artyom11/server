@@ -1,3 +1,0 @@
-/home/aram/workspace/clientserver/src/client/CMakeFiles/rebuild_cache.dir
-/home/aram/workspace/clientserver/src/client/CMakeFiles/edit_cache.dir
-/home/aram/workspace/clientserver/src/client/CMakeFiles/client.dir
