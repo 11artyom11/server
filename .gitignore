@@ -15,7 +15,8 @@ latex/
 **/*.cmake
 **/*.pc
 **/*.in
-**/*.so.**
+**/*.so.*
+**/*.so
 **/*.internal
 **/cmake-build-debug
 **/CMakeCache.txt
