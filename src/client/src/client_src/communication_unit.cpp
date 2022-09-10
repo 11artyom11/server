@@ -65,7 +65,7 @@ void BasicCommunicationModel::start_read_async(int sockfd) {
     int read_result = read(sockfd, buff, sizeof(buff));
     if (read_result == 0) {
       Debug().fatal("Host is no longer available. Terminating...");
-      exit(0);
+      return;
     }
     /*Start new thread to print retrieved buffer*/
     m_io_model->read_q(sockfd, buff);
