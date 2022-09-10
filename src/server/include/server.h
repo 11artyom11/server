@@ -17,7 +17,7 @@
  */
 #ifndef __SERVER__
 #define __SERVER__
-
+#define ENBL_DEBUG
 #include <arpa/inet.h>
 #include <netdb.h>
 #include <netinet/in.h>
