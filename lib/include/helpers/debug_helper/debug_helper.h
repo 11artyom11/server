@@ -55,33 +55,45 @@ class Debug {
 
 template <typename... mesTL>
 void Debug::info(mesTL... messages) {
-  if (!Debug::debug_state) return;
-  *outp_stream << KGRN /*Green code*/ << get_current_time() << INFO_S;
-  ((*outp_stream << messages << ' '), ...);
-  *outp_stream << KWHT /*White code*/ << std::endl;
+  #ifdef ENBL_DEBUG
+    *outp_stream << KGRN /*Green code*/ << get_current_time() << INFO_S;
+    ((*outp_stream << messages << ' '), ...);
+    *outp_stream << KWHT /*White code*/ << std::endl;
+  #else
+    return;
+  #endif
 }
 
 template <typename... mesTL>
 void Debug::warning(mesTL... messages) {
-  if (!Debug::debug_state) return;
-  *outp_stream << KYEL << get_current_time() << WARNING_S;
-  ((*outp_stream << messages << ' '), ...);
-  *outp_stream << KWHT << std::endl;
+  #ifdef ENBL_DEBUG
+    *outp_stream << KYEL << get_current_time() << WARNING_S;
+    ((*outp_stream << messages << ' '), ...);
+    *outp_stream << KWHT << std::endl;
+  #else
+    return;
+  #endif
 }
 
 template <typename... mesTL>
 void Debug::fatal(mesTL... messages) {
-  if (!Debug::debug_state) return;
-  *outp_stream << KRED << get_current_time() << ERROR_S;
-  ((*outp_stream << messages << ' '), ...);
-  *outp_stream << KWHT << std::endl;
+  #ifdef ENBL_DEBUG
+    *outp_stream << KRED << get_current_time() << ERROR_S;
+    ((*outp_stream << messages << ' '), ...);
+    *outp_stream << KWHT << std::endl;
+  #else
+    return;
+  #endif
 }
 
 template <typename... mesTL>
 void Debug::raw(mesTL... messages) {
-  if (!Debug::debug_state) return;
-  ((*outp_stream << messages << ' '), ...);
-  *outp_stream << '\n';
+  #ifdef ENBL_DEBUG
+    ((*outp_stream << messages << ' '), ...);
+    *outp_stream << '\n';
+  #else
+    return;
+  #endif
 }
 
 #endif
