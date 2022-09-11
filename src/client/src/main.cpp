@@ -1,5 +1,5 @@
 #include "client.h"
-
+#include "client_interface.h"
 using namespace Client;
 
 int main(int argc, char* argv[]) {
