@@ -19,7 +19,7 @@
 
 #ifndef __CLIENT_H__
 #define __CLIENT_H__
-// #define ENBL`ma_DEBUG  
+// #define ENBL_DEBUG  
 #include <memory>
 #include <utility>
 #include <fstream>
@@ -44,14 +44,16 @@ typedef shared_ptr<Net::BasicCommunicationModel>
 class ClientModel {
  public:
   ClientModel(void);
-  ClientModel(int __port);
-  void init_new_client(int __port);
+  ClientModel(unsigned int __port);
+  void init_new_client();
   int connect_to_default_host(void);
   int get_connection_state(void) const noexcept;
   BasicConnectionHandlerSharedPtr get_con_handler(void) const noexcept;
   BasicCommunicationModelSharedPtr get_comm_unit(void) const noexcept;
   int send_to_host(const DataTransfer::MessageModel&);
-  int read_commands_from_stream ( std::istream&, long delay);
+  int read_commands (const std::string& command);
+  
+
   
   int close_connection(void);
   ~ClientModel();
@@ -63,6 +65,7 @@ class ClientModel {
   /* don't mess with net_state in handler unit  */
   int connection_state = -1;
   int main_socket;
+  unsigned long port;
 };
 };  // namespace Client
 

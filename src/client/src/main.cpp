@@ -1,5 +1,7 @@
 #include "client.h"
 #include "client_interface.h"
+#include "itc.hpp"
+
 using namespace Client;
 
 int main(int argc, char* argv[]) {
@@ -10,16 +12,33 @@ int main(int argc, char* argv[]) {
   }
 
   uint32_t port = atoi(argv[1]);
-  ClientModel* cModel;
+  std::shared_ptr<ClientModel> cModel = std::make_shared<ClientModel>(ClientModel(port));
+  std::shared_ptr<ClientInterface> cInterface;
+  ITC<std::string, ClientInterface, ClientModel> itc;
+  std::stringstream ss;
 
   auto clientAsync = [port, &cModel]()
    { 
-    cModel = new ClientModel(port);/* This runs infinite loop */
+    cModel->init_new_client();
+  };
 
-    delete cModel;
+  auto interfaceAsync = [&cInterface, &cModel] ()
+  {
+    cInterface = std::make_shared<ClientInterface>();
   };
 
   auto cTh = std::async(std::launch::async, clientAsync);
-  greet_message();
+  auto iTh = std::async(std::launch::async, interfaceAsync);
+  
+  itc.set_in (&ClientInterface::scan_command, cInterface.get());
+  itc.set_callback(&ClientModel::read_commands, cModel.get());
+  
+  cInterface->greet_message();
+
+  while (1)
+  {
+    itc.swrite_to_stream();
+    itc.sread_from_stream();
+  }
   return 0;
 }

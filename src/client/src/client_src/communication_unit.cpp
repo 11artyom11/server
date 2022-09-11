@@ -105,3 +105,11 @@ void BasicCommunicationModel::start_write_async(int sockfd, std::istream& is) {
     // buf_s.clear();
   } while (buf_s.length() && !is.eof());
 }
+
+
+void BasicCommunicationModel::start_write_async(int sockfd, const std::string& command) 
+{
+    std::cout << "To send : " << command << "\n";
+    DataTransfer::MessageModel model(command);
+    m_io_model->send_message(model, sockfd);
+}

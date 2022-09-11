@@ -1,6 +1,13 @@
 #include "client_interface.h"
 
-void greet_message ()
+std::string ClientInterface::scan_command()
+{
+    std::string command;
+    std::cin >> command;
+    return command;
+}
+
+void ClientInterface::greet_message ()
 {
   std::cout << "******************************************************************\n";
   std::cout << "*       _________.___.____ ____   _________________________      *\n";
@@ -15,4 +22,22 @@ void greet_message ()
   std::cout << "* 4 - Open Chatroom                                              *\n";
   std::cout << "******************************************************************\n";
   return;
+}
+
+int ClientInterface::attach_reader(std::stringstream* __S)
+{
+    this->strPtr = __S;
+    return !(strPtr != nullptr); // == nullptr
+}
+
+int ClientInterface::start_read(void)
+{
+     
+    return 0;
+}
+
+int ClientInterface::end_read(void)
+{
+
+    return 0;
 }

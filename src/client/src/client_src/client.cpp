@@ -12,15 +12,16 @@ ClientModel::ClientModel() {
   Debug().info("Created uninitialized client");
   con_handler = std::make_shared<Net::BasicConnectionHandler>();
   comm_unit = std::make_shared<Net::BasicCommunicationModel>();
+  Debug().warning(comm_unit);
 }
 
-ClientModel::ClientModel(int __port) : ClientModel() {
-  init_new_client(__port);
+ClientModel::ClientModel(unsigned int __port) : ClientModel() {
+    port = __port;
 }
 
-void ClientModel::init_new_client(int __port) {
+void ClientModel::init_new_client() {
   bool sock_res = con_handler->setup_socket(AF_INET, SOCK_STREAM, 0);
-  bool serv_res = con_handler->setup_server_addr(AF_INET, SERVER_IP, __port);
+  bool serv_res = con_handler->setup_server_addr(AF_INET, SERVER_IP, port);
   main_socket = con_handler->get_sockfd();
 
   if (!(sock_res & serv_res)) {
@@ -40,9 +41,9 @@ void ClientModel::init_new_client(int __port) {
   auto read_th = std::async(std::launch::async,
                             &Net::BasicCommunicationModel::start_read_async,
                             this->comm_unit, main_socket);
-  auto write_th = std::async(std::launch::async,
-                            &Net::BasicCommunicationModel::start_write_async,
-                            this->comm_unit, main_socket, std::ref(std::cin));
+  // auto write_th = std::async(std::launch::async,
+  //                           &Net::BasicCommunicationModel::start_write_async,
+  //                           this->comm_unit, main_socket, std::ref(std::cin));
   return;
 
 }
@@ -82,9 +83,9 @@ int ClientModel::close_connection() {
   // return 0;
 }
 
-int ClientModel::read_commands_from_stream ( std::istream& is, long delay){
-  Debug().info ("we can read from here");
-  comm_unit->start_write_async(con_handler->get_sockfd(), std::ref(is));
+int ClientModel::read_commands (const std::string& command){
+
+  comm_unit->start_write_async(con_handler->get_sockfd(), command);
   return 0;
 }
 
