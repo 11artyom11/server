@@ -50,7 +50,8 @@ class BasicCommunicationModel {
 
   /*functions for async reading and writing*/
   void start_read_async(int sockfd);
-  void start_write_async(int sockfd, std::istream& is);
+  void start_write_async(int sockfd, std::istream& is); //irrelevant
+  void start_write_async(int sockfd, const std::string& command);
 
   IOModel_shrd_ptr get_io_model(void) const;
 
