@@ -33,11 +33,7 @@ int main(int argc, char* argv[]) {
   itc.set_callback(&ClientModel::read_commands, cModel.get());
   
   cInterface->greet_message();
+  itc.trig_loop();
 
-  while (1)
-  {
-    itc.swrite_to_stream();
-    itc.sread_from_stream();
-  }
   return 0;
 }
