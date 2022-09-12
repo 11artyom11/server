@@ -15,11 +15,10 @@ ClientModel::ClientModel() {
   Debug().warning(comm_unit);
 }
 
-ClientModel::ClientModel(unsigned int __port) : ClientModel() {
-    port = __port;
-}
 
-void ClientModel::init_new_client() {
+
+void ClientModel::init_new_client(unsigned int __port) {
+  port = __port;
   bool sock_res = con_handler->setup_socket(AF_INET, SOCK_STREAM, 0);
   bool serv_res = con_handler->setup_server_addr(AF_INET, SERVER_IP, port);
   main_socket = con_handler->get_sockfd();

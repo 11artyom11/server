@@ -20,9 +20,20 @@
 #include <future>
 #include <type_traits>
 #include <functional>
+#include "debug_helper/debug_helper.h"
 
 using namespace std;
 
+
+/**
+ * @brief Class for creating pipe between trigger and callback memmber function
+ * 
+ * Need to specify binding typenames and shared memory typename
+ * template <typename StreamType, typename InClassType, typename OutClassType>
+ * @tparam StreamType 
+ * @tparam InClassType 
+ * @tparam OutClassType 
+ */
 template <typename StreamType, typename InClassType, typename OutClassType>
 class ITC
 {
@@ -48,7 +59,7 @@ class ITC
             return;
         }
 
-        void set_in (StreamType (InClassType::*__in_fptr)(void), InClassType* inptr)
+        void set_trigger (StreamType (InClassType::*__in_fptr)(void), InClassType* inptr)
         {
             in_fptr = __in_fptr;
             in = inptr;
@@ -58,6 +69,19 @@ class ITC
         {
             callback_ptr = __callback_ptr;
             out = outptr;
+        }
+
+        void trig_loop (void)
+        {
+            if (callback_ptr && in_fptr){   
+                while (1){
+                    swrite_to_stream();
+                    sread_from_stream();
+                } 
+            } else {
+                Debug().fatal ("trigger and/or callback is not set for ITC instance...");   
+                return;
+            }
         }
 
     private :

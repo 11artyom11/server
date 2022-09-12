@@ -20,6 +20,8 @@
 #include <string>
 #include <vector>
 
+constexpr auto SIL_SUCCESS = 0;
+
 constexpr auto RSA_DEFAULT_PASSPHRASE = "123";
 
 constexpr auto SERVER_NAME = "=> [SERVER] ";

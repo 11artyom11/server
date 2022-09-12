@@ -44,8 +44,7 @@ typedef shared_ptr<Net::BasicCommunicationModel>
 class ClientModel {
  public:
   ClientModel(void);
-  ClientModel(unsigned int __port);
-  void init_new_client();
+  void init_new_client(unsigned int __port);
   int connect_to_default_host(void);
   int get_connection_state(void) const noexcept;
   BasicConnectionHandlerSharedPtr get_con_handler(void) const noexcept;
