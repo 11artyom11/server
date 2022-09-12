@@ -73,12 +73,11 @@ class ITC
 
         void trig_loop (void)
         {
-            if (callback_ptr && in_fptr)
-            {   
+            if (callback_ptr && in_fptr){   
                 while (1){
                     swrite_to_stream();
                     sread_from_stream();
-                }
+                } 
             } else {
                 Debug().fatal ("trigger and/or callback is not set for ITC instance...");   
                 return;
