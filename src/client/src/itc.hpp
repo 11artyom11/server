@@ -48,7 +48,7 @@ class ITC
             return;
         }
 
-        void set_in (StreamType (InClassType::*__in_fptr)(void), InClassType* inptr)
+        void set_trigger (StreamType (InClassType::*__in_fptr)(void), InClassType* inptr)
         {
             in_fptr = __in_fptr;
             in = inptr;
