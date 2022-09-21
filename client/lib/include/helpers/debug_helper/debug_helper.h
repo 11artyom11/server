@@ -24,7 +24,6 @@
 enum class DEBUG_TYPE { ERROR_T, INFO_T, WARNING_T };
 
 enum class MACHINE_TYPE { SERVER, CLIENT };
-#define ENBL_DEBUG
 
 /*Functional class to provide debug interface*/
 class Debug {

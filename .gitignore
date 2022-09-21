@@ -3,7 +3,7 @@
 
 # etc...
 lib/src/helpers/*.so*
-bin/*
+**/bin/*
 lib/*.a
 build/*
 *.key
@@ -27,5 +27,6 @@ latex/
 **/compile_commands.json
 **/*.make 
 **/Makefile
+make_all.sh
 .vscode/*
 
