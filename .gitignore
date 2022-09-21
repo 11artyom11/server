@@ -5,7 +5,7 @@
 lib/src/helpers/*.so*
 **/bin/*
 lib/*.a
-build/*
+**/build/*
 *.key
 html/
 latex/
@@ -27,6 +27,6 @@ latex/
 **/compile_commands.json
 **/*.make 
 **/Makefile
-make_all.sh
+**/atasm-build.json
 .vscode/*
 
