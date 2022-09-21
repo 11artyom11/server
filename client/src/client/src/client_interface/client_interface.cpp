@@ -1,10 +1,12 @@
 #include "client_interface.h"
 
-std::string ClientInterface::scan_command()
+std::vector<std::string> ClientInterface::scan_command()
 {
+    buffer.clear();
     std::string command;
     std::cin >> command;
-    return command;
+    buffer.push_back(command);
+    return buffer;
 }
 
 
@@ -24,22 +26,4 @@ void ClientInterface::greet_message ()
   std::cout << "* 4 - Open Chatroom                                              *\n";
   std::cout << "******************************************************************\n";
   return;
-}
-
-int ClientInterface::attach_reader(std::stringstream* __S)
-{
-    this->strPtr = __S;
-    return !(strPtr != nullptr); // == nullptr
-}
-
-int ClientInterface::start_read(void)
-{
-     
-    return 0;
-}
-
-int ClientInterface::end_read(void)
-{
-
-    return 0;
 }

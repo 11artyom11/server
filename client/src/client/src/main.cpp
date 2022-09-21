@@ -17,7 +17,7 @@ int main(int argc, char* argv[]) {
   uint32_t port = atoi(argv[1]);
   std::shared_ptr<ClientModel> cModel = std::make_shared<ClientModel>();
   std::shared_ptr<ClientInterface> cInterface =  std::make_shared<ClientInterface>();
-  ITC<std::string, ClientInterface, ClientModel> itc;
+  ITC<std::vector<std::string>, ClientInterface, ClientModel> itc;
 
   auto clientAsync = [port, &cModel]()
   { 

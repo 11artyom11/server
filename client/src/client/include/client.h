@@ -49,7 +49,7 @@ class ClientModel {
   BasicConnectionHandlerSharedPtr get_con_handler(void) const noexcept;
   BasicCommunicationModelSharedPtr get_comm_unit(void) const noexcept;
   int send_to_host(const DataTransfer::MessageModel&);
-  int read_commands (const std::string& command);
+  int read_commands (const std::vector<std::string>& commands);
   
 
   

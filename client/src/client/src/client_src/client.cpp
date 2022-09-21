@@ -82,9 +82,9 @@ int ClientModel::close_connection() {
   // return 0;
 }
 
-int ClientModel::read_commands (const std::string& command){
+int ClientModel::read_commands (const std::vector<std::string>& commands){
 
-  std::string command_str = comm_unit->get_io_model()->get_handler()->get_input_command(command);
+  std::string command_str = comm_unit->get_io_model()->get_handler()->get_input_command(commands[0]);
   comm_unit->start_write_async(con_handler->get_sockfd(), command_str);
   return 0;
 }
