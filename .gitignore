@@ -4,7 +4,7 @@
 # etc...
 lib/src/helpers/*.so*
 **/bin/*
-lib/*.a
+**/lib/*.a
 **/build/*
 *.key
 html/
