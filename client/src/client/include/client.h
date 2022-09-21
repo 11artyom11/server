@@ -19,7 +19,6 @@
 
 #ifndef __CLIENT_H__
 #define __CLIENT_H__
-// #define ENBL_DEBUG  
 #include <memory>
 #include <utility>
 #include <fstream>
