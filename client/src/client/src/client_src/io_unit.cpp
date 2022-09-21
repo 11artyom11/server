@@ -9,6 +9,7 @@ using namespace iounit;
 IOModel::IOModel() {
   this->m_handler = std::make_unique<Client::Handler>();
   m_handler.get()->commap_init();
+  m_handler.get()->input_commap_init();
 }
 
 Handler_shrd_ptr IOModel::get_handler(void) const { return m_handler; }

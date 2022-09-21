@@ -7,6 +7,8 @@ std::string ClientInterface::scan_command()
     return command;
 }
 
+
+
 void ClientInterface::greet_message ()
 {
   std::cout << "******************************************************************\n";

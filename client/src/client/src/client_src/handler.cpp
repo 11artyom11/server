@@ -18,6 +18,12 @@ void Handler::commap_init(void) {
   commap[SIGN_UP_VERIFY] = &Handler::on_sign_up_verify_recieved;
   commap[BRDCST_MESSAGE_COMMAND] = &Handler::on_broadcast_message_recieved;
   commap[CHATROOM_CREATE_VERIFY] = &Handler::on_chatroom_create_verified;
+  
+}
+
+void Handler::input_commap_init(void){
+  input_commap["2"] = "{\"command\":\"com_crt_chatroom\"}";
+  /* .... */
 }
 
 int Handler::send_login_request(int sfd, const DataTransfer::MessageModel&) {}
@@ -46,8 +52,7 @@ int Handler::send_connect_request(int sfd, const DataTransfer::MessageModel&) {
   return -1;
 }
 
-int Handler::on_connect_accept_recieved(
-    int sfd, const DataTransfer::MessageModel& message) {
+int Handler::on_connect_accept_recieved(int sfd, const DataTransfer::MessageModel& message) {
   Debug().info("in on_connect_accept_recieved");
   /*
   Recieve RSA public key from server, cipher by it aes token and send
@@ -139,4 +144,16 @@ decltype(&Client::Handler::send_connect_request) Handler::get_command(
     std::cerr << e.what() << '\n';
     return nullptr;
   }
+}
+
+std::string Handler::get_input_command(const std::string &key_code){
+  try 
+  {
+    return input_commap[key_code];
+  } catch (const std::exception& ex)
+  {
+      Debug().fatal("No Key code found", ex.what());
+      return "NULL";
+  }
+  
 }
