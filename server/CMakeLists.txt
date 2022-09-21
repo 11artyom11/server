@@ -16,10 +16,6 @@ set(THREADS_PREFER_PTHREAD_FLAG ON)
 #adding subproject server 
 add_subdirectory( src/server/ ./bin/server)
 
-
-#adding subproject client
-add_subdirectory( src/client)
-
 add_subdirectory(3rdparty/json)
 
 #adding shared lib helpers
