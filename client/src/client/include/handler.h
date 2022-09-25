@@ -73,11 +73,15 @@ typedef std::map<std::string,
                  ::strless>
     CommMapType;
 
+  /* this command map is used to process key codes passed from client interface */
+typedef std::unordered_map<std::string, std::string> InputCommMapType;
+
+
 class Handler {
  public:
   Handler();
   void commap_init(void);
-
+  void input_commap_init(void);
   int send_login_request(int sfd, const DataTransfer::MessageModel&);
   int send_connect_request(int sfd, const DataTransfer::MessageModel&);
   int on_connect_accept_recieved(int sfd, const DataTransfer::MessageModel&);
@@ -97,9 +101,14 @@ class Handler {
 
   decltype(&Client::Handler::send_connect_request) get_command(
       std::string command);
+    
+  std::string get_input_command (const std::string& key_code);
 
  private:
   CommMapType commap;
+  InputCommMapType input_commap;
+
+
   /*Conciously hadn't added getter for aes token*/
   ClientPrototype cP;
   CONNECT_STATE current_state = CONNECT_STATE::conn_request;

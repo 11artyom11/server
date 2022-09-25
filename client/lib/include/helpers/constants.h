@@ -110,4 +110,20 @@ const std::map<std::string, std::vector<std::string>> COMMAND_DATA_KEY_BINDINGS{
     {SIGN_UP_COMMAND, {SIGN_UP_DATA_KEYS}},
     {LOG_IN_COMMAND, {LOG_IN_DATA_KEYS}}};
 
+
+static const char GREETING_MESSAGE[] = {\
+"******************************************************************\n" \
+"*       _________.___.____ ____   _________________________      *\n"\
+"*      /   _____/|   |    |\\   \\ /   /\\_   _____/\\______   \\     *\n"\
+"*      \\_____  \\ |   |    | \\   Y   /  |    __)_  |       _/     *\n"\
+"*      /        \\|   |    |__\\     /   |        \\ |    |   \\     *\n"\
+"*     /_______  /|___|_______ \\___/   /_______  / |____|_  /     *\n"\
+"*             \\/             \\/               \\/         \\/      *\n"\
+    "* 1 - Config connection                                          *\n"\
+    "* 2 - Create Chatroom                                            *\n"\
+    "* 3 - Get Chatroom info                                          *\n"\
+    "* 4 - Open Chatroom                                              *\n"\
+    "******************************************************************\n"\
+  };
+
 #endif  //__CONSTS

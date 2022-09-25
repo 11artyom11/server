@@ -1,6 +1,9 @@
 #include <iostream>
 #include <sstream>
 #include <semaphore.h>
+#include <unordered_map>
+#include <vector>
+#include "constants.h"
 
 enum INTERFACE_COMMANDS
 {
@@ -10,12 +13,10 @@ enum INTERFACE_COMMANDS
 class ClientInterface 
 {
     public:
-        std::string scan_command ();
+        std::vector<std::string> scan_command ();
         void greet_message(void);
-        int attach_reader(std::stringstream* __S);
-        int start_read(void);
-        int end_read(void);
+
     
     private:
-        std::stringstream* strPtr;
+        std::vector<std::string> buffer;
 };

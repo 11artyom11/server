@@ -80,11 +80,23 @@ BroadcastMessage::BroadcastMessage(const string& message,
   this->set("name", name);
 }
 
+CreateChatroomCommand::CreateChatroomCommand(void){
+  this->set("command", command);
+}
+
 CreateChatroomVerify::CreateChatroomVerify(const std::string& new_room_id) {
   Debug().info("constructed CreateChatroomVerify");
 
   this->set("command", command);
   this->set("new_room_id", new_room_id);
+}
+
+JoinChatroomCommand::JoinChatroomCommand(const std::string& room_id, const std::string& master_token, const std::string& utoken)
+{
+  this->set("command", command);
+  this->set("room_id", room_id);
+  this->set("master_token", master_token);
+  this->set("utoken", utoken);
 }
 
 SafeMessageModel::SafeMessageModel(const std::string& crpt_hex, int crpt_len) {
