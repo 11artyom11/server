@@ -3,6 +3,7 @@
 #include <semaphore.h>
 #include <unordered_map>
 #include <vector>
+#include "constants.h"
 
 enum INTERFACE_COMMANDS
 {
