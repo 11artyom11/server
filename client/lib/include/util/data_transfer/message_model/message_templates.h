@@ -110,12 +110,28 @@ class BroadcastMessage : public MessageModel {
   static constexpr auto command = BRDCST_MESSAGE_COMMAND;
 };
 
+class CreateChatroomCommand : public MessageModel
+{
+  public:
+    CreateChatroomCommand(void);
+  private:
+    static constexpr auto command = CREATE_CHATROOM_COMMAND;
+
+};
+
 class CreateChatroomVerify : public MessageModel {
  public:
   CreateChatroomVerify(const std::string& new_room_id);
 
  private:
   static constexpr auto command = CHATROOM_CREATE_VERIFY;
+};
+
+class JoinChatroomCommand : public MessageModel {
+  public:
+    JoinChatroomCommand(const std::string& room_id, const std::string& master_token, const std::string& utoken);
+  private:  
+    static constexpr auto command = JOIN_CHATROOM_COMMAND;
 };
 
 class SafeMessageModel : public MessageModel {
