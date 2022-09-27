@@ -22,7 +22,7 @@ void Handler::commap_init(void) {
 }
 
 void Handler::input_commap_init(void){
-  input_commap["2"] = "{\"command\":\"com_crt_chatroom\"}";
+  input_commap[CREATE_CHATROOM] = "{\"command\":\"com_crt_chatroom\"}";
   /* .... */
 }
 

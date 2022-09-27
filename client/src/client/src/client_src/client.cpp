@@ -17,10 +17,10 @@ ClientModel::ClientModel() {
 
 
 
-void ClientModel::init_new_client(unsigned int __port) {
+void ClientModel::init_new_client(unsigned int __port, const std::string& host) {
   port = __port;
   bool sock_res = con_handler->setup_socket(AF_INET, SOCK_STREAM, 0);
-  bool serv_res = con_handler->setup_server_addr(AF_INET, SERVER_IP, port);
+  bool serv_res = con_handler->setup_server_addr(AF_INET, host, port);
   main_socket = con_handler->get_sockfd();
 
   if (!(sock_res & serv_res)) {
@@ -83,6 +83,12 @@ int ClientModel::close_connection() {
 }
 
 int ClientModel::read_commands (const std::vector<std::string>& commands){
+  //check if command is to connect to host 
+  if(commands.front() == CONFIG_CONNECTION){
+    int port = stoi(commands[2]);
+    this->init_new_client(port, commands[1]);
+    return 0;
+  }
 
   std::string command_str = comm_unit->get_io_model()->get_handler()->get_input_command(commands[0]);
   comm_unit->start_write_async(con_handler->get_sockfd(), command_str);
