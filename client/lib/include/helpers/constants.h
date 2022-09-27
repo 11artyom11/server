@@ -122,8 +122,13 @@ static const char GREETING_MESSAGE[] = {\
     "* 1 - Config connection                                          *\n"\
     "* 2 - Create Chatroom                                            *\n"\
     "* 3 - Get Chatroom info                                          *\n"\
-    "* 4 - Open Chatroom                                              *\n"\
+    "* 4 - Join Chatroom                                              *\n"\
     "******************************************************************\n"\
   };
+
+constexpr auto CONFIG_CONNECTION = "1";
+constexpr auto CREATE_CHATROOM = "2";
+constexpr auto GET_CHATROOM_INFO = "3";
+constexpr auto JOIN_CHATROOM = "4";
 
 #endif  //__CONSTS
