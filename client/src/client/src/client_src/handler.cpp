@@ -146,7 +146,12 @@ decltype(&Client::Handler::send_connect_request) Handler::get_command(
   }
 }
 
-std::string Handler::get_input_command(const std::string &key_code){
+std::string Handler::get_input_command(std::vector<std::string> com_buffer){
+  std::string key_code = com_buffer[0];
+  if (key_code == JOIN_CHATROOM_COMMAND)
+  {
+	return "{\"command\":\""+ std::string(JOIN_CHATROOM_COMMAND)+"\",\"master_token\":\""+com_buffer[2]+"\",\"room_id\":\""+com_buffer[1]+"\",\"utoken\":\""+cP.unique_token+"\"}";
+  }
   try 
   {
     return input_commap[key_code];

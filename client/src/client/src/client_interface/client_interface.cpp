@@ -49,6 +49,16 @@ std::vector<std::string>& ClientInterface::get_chatroom_info (void)
 
 std::vector<std::string>& ClientInterface::join_chatroom (void)
 {
+  buffer.clear();
+  std::string in;
+  std::cout << "Enter chatroom id\n";
+  std::cin >> in;
+  buffer.push_back(JOIN_CHATROOM_COMMAND);
+  buffer.push_back(in);
+  std::cout << "Enter chatroom owner id\n";
+  std::cin >> in;
+  buffer.push_back(in);
+  
 
   return this->buffer;
 }
