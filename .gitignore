@@ -9,12 +9,11 @@ lib/src/helpers/*.so*
 *.key
 html/
 latex/
-3rdparty/json/*
+3rdparty/json/**
 
 **/CMakeFiles/*
 **/*.cmake
 **/*.pc
-**/*.in
 **/*.so.*
 **/*.so
 **/*.internal
