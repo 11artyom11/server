@@ -85,12 +85,19 @@ int ClientModel::close_connection() {
 int ClientModel::read_commands (const std::vector<std::string>& commands){
   //check if command is to connect to host 
   if(commands.front() == CONFIG_CONNECTION){
-    int port = stoi(commands[2]);
-    this->init_new_client(port, commands[1]);
+      std::thread th = std::thread([this,&commands]
+      {
+        int port = stoi(commands[2]);
+        this->init_new_client(port, commands[1]);
+        return 0;
+    });
+    std::cout << "Joining  establishing ....\n";
+    th.detach();
+    std::cout << "Done  establishing ....\n";
     return 0;
   }
 
-  std::string command_str = comm_unit->get_io_model()->get_handler()->get_input_command(commands[0]);
+  std::string command_str = comm_unit->get_io_model()->get_handler()->get_input_command(commands);
   comm_unit->start_write_async(con_handler->get_sockfd(), command_str);
   return 0;
 }

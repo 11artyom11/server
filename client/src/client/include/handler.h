@@ -102,7 +102,7 @@ class Handler {
   decltype(&Client::Handler::send_connect_request) get_command(
       std::string command);
     
-  std::string get_input_command (const std::string& key_code);
+  std::string get_input_command (std::vector<std::string> commands);
 
  private:
   CommMapType commap;
