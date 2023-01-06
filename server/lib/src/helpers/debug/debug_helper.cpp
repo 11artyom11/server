@@ -4,7 +4,7 @@
  * @brief Construct a new Debug:: Debug object
  *
  */
-Debug::Debug() { this->outp_stream = &std::cout; }
+Debug::Debug() { this->outp_stream = &std::cout;}
 
 /**
  * @brief Destroy the Debug:: Debug object

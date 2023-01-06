@@ -112,7 +112,7 @@ class BroadcastMessage : public MessageModel {
 
 class CreateChatroomVerify : public MessageModel {
  public:
-  CreateChatroomVerify(const std::string& new_room_id);
+  CreateChatroomVerify(const std::string& new_room_id, const std::string& owner_id);
 
  private:
   static constexpr auto command = CHATROOM_CREATE_VERIFY;

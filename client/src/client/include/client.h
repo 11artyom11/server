@@ -37,8 +37,7 @@ using unique_ptr = std::unique_ptr<T>;
 
 typedef shared_ptr<Net::BasicConnectionHandler> BasicConnectionHandlerSharedPtr;
 
-typedef shared_ptr<Net::BasicCommunicationModel>
-    BasicCommunicationModelSharedPtr;
+typedef shared_ptr<Net::BasicCommunicationModel> BasicCommunicationModelSharedPtr;
 
 class ClientModel {
  public:
@@ -50,8 +49,6 @@ class ClientModel {
   BasicCommunicationModelSharedPtr get_comm_unit(void) const noexcept;
   int send_to_host(const DataTransfer::MessageModel&);
   int read_commands (const std::vector<std::string>& commands);
-  
-
   
   int close_connection(void);
   ~ClientModel();
@@ -66,5 +63,7 @@ class ClientModel {
   unsigned long port;
 };
 };  // namespace Client
+
+
 
 #endif

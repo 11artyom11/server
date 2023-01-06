@@ -9,7 +9,6 @@
 
 #ifndef _COLORS_
 #define _COLORS_
-#define ENBL_DEBUG
 /* FOREGROUND */
 #define RST "\x1B[0m"
 #define KRED "\x1B[31m"
@@ -25,6 +24,7 @@ enum class DEBUG_TYPE { ERROR_T, INFO_T, WARNING_T };
 
 enum class MACHINE_TYPE { SERVER, CLIENT };
 #define ENBL_DEBUG
+
 
 /*Functional class to provide debug interface*/
 class Debug {

@@ -2,7 +2,10 @@
 
 using Handler = Client::Handler;
 
-Handler::Handler() {}
+Handler::Handler()
+{
+
+}
 
 void Handler::commap_init(void) {
   commap[CONNECT_REQUEST] = &Handler::send_connect_request;
@@ -36,8 +39,7 @@ int Handler::send_connect_request(int sfd, const DataTransfer::MessageModel&) {
   try {
     int error_code;
     socklen_t error_code_size = sizeof(error_code);
-    int retval =
-        getsockopt(sfd, SOL_SOCKET, SO_ERROR, &error_code, &error_code_size);
+    int retval = getsockopt(sfd, SOL_SOCKET, SO_ERROR, &error_code, &error_code_size);
     if (error_code != 0) {
       /* socket has a non zero error status */
       fprintf(stderr, "socket error: %s\n", strerror(error_code));
@@ -47,7 +49,7 @@ int Handler::send_connect_request(int sfd, const DataTransfer::MessageModel&) {
     return res;
 
   } catch (...) {
-    // emit custom_event->server_connection_not_responding();
+
   }
   return -1;
 }
@@ -74,12 +76,12 @@ int Handler::send_connect_command(int sfd,
   Debug().info("Message recieved  : ", message.to_str());
 
   auto utoken = message.get<string>("unique_token");
-  cP.unique_token = utoken;
+  cP.set_unique_token(utoken);
 
   DataTransfer::ConnectCommand cC{"localhost", utoken};
 
-  string raw_str =
-      cC.to_str();  //"{\"command\":\"com_connect\", \"ip\":\"127.0.0.1\",
+  string raw_str = cC.to_str();  
+                    //"{\"command\":\"com_connect\", \"ip\":\"127.0.0.1\",
                     //\"aes_token\":\"1234556789\",
                     //\"unique_token\":\""+cP.unique_token+"\"}";
   send(sfd, (char*)raw_str.c_str(), strlen((char*)raw_str.c_str()), NULL);
@@ -93,7 +95,7 @@ int Handler::send_sign_up_command(int sfd, const DataTransfer::MessageModel&) {}
 int Handler::on_connect_verify_recieved(
     int sfd, const DataTransfer::MessageModel& message) {
   std::string token_fetched = message.get<std::string>("unique_token");
-  if (!cP.unique_token.compare(token_fetched)) {
+  if (!cP.get_unique_token().compare(token_fetched)) {
     Debug().info("CONNECTION VERIFIED");
     this->current_state = CONNECT_STATE::conn_verify;
   } else {
@@ -125,9 +127,21 @@ int Handler::on_broadcast_message_recieved(
 int Handler::on_chatroom_create_verified(int sfd, const DataTransfer::MessageModel& message)
 {
   Debug().info ("Chatroom created successfully");
+  ChatRoom new_room(cP);
+  if (!message.get<std::string>("owner_id").compare(cP.get_unique_token()))
+  {
+      std::cout << "Dear Master Chatroom Created\n";
+  } else {
+    std::cout << "Dear Customer this is not for you but Chatroom Created\n";
+  }
+
   return 0;
 }
 
+int Handler::on_new_customer_joined_room (int sfd, const DataTransfer::MessageModel& message)
+{
+	return 0;
+}
 
 CONNECT_STATE Handler::get_net_state(void) const { return this->current_state; }
 
@@ -146,16 +160,22 @@ decltype(&Client::Handler::send_connect_request) Handler::get_command(
   }
 }
 
+/**
+ * This function processes the messages that need interception in core, such as unique token and etc
+ * and returns final message which is to be sent.
+*/
 std::string Handler::get_input_command(std::vector<std::string> com_buffer){
   std::string key_code = com_buffer[0];
   if (key_code == JOIN_CHATROOM_COMMAND)
   {
-	return "{\"command\":\""+ std::string(JOIN_CHATROOM_COMMAND)+"\",\"master_token\":\""+com_buffer[2]+"\",\"room_id\":\""+com_buffer[1]+"\",\"utoken\":\""+cP.unique_token+"\"}";
+	// TODO replace with function, b/c further messages may be very complex'
+	return "{\"command\":\""+ std::string(JOIN_CHATROOM_COMMAND)+"\",\"master_token\":\""+com_buffer[2]+"\",\"room_id\":\""+com_buffer[1]+"\",\"utoken\":\""+cP.get_unique_token()+"\"}";
   }
   try 
   {
     return input_commap[key_code];
-  } catch (const std::exception& ex)
+  } 
+  catch (const std::exception& ex)
   {
       Debug().fatal("No Key code found", ex.what());
       return "NULL";

@@ -27,5 +27,5 @@ latex/
 **/*.make 
 **/Makefile
 **/atasm-build.json
-.vscode/*
+**/.vscode/*
 

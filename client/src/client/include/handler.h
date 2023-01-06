@@ -31,15 +31,15 @@
 
 #include "constants.h"
 #include "debug_helper.h"
-#include "message_model.h"
 #include "message_resolver.h"
 #include "message_templates.h"
+#include "chatroom_model.h"
 
 // Helper functor to ease cleanup of container
 struct delete_ptr {
   template <typename P>
   void operator()(P p) {
-    delete p;
+	delete p;
   }
 };
 
@@ -50,7 +50,7 @@ struct delete_ptr {
 class strless {
  public:
   bool operator()(const std::string& first, const std::string& second) const {
-    return first < second;
+	return first < second;
   }
 };
 
@@ -61,17 +61,13 @@ enum class CONNECT_STATE {
   conn_verify
 };
 
-struct ClientPrototype {
-  std::string unique_token;
-};
-
 namespace Client {
 class Handler;
 /*Binding which help to add new handler functions genreically*/
 typedef std::map<std::string,
-                 int (Handler::*)(int, const DataTransfer::MessageModel&),
-                 ::strless>
-    CommMapType;
+				 int (Handler::*)(int, const DataTransfer::MessageModel&),
+				 ::strless>
+	CommMapType;
 
   /* this command map is used to process key codes passed from client interface */
 typedef std::unordered_map<std::string, std::string> InputCommMapType;
@@ -95,13 +91,14 @@ class Handler {
   int send_terminate_connection(int sfd, const DataTransfer::MessageModel&);
   int on_broadcast_message_recieved(int sfd, const DataTransfer::MessageModel&);
   int on_chatroom_create_verified(int sfd, const DataTransfer::MessageModel&);
+  int on_new_customer_joined_room(int sfd, const DataTransfer::MessageModel&);
 
   CONNECT_STATE get_net_state(void) const;
   ClientPrototype const* get_client_prototype_ptr_c(void) const;
 
   decltype(&Client::Handler::send_connect_request) get_command(
-      std::string command);
-    
+	  std::string command);
+	
   std::string get_input_command (std::vector<std::string> commands);
 
  private:

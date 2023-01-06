@@ -6,7 +6,7 @@ communication_unit.cpp
 connection_handler.cpp
 io_unit.cpp
 handler.cpp
-)
+chatroom_model.cpp)
 
 target_include_directories(client_lib PUBLIC "../../include/",
                     "../../../../lib/include",
@@ -14,8 +14,7 @@ target_include_directories(client_lib PUBLIC "../../include/",
                     "../../../../lib/include/util/data_transfer/message_model/",
                     "../../../../lib/include/util/data_transfer/message_resolver/",
                     "../../../../lib/include/helpers/",
-                    "../../../../lib/include/helpers/debug_helper"
-)
+                    "../../../../lib/include/helpers/debug_helper")
 
 
 target_link_libraries( client_lib debug_helper)
