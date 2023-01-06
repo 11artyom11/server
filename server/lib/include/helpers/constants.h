@@ -64,6 +64,8 @@ constexpr auto SIGN_UP_VERIFY = "sign_up_verify";
 constexpr auto LOG_IN_ACCEPT = "log_in_accept";
 constexpr auto LOG_IN_VERIFY = "log_in_verify";
 constexpr auto CHATROOM_CREATE_VERIFY = "chatroom_crt_verify";
+constexpr auto CHATROOM_JOINED_CUSTOMER = "chatroom_joined_customer";
+
 
 /*
 Kind of this communication during handshake will ne taken

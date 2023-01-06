@@ -291,8 +291,9 @@ int Server::Handler::on_join_chatroom_command_recieved(int sfd, const DataTransf
 
   chatroom->add_new_secondary_customer(*recent_customers_sfd[sfd].get());
   Debug().info("ChatRoom ID => ", chatroom->get_room_id());
-  chatroom->get_master()->send_message(DataTransfer::MessageModel{"{\"Some\":\"message\"}"});
-
+  DataTransfer::ChatroomJoinedCustomer joined_message(secondary_token, master_token, room_id);
+  chatroom->get_master()->send_message(joined_message);
+  chatroom->broadcast_to_all_users(joined_message);
   /*
   {"command":"com_join_chatroom","master_token":"XSdlBEom9G","room_id":"J8xHVBw3hS","utoken":"5WOm4Z2GCr"}
   */
@@ -311,7 +312,7 @@ int Server::Handler::on_broadcast_message_command_recieved(int sfd, const DataTr
   std::string room_id = message.get<std::string>("room_id");
   std::string utoken = message.get<std::string>("utoken");
   Server::ChatRoom_shrd_ptr chatroom = chatroom_mngr_shrd_ptr->get_room_global(room_id);
-  chatroom->broadcast_to_all_users(utoken, message);
+  chatroom->broadcast_to_all_users(message);
   /* {"command":"com_brdcst_message","utoken":"Q4Ypo2KqSd","room_id":"J8xHVBw3hS","message":"HelloFromFirstUSER","name":"Nicolas"}
    */
   return 0;

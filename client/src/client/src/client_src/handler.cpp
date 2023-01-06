@@ -21,7 +21,7 @@ void Handler::commap_init(void) {
   commap[SIGN_UP_VERIFY] = &Handler::on_sign_up_verify_recieved;
   commap[BRDCST_MESSAGE_COMMAND] = &Handler::on_broadcast_message_recieved;
   commap[CHATROOM_CREATE_VERIFY] = &Handler::on_chatroom_create_verified;
-  
+  commap[CHATROOM_JOINED_CUSTOMER] = &Handler::on_new_customer_joined_room;
 }
 
 void Handler::input_commap_init(void){
@@ -130,9 +130,12 @@ int Handler::on_chatroom_create_verified(int sfd, const DataTransfer::MessageMod
   ChatRoom new_room(cP);
   if (!message.get<std::string>("owner_id").compare(cP.get_unique_token()))
   {
-      std::cout << "Dear Master Chatroom Created\n";
+    std::cout << "Dear Master Chatroom Created\n";
+    cP.register_master_chatroom(new_room.get_room_id(), new_room);
   } else {
-    std::cout << "Dear Customer this is not for you but Chatroom Created\n";
+    //this case normally wont be executed
+    Debug().info("Master id does not match ");
+    return 0;
   }
 
   return 0;
@@ -140,6 +143,28 @@ int Handler::on_chatroom_create_verified(int sfd, const DataTransfer::MessageMod
 
 int Handler::on_new_customer_joined_room (int sfd, const DataTransfer::MessageModel& message)
 {
+  // std::cout << message.to_str() << "\n";
+  std::string new_customer_id = message.get<std::string>("cust_id");
+  std::string owner_id = message.get<std::string>("owner_id");
+  std::string room_id =  message.get<std::string>("room_id");
+
+  // std::cout << cP.get_unique_token() << " " << owner_id << !cP.get_unique_token().compare(owner_id) << "\n";
+  // std::cout << cP.get_unique_token() << " " << new_customer_id << !cP.get_unique_token().compare(new_customer_id) << "\n";
+
+  //If this client is master of that room
+  if (!cP.get_unique_token().compare(owner_id))
+  {
+    std::cout << "New customer " << new_customer_id << " joined "<< room_id << " room (you are master in this room)\n";
+  } 
+  //if new customer is this client
+  else if (!cP.get_unique_token().compare(new_customer_id))
+  {
+    std::cout << "You have just joined "<< room_id << " room (you are customer in this room)\n";
+  }
+  //if this client is old customer of that room 
+  else {
+    std::cout << "New customer " << new_customer_id << " joined "<< room_id << " room (you are customer in this room)\n";
+  }
 	return 0;
 }
 
@@ -168,8 +193,8 @@ std::string Handler::get_input_command(std::vector<std::string> com_buffer){
   std::string key_code = com_buffer[0];
   if (key_code == JOIN_CHATROOM_COMMAND)
   {
-	// TODO replace with function, b/c further messages may be very complex'
-	return "{\"command\":\""+ std::string(JOIN_CHATROOM_COMMAND)+"\",\"master_token\":\""+com_buffer[2]+"\",\"room_id\":\""+com_buffer[1]+"\",\"utoken\":\""+cP.get_unique_token()+"\"}";
+	  // TODO replace with function, b/c further messages may be very complex'
+	  return "{\"command\":\""+ std::string(JOIN_CHATROOM_COMMAND)+"\",\"master_token\":\""+com_buffer[2]+"\",\"room_id\":\""+com_buffer[1]+"\",\"utoken\":\""+cP.get_unique_token()+"\"}";
   }
   try 
   {
@@ -177,8 +202,8 @@ std::string Handler::get_input_command(std::vector<std::string> com_buffer){
   } 
   catch (const std::exception& ex)
   {
-      Debug().fatal("No Key code found", ex.what());
-      return "NULL";
+    Debug().fatal("No Key code found", ex.what());
+    return "NULL";
   }
   
 }

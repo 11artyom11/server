@@ -108,23 +108,14 @@ std::string ChatRoom::get_room_id(void) const noexcept { return this->room_id; }
  * @param message json recieved from trigger customer
  * @return count of customers to whom this message has been sent
  */
-int ChatRoom::broadcast_to_all_users(
-    const std::string& utoken,
-    const DataTransfer::MessageModel& message) const {
+int ChatRoom::broadcast_to_all_users(const DataTransfer::MessageModel& message) const
+{
   Debug().info("in broadcast_to_all_users");
   int idx = 0;
   auto all_customers = secondary_customers;
-  all_customers.push_front(master_customer);
-
-  std::string only_message = message.get<std::string>("message");
-  std::string nickname = message.get<std::string>("name");
-  DataTransfer::BroadcastMessage brdcstMessage{only_message, utoken, room_id,
-                                               nickname};
 
   for (const auto& customer : all_customers) {
-    if (customer->get_unique_token() != utoken) {
-      customer->send_message(brdcstMessage);
-    }
+      customer->send_message(message);
   }
   Debug().info("out broadcast_to_all_users");
   return idx;
