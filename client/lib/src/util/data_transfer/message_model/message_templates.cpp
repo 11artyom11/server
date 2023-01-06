@@ -99,6 +99,15 @@ JoinChatroomCommand::JoinChatroomCommand(const std::string& room_id, const std::
   this->set("utoken", utoken);
 }
 
+ChatroomJoinedCustomer::ChatroomJoinedCustomer(const std::string& cust_id, const std::string& owner_id, const std::string& room_id)
+{
+  this->set("command", command);
+  this->set("cust_id", cust_id);
+  this->set("owner_id", owner_id);
+  this->set("room_id", room_id);
+}
+
+
 SafeMessageModel::SafeMessageModel(const std::string& crpt_hex, int crpt_len) {
   Debug().info("constructed SafeMessageModel");
 

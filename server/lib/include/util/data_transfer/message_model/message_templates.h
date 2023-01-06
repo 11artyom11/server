@@ -118,6 +118,21 @@ class CreateChatroomVerify : public MessageModel {
   static constexpr auto command = CHATROOM_CREATE_VERIFY;
 };
 
+class JoinChatroomCommand : public MessageModel {
+  public:
+    JoinChatroomCommand(const std::string& room_id, const std::string& master_token, const std::string& utoken);
+  private:  
+    static constexpr auto command = JOIN_CHATROOM_COMMAND;
+};
+
+class ChatroomJoinedCustomer : public MessageModel{
+  public:
+    ChatroomJoinedCustomer(const std::string& cust_id, const std::string& owner_id, const std::string& room_id);
+  private:
+    static constexpr auto command = CHATROOM_JOINED_CUSTOMER;
+
+};
+
 class SafeMessageModel : public MessageModel {
  public:
   /* This c-tor is deleted because in this class safe field MUST contain cipher

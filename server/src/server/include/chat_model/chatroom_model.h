@@ -23,8 +23,7 @@ class ChatRoom {
 
   std::string get_room_id(void) const noexcept;
 
-  int broadcast_to_all_users(const std::string& utoken,
-                             const DataTransfer::MessageModel& message) const;
+  int broadcast_to_all_users(const DataTransfer::MessageModel& message) const;
 
   void dump_state(void) const noexcept;
   ~ChatRoom();

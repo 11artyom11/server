@@ -86,6 +86,23 @@ CreateChatroomVerify::CreateChatroomVerify(const std::string& new_room_id, const
   this->set("command", command);
   this->set("new_room_id", new_room_id);
   this->set("owner_id", owner_id);
+
+}
+
+JoinChatroomCommand::JoinChatroomCommand(const std::string& room_id, const std::string& master_token, const std::string& utoken)
+{
+  this->set("command", command);
+  this->set("room_id", room_id);
+  this->set("master_token", master_token);
+  this->set("utoken", utoken);
+}
+
+ChatroomJoinedCustomer::ChatroomJoinedCustomer(const std::string& cust_id, const std::string& owner_id, const std::string& room_id)
+{
+  this->set("command", command);
+  this->set("cust_id", cust_id);
+  this->set("owner_id", owner_id);
+  this->set("room_id", room_id);
 }
 
 SafeMessageModel::SafeMessageModel(const std::string& crpt_hex, int crpt_len) {
