@@ -291,9 +291,11 @@ int Server::Handler::on_join_chatroom_command_recieved(int sfd, const DataTransf
 
   chatroom->add_new_secondary_customer(*recent_customers_sfd[sfd].get());
   Debug().info("ChatRoom ID => ", chatroom->get_room_id());
+  
   DataTransfer::ChatroomJoinedCustomer joined_message(secondary_token, master_token, room_id);
   chatroom->get_master()->send_message(joined_message);
   chatroom->broadcast_to_all_users(joined_message);
+
   /*
   {"command":"com_join_chatroom","master_token":"XSdlBEom9G","room_id":"J8xHVBw3hS","utoken":"5WOm4Z2GCr"}
   */

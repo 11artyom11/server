@@ -86,6 +86,7 @@ CreateChatroomVerify::CreateChatroomVerify(const std::string& new_room_id, const
   this->set("command", command);
   this->set("new_room_id", new_room_id);
   this->set("owner_id", owner_id);
+
 }
 
 JoinChatroomCommand::JoinChatroomCommand(const std::string& room_id, const std::string& master_token, const std::string& utoken)
