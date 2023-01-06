@@ -274,7 +274,7 @@ int Server::Handler::on_create_chatroom_command_recieved(int sfd, const DataTran
 
   chatroom_mngr_shrd_ptr->push_new_room(recent_customers_sfd[sfd].get(), new_room);
   /* Create chatroom_create_verify message to send to desired client */
-  DataTransfer::CreateChatroomVerify createVerify(new_room->get_room_id());
+  DataTransfer::CreateChatroomVerify createVerify(new_room->get_room_id(), new_room->get_master()->get_unique_token());
   Debug().info("ROOM DATA\n", createVerify.to_str());
 
   chatroom_create_verify(sfd, createVerify);
@@ -291,6 +291,7 @@ int Server::Handler::on_join_chatroom_command_recieved(int sfd, const DataTransf
 
   chatroom->add_new_secondary_customer(*recent_customers_sfd[sfd].get());
   Debug().info("ChatRoom ID => ", chatroom->get_room_id());
+  chatroom->get_master()->send_message(DataTransfer::MessageModel{"{\"Some\":\"message\"}"});
 
   /*
   {"command":"com_join_chatroom","master_token":"XSdlBEom9G","room_id":"J8xHVBw3hS","utoken":"5WOm4Z2GCr"}
@@ -348,11 +349,9 @@ int Server::Handler::send_sign_up_verify(int sfd,
  * @param sfd
  * @return int
  */
-int Server::Handler::send_login_verify(int sfd,
-                                       const DataTransfer::MessageModel&) {}
+int Server::Handler::send_login_verify(int sfd, const DataTransfer::MessageModel&) {}
 
-int Server::Handler::chatroom_create_verify(
-    int sfd, const DataTransfer::MessageModel& message) {
+int Server::Handler::chatroom_create_verify(int sfd, const DataTransfer::MessageModel& message) {
   auto customer = recent_customers_sfd[sfd];
   if (customer == CustomerModel_ptr(nullptr)) {
     Debug().fatal("customer not found");

@@ -80,11 +80,12 @@ BroadcastMessage::BroadcastMessage(const string& message,
   this->set("name", name);
 }
 
-CreateChatroomVerify::CreateChatroomVerify(const std::string& new_room_id) {
+CreateChatroomVerify::CreateChatroomVerify(const std::string& new_room_id, const std::string& owner_id) {
   Debug().info("constructed CreateChatroomVerify");
 
   this->set("command", command);
   this->set("new_room_id", new_room_id);
+  this->set("owner_id", owner_id);
 }
 
 SafeMessageModel::SafeMessageModel(const std::string& crpt_hex, int crpt_len) {

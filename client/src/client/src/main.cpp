@@ -1,6 +1,5 @@
 #define ENBL_DEBUG
 
-
 #include "client.h"
 #include "client_interface.h"
 #include "itc.hpp"
