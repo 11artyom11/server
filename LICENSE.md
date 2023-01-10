@@ -1,9 +1,6 @@
 Copyright (c) 2023, Artyom Grigoryan
 All rights reserved.
 
-Chicken Dance License v0.2
-http://supertunaman.com/cdl/
-
 Redistribution and use in source and binary forms, with 
 or without modification, are permitted provided that the 
 following conditions are met:
