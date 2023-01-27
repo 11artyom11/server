@@ -13,7 +13,7 @@ using std::string;
 
 class ClientPrototype;
 
-typedef std::shared_ptr<ClientPrototype> ClientPrototype_ptr;
+using ClientPrototype_ptr = std::shared_ptr<ClientPrototype>;
 
 
 

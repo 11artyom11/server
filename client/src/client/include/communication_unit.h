@@ -38,8 +38,7 @@ constexpr auto max_write_th_count = 3;
 namespace Net {
 template <typename T>
 using unique_ptr = std::unique_ptr<T>;
-
-typedef shared_ptr<iounit::IOModel> IOModel_shrd_ptr;
+using IOModel_shrd_ptr = shared_ptr<iounit::IOModel> ;
 
 class BasicCommunicationModel {
  public:

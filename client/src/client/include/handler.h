@@ -64,13 +64,9 @@ enum class CONNECT_STATE {
 namespace Client {
 class Handler;
 /*Binding which help to add new handler functions genreically*/
-typedef std::map<std::string,
-				 int (Handler::*)(int, const DataTransfer::MessageModel&),
-				 ::strless>
-	CommMapType;
-
-  /* this command map is used to process key codes passed from client interface */
-typedef std::unordered_map<std::string, std::string> InputCommMapType;
+using CommMapType = std::map<std::string, int (Handler::*)(int, const DataTransfer::MessageModel&), ::strless>;
+/* this command map is used to process key codes passed from client interface */
+using InputCommMapType = std::unordered_map<std::string, std::string>;
 
 
 class Handler {
