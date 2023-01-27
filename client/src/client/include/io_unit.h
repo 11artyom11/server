@@ -36,7 +36,7 @@ namespace iounit {
 template <typename T>
 using shared_ptr = std::shared_ptr<T>;
 
-typedef shared_ptr<Client::Handler> Handler_shrd_ptr;
+using Handler_shrd_ptr = shared_ptr<Client::Handler>;
 
 class IOModel {
  public:

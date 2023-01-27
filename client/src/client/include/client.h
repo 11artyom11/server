@@ -35,9 +35,8 @@ using shared_ptr = std::shared_ptr<T>;
 template <typename T>
 using unique_ptr = std::unique_ptr<T>;
 
-typedef shared_ptr<Net::BasicConnectionHandler> BasicConnectionHandlerSharedPtr;
-
-typedef shared_ptr<Net::BasicCommunicationModel> BasicCommunicationModelSharedPtr;
+using BasicConnectionHandlerSharedPtr = shared_ptr<Net::BasicConnectionHandler>;
+using BasicCommunicationModelSharedPtr = shared_ptr<Net::BasicCommunicationModel>;
 
 class ClientModel {
  public:

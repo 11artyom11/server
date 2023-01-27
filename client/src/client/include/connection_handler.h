@@ -38,8 +38,7 @@ using shared_ptr = std::shared_ptr<T>;
 
 template <typename T>
 using unique_ptr = std::unique_ptr<T>;
-
-typedef unique_ptr<struct sockaddr_in> sockaddr_in_unq_ptr;
+using sockaddr_in_unq_ptr = unique_ptr<struct sockaddr_in> ;
 
 class BasicConnectionHandler {
  public:
