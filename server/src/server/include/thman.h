@@ -8,6 +8,11 @@
 #include <atomic>
 #include <functional>
 
+/**
+ * @brief Class helper for auto scopping thread-joining
+ * and keeping all threads done when exiting the scope of instance of this class
+ * Prevents from UB's when thread task is not finished upon exiting block scope
+ */
 class join_threads
 {
     public:
@@ -18,6 +23,12 @@ class join_threads
 
 };
 
+/**
+ * @brief STL queue wrapper = thread safe queue to do standard operations atomically and
+ * relativaely safe compared to stl queue
+ * 
+ * @tparam T 
+ */
 template <typename T>
 class thread_safe_queue
 {
@@ -35,6 +46,12 @@ class thread_safe_queue
         std::condition_variable data_cond;
 };
 
+/**
+ * @brief Class for automatically managing tasks and 
+ * distribute them between maximum of hw - supported number
+ * of threads.
+ * 
+ */
 class thread_pool
 {
     public:
@@ -53,7 +70,12 @@ class thread_pool
 
 
 
-
+/**
+ * @brief Construct a new thread safe queue<T>::thread safe queue object
+ * 
+ * @tparam T 
+ * @param other 
+ */
 template <typename T>
 thread_safe_queue<T>::thread_safe_queue(const thread_safe_queue<T> & other)
 {
@@ -61,6 +83,12 @@ thread_safe_queue<T>::thread_safe_queue(const thread_safe_queue<T> & other)
     data_queue = other.data_queue;
 }
 
+/**
+ * @brief Atomically push new queue member to the end of list 
+ * 
+ * @tparam T 
+ * @param new_value 
+ */
 template <typename T>
 void thread_safe_queue<T>::push(T new_value)
 {
@@ -69,6 +97,12 @@ void thread_safe_queue<T>::push(T new_value)
     data_cond.notify_one();
 }
 
+/**
+ * @brief Wait for mutex to unlock and pop last item from queue
+ * 
+ * @tparam T 
+ * @param value 
+ */
 template <typename T>
 void thread_safe_queue<T>::wait_and_pop(T& value)
 {
@@ -78,7 +112,14 @@ void thread_safe_queue<T>::wait_and_pop(T& value)
     data_queue.pop();
 }
 
-
+/**
+ * @brief Atomically pop last item from queue if one exists
+ * 
+ * @tparam T 
+ * @param value 
+ * @return true if succeed
+ * @return false if failed
+ */
 template <typename T>
 bool thread_safe_queue<T>::try_pop(T& value)
 {
@@ -91,6 +132,13 @@ bool thread_safe_queue<T>::try_pop(T& value)
     return true;
 }
 
+/**
+ * @brief ATOMICALLY check emptiness of thread safe queue 
+ * 
+ * @tparam T 
+ * @return true if empty 
+ * @return false if NOT empty
+ */
 template <typename T>
 bool thread_safe_queue<T>::empty() const
 {
@@ -98,6 +146,12 @@ bool thread_safe_queue<T>::empty() const
     return data_queue.empty();  
 }
 
+/**
+ * @brief Submit new task for threads to do
+ * 
+ * @tparam FuncType 
+ * @param f 
+ */
 template <typename FuncType>
 void thread_pool::submit(FuncType f)
 {
