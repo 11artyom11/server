@@ -36,6 +36,7 @@
 #include "handler.h"
 #include "message_model.h"
 #include "message_resolver.h"
+#include "thman.h"
 
 /*Namespace purposed to store server-related functions and classes*/
 namespace Server {

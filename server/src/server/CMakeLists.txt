@@ -19,6 +19,7 @@ set (CMAKE_CXX_FLAGS "-g -w -O2 -pthread")
 add_executable(server src/main.cpp
                src/server.cpp 
                src/handler.cpp
+               src/thman.cpp
                src/customer_model/customer.cpp
                src/customer_model/customer_crypto_unit.cpp
                src/chat_model/chatroom_model.cpp
