@@ -32,7 +32,7 @@ int main(int argc, char *argv[]) {
   }
 
   // Start listening. Hold at most 10 connections in the queue
-  if (listen(sockfd, 1) < 0) {
+  if (servModel.listen_to_socket(sockfd, 1)){
     Debug().fatal("Failed to listen on socket. errno: ", errno,
                   ", terminating...");
     exit(EXIT_FAILURE);
