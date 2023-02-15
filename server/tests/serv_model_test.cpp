@@ -1,7 +1,7 @@
+#undef ENABLE_DEBUG
 #include "server.h"
 #include <gtest/gtest.h>
 
-#undef ENBL_DEBUG
 
 #define PORT 8888
 
@@ -17,6 +17,7 @@ TEST(SERVER_CONNECTIVITY_TEST, set_socket_listen){
 
 int main(int argc, char* argv[])
 {
+    debug_i_console("Hello?");
     testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();
 }

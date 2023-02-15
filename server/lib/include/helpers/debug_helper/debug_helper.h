@@ -1,5 +1,6 @@
 #ifndef __DEBUG_HELPER__
 #define __DEBUG_HELPER__
+#define ENABLE_DEBUG
 #include <stdio.h>
 #include <time.h>
 
@@ -23,78 +24,60 @@
 enum class DEBUG_TYPE { ERROR_T, INFO_T, WARNING_T };
 
 enum class MACHINE_TYPE { SERVER, CLIENT };
-#define ENBL_DEBUG
 
+class Debug;
 
+#ifdef ENABLE_DEBUG
+  #define debug_i_console(args...) Debug::info(std::cout, args) 
+#else 
+  #define debug_i_console(args...) 
+#endif 
 /*Functional class to provide debug interface*/
 class Debug {
  public:
-  Debug();
-  ~Debug();
+  Debug() = delete;
+  ~Debug() = delete;
   template <typename... mesTL>
-  void info(mesTL... messages);
-
-  template <typename... mesTL>
-  void warning(mesTL... messages);
+  static void info( std::ostream& out, mesTL... messages);
 
   template <typename... mesTL>
-  void fatal(mesTL... messages);
+  static void warning(std::ostream& out, mesTL... messages);
 
   template <typename... mesTL>
-  void raw(mesTL... messages);
+  static void fatal(std::ostream& out, mesTL... messages);
 
-  std::string get_current_time(void) const noexcept;
+  template <typename... mesTL>
+  static void raw(std::ostream& out, mesTL... messages);
 
-  int set_output_stream(std::ostream* oS_ptr);
-  static void disable_debug(void);
-  static void enable_debug(void);
+  static std::string get_current_time(void) noexcept;
 
- private:
-  inline static bool debug_state = true;
-  std::ostream* outp_stream;
 };
 
 template <typename... mesTL>
-void Debug::info(mesTL... messages) {
-  #ifdef ENBL_DEBUG
-    *outp_stream << KGRN /*Green code*/ << get_current_time() << INFO_S;
-    ((*outp_stream << messages << ' '), ...);
-    *outp_stream << KWHT /*White code*/ << std::endl;
-  #else
-    return;
-  #endif
+void Debug::info(std::ostream& out, mesTL... messages) {
+    out << KGRN /*Green code*/ << get_current_time() << INFO_S;
+  ((out  << messages << ' '), ...);
+    out  << KWHT /*White code*/ << std::endl;
 }
 
 template <typename... mesTL>
-void Debug::warning(mesTL... messages) {
-  #ifdef ENBL_DEBUG
-    *outp_stream << KYEL << get_current_time() << WARNING_S;
-    ((*outp_stream << messages << ' '), ...);
-    *outp_stream << KWHT << std::endl;
-  #else
-    return;
-  #endif
+void Debug::warning(std::ostream& out, mesTL... messages) {
+    out << KYEL << get_current_time() << WARNING_S;
+    ((out << messages << ' '), ...);
+    out << KWHT << std::endl;
 }
 
 template <typename... mesTL>
-void Debug::fatal(mesTL... messages) {
-  #ifdef ENBL_DEBUG
-    *outp_stream << KRED << get_current_time() << ERROR_S;
-    ((*outp_stream << messages << ' '), ...);
-    *outp_stream << KWHT << std::endl;
-  #else
-    return;
-  #endif
+void Debug::fatal(std::ostream& out, mesTL... messages) {
+    out << KRED << get_current_time() << ERROR_S;
+    ((out << messages << ' '), ...);
+    out << KWHT << std::endl;
 }
 
 template <typename... mesTL>
-void Debug::raw(mesTL... messages) {
-  #ifdef ENBL_DEBUG
-    ((*outp_stream << messages << ' '), ...);
-    *outp_stream << '\n';
-  #else
-    return;
-  #endif
+void Debug::raw(std::ostream& out, mesTL... messages) {
+    ((out << messages << ' '), ...);
+    out << '\n';
 }
 
 #endif
