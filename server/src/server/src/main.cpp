@@ -19,6 +19,7 @@ int main(int argc, char *argv[]) {
   }
 
   ServerModel servModel(port);
+  ThreadPool th_pool;
   sockaddr_in *sockaddr = servModel.get_server_addr();
 
   servModel.dump_server_state();
@@ -39,11 +40,8 @@ int main(int argc, char *argv[]) {
   int connection;
   while (1) {
     // Grab a connection from the queue
-    auto addrlen = sizeof(*sockaddr);
     connection = servModel.accept_connection_from_socket(sockfd);
-
-    std::thread *new_thread = new std::thread(
-        [&servModel, &connection] { servModel.handle_connection(connection); });
+    th_pool.submit([&servModel, &connection] { servModel.handle_connection(connection); });
   }
   close(sockfd);
 }

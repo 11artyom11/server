@@ -21,7 +21,7 @@ int main(int argc, char* argv[]) {
   {
      return;
   };
-
+  system("clear");
   itc.set_trigger (&ClientInterface::scan_command, cInterface.get());
   itc.set_callback(&ClientModel::read_commands, cModel.get());
   

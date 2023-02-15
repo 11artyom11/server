@@ -5,6 +5,7 @@ project (server)
 include_directories( 
                      "include/",
                      "include/customer_model/",
+                     "include/threads/"
                      "../../lib/include/util/cyptolib/",
                      "../../lib/include/helpers/debug_helper/",
                      "../../lib/include/util/data_transfer/message_model/",
@@ -19,6 +20,9 @@ set (CMAKE_CXX_FLAGS "-g -w -O2 -pthread")
 add_executable(server src/main.cpp
                src/server.cpp 
                src/handler.cpp
+               src/threads/thman.cpp
+               src/threads/joiner.cpp
+               src/threads/thread_safe_queue.cpp
                src/customer_model/customer.cpp
                src/customer_model/customer_crypto_unit.cpp
                src/chat_model/chatroom_model.cpp
