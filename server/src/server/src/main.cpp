@@ -19,7 +19,7 @@ int main(int argc, char *argv[]) {
   }
 
   ServerModel servModel(port);
-  thread_pool th_pool;
+  ThreadPool th_pool;
   sockaddr_in *sockaddr = servModel.get_server_addr();
 
   servModel.dump_server_state();
