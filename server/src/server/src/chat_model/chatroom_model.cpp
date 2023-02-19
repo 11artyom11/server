@@ -126,18 +126,18 @@ int ChatRoom::broadcast_to_all_users(const DataTransfer::MessageModel& message) 
  *
  */
 void ChatRoom::dump_state(void) const noexcept {
-  //Debug().raw("+=========+===================+");
-  //Debug().raw("|   Room ID    | ", room_id, " |");
-  //Debug().raw("+==============+==============+");
-  //Debug().raw("|   Master     | ", master_customer->get_unique_token(), " |");
-  //Debug().raw("+==============+==============+");
+  //debug_r_console("+=========+===================+");
+  //debug_r_console("|   Room ID    | ", room_id, " |");
+  //debug_r_console("+==============+==============+");
+  //debug_r_console("|   Master     | ", master_customer->get_unique_token(), " |");
+  //debug_r_console("+==============+==============+");
   int idx = 0;
   for (const auto& sec_customer : secondary_customers) {
-    //Debug().raw("| Customer ", idx++, " | ", sec_customer->get_unique_token(), " |");
-    //Debug().raw("+--------------+--------------+");
+    //debug_r_console("| Customer ", idx++, " | ", sec_customer->get_unique_token(), " |");
+    //debug_r_console("+--------------+--------------+");
   }
-  //Debug().raw("| Whole Customer Count : ", idx + 1, " |");
-  //Debug().raw("+--------------+--------------+");
+  //debug_r_console("| Whole Customer Count : ", idx + 1, " |");
+  //debug_r_console("+--------------+--------------+");
 }
 
 /**

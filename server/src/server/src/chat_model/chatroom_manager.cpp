@@ -123,7 +123,7 @@ Server::ChatRoom_shrd_ptr Server::ChatRoomManager::get_room_global(
   try {
     return chatroom_glob_lst[room_id];
   } catch (const std::exception& e) {
-    //Debug().fatal("No room with id ", room_id, "was found");
+    //debug_f_console("No room with id ", room_id, "was found");
   }
 }
 
@@ -131,11 +131,11 @@ void Server::ChatRoomManager::dump_customer_chatroom_state(
     const std::string& utoken) noexcept {
   auto chatrooms = this->operator[](utoken);
   uint32_t room_idx = 0;
-  //Debug().raw("+==========+==============+");
-  //Debug().raw("| Customer | ", utoken, " |");
-  //Debug().raw("+==========+==============+");
+  //debug_r_console("+==========+==============+");
+  //debug_r_console("| Customer | ", utoken, " |");
+  //debug_r_console("+==========+==============+");
   for (const auto& room : chatrooms) {
-    //Debug().raw("| Room ", room_idx++, " | ", room->get_room_id(), " |");
-    //Debug().raw("+-------------------------+");
+    //debug_r_console("| Room ", room_idx++, " | ", room->get_room_id(), " |");
+    //debug_r_console("+-------------------------+");
   }
 }

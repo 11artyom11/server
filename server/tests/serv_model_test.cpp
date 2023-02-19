@@ -1,4 +1,3 @@
-#undef ENABLE_DEBUG
 #include "server.h"
 #include <gtest/gtest.h>
 

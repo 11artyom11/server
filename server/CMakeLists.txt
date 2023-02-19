@@ -7,7 +7,7 @@ project (client_server)
 include(FetchContent)
 
 set (THIRD_PARTY_DIR ${CMAKE_CURRENT_SOURCE_DIR}/3rdparty)
-
+add_compile_definitions(ENABLE_DEBUG)
 function(CloneRepository repositoryURL branchName projectName sourceDir)
   #Commands are left empty so that we only checkout the source and no not perform any kind of build
   message("Starting to clone ${projectName} into ${sourceDir}")

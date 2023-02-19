@@ -26,15 +26,19 @@ class Debug;
   #define debug_i_stream(stream, args...) Debug::info(stream, args)
   #define debug_w_stream(stream, args...) Debug::warning(stream, args)
   #define debug_f_stream(stream, args...) Debug::fatal(stream, args)
+  #define debug_r_stream(stream, args...) Debug::fatal(stream, args)
 #else 
   #define debug_i_stream(stream, args...) /* Blank */
   #define debug_w_stream(stream, args...) /* Blank */
   #define debug_f_stream(stream, args...) /* Blank */
+  #define debug_r_stream(stream, args...) /* Blank */
+
 #endif 
 
 #define debug_i_console(args...) debug_i_stream(std::cout, args) 
 #define debug_w_console(args...) debug_w_stream(std::cout, args)
 #define debug_f_console(args...) debug_f_stream(std::cout, args)
+#define debug_r_console(args...) debug_r_stream(std::cout, args)
 
 
 /*Functional class to provide debug interface*/
