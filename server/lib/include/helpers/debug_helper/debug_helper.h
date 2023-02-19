@@ -1,6 +1,5 @@
 #ifndef __DEBUG_HELPER__
 #define __DEBUG_HELPER__
-#define ENABLE_DEBUG
 #include <stdio.h>
 #include <time.h>
 
@@ -21,17 +20,18 @@
 #define KWHT "\x1B[37m"
 #endif /* _COLORS_ */
 
-enum class DEBUG_TYPE { ERROR_T, INFO_T, WARNING_T };
-
-enum class MACHINE_TYPE { SERVER, CLIENT };
-
 class Debug;
 
 #ifdef ENABLE_DEBUG
   #define debug_i_console(args...) Debug::info(std::cout, args) 
+  #define debug_w_console(args...) Debug::warning(std::cout, args)
+  #define debug_f_console(args...) Debug::fatal(std::cout, args)
 #else 
-  #define debug_i_console(args...) 
+  #define debug_i_console(args...) /* Blank */
+  #define debug_w_console(args...) /* Blank */
+  #define debug_f_console(args...) /* Blank */
 #endif 
+
 /*Functional class to provide debug interface*/
 class Debug {
  public:
