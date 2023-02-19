@@ -123,7 +123,7 @@ Server::ChatRoom_shrd_ptr Server::ChatRoomManager::get_room_global(
   try {
     return chatroom_glob_lst[room_id];
   } catch (const std::exception& e) {
-    //debug_f_console("No room with id ", room_id, "was found");
+    debug_f_console("No room with id ", room_id, "was found");
   }
 }
 

@@ -167,7 +167,7 @@ int Server::Handler::send_connect_accept(int sfd,
   debug_i_console("IN send_connect_accept()");
   string new_unique_token = recent_customers_sfd[sfd]->get_unique_token();
 
-  //debug_w_console(new_unique_token);
+  debug_w_console(new_unique_token);
   /* Create new customer model and save in association with unqiue token and
    * sfd
    */
@@ -356,7 +356,7 @@ int Server::Handler::send_login_verify(int sfd, const DataTransfer::MessageModel
 int Server::Handler::chatroom_create_verify(int sfd, const DataTransfer::MessageModel& message) {
   auto customer = recent_customers_sfd[sfd];
   if (customer == CustomerModel_ptr(nullptr)) {
-    //debug_f_console("customer not found");
+    debug_f_console("customer not found");
     return -1;
   }
   customer->send_message(message);
@@ -526,11 +526,11 @@ int Server::Handler::find_in_customer_cache(int sfd) {
 
 void Server::Handler::dump_all_customers (void) const {
   int idx = 0;
-  //debug_i_console("------------------------------");
+  debug_i_console("------------------------------");
   for (auto customer_it : recent_customers_sfd){
       //debug_r_console (idx, " -> ", customer_it.second->get_unique_token());
   } 
-  //debug_i_console("------------------------------");
+  debug_i_console("------------------------------");
 }
 
 /**

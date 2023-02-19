@@ -166,7 +166,7 @@ int Server::ServerModel::distribute_incoming_connections(int socket,
   MessageModel message(std::string{response});
   std::string response_s = message.get<std::string>("command");
   auto mem_function = (*m_handler.get()).get_command(response_s);
-  //debug_w_console((mem_function ? "IS VALID FUNCTION" : "FUNCTION IS INVALID"));
+  debug_w_console((mem_function ? "IS VALID FUNCTION" : "FUNCTION IS INVALID"));
   if (!mem_function) {
     return UNKNOWN_COMMAND_ERROR;
   }
@@ -185,7 +185,7 @@ int Server::ServerModel::distribute_incoming_connections(int socket,
  */
 void Server::ServerModel::handle_connection(int connection) {
   if (connection < 0) {
-    //debug_f_console("Failed to grab connection. errno: ", errno, ", terminating...");
+    debug_f_console("Failed to grab connection. errno: ", errno, ", terminating...");
     exit(EXIT_FAILURE);
   }
 
@@ -197,7 +197,7 @@ void Server::ServerModel::handle_connection(int connection) {
     bytes = read(connection, buffer, sizeof(buffer) - 1);
     buffer[bytes] = 0x00;
     debug_i_console("Recieved message : ", buffer);
-    //debug_i_console("Received message len : ", bytes);
+    debug_i_console("Received message len : ", bytes);
     if (bytes < 0)
     {
       continue;

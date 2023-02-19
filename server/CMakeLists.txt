@@ -1,5 +1,6 @@
 cmake_minimum_required(VERSION 2.8.9)
 
+set(CMAKE_DEBUG_POSTFIX _debug)
 
 #project name : client_server
 project (client_server)
