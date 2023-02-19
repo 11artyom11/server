@@ -1,7 +1,6 @@
 cmake_minimum_required(VERSION 2.8.9)
 project (server)
 
-
 include_directories( 
                      "include/",
                      "include/customer_model/",
@@ -25,14 +24,8 @@ add_executable(server src/main.cpp
                src/chat_model/chatroom_manager.cpp
                )                     
 
-
-
 target_link_libraries( server message_model)
 target_link_libraries( server message_resolver)
-
-
 target_link_libraries( server debug_helper)
-
 target_link_libraries( server message_model)
-
 target_link_libraries( server message_resolver)

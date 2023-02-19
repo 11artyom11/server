@@ -5,6 +5,7 @@ find_package(OpenSSL REQUIRED)
 set(OPENSSL_USE_STATIC_LIBS TRUE)
 find_library(nlohmann_json nlohmann_json)
 
+
 include(GNUInstallDirs)
 include_directories(../../../../include/util/data_transfer/message_resolver)
 
