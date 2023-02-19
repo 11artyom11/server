@@ -2,12 +2,13 @@ cmake_minimum_required(VERSION 3.9)
 project(message_model VERSION 1.0.1 DESCRIPTION "message_model description")
 include(GNUInstallDirs)
 
+set(OUT_DIR ../../../../../bin/libs)
 set(OPENSSL_USE_STATIC_LIBS TRUE)
 find_package(OpenSSL REQUIRED)
 find_library(nlohmann_json nlohmann_json)
 
 include_directories(../../../../../3rdparty/json/single_include/nlohmann)
-
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${OUT_DIR})
 add_library(message_model SHARED message_model.cpp message_templates.cpp)
 set_target_properties(message_model PROPERTIES VERSION ${PROJECT_VERSION})
 
