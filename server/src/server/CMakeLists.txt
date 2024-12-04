@@ -29,6 +29,7 @@ add_executable(server src/main.cpp
                src/chat_model/chatroom_manager.cpp
                )                     
 
+set_target_properties(server PROPERTIES DEBUG_POSTFIX ${CMAKE_DEBUG_POSTFIX})
 
 
 target_link_libraries( server message_model)
